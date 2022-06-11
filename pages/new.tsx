@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Button, Flex, Input, Text } from "@chakra-ui/react";
+import { Button, Flex, Icon, Input, Text } from "@chakra-ui/react";
 import NewWatchLayout from "@components/Layouts/NewWatch";
 import React, { ChangeEvent, useRef, useState } from "react";
 import RichText from "@components/RichText";
@@ -12,6 +12,8 @@ import { useCreatePostMutation } from "src/generated/graphql";
 import { useSelector } from "react-redux";
 import { RootState } from "@redux/reducers";
 import { imageService } from "@services/api/fetcher";
+import axiosInstance from "@services/api/axiosInstance";
+import { GrClose } from "react-icons/gr";
 
 const initialValue = "<p> <b>Start to writte your watch here ...</b></p>";
 
@@ -25,18 +27,18 @@ export default function NewWatch(): JSX.Element {
     const [selectedCategory, setSelectedCategory] = useState<string>("");
     const { handleSubmit, register } = useForm();
     const [image, setImage] = useState<File | undefined>();
-    const [progress, setProgress] = useState<number>(0);
     const [createPost, { loading }] = useCreatePostMutation();
     const [isUploading, setIsUploading] = useState(false);
 
-    console.log(progress);
-
     const handleSetTags = (e: string) => {
-        console.log(e);
         if (tags.length < 4) {
-            setTags([...tags, e]);
+            setTags([...tags, e.split(" ").join("").toLowerCase()]);
             setTagInput("");
         }
+    };
+
+    const handleRemoveTag = (name: string) => {
+        setTags(tags.filter((tag) => tag !== name));
     };
 
     const handleClickOnUpload = () => {
@@ -59,24 +61,31 @@ export default function NewWatch(): JSX.Element {
         const response = await imageService.upload({
             formData,
             postId,
-            setProgress,
             size: oneFile.size,
         });
         setIsUploading(false);
         return response;
     };
 
-    const handleImageUpload = (file: File): Promise<string> =>
+    const handleImageUpload = (image: File): Promise<string> =>
         new Promise((resolve, reject) => {
             const formData = new FormData();
-            formData.append("image", file);
+            formData.append(
+                "operations",
+                JSON.stringify({
+                    query: "mutation upload($file: Upload!){\n uploadPostPicture(file: $file){\n  url\n }\n}\n",
+                }),
+            );
+            formData.append("map", JSON.stringify({ "0": ["variables.file"] }));
+            formData.append("0", image);
 
-            fetch("https://api.imgbb.com/1/upload?key=api_key", {
-                method: "POST",
-                body: formData,
-            })
-                .then((response) => response.json())
-                .then((result) => resolve(result.data.url))
+            axiosInstance
+                .post(``, formData)
+                .then((response) => response.data)
+                .then((result) => {
+                    console.log(result);
+                    resolve(result.data.url);
+                })
                 .catch(() => reject(new Error("Upload failed")));
         });
 
@@ -198,8 +207,29 @@ export default function NewWatch(): JSX.Element {
                     />
                     <Flex w="full">
                         {tags.map((tag) => (
-                            <Flex bg="gray.200" rounded="md" p={2} mx={2}>
-                                {tag}
+                            <Flex
+                                justifyContent="center"
+                                alignItems="center"
+                                bg="gray.200"
+                                rounded="md"
+                                px={2}
+                                py={1}
+                                mx={2}
+                            >
+                                <Text
+                                    whiteSpace="nowrap"
+                                    fontWeight="bold"
+                                    as="p"
+                                >
+                                    #{tag}
+                                </Text>
+                                <Button
+                                    _focus={{ border: "0px" }}
+                                    backgroundColor="transparent"
+                                    onClick={() => handleRemoveTag(tag)}
+                                >
+                                    <Icon as={GrClose} size={5} />
+                                </Button>
                             </Flex>
                         ))}
                         <Input
@@ -209,7 +239,9 @@ export default function NewWatch(): JSX.Element {
                                     handleSetTags(e.target.value);
                                 }
                             }}
-                            onChange={(e) => setTagInput(e.target.value)}
+                            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                                setTagInput(e.target.value)
+                            }
                             color="black"
                             fontWeight="bold"
                             fontSize="24px"
@@ -225,9 +257,8 @@ export default function NewWatch(): JSX.Element {
                     </Flex>
                 </Flex>
                 <RichText
-                    onImageUpload={handleImageUpload}
+                    onImageUpload={(image) => handleImageUpload(image)}
                     styles={{
-                        // minHeight: "60%",
                         root: { color: "black", border: "0px" },
                         toolbar: {
                             color: "black",

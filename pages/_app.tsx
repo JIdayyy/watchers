@@ -10,10 +10,17 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { Hydrate } from "react-query/hydration";
 import { Provider } from "react-redux";
 import store from "@redux/store";
+import { Router } from "next/router";
+import nProgress from "nprogress";
+import "nprogress/nprogress.css";
 
 const Noop = ({ children }: { children: ReactNode }) => <>{children}</>;
 
 export const apolloClient = initializeApollo();
+
+Router.events.on("routeChangeStart", nProgress.start);
+Router.events.on("routeChangeError", nProgress.done);
+Router.events.on("routeChangeComplete", nProgress.done);
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
     const queryClient = new QueryClient();

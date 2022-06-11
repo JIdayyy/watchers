@@ -1,23 +1,23 @@
 import MainLayout from "@components/Layouts/MainLayout";
-import { useRouter } from "next/router";
 import React from "react";
-import { useGetPostDataQuery } from "src/generated/graphql";
+import {
+    GetAllPostsDocument,
+    GetAllPostsQuery,
+    GetPostDataDocument,
+    GetPostDataQuery,
+} from "src/generated/graphql";
 import { Flex, Grid, GridItem, Spinner, Text, Box } from "@chakra-ui/react";
 import Image from "next/image";
+import { apolloClient } from "./_app";
+import { GetStaticPropsResult } from "next/types";
 
-export default function Watch(): JSX.Element {
-    const router = useRouter();
-    const { slug } = router.query;
-    const { data } = useGetPostDataQuery({
-        variables: {
-            where: {
-                slug: slug as string,
-            },
-        },
-    });
+interface IProps {
+    post: GetPostDataQuery["post"];
+}
 
-    if (!data) return <Spinner />;
-    console.log(data.post.Tags);
+export default function Watch({ post }: IProps): JSX.Element {
+    if (!post) return <Spinner />;
+
     return (
         <Grid
             w="7xl"
@@ -39,11 +39,11 @@ export default function Watch(): JSX.Element {
                     direction="column"
                 >
                     <Flex position="relative" w="full" h="250px">
-                        {data.post.cover_picture && (
+                        {post.cover_picture && (
                             <Image
                                 objectFit="cover"
                                 priority
-                                src={data?.post.cover_picture as string}
+                                src={post.cover_picture as string}
                                 layout="fill"
                             />
                         )}
@@ -56,14 +56,13 @@ export default function Watch(): JSX.Element {
                         alignItems="flex-start"
                     >
                         <Text as="p">
-                            {data.post.author.first_name}{" "}
-                            {data.post.author.last_name}
+                            {post.author.first_name} {post.author.last_name}
                         </Text>
                         <Text my={4} as="h1">
-                            {data.post.title}
+                            {post.title}
                         </Text>
                         <Flex my={4}>
-                            {data.post.Tags.map((tag) => (
+                            {post.Tags.map((tag) => (
                                 <Text mr={1} as="p">
                                     #{tag.name}
                                 </Text>
@@ -72,7 +71,7 @@ export default function Watch(): JSX.Element {
                         <Text
                             w="full"
                             dangerouslySetInnerHTML={{
-                                __html: data?.post.content as string,
+                                __html: post.content as string,
                             }}
                         />
                     </Flex>
@@ -121,6 +120,60 @@ export default function Watch(): JSX.Element {
             </GridItem>
         </Grid>
     );
+}
+
+export async function getStaticPaths(): Promise<{
+    paths: { params: { slug: string } }[];
+    fallback: boolean;
+}> {
+    const allPosts = await apolloClient.query({
+        query: GetAllPostsDocument,
+        variables: {
+            where: {
+                isDraft: {
+                    equals: false,
+                },
+            },
+        },
+    });
+
+    const paths = allPosts.data?.posts.map(
+        (post: GetAllPostsQuery["posts"][number]) => ({
+            params: {
+                slug: post.slug,
+            },
+        }),
+    );
+
+    if (!paths) return { paths: [], fallback: true };
+
+    return {
+        paths,
+        fallback: true, // false or 'blocking'
+    };
+}
+
+export async function getStaticProps(params: {
+    params: {
+        slug: string;
+    };
+}): Promise<GetStaticPropsResult<IProps>> {
+    const { slug } = params.params;
+
+    const res = await apolloClient.query({
+        query: GetPostDataDocument,
+        variables: {
+            where: {
+                slug: slug,
+            },
+        },
+    });
+    return {
+        props: {
+            post: res.data.post,
+        },
+        revalidate: 10,
+    };
 }
 
 Watch.Layout = MainLayout;

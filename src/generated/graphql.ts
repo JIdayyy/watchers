@@ -367,6 +367,7 @@ export type Mutation = {
     updateTag: Maybe<Tag>;
     updateUser: Maybe<User>;
     uploadCoverPicture: Post;
+    uploadPostPicture: Picture;
     upsertCategory: Category;
     upsertPost: Post;
     upsertResetPassword: ResetPassword;
@@ -518,6 +519,10 @@ export type MutationUpdateUserArgs = {
 };
 
 export type MutationUploadCoverPictureArgs = {
+    file: Scalars["Upload"];
+};
+
+export type MutationUploadPostPictureArgs = {
     file: Scalars["Upload"];
 };
 
@@ -675,6 +680,11 @@ export type NestedStringWithAggregatesFilter = {
 
 export type NullableStringFieldUpdateOperationsInput = {
     set?: InputMaybe<Scalars["String"]>;
+};
+
+export type Picture = {
+    __typename?: "Picture";
+    url: Scalars["String"];
 };
 
 export type Post = {
@@ -2374,7 +2384,14 @@ export type GetAllPostsQuery = {
         slug: string;
         userId: string;
         categoryId: string;
-        author: { __typename?: "User"; id: string; first_name: string };
+        author: {
+            __typename?: "User";
+            id: string;
+            first_name: string;
+            last_name: string;
+            email: string;
+            avatar: string;
+        };
         Category: { __typename?: "Category"; id: string; name: string };
         Tags: Array<{ __typename?: "Tag"; id: string; name: string }>;
     }>;
@@ -2396,6 +2413,7 @@ export type GetPostDataQuery = {
         isDraft: boolean;
         author: {
             __typename?: "User";
+            id: string;
             first_name: string;
             last_name: string;
             email: string;
@@ -2633,6 +2651,9 @@ export const GetAllPostsDocument = gql`
             author {
                 id
                 first_name
+                last_name
+                email
+                avatar
             }
             userId
             Category {
@@ -2706,6 +2727,7 @@ export const GetPostDataDocument = gql`
             cover_picture
             isDraft
             author {
+                id
                 first_name
                 last_name
                 email

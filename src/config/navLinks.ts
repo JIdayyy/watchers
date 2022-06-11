@@ -11,5 +11,11 @@ const navLinks = [
         path: "/categories",
         icon: "/icons/categories.png",
     },
+    {
+        id: 3,
+        name: "My Posts",
+        path: "/myposts",
+        icon: "/icons/posts.png",
+    },
 ];
 export default navLinks;

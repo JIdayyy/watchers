@@ -1,10 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { Role } from "src/generated/graphql";
 
 type User = {
     id: string;
     firstName: string;
     lastName: string;
     email: string;
+    roles: Role[];
 };
 
 interface IUser {

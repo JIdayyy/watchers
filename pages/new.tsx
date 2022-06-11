@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button, Flex, Icon, Input, Text } from "@chakra-ui/react";
 import NewWatchLayout from "@components/Layouts/NewWatch";
-import React, { ChangeEvent, useRef, useState } from "react";
+import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import RichText from "@components/RichText";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -29,6 +29,12 @@ export default function NewWatch(): JSX.Element {
     const [image, setImage] = useState<File | undefined>();
     const [createPost, { loading }] = useCreatePostMutation();
     const [isUploading, setIsUploading] = useState(false);
+
+    useEffect(() => {
+        if (!user) {
+            router.push("/");
+        }
+    }, []);
 
     const handleSetTags = (e: string) => {
         if (tags.length < 4) {

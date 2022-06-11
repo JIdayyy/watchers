@@ -1,18 +1,33 @@
-import React from "react";
-import { Button, Flex, Grid, GridItem, Text } from "@chakra-ui/react";
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+import { Grid, GridItem, Flex, Button, Text, Spinner } from "@chakra-ui/react";
 import MainLayout from "@components/Layouts/MainLayout";
 import WatchesList from "@components/Lists/Watches/WatchesList";
-import Image from "next/image";
 import NavigationCard from "@components/Navigation/NavigationCard";
-import { GetAllPostsDocument, GetAllPostsQuery } from "src/generated/graphql";
-import { apolloClient } from "./_app";
-import { GetStaticPropsResult } from "next";
+import { RootState } from "@redux/reducers";
+import Image from "next/image";
+import React from "react";
+import { useSelector } from "react-redux";
+import { useGetAllPostsQuery } from "src/generated/graphql";
 
-interface IProps {
-    posts: GetAllPostsQuery["posts"];
-}
+export default function Myposts(): JSX.Element {
+    const { user } = useSelector((state: RootState) => state.user);
+    const { data } = useGetAllPostsQuery({
+        variables: {
+            where: {
+                author: {
+                    is: {
+                        id: {
+                            equals: user!.id,
+                        },
+                    },
+                },
+            },
+        },
+        skip: !user,
+    });
 
-const Home = ({ posts }: IProps): JSX.Element => {
+    if (!data?.posts) return <Spinner />;
+
     return (
         <Grid
             p={[3, 2, 2, 0]}
@@ -32,7 +47,7 @@ const Home = ({ posts }: IProps): JSX.Element => {
                 <NavigationCard />
             </GridItem>
             <GridItem colSpan={3}>
-                <WatchesList posts={posts} />
+                <WatchesList posts={data?.posts} />
             </GridItem>
             <GridItem display={["none", "none", "none", "block"]} colSpan={1}>
                 <Flex
@@ -71,30 +86,6 @@ const Home = ({ posts }: IProps): JSX.Element => {
             </GridItem>
         </Grid>
     );
-};
+}
 
-export const getStaticProps = async (): Promise<
-    GetStaticPropsResult<IProps>
-> => {
-    const data = await apolloClient.query({
-        query: GetAllPostsDocument,
-        variables: {
-            where: {
-                isDraft: {
-                    equals: false,
-                },
-            },
-        },
-    });
-
-    return {
-        props: {
-            posts: data.data.posts,
-        },
-        revalidate: 10,
-    };
-};
-
-Home.Layout = MainLayout;
-
-export default Home;
+Myposts.Layout = MainLayout;

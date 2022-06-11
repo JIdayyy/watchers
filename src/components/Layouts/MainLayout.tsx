@@ -20,6 +20,7 @@ export default function MainLayout({ children }: Props): JSX.Element {
                     lastName: data.me.last_name,
                     id: data.me.id,
                     email: data.me.email,
+                    roles: data.me.role,
                 }),
             );
         },

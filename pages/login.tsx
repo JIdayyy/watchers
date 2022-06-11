@@ -33,6 +33,7 @@ export default function Login(): JSX.Element {
                         lastName: data.login.last_name,
                         id: data.login.id,
                         email: data.login.email,
+                        roles: data.login.role,
                     }),
                 );
                 router.push("/");

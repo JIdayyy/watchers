@@ -7,6 +7,7 @@ query GetPostData($where: PostWhereUniqueInput!) {
         cover_picture
         isDraft
         author {
+            id
             first_name
             last_name
             email

@@ -7,11 +7,9 @@ export default {
         global: {
             h1: {
                 fontWeight: 500,
-                marginBottom: "0.5em",
+                fontSize: "80px",
             },
-            p: {
-                marginBottom: "1em",
-            },
+            p: {},
         },
     },
 } as GlobalStyles;

@@ -1,0 +1,22 @@
+query GetAllPosts($where: PostWhereInput!) {
+    posts(where: $where) {
+        id
+        title
+        content
+        isDraft
+        author {
+            id
+            first_name
+        }
+        userId
+        Category {
+            id
+            name
+        }
+        categoryId
+        Tags {
+            id
+            name
+        }
+    }
+}

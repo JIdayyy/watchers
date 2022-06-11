@@ -1,24 +1,33 @@
 import {
     ApolloClient,
+    createHttpLink,
     InMemoryCache,
     NormalizedCacheObject,
 } from "@apollo/client";
 
 let apolloClient: ApolloClient<NormalizedCacheObject> | null = null;
 
-const createApolloClient = new ApolloClient({
-    ssrMode: typeof window === "undefined",
-    uri: "https://api.spacex.land/graphql/",
-    cache: new InMemoryCache(),
+const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:5000";
+
+const httpLink = createHttpLink({
+    uri: serverUrl,
+    credentials: "include",
+    headers: {
+        "platform-auth-user-agent": "web-platform",
+    },
 });
 
-export const initializeApollo = () => {
-    // For SSG and SSR always create a new Apollo Client
+const createApolloClient = new ApolloClient({
+    ssrMode: typeof window === "undefined",
+    uri: serverUrl,
+    cache: new InMemoryCache(),
+    link: httpLink,
+});
+
+export const initializeApollo = (): ApolloClient<NormalizedCacheObject> => {
     if (typeof window === "undefined") {
         return createApolloClient;
     }
-
-    // Create the Apollo Client once in the client
     if (!apolloClient) {
         apolloClient = createApolloClient;
     }

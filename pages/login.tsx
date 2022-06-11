@@ -15,7 +15,7 @@ interface FormData {
 export default function Login(): JSX.Element {
     const router = useRouter();
     const dispatch = useDispatch();
-    const { handleSubmit, register } = useForm();
+    const { handleSubmit, register } = useForm<FormData>();
     const [mutateLogin, { loading }] = useMutateLoginMutation();
 
     const onSubmit = (data: FormData) => {

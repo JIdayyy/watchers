@@ -1,17 +1,50 @@
-import { Button, Flex, Grid, GridItem, Input, Text } from "@chakra-ui/react";
+import {
+    Button,
+    Flex,
+    Grid,
+    GridItem,
+    Input,
+    InputGroup,
+    InputRightElement,
+    Kbd,
+    Text,
+    useDisclosure,
+} from "@chakra-ui/react";
 import { RootState } from "@redux/reducers";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
+import SearchModal from "@components/Modals/SearchModal";
 
 export default function Navbar(): JSX.Element {
     const router = useRouter();
     const { user } = useSelector((state: RootState) => state.user);
+    const { isOpen, onClose, onOpen } = useDisclosure();
+
+    useEffect(() => {
+        let cmdDown = false;
+
+        document.body.addEventListener("keydown", function (event) {
+            const key = event.key || 0;
+            if (key === "Meta") {
+                cmdDown = true;
+            }
+        });
+
+        document.body.addEventListener("keydown", function (event) {
+            const key = event.key || 0;
+            if (key === "k") {
+                if (cmdDown && key === "k") {
+                    onOpen();
+                }
+            }
+        });
+    }, []);
 
     return (
         <Flex
-            zIndex="overlay"
+            zIndex={10}
             bg="white"
             position="fixed"
             top={0}
@@ -43,7 +76,27 @@ export default function Navbar(): JSX.Element {
                     </Button>
                 </GridItem>
                 <GridItem display="flex" colSpan={3}>
-                    <Input flexGrow={1} placeholder="Search..." />
+                    <InputGroup>
+                        <InputRightElement
+                            pointerEvents="none"
+                            children={
+                                <Flex mr={20}>
+                                    <Kbd mx={1} rounded="0px">
+                                        ⌘
+                                    </Kbd>
+                                    <Kbd mx={1} rounded="0px">
+                                        k
+                                    </Kbd>
+                                </Flex>
+                            }
+                        />
+                        <Input
+                            onClick={() => onOpen()}
+                            flexGrow={1}
+                            placeholder="Search..."
+                        />
+                        <SearchModal isOpen={isOpen} onClose={onClose} />
+                    </InputGroup>
                 </GridItem>
                 <GridItem colSpan={1} display="flex" flexDirection="row">
                     {user ? (

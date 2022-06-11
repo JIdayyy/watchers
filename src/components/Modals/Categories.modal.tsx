@@ -7,21 +7,26 @@ import {
     ModalHeader,
     ModalCloseButton,
     ModalBody,
-    ModalFooter,
     Text,
 } from "@chakra-ui/react";
-import React, { Dispatch, SetStateAction } from "react";
+import React, { Dispatch, SetStateAction, useEffect } from "react";
 import { useGetAllCategoriesQuery } from "src/generated/graphql";
 
 interface IProps {
     setSelectedCategory: Dispatch<SetStateAction<string>>;
+    category: string;
 }
 
 export default function CategoriesModal({
     setSelectedCategory,
+    category,
 }: IProps): JSX.Element {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const { data } = useGetAllCategoriesQuery();
+
+    useEffect(() => {
+        onClose();
+    }, [category]);
 
     return (
         <>
@@ -43,7 +48,7 @@ export default function CategoriesModal({
                                 onClick={() => setSelectedCategory(category.id)}
                                 cursor="pointer"
                                 rounded="md"
-                                px={2}
+                                p={3}
                                 _hover={{ backgroundColor: "gray.200" }}
                             >
                                 {category.name}

@@ -4,6 +4,7 @@ query GetAllPosts($where: PostWhereInput!) {
         title
         content
         isDraft
+        slug
         author {
             id
             first_name

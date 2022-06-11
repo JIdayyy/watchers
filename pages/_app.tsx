@@ -13,8 +13,9 @@ import store from "@redux/store";
 
 const Noop = ({ children }: { children: ReactNode }) => <>{children}</>;
 
+export const apolloClient = initializeApollo();
+
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
-    const apolloClient = initializeApollo();
     const queryClient = new QueryClient();
     const Layout = (Component as any).Layout || Noop;
 

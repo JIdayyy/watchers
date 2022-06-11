@@ -27,10 +27,13 @@ export default function NewWatch(): JSX.Element {
     const [image, setImage] = useState<File | undefined>();
     const [progress, setProgress] = useState<number>(0);
     const [createPost, { loading }] = useCreatePostMutation();
+    const [isUploading, setIsUploading] = useState(false);
+
+    console.log(progress);
 
     const handleSetTags = (e: string) => {
         console.log(e);
-        if (tags.length <= 4) {
+        if (tags.length < 4) {
             setTags([...tags, e]);
             setTagInput("");
         }
@@ -41,6 +44,7 @@ export default function NewWatch(): JSX.Element {
     };
 
     const uploadCoverPicture = async (oneFile: File, postId: string) => {
+        setIsUploading(true);
         const formData = new FormData();
 
         formData.append(
@@ -58,8 +62,23 @@ export default function NewWatch(): JSX.Element {
             setProgress,
             size: oneFile.size,
         });
+        setIsUploading(false);
         return response;
     };
+
+    const handleImageUpload = (file: File): Promise<string> =>
+        new Promise((resolve, reject) => {
+            const formData = new FormData();
+            formData.append("image", file);
+
+            fetch("https://api.imgbb.com/1/upload?key=api_key", {
+                method: "POST",
+                body: formData,
+            })
+                .then((response) => response.json())
+                .then((result) => resolve(result.data.url))
+                .catch(() => reject(new Error("Upload failed")));
+        });
 
     const onSubmit = (data: FieldValues) => {
         createPost({
@@ -159,6 +178,7 @@ export default function NewWatch(): JSX.Element {
                             type="file"
                         />
                         <CategoriesModal
+                            category={selectedCategory}
                             setSelectedCategory={setSelectedCategory}
                         />
                     </Flex>
@@ -205,8 +225,9 @@ export default function NewWatch(): JSX.Element {
                     </Flex>
                 </Flex>
                 <RichText
+                    onImageUpload={handleImageUpload}
                     styles={{
-                        minHeight: "60%",
+                        // minHeight: "60%",
                         root: { color: "black", border: "0px" },
                         toolbar: {
                             color: "black",
@@ -223,7 +244,7 @@ export default function NewWatch(): JSX.Element {
             </Flex>
             <Flex my={1} justifyContent="flex-start" alignItems="flex-start">
                 <Button
-                    isLoading={loading}
+                    isLoading={loading || isUploading}
                     onClick={handleSubmit(onSubmit)}
                     bg="blue"
                     color="white"

@@ -1,5 +1,6 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import React from "react";
 import { GetAllPostsQuery } from "src/generated/graphql";
 
@@ -9,19 +10,28 @@ interface IProps {
 }
 
 export default function WatchCard({ watch, isMain }: IProps): JSX.Element {
+    const router = useRouter();
+
+    const handleClick = () => {
+        router.push(`/${watch.slug}`);
+    };
+
     return (
         <Flex
+            onClick={handleClick}
+            cursor="pointer"
             direction="column"
             bg="white"
             rounded={10}
             shadow="base"
             w="full"
-            h={isMain ? "500px" : "250px"}
+            h={isMain ? "450px" : "200px"}
             overflow="hidden"
         >
             {isMain && (
                 <Box position="relative" w="full" h="250px">
                     <Image
+                        priority
                         src="/images/cardfakeimage.png"
                         layout="fill"
                         objectFit="cover"
@@ -47,7 +57,7 @@ export default function WatchCard({ watch, isMain }: IProps): JSX.Element {
                     </Text>
                     <Flex>
                         {watch.Tags.map((tag) => (
-                            <Text color="#8A8A8A" fontSize="12px">
+                            <Text key={tag.id} color="#8A8A8A" fontSize="12px">
                                 #{tag.name}
                             </Text>
                         ))}

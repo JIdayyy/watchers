@@ -6,10 +6,22 @@ export default {
     styles: {
         global: {
             h1: {
-                fontWeight: 500,
-                fontSize: "80px",
+                fontWeight: "bold",
+                fontSize: "24px",
             },
-            p: {},
+            h2: {
+                fontWeight: "bold",
+                fontSize: "24px",
+            },
+            p: {
+                fontsize: "12px",
+            },
+            iframe: {
+                aspectRatio: "16/9",
+                width: "full",
+                rounded: "10px",
+                marginY: "30px",
+            },
         },
     },
 } as GlobalStyles;

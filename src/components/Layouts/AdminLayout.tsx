@@ -14,7 +14,7 @@ export default function AdminLayout({ children }: Props): JSX.Element {
     const { user } = useSelector((state: RootState) => state.user);
     const router = useRouter();
 
-    if (user && !user?.roles.includes(Role.Admin || Role.SuperAdmin)) {
+    if (user.id && !user?.roles.includes(Role.Admin || Role.SuperAdmin)) {
         router.push("/");
     }
 

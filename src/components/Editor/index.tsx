@@ -28,7 +28,7 @@ export default function Editor(): JSX.Element {
     const [isUploading, setIsUploading] = useState(false);
 
     useEffect(() => {
-        if (!user) {
+        if (!user.id) {
             router.push("/");
         }
     }, []);
@@ -86,7 +86,6 @@ export default function Editor(): JSX.Element {
                 .post(``, formData)
                 .then((response) => response.data)
                 .then((result) => {
-                    console.log(result);
                     resolve(result.data.url);
                 })
                 .catch(() => reject(new Error("Upload failed")));

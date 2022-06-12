@@ -33,7 +33,7 @@ export default function NewWatch(): JSX.Element {
     const [isUploading, setIsUploading] = useState(false);
 
     useEffect(() => {
-        if (!user) {
+        if (!user.id) {
             router.push("/");
         }
     }, []);
@@ -74,7 +74,6 @@ export default function NewWatch(): JSX.Element {
         setIsUploading(false);
         return response;
     };
-    console.log(value);
     const handleImageUpload = (image: File): Promise<string> =>
         new Promise((resolve, reject) => {
             const formData = new FormData();
@@ -91,7 +90,6 @@ export default function NewWatch(): JSX.Element {
                 .post(``, formData)
                 .then((response) => response.data)
                 .then((result) => {
-                    console.log(result);
                     resolve(result.data.url);
                 })
                 .catch(() => reject(new Error("Upload failed")));

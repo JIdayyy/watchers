@@ -20,7 +20,7 @@ export default function Preview({
 }: IProps): JSX.Element {
     const { user } = useSelector((state: RootState) => state.user);
 
-    if (!user) return <></>;
+    if (!user.id) return <></>;
 
     return (
         <Flex

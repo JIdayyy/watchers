@@ -23,7 +23,7 @@ export default function Myposts(): JSX.Element {
                 },
             },
         },
-        skip: !user,
+        skip: !user.id,
     });
 
     if (!data?.posts) return <Spinner />;

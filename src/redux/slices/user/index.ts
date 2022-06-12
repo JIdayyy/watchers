@@ -10,11 +10,17 @@ type User = {
 };
 
 interface IUser {
-    user: User | null;
+    user: User;
 }
 
 const initialState: IUser = {
-    user: null,
+    user: {
+        email: "",
+        firstName: "",
+        id: "",
+        lastName: "",
+        roles: [],
+    },
 };
 
 const userSlice = createSlice({
@@ -25,7 +31,7 @@ const userSlice = createSlice({
             state.user = action.payload;
         },
         logout: (state: IUser) => {
-            state.user = null;
+            state.user = initialState.user;
         },
     },
 });

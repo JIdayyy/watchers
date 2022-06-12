@@ -19,8 +19,6 @@ interface IProps {
 export default function Watch({ post }: IProps): JSX.Element {
     if (!post) return <Spinner />;
 
-    console.log(post);
-
     return (
         <Grid
             w="7xl"

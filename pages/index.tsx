@@ -84,6 +84,9 @@ export const getStaticProps = async (): Promise<
                     equals: false,
                 },
             },
+            orderBy: {
+                created_at: "desc",
+            },
         },
     });
 

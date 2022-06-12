@@ -2371,6 +2371,9 @@ export type GetAllCategoriesQuery = {
 
 export type GetAllPostsQueryVariables = Exact<{
     where: PostWhereInput;
+    orderBy: InputMaybe<
+        Array<PostOrderByWithRelationInput> | PostOrderByWithRelationInput
+    >;
 }>;
 
 export type GetAllPostsQuery = {
@@ -2641,8 +2644,11 @@ export type GetAllCategoriesQueryResult = Apollo.QueryResult<
     GetAllCategoriesQueryVariables
 >;
 export const GetAllPostsDocument = gql`
-    query GetAllPosts($where: PostWhereInput!) {
-        posts(where: $where) {
+    query GetAllPosts(
+        $where: PostWhereInput!
+        $orderBy: [PostOrderByWithRelationInput!]
+    ) {
+        posts(where: $where, orderBy: $orderBy) {
             id
             title
             content
@@ -2682,6 +2688,7 @@ export const GetAllPostsDocument = gql`
  * const { data, loading, error } = useGetAllPostsQuery({
  *   variables: {
  *      where: // value for 'where'
+ *      orderBy: // value for 'orderBy'
  *   },
  * });
  */

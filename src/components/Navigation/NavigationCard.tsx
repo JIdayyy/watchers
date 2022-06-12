@@ -12,7 +12,7 @@ export default function NavigationCard(): JSX.Element {
     return (
         <Flex rounded={5} direction="column" w="full">
             {navLinks.map((link) => (
-                <Link href={link.path}>
+                <Link key={link.id} href={link.path}>
                     <Flex
                         cursor="pointer"
                         _hover={{ bg: "gray.200" }}

@@ -56,7 +56,7 @@ export default function Preview({
                 </Text>
                 <Flex my={4}>
                     {tags.map((tag) => (
-                        <Text mr={1} as="p">
+                        <Text key={tag} mr={1} as="p">
                             #{tag}
                         </Text>
                     ))}

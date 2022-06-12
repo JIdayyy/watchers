@@ -1,5 +1,8 @@
-query GetAllPosts($where: PostWhereInput!) {
-    posts(where: $where) {
+query GetAllPosts(
+    $where: PostWhereInput!
+    $orderBy: [PostOrderByWithRelationInput!]
+) {
+    posts(where: $where, orderBy: $orderBy) {
         id
         title
         content

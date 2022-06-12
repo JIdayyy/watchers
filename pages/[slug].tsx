@@ -66,7 +66,7 @@ export default function Watch({ post }: IProps): JSX.Element {
                         </Text>
                         <Flex my={4}>
                             {post.Tags.map((tag) => (
-                                <Text mr={1} as="p">
+                                <Text key={tag.id} mr={1} as="p">
                                     #{tag.name}
                                 </Text>
                             ))}

@@ -4,7 +4,11 @@ import MainLayout from "@components/Layouts/MainLayout";
 import WatchesList from "@components/Lists/Watches/WatchesList";
 import Image from "next/image";
 import NavigationCard from "@components/Navigation/NavigationCard";
-import { GetAllPostsDocument, GetAllPostsQuery } from "src/generated/graphql";
+import {
+    GetAllPostsDocument,
+    GetAllPostsQuery,
+    SortOrder,
+} from "src/generated/graphql";
 import { apolloClient } from "./_app";
 import { GetStaticPropsResult } from "next";
 
@@ -85,7 +89,7 @@ export const getStaticProps = async (): Promise<
                 },
             },
             orderBy: {
-                created_at: "desc",
+                created_at: SortOrder.Desc,
             },
         },
     });

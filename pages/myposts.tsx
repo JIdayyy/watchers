@@ -7,7 +7,7 @@ import { RootState } from "@redux/reducers";
 import Image from "next/image";
 import React from "react";
 import { useSelector } from "react-redux";
-import { useGetAllPostsQuery } from "src/generated/graphql";
+import { SortOrder, useGetAllPostsQuery } from "src/generated/graphql";
 
 export default function Myposts(): JSX.Element {
     const { user } = useSelector((state: RootState) => state.user);
@@ -21,6 +21,9 @@ export default function Myposts(): JSX.Element {
                         },
                     },
                 },
+            },
+            orderBy: {
+                created_at: SortOrder.Desc,
             },
         },
         skip: !user.id,

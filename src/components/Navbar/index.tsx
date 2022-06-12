@@ -99,7 +99,7 @@ export default function Navbar(): JSX.Element {
                     </InputGroup>
                 </GridItem>
                 <GridItem colSpan={1} display="flex" flexDirection="row">
-                    {user ? (
+                    {user.id ? (
                         <Button onClick={() => router.push("/new")} w="full">
                             Add Watch
                         </Button>

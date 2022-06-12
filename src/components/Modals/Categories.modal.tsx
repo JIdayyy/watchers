@@ -45,6 +45,7 @@ export default function CategoriesModal({
                     >
                         {data?.categories.map((category) => (
                             <Text
+                                key={category.id}
                                 onClick={() => setSelectedCategory(category.id)}
                                 cursor="pointer"
                                 rounded="md"

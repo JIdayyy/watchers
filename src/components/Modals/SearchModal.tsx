@@ -97,7 +97,9 @@ export default function SearchModal({ isOpen, onClose }: Props): JSX.Element {
                                     <Text>{result.title}</Text>
                                     <Flex>
                                         {result.tags.map((tag) => (
-                                            <Text mx={1}>#{tag.name}</Text>
+                                            <Text key={tag.id} mx={1}>
+                                                #{tag.name}
+                                            </Text>
                                         ))}
                                     </Flex>
                                 </Flex>

@@ -14,6 +14,7 @@ const httpLink = createHttpLink({
     credentials: "include",
     headers: {
         "platform-auth-user-agent": "web-platform",
+        Origin: "https://watchers-khaki.vercel.app", // <- Added this and now builds are no longer 500 erroring on vercel
     },
 });
 

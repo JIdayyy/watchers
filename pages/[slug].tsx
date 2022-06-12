@@ -131,7 +131,7 @@ export default function Watch({ post }: IProps): JSX.Element {
 
 export async function getStaticPaths(): Promise<{
     paths: { params: { slug: string } }[];
-    fallback: boolean;
+    fallback: boolean | string;
 }> {
     const allPosts = await apolloClient.query({
         query: GetAllPostsDocument,
@@ -156,7 +156,7 @@ export async function getStaticPaths(): Promise<{
 
     return {
         paths,
-        fallback: true, // false or 'blocking'
+        fallback: "blocking", // false or 'blocking'
     };
 }
 

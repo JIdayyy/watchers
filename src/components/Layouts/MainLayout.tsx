@@ -1,8 +1,9 @@
 import { Center, Flex, Spinner } from "@chakra-ui/react";
 import Navbar from "@components/Navbar";
 import { login, logout } from "@redux/actions";
+import { RootState } from "@redux/reducers";
 import { ReactNode, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useMutateMeMutation } from "src/generated/graphql";
 
 type Props = {
@@ -11,6 +12,7 @@ type Props = {
 
 export default function MainLayout({ children }: Props): JSX.Element {
     const dispatch = useDispatch();
+    const { user } = useSelector((state: RootState) => state.user);
 
     const [me, { loading }] = useMutateMeMutation({
         onCompleted: (data) => {
@@ -30,7 +32,9 @@ export default function MainLayout({ children }: Props): JSX.Element {
     });
 
     useEffect(() => {
-        me();
+        if (!user.id) {
+            me();
+        }
     }, []);
 
     if (loading)

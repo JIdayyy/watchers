@@ -7,7 +7,7 @@ interface IProps {
 
 export default function NewWatchLayout({ children }: IProps): JSX.Element {
     return (
-        <Flex justifyContent="center" w="100vw" minH="100vh">
+        <Flex justifyContent="center" bg="#FAF9F9" w="100vw" minH="100vh">
             {children}
         </Flex>
     );

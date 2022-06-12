@@ -15,7 +15,7 @@ interface IProps {
 const Home = ({ posts }: IProps): JSX.Element => {
     return (
         <Grid
-            p={[3, 2, 2, 0]}
+            p={[2, 2, 2, 2, 0]}
             mb="100px"
             gap={7}
             templateColumns={[

@@ -14,10 +14,12 @@ import { RootState } from "@redux/reducers";
 import { imageService } from "@services/api/fetcher";
 import axiosInstance from "@services/api/axiosInstance";
 import { GrClose } from "react-icons/gr";
+import Preview from "@components/Preview";
 
 const initialValue = "<p> <b>Start to writte your watch here ...</b></p>";
 
 export default function NewWatch(): JSX.Element {
+    const [isPreview, setIsPreview] = useState(false);
     const fileInpuRef = useRef<HTMLInputElement>(null);
     const router = useRouter();
     const { user } = useSelector((state: RootState) => state.user);
@@ -25,7 +27,7 @@ export default function NewWatch(): JSX.Element {
     const [tagInput, setTagInput] = useState("");
     const [value, onChange] = useState(initialValue);
     const [selectedCategory, setSelectedCategory] = useState<string>("");
-    const { handleSubmit, register } = useForm();
+    const { handleSubmit, register, getValues } = useForm();
     const [image, setImage] = useState<File | undefined>();
     const [createPost, { loading }] = useCreatePostMutation();
     const [isUploading, setIsUploading] = useState(false);
@@ -72,7 +74,7 @@ export default function NewWatch(): JSX.Element {
         setIsUploading(false);
         return response;
     };
-
+    console.log(value);
     const handleImageUpload = (image: File): Promise<string> =>
         new Promise((resolve, reject) => {
             const formData = new FormData();
@@ -145,6 +147,7 @@ export default function NewWatch(): JSX.Element {
             pb={10}
             w="7xl"
             maxW="7xl"
+            px={[2, 2, 2, 2, 0]}
         >
             <Flex py={3} mb={10} w="full" justifyContent="space-between">
                 <Button
@@ -163,134 +166,176 @@ export default function NewWatch(): JSX.Element {
                 </Button>
                 <Button>X</Button>
             </Flex>
-            <Text fontSize="24px" fontWeight="bold">
-                Create Watch
-            </Text>
-            <Flex
-                w="full"
-                h="full"
-                rounded="md"
-                border="2px solid #D4D4D4"
-                direction="column"
-            >
-                <Flex
-                    direction="column"
-                    justifyContent="space-between"
-                    p={5}
-                    h="40%"
-                    w="full"
-                >
-                    <Flex w="full" justifyContent="space-between">
-                        <Button onClick={handleClickOnUpload}>
-                            Add cover picture
-                        </Button>
-                        <Input
-                            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                                setImage(e.target.files?.[0])
-                            }
-                            ref={fileInpuRef}
-                            display="none"
-                            type="file"
-                        />
-                        <CategoriesModal
-                            category={selectedCategory}
-                            setSelectedCategory={setSelectedCategory}
-                        />
-                    </Flex>
-                    <Input
-                        {...register("title")}
-                        color="black"
-                        fontWeight="bold"
-                        fontSize="24px"
-                        border="0px"
-                        _placeholder={{
-                            color: "black",
-                            fontWeight: "bold",
-                            fontSize: "24px",
-                        }}
-                        _focus={{ border: "0px" }}
-                        placeholder="Add a title here ..."
-                    />
-                    <Flex w="full">
-                        {tags.map((tag) => (
-                            <Flex
-                                justifyContent="center"
-                                alignItems="center"
-                                bg="gray.200"
-                                rounded="md"
-                                px={2}
-                                py={1}
-                                mx={2}
-                            >
-                                <Text
-                                    whiteSpace="nowrap"
-                                    fontWeight="bold"
-                                    as="p"
-                                >
-                                    #{tag}
-                                </Text>
-                                <Button
-                                    _focus={{ border: "0px" }}
-                                    backgroundColor="transparent"
-                                    onClick={() => handleRemoveTag(tag)}
-                                >
-                                    <Icon as={GrClose} size={5} />
-                                </Button>
-                            </Flex>
-                        ))}
-                        <Input
-                            value={tagInput}
-                            onKeyDown={(e: any) => {
-                                if (e.key === "Enter") {
-                                    handleSetTags(e.target.value);
-                                }
-                            }}
-                            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                                setTagInput(e.target.value)
-                            }
-                            color="black"
-                            fontWeight="bold"
-                            fontSize="24px"
-                            border="0px"
-                            _placeholder={{
-                                color: "black",
-                                fontWeight: "bold",
-                                fontSize: "24px",
-                            }}
-                            _focus={{ border: "0px" }}
-                            placeholder="Add up to 4 tags here ..."
-                        />
-                    </Flex>
-                </Flex>
-                <RichText
-                    onImageUpload={(image) => handleImageUpload(image)}
-                    styles={{
-                        root: { color: "black", border: "0px" },
-                        toolbar: {
-                            color: "black",
-                            background: "#FAF9F9",
-                            border: "0px",
-                        },
-                        toolbarInner: { color: "black" },
-                        toolbarGroup: { color: "black" },
-                        toolbarControl: { color: "black" },
-                    }}
-                    value={value}
-                    onChange={onChange}
-                />
-            </Flex>
-            <Flex my={1} justifyContent="flex-start" alignItems="flex-start">
+            <Flex my={1} justifyContent="space-between" w="full">
+                <Text fontSize="24px" fontWeight="bold">
+                    Create Watch
+                </Text>
                 <Button
-                    isLoading={loading || isUploading}
-                    onClick={handleSubmit(onSubmit)}
-                    bg="blue"
+                    bg="blue.400"
                     color="white"
-                    mr={2}
+                    onClick={() => setIsPreview((c) => !c)}
                 >
-                    PUBLISH
+                    {isPreview ? "Edit" : "Preview"}
                 </Button>
-                <Button bg="transparent">Save as draft</Button>
             </Flex>
+            {!isPreview ? (
+                <>
+                    <Flex
+                        bg="white"
+                        w="full"
+                        h="full"
+                        rounded="md"
+                        border="2px solid #D4D4D4"
+                        direction="column"
+                    >
+                        <Flex
+                            direction="column"
+                            justifyContent="space-between"
+                            p={5}
+                            h="40%"
+                            w="full"
+                        >
+                            <Flex w="full" justifyContent="space-between">
+                                <Flex w="full">
+                                    <Button
+                                        mr={4}
+                                        onClick={handleClickOnUpload}
+                                    >
+                                        Add cover picture
+                                    </Button>
+
+                                    {image && (
+                                        <Image
+                                            objectFit="cover"
+                                            priority
+                                            src={URL.createObjectURL(
+                                                image as File,
+                                            )}
+                                            width={160}
+                                            height={90}
+                                        />
+                                    )}
+                                </Flex>
+                                <Input
+                                    onChange={(
+                                        e: ChangeEvent<HTMLInputElement>,
+                                    ) => setImage(e.target.files?.[0])}
+                                    ref={fileInpuRef}
+                                    display="none"
+                                    type="file"
+                                />
+                                <CategoriesModal
+                                    category={selectedCategory}
+                                    setSelectedCategory={setSelectedCategory}
+                                />
+                            </Flex>
+                            <Input
+                                {...register("title")}
+                                color="black"
+                                fontWeight="bold"
+                                fontSize="24px"
+                                border="0px"
+                                _placeholder={{
+                                    color: "black",
+                                    fontWeight: "bold",
+                                    fontSize: "24px",
+                                }}
+                                _focus={{ border: "0px" }}
+                                placeholder="Add a title here ..."
+                            />
+                            <Flex w="full">
+                                {tags.map((tag) => (
+                                    <Flex
+                                        justifyContent="center"
+                                        alignItems="center"
+                                        bg="gray.200"
+                                        rounded="md"
+                                        px={2}
+                                        py={1}
+                                        mx={2}
+                                    >
+                                        <Text
+                                            whiteSpace="nowrap"
+                                            fontWeight="bold"
+                                            as="p"
+                                        >
+                                            #{tag}
+                                        </Text>
+                                        <Button
+                                            _focus={{ border: "0px" }}
+                                            backgroundColor="transparent"
+                                            onClick={() => handleRemoveTag(tag)}
+                                        >
+                                            <Icon as={GrClose} size={5} />
+                                        </Button>
+                                    </Flex>
+                                ))}
+                                <Input
+                                    value={tagInput}
+                                    onKeyDown={(e: any) => {
+                                        if (e.key === "Enter") {
+                                            handleSetTags(e.target.value);
+                                        }
+                                    }}
+                                    onChange={(
+                                        e: ChangeEvent<HTMLInputElement>,
+                                    ) => setTagInput(e.target.value)}
+                                    color="black"
+                                    fontWeight="bold"
+                                    fontSize="24px"
+                                    border="0px"
+                                    _placeholder={{
+                                        color: "black",
+                                        fontWeight: "bold",
+                                        fontSize: "24px",
+                                    }}
+                                    _focus={{ border: "0px" }}
+                                    placeholder="Add up to 4 tags here ..."
+                                />
+                            </Flex>
+                        </Flex>
+                        <RichText
+                            onImageUpload={(image) => handleImageUpload(image)}
+                            styles={{
+                                root: { color: "black", border: "0px" },
+                                toolbar: {
+                                    color: "black",
+                                    background: "#FAF9F9",
+                                    border: "0px",
+                                },
+                                toolbarInner: { color: "black" },
+                                toolbarGroup: { color: "black" },
+                                toolbarControl: { color: "black" },
+                            }}
+                            value={value}
+                            onChange={onChange}
+                        />
+                    </Flex>
+                    <Flex
+                        my={1}
+                        justifyContent="flex-start"
+                        alignItems="flex-start"
+                    >
+                        <Button
+                            isLoading={loading || isUploading}
+                            onClick={handleSubmit(onSubmit)}
+                            bg="blue"
+                            color="white"
+                            mr={2}
+                        >
+                            PUBLISH
+                        </Button>
+                        <Button bg="transparent">Save as draft</Button>
+                    </Flex>
+                </>
+            ) : (
+                <Preview
+                    title={getValues("title")}
+                    tags={tags}
+                    content={value}
+                    image={image}
+                />
+            )}
         </Flex>
     );
 }

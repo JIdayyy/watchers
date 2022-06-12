@@ -22,6 +22,25 @@ export default {
                 rounded: "10px",
                 marginY: "30px",
             },
+            img: {
+                marginY: "30px",
+            },
+            blockquote: {
+                paddingX: 1,
+                paddingY: 2,
+                fontSize: "12px",
+                backgroundColor: "gray.200",
+                fontStyle: "italic",
+                rounded: "10px",
+            },
+            pre: {
+                marginY: "30px",
+                rounded: "10px",
+                borderRadius: "10px",
+                overflow: "hidden",
+                width: "full",
+                backgroundColor: "transparent",
+            },
         },
     },
 } as GlobalStyles;

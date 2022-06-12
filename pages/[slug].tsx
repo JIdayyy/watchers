@@ -10,6 +10,7 @@ import { Flex, Grid, GridItem, Spinner, Text, Box } from "@chakra-ui/react";
 import Image from "next/image";
 import { apolloClient } from "./_app";
 import { GetStaticPropsResult } from "next/types";
+import Highlight from "react-highlight";
 
 interface IProps {
     post: GetPostDataQuery["post"];
@@ -35,10 +36,12 @@ export default function Watch({ post }: IProps): JSX.Element {
         >
             <GridItem colSpan={3}>
                 <Flex
+                    bg="white"
                     shadow="base"
                     rounded="md"
                     overflow="hidden"
                     direction="column"
+                    pb="80px"
                 >
                     <Flex position="relative" w="full" h="250px">
                         {post.cover_picture && (
@@ -70,17 +73,20 @@ export default function Watch({ post }: IProps): JSX.Element {
                                 </Text>
                             ))}
                         </Flex>
-                        <Text
-                            w="full"
-                            dangerouslySetInnerHTML={{
-                                __html: post.content as string,
-                            }}
-                        />
+                        <Highlight className="react">
+                            <Text
+                                w="full"
+                                dangerouslySetInnerHTML={{
+                                    __html: post.content as string,
+                                }}
+                            />
+                        </Highlight>
                     </Flex>
                 </Flex>
             </GridItem>
             <GridItem display="flex" flexDir="column" colSpan={2}>
                 <Flex
+                    bg="white"
                     shadow="base"
                     rounded="md"
                     flexDirection="column"
@@ -106,6 +112,7 @@ export default function Watch({ post }: IProps): JSX.Element {
                     rounded="md"
                     direction="column"
                     w="full"
+                    bg="white"
                 >
                     <Flex flexWrap="wrap">
                         <Text as="h2" fontWeight="bold">

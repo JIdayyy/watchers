@@ -13,6 +13,7 @@ import store from "@redux/store";
 import { Router } from "next/router";
 import nProgress from "nprogress";
 import "nprogress/nprogress.css";
+import "../src/styles/highlight.css";
 
 const Noop = ({ children }: { children: ReactNode }) => <>{children}</>;
 

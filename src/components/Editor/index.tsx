@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Flex, Button, Input, Icon, Text } from "@chakra-ui/react";
 import CategoriesModal from "@components/Modals/Categories.modal";
 import RichText from "@components/RichText";

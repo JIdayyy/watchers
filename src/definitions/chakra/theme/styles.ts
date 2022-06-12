@@ -8,13 +8,16 @@ export default {
             h1: {
                 fontWeight: "bold",
                 fontSize: "24px",
+                fontFamily: "sans-serif",
             },
             h2: {
                 fontWeight: "bold",
                 fontSize: "24px",
+                fontFamily: "sans-serif",
             },
             p: {
                 fontsize: "12px",
+                fontFamily: "sans-serif",
             },
             iframe: {
                 aspectRatio: "16/9",
@@ -29,7 +32,6 @@ export default {
                 paddingX: 1,
                 paddingY: 2,
                 fontSize: "12px",
-                backgroundColor: "gray.200",
                 fontStyle: "italic",
                 rounded: "10px",
             },
@@ -37,9 +39,10 @@ export default {
                 marginY: "30px",
                 rounded: "10px",
                 borderRadius: "10px",
-                overflow: "hidden",
                 width: "full",
-                backgroundColor: "transparent",
+            },
+            code: {
+                borderRadius: "10px",
             },
         },
     },

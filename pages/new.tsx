@@ -15,6 +15,7 @@ import { imageService } from "@services/api/fetcher";
 import axiosInstance from "@services/api/axiosInstance";
 import { GrClose } from "react-icons/gr";
 import Preview from "@components/Preview";
+import hljs from "highlight.js";
 
 const initialValue = "<p> <b>Start to writte your watch here ...</b></p>";
 
@@ -31,6 +32,8 @@ export default function NewWatch(): JSX.Element {
     const [image, setImage] = useState<File | undefined>();
     const [createPost, { loading }] = useCreatePostMutation();
     const [isUploading, setIsUploading] = useState(false);
+
+    console.log("value", value);
 
     useEffect(() => {
         if (!user.id) {
@@ -292,15 +295,34 @@ export default function NewWatch(): JSX.Element {
                                 />
                             </Flex>
                         </Flex>
+
                         <RichText
+                            modules={{
+                                syntax: {
+                                    highlight: (text: string) => {
+                                        console.log(
+                                            "transformed",
+                                            hljs.highlightAuto(text).value,
+                                        );
+                                        return hljs.highlightAuto(text, [
+                                            "javascript",
+                                        ]).value;
+                                    },
+                                },
+                                toolbar: [["code-block"]],
+                            }}
                             onImageUpload={(image) => handleImageUpload(image)}
                             styles={{
-                                root: { color: "black", border: "0px" },
+                                root: {
+                                    color: "black",
+                                    border: "0px",
+                                },
                                 toolbar: {
                                     color: "black",
                                     background: "#FAF9F9",
                                     border: "0px",
                                 },
+
                                 toolbarInner: { color: "black" },
                                 toolbarGroup: { color: "black" },
                                 toolbarControl: { color: "black" },

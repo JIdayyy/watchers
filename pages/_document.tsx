@@ -20,7 +20,6 @@ class CustomDocument extends Document {
         return (
             <Html>
                 <Head />
-
                 <body>
                     <Main />
                     <NextScript />

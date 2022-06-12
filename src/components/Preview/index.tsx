@@ -1,9 +1,9 @@
 import { Flex, Text } from "@chakra-ui/react";
 import { RootState } from "@redux/reducers";
 import Image from "next/image";
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
-import HighLight from "react-highlight";
+import hljs from "highlight.js";
 
 interface IProps {
     image: File | undefined;
@@ -21,6 +21,19 @@ export default function Preview({
     const { user } = useSelector((state: RootState) => state.user);
 
     if (!user.id) return <></>;
+
+    useEffect(() => {
+        hljs.highlightAll();
+        const code = document.querySelectorAll("pre");
+        if (!code) {
+            return;
+        }
+        code.forEach((el) => {
+            el.innerHTML = `<code class="hljs">${
+                hljs.highlightAuto(el.innerHTML, ["javascript"]).value
+            }</code>`;
+        });
+    }, []);
 
     return (
         <Flex
@@ -62,14 +75,12 @@ export default function Preview({
                     ))}
                 </Flex>
 
-                <HighLight className="react">
-                    <Text
-                        w="full"
-                        dangerouslySetInnerHTML={{
-                            __html: content,
-                        }}
-                    />
-                </HighLight>
+                <Text
+                    w="full"
+                    dangerouslySetInnerHTML={{
+                        __html: content,
+                    }}
+                />
             </Flex>
         </Flex>
     );

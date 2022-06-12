@@ -14,6 +14,15 @@ import { Router } from "next/router";
 import nProgress from "nprogress";
 import "nprogress/nprogress.css";
 import "../src/styles/highlight.css";
+import hljs from "highlight.js";
+
+import javascript from "highlight.js/lib/languages/javascript";
+
+hljs.registerLanguage("javascript", javascript);
+
+hljs.configure({
+    languages: ["javascript", "ruby", "python", "rust"],
+});
 
 const Noop = ({ children }: { children: ReactNode }) => <>{children}</>;
 

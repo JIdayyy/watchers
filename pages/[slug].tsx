@@ -1,5 +1,5 @@
 import MainLayout from "@components/Layouts/MainLayout";
-import React from "react";
+import React, { useEffect } from "react";
 import {
     GetAllPostsDocument,
     GetAllPostsQuery,
@@ -10,7 +10,7 @@ import { Flex, Grid, GridItem, Spinner, Text, Box } from "@chakra-ui/react";
 import Image from "next/image";
 import { apolloClient } from "./_app";
 import { GetStaticPropsResult } from "next/types";
-import Highlight from "react-highlight";
+import hljs from "highlight.js";
 
 interface IProps {
     post: GetPostDataQuery["post"];
@@ -18,6 +18,19 @@ interface IProps {
 
 export default function Watch({ post }: IProps): JSX.Element {
     if (!post) return <Spinner />;
+
+    useEffect(() => {
+        hljs.highlightAll();
+        const code = document.querySelectorAll("pre");
+        if (!code) {
+            return;
+        }
+        code.forEach((el) => {
+            el.innerHTML = `<code class="hljs">${
+                hljs.highlightAuto(el.innerHTML, ["javascript"]).value
+            }</code>`;
+        });
+    }, []);
 
     return (
         <Grid
@@ -39,7 +52,7 @@ export default function Watch({ post }: IProps): JSX.Element {
                     rounded="md"
                     overflow="hidden"
                     direction="column"
-                    pb="80px"
+                    pb="30px"
                 >
                     <Flex position="relative" w="full" h="250px">
                         {post.cover_picture && (
@@ -71,14 +84,15 @@ export default function Watch({ post }: IProps): JSX.Element {
                                 </Text>
                             ))}
                         </Flex>
-                        <Highlight className="react">
-                            <Text
-                                w="full"
-                                dangerouslySetInnerHTML={{
-                                    __html: post.content as string,
-                                }}
-                            />
-                        </Highlight>
+                        {/* <Highlight className="javascript"> */}
+                        <Text
+                            className=""
+                            w="full"
+                            dangerouslySetInnerHTML={{
+                                __html: post.content as string,
+                            }}
+                        />
+                        {/* </Highlight> */}
                     </Flex>
                 </Flex>
             </GridItem>

@@ -49,7 +49,7 @@ export default function Navbar(): JSX.Element {
             position="fixed"
             top={0}
             shadow="base"
-            w="full"
+            w="100vw"
             p={3}
             justifyContent="center"
             alignItems="center"

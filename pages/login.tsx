@@ -29,8 +29,7 @@ export default function Login(): JSX.Element {
             onCompleted: (data) => {
                 dispatch(
                     login({
-                        firstName: data.login.first_name,
-                        lastName: data.login.last_name,
+                        nickName: data.login.nickname,
                         id: data.login.id,
                         email: data.login.email,
                         roles: data.login.role,

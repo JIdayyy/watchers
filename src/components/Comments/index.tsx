@@ -7,24 +7,20 @@ import { RootState } from "@redux/reducers";
 export default function Comments(): JSX.Element {
     const { user } = useSelector((state: RootState) => state.user);
     return (
-        <>
-            {user.id && (
-                <Flex
-                    p={5}
-                    mt="100px"
-                    w="full"
-                    minH="500px"
-                    justifyContent="center"
-                    alignItems="flex-start"
-                    direction="column"
-                >
-                    <Text fontSize="24px" fontWeight="bold">
-                        Comments
-                    </Text>
-                    <CreateComment />
-                    <CommentList />
-                </Flex>
-            )}
-        </>
+        <Flex
+            p={5}
+            mt="100px"
+            w="full"
+            minH="500px"
+            justifyContent="center"
+            alignItems="flex-start"
+            direction="column"
+        >
+            <Text fontSize="24px" fontWeight="bold">
+                Comments
+            </Text>
+            {user.id && <CreateComment />}
+            <CommentList />
+        </Flex>
     );
 }

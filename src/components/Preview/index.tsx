@@ -61,9 +61,7 @@ export default function Preview({
                 justifyContent="flex-start"
                 alignItems="flex-start"
             >
-                <Text as="p">
-                    {user.firstName} {user.lastName}
-                </Text>
+                <Text as="p">{user.nickName}</Text>
                 <Text my={4} as="h1">
                     {title}
                 </Text>

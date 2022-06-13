@@ -1,14 +1,20 @@
 import { Flex, Text } from "@chakra-ui/react";
+import { logout } from "@redux/actions";
 import { RootState } from "@redux/reducers";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import navLinks from "src/config/navLinks";
-import { Role } from "src/generated/graphql";
+import { Role, useLogoutMutation } from "src/generated/graphql";
 
 export default function NavigationCard(): JSX.Element {
     const { user } = useSelector((state: RootState) => state.user);
+    const dispatch = useDispatch();
+    const [mutateLogout] = useLogoutMutation({
+        onCompleted: () => dispatch(logout()),
+    });
+
     return (
         <Flex rounded={5} direction="column" w="full">
             {navLinks.map((link) => (
@@ -47,6 +53,23 @@ export default function NavigationCard(): JSX.Element {
                         </Text>
                     </Flex>
                 </Link>
+            )}
+            {user.id && (
+                <Flex
+                    onClick={() => mutateLogout()}
+                    cursor="pointer"
+                    _hover={{ bg: "gray.200" }}
+                    rounded="md"
+                    p={3}
+                    w="full"
+                    justifyContent="flex-start"
+                    alignItems="flex-start"
+                >
+                    <Image src="/icons/logout.png" width={20} height={20} />
+                    <Text mx={2} _hover={{ textDecoration: "underline" }}>
+                        Logout
+                    </Text>
+                </Flex>
             )}
         </Flex>
     );

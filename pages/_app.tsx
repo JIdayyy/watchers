@@ -14,7 +14,9 @@ import { Router } from "next/router";
 import nProgress from "nprogress";
 import "nprogress/nprogress.css";
 import "../src/styles/highlight.css";
+import { DefaultSeo } from "next-seo";
 import hljs from "highlight.js";
+import SEO from "../src/config/next-seo.config";
 
 import javascript from "highlight.js/lib/languages/javascript";
 
@@ -43,6 +45,7 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
                     <Hydrate state={pageProps.dehydratedState}>
                         <Provider store={store}>
                             <Layout pageProps={pageProps}>
+                                <DefaultSeo {...SEO} />
                                 <Component {...pageProps} />
                             </Layout>
                         </Provider>

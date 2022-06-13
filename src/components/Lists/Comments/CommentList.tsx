@@ -1,7 +1,7 @@
 import { Flex } from "@chakra-ui/react";
 import CommentCard from "@components/Comments/CommentCard";
 import { useRouter } from "next/router";
-import { useGetAllPostCommentsQuery } from "src/generated/graphql";
+import { SortOrder, useGetAllPostCommentsQuery } from "src/generated/graphql";
 
 export default function CommentList(): JSX.Element {
     const { query } = useRouter();
@@ -11,6 +11,9 @@ export default function CommentList(): JSX.Element {
                 postSlug: {
                     equals: query.slug as string,
                 },
+            },
+            orderBy: {
+                created_at: SortOrder.Desc,
             },
         },
     });

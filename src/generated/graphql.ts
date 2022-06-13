@@ -3671,6 +3671,7 @@ export type GetAllCategoriesQuery = { __typename?: 'Query', categories: Array<{ 
 
 export type GetAllPostCommentsQueryVariables = Exact<{
   where: InputMaybe<CommentWhereInput>;
+  orderBy: InputMaybe<Array<CommentOrderByWithRelationInput> | CommentOrderByWithRelationInput>;
 }>;
 
 
@@ -3938,8 +3939,8 @@ export type GetAllCategoriesQueryHookResult = ReturnType<typeof useGetAllCategor
 export type GetAllCategoriesLazyQueryHookResult = ReturnType<typeof useGetAllCategoriesLazyQuery>;
 export type GetAllCategoriesQueryResult = Apollo.QueryResult<GetAllCategoriesQuery, GetAllCategoriesQueryVariables>;
 export const GetAllPostCommentsDocument = gql`
-    query getAllPostComments($where: CommentWhereInput) {
-  comments(where: $where) {
+    query getAllPostComments($where: CommentWhereInput, $orderBy: [CommentOrderByWithRelationInput!]) {
+  comments(where: $where, orderBy: $orderBy) {
     id
     content
     created_at
@@ -3966,6 +3967,7 @@ export const GetAllPostCommentsDocument = gql`
  * const { data, loading, error } = useGetAllPostCommentsQuery({
  *   variables: {
  *      where: // value for 'where'
+ *      orderBy: // value for 'orderBy'
  *   },
  * });
  */

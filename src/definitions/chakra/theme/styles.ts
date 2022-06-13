@@ -44,6 +44,12 @@ export default {
             code: {
                 borderRadius: "10px",
             },
+            ol: {
+                marginLeft: "20px",
+            },
+            ul: {
+                marginLeft: "20px",
+            },
         },
     },
 } as GlobalStyles;

@@ -48,11 +48,10 @@ export default function MainLayout({ children }: Props): JSX.Element {
         <Flex
             pt="110px"
             w="100vw"
-            minH="100vh"
+            h="100vh"
             justifyContent="flex-start"
             alignItems="center"
             direction="column"
-            bg="#FAF9F9"
         >
             <Navbar />
             {children}

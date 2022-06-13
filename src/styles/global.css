@@ -8,3 +8,44 @@ body {
         "Noto Color Emoji";
     overflow-x: hidden;
 }
+
+body {
+    background-color: #faf9f9 !important;
+}
+
+ol,
+ul,
+li {
+    margin: 0;
+    padding: 0;
+}
+ol,
+ul {
+    margin-left: 20px;
+}
+
+.ql-editor .mantine-sngul1 {
+    height: 100%;
+    min-height: 400px;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 100px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}

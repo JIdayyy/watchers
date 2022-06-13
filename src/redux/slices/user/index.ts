@@ -3,8 +3,7 @@ import { Role } from "src/generated/graphql";
 
 type User = {
     id: string;
-    firstName: string;
-    lastName: string;
+    nickName: string;
     email: string;
     roles: Role[];
 };
@@ -16,9 +15,8 @@ interface IUser {
 const initialState: IUser = {
     user: {
         email: "",
-        firstName: "",
         id: "",
-        lastName: "",
+        nickName: "",
         roles: [],
     },
 };

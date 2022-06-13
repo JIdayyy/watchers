@@ -34,6 +34,7 @@ export default function Watch({ post }: IProps): JSX.Element {
 
     return (
         <Grid
+            alignItems="start"
             w="7xl"
             px={[3, 2, 2, 0]}
             pb={10}
@@ -84,7 +85,6 @@ export default function Watch({ post }: IProps): JSX.Element {
                                 </Text>
                             ))}
                         </Flex>
-                        {/* <Highlight className="javascript"> */}
                         <Text
                             className=""
                             w="full"
@@ -92,11 +92,17 @@ export default function Watch({ post }: IProps): JSX.Element {
                                 __html: post.content as string,
                             }}
                         />
-                        {/* </Highlight> */}
                     </Flex>
                 </Flex>
             </GridItem>
-            <GridItem display="flex" flexDir="column" colSpan={2}>
+            <GridItem
+                alignSelf="start"
+                position="sticky"
+                top="110px"
+                display="flex"
+                flexDir="column"
+                colSpan={2}
+            >
                 <Flex
                     bg="white"
                     shadow="base"

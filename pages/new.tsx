@@ -77,6 +77,7 @@ export default function NewWatch(): JSX.Element {
         setIsUploading(false);
         return response;
     };
+
     const handleImageUpload = (image: File): Promise<string> =>
         new Promise((resolve, reject) => {
             const formData = new FormData();
@@ -112,7 +113,11 @@ export default function NewWatch(): JSX.Element {
                             id: selectedCategory,
                         },
                     },
-                    slug: data.title.toLowerCase().replace(/\s/g, "-"),
+                    slug: data.title
+                        .toLowerCase()
+                        .replace(/[^a-z0-9 -]/g, "") // remove invalid chars
+                        .replace(/\s+/g, "-") // collapse whitespace and replace by -
+                        .replace(/-+/g, "-"), // collapse dashes,
                     content: value,
                     title: data.title,
                     Tags: {
@@ -309,11 +314,18 @@ export default function NewWatch(): JSX.Element {
                                         ]).value;
                                     },
                                 },
+
+                                history: {
+                                    delay: 2000,
+                                    maxStack: 500,
+                                    userOnly: true,
+                                },
                                 toolbar: [["code-block"]],
                             }}
                             onImageUpload={(image) => handleImageUpload(image)}
                             styles={{
                                 root: {
+                                    height: "100%",
                                     color: "black",
                                     border: "0px",
                                 },

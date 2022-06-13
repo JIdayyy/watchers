@@ -5,35 +5,41 @@ import { useRouter } from "next/router";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { useMutateLoginMutation } from "src/generated/graphql";
+import { useRegisterMutation } from "src/generated/graphql";
 
 interface FormData {
     email: string;
     password: string;
+    confirm_password: string;
+    nickname: string;
 }
 
-export default function Login(): JSX.Element {
+export default function Register(): JSX.Element {
     const router = useRouter();
     const dispatch = useDispatch();
     const { handleSubmit, register } = useForm<FormData>();
-    const [mutateLogin, { loading }] = useMutateLoginMutation();
+    const [mutateRegister, { loading }] = useRegisterMutation();
 
     const onSubmit = (data: FormData) => {
-        mutateLogin({
+        if (data.confirm_password !== data.password) {
+            return;
+        }
+        mutateRegister({
             variables: {
                 data: {
                     email: data.email,
                     password: data.password,
+                    nickName: data.nickname,
                 },
             },
             onCompleted: (data) => {
                 dispatch(
                     login({
-                        avatar: data.login.avatar,
-                        nickName: data.login.nickname,
-                        id: data.login.id,
-                        email: data.login.email,
-                        roles: data.login.role,
+                        avatar: data.register.avatar,
+                        nickName: data.register.nickname,
+                        id: data.register.id,
+                        email: data.register.email,
+                        roles: data.register.role,
                     }),
                 );
                 router.push("/");
@@ -49,11 +55,10 @@ export default function Login(): JSX.Element {
                 rounded={5}
                 shadow="base"
                 w="30%"
-                h="50%"
                 bg="white"
             >
                 <Text fontSize="24px" fontWeight="bold">
-                    Welcome back to Tech Watchers
+                    Welcome to Tech Watchers
                 </Text>
                 <Button isDisabled color="white" bg="black" w="full">
                     Continue with github
@@ -65,6 +70,10 @@ export default function Login(): JSX.Element {
                     Email
                 </FormLabel>
                 <Input {...register("email")} id="email" w="full" />
+                <FormLabel w="full" textAlign="left" htmlFor="nickname">
+                    Pseudo
+                </FormLabel>
+                <Input {...register("nickname")} id="nickname" w="full" />
                 <FormLabel w="full" textAlign="left" htmlFor="password">
                     Password
                 </FormLabel>
@@ -72,6 +81,15 @@ export default function Login(): JSX.Element {
                     {...register("password")}
                     type="password"
                     id="password"
+                    w="full"
+                />
+                <FormLabel w="full" textAlign="left" htmlFor="confirm_password">
+                    Confirm password
+                </FormLabel>
+                <Input
+                    {...register("confirm_password")}
+                    type="password"
+                    id="confirm_password"
                     w="full"
                 />
                 <Button
@@ -88,4 +106,4 @@ export default function Login(): JSX.Element {
     );
 }
 
-Login.Layout = MainLayout;
+Register.Layout = MainLayout;

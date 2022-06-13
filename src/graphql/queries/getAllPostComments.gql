@@ -1,0 +1,13 @@
+query getAllPostComments($where: CommentWhereInput) {
+    comments(where: $where) {
+        id
+        content
+        created_at
+        picture
+        author {
+            id
+            nickname
+            avatar
+        }
+    }
+}

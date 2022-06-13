@@ -57,6 +57,7 @@ export default function Navbar(): JSX.Element {
             <Grid w="7xl" gap={7} templateColumns="repeat(5, 1fr)">
                 <GridItem colSpan={1}>
                     <Button
+                        _focus={{ border: "0px" }}
                         bg="black"
                         px={5}
                         rounded={5}
@@ -100,12 +101,19 @@ export default function Navbar(): JSX.Element {
                 </GridItem>
                 <GridItem colSpan={1} display="flex" flexDirection="row">
                     {user.id ? (
-                        <Button onClick={() => router.push("/new")} w="full">
+                        <Button
+                            color="white"
+                            bg="blue.400"
+                            _focus={{ border: "0px" }}
+                            onClick={() => router.push("/new")}
+                            w="full"
+                        >
                             Add Watch
                         </Button>
                     ) : (
                         <>
                             <Button
+                                onClick={() => router.push("/register")}
                                 mx={1}
                                 _hover={{ backgroundColor: "transparent" }}
                                 bg="transparent"

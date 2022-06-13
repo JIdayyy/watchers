@@ -11,6 +11,7 @@ import Image from "next/image";
 import { apolloClient } from "./_app";
 import { GetStaticPropsResult } from "next/types";
 import hljs from "highlight.js";
+import Comments from "@components/Comments";
 
 interface IProps {
     post: GetPostDataQuery["post"];
@@ -34,6 +35,7 @@ export default function Watch({ post }: IProps): JSX.Element {
 
     return (
         <Grid
+            alignItems="start"
             w="7xl"
             px={[3, 2, 2, 0]}
             pb={10}
@@ -79,24 +81,36 @@ export default function Watch({ post }: IProps): JSX.Element {
                         </Text>
                         <Flex my={4}>
                             {post.Tags.map((tag) => (
-                                <Text key={tag.id} mr={1} as="p">
+                                <Text
+                                    key={tag.id}
+                                    mr={1}
+                                    as="p"
+                                    fontSize="16px"
+                                >
                                     #{tag.name}
                                 </Text>
                             ))}
                         </Flex>
-                        {/* <Highlight className="javascript"> */}
                         <Text
+                            fontSize="18px"
                             className=""
                             w="full"
                             dangerouslySetInnerHTML={{
                                 __html: post.content as string,
                             }}
                         />
-                        {/* </Highlight> */}
                     </Flex>
+                    <Comments />
                 </Flex>
             </GridItem>
-            <GridItem display="flex" flexDir="column" colSpan={2}>
+            <GridItem
+                alignSelf="start"
+                position="sticky"
+                top="110px"
+                display="flex"
+                flexDir="column"
+                colSpan={2}
+            >
                 <Flex
                     bg="white"
                     shadow="base"

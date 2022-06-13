@@ -25,7 +25,6 @@ export default function AdminLayout({ children }: Props): JSX.Element {
             justifyContent="flex-start"
             alignItems="center"
             direction="column"
-            bg="#FAF9F9"
         >
             <Navbar />
             {children}

@@ -1,7 +1,10 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
+import { RootState } from "@redux/reducers";
+import { DateTime } from "luxon";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import React from "react";
+import { useSelector } from "react-redux";
 import { GetAllPostsQuery } from "src/generated/graphql";
 
 interface IProps {
@@ -11,10 +14,13 @@ interface IProps {
 
 export default function WatchCard({ watch, isMain }: IProps): JSX.Element {
     const router = useRouter();
+    const { user } = useSelector((state: RootState) => state.user);
 
     const handleClick = () => {
         router.push(`/${watch.slug}`);
     };
+
+    const date = DateTime.fromJSDate(new Date(watch.created_at));
 
     return (
         <Flex
@@ -32,7 +38,7 @@ export default function WatchCard({ watch, isMain }: IProps): JSX.Element {
                 <Box position="relative" w="full" h="200px">
                     <Image
                         priority
-                        src="/images/cardfakeimage.png"
+                        src={watch.cover_picture}
                         layout="fill"
                         objectFit="cover"
                     />
@@ -40,7 +46,15 @@ export default function WatchCard({ watch, isMain }: IProps): JSX.Element {
             )}
             <Flex p={5} flexGrow={1}>
                 <Flex mr={2} direction="column">
-                    <Image src="/images/avatar.png" width={35} height={35} />
+                    <Box
+                        overflow="hidden"
+                        position="relative"
+                        width={35}
+                        height={35}
+                        rounded="full"
+                    >
+                        <Image src={watch.author.avatar} layout="fill" />
+                    </Box>
                 </Flex>
                 <Flex
                     flexGrow={1}
@@ -48,8 +62,10 @@ export default function WatchCard({ watch, isMain }: IProps): JSX.Element {
                     direction="column"
                 >
                     <Flex direction="column">
-                        <Text>Julien</Text>
-                        <Text>Jan 02</Text>
+                        <Text>{user.nickName}</Text>
+                        <Text>
+                            {date.day} {date.monthShort} {date.year}
+                        </Text>
                     </Flex>
                     <Text
                         fontWeight="bold"
@@ -61,7 +77,12 @@ export default function WatchCard({ watch, isMain }: IProps): JSX.Element {
                     </Text>
                     <Flex w="full" my={1}>
                         {watch.Tags.map((tag) => (
-                            <Text key={tag.id} color="#8A8A8A" fontSize="14px">
+                            <Text
+                                mr={1}
+                                key={tag.id}
+                                color="#8A8A8A"
+                                fontSize="14px"
+                            >
                                 #{tag.name}
                             </Text>
                         ))}

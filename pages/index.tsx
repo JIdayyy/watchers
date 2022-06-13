@@ -28,17 +28,28 @@ const Home = ({ posts }: IProps): JSX.Element => {
                 "repeat(1, 1fr)",
                 "repeat(5, 1fr)",
             ]}
-            minH="100vh"
             w="full"
             maxW="7xl"
         >
-            <GridItem display={["none", "none", "none", "block"]} colSpan={1}>
+            <GridItem
+                alignSelf="start"
+                position="sticky"
+                top="110px"
+                display={["none", "none", "none", "block"]}
+                colSpan={1}
+            >
                 <NavigationCard />
             </GridItem>
             <GridItem colSpan={3}>
                 <WatchesList posts={posts} />
             </GridItem>
-            <GridItem display={["none", "none", "none", "block"]} colSpan={1}>
+            <GridItem
+                alignSelf="start"
+                position="sticky"
+                top="110px"
+                display={["none", "none", "none", "block"]}
+                colSpan={1}
+            >
                 <Flex
                     direction="column"
                     p={5}

@@ -33,8 +33,6 @@ export default function NewWatch(): JSX.Element {
     const [createPost, { loading }] = useCreatePostMutation();
     const [isUploading, setIsUploading] = useState(false);
 
-    console.log("value", value);
-
     useEffect(() => {
         if (!user.id) {
             router.push("/");
@@ -305,10 +303,6 @@ export default function NewWatch(): JSX.Element {
                             modules={{
                                 syntax: {
                                     highlight: (text: string) => {
-                                        console.log(
-                                            "transformed",
-                                            hljs.highlightAuto(text).value,
-                                        );
                                         return hljs.highlightAuto(text, [
                                             "javascript",
                                         ]).value;

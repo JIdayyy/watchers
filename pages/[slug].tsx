@@ -11,6 +11,7 @@ import Image from "next/image";
 import { apolloClient } from "./_app";
 import { GetStaticPropsResult } from "next/types";
 import hljs from "highlight.js";
+import Comments from "@components/Comments";
 
 interface IProps {
     post: GetPostDataQuery["post"];
@@ -80,12 +81,18 @@ export default function Watch({ post }: IProps): JSX.Element {
                         </Text>
                         <Flex my={4}>
                             {post.Tags.map((tag) => (
-                                <Text key={tag.id} mr={1} as="p">
+                                <Text
+                                    key={tag.id}
+                                    mr={1}
+                                    as="p"
+                                    fontSize="16px"
+                                >
                                     #{tag.name}
                                 </Text>
                             ))}
                         </Flex>
                         <Text
+                            fontSize="18px"
                             className=""
                             w="full"
                             dangerouslySetInnerHTML={{
@@ -93,6 +100,7 @@ export default function Watch({ post }: IProps): JSX.Element {
                             }}
                         />
                     </Flex>
+                    <Comments />
                 </Flex>
             </GridItem>
             <GridItem

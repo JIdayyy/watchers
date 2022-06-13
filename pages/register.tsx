@@ -35,6 +35,7 @@ export default function Register(): JSX.Element {
             onCompleted: (data) => {
                 dispatch(
                     login({
+                        avatar: data.register.avatar,
                         nickName: data.register.nickname,
                         id: data.register.id,
                         email: data.register.email,

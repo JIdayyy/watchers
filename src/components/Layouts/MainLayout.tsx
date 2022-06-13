@@ -18,8 +18,8 @@ export default function MainLayout({ children }: Props): JSX.Element {
         onCompleted: (data) => {
             dispatch(
                 login({
-                    firstName: data.me.first_name,
-                    lastName: data.me.last_name,
+                    avatar: data.me.avatar,
+                    nickName: data.me.nickname,
                     id: data.me.id,
                     email: data.me.email,
                     roles: data.me.role,

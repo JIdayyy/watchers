@@ -7,7 +7,7 @@ export default {
         global: {
             h1: {
                 fontWeight: "bold",
-                fontSize: "24px",
+                fontSize: "32px",
                 fontFamily: "sans-serif",
             },
             h2: {
@@ -16,7 +16,7 @@ export default {
                 fontFamily: "sans-serif",
             },
             p: {
-                fontsize: "12px",
+                fontsize: "18px",
                 fontFamily: "sans-serif",
             },
             iframe: {

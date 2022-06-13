@@ -1,7 +1,7 @@
 import { VStack } from "@chakra-ui/react";
 import React from "react";
 import { GetAllPostsQuery } from "src/generated/graphql";
-import WatchCard from "./WatchCard";
+import WatchCard from "../../Cards/WatchCard";
 
 interface IProps {
     posts: GetAllPostsQuery["posts"];

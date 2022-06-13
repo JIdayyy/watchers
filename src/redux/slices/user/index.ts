@@ -6,6 +6,7 @@ type User = {
     nickName: string;
     email: string;
     roles: Role[];
+    avatar: string;
 };
 
 interface IUser {
@@ -18,6 +19,7 @@ const initialState: IUser = {
         id: "",
         nickName: "",
         roles: [],
+        avatar: "",
     },
 };
 

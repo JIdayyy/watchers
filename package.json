@@ -33,6 +33,7 @@
         "luxon": "^2.4.0",
         "next": "12.0.7",
         "next-compose-plugins": "^2.2.1",
+        "next-seo": "^5.4.0",
         "nprogress": "^0.2.0",
         "prettier": "^2.2.1",
         "react": "17.0.2",
@@ -68,6 +69,7 @@
         "eslint-plugin-prettier": "^3.2.0",
         "husky": "^4.3.7",
         "lint-staged": "^10.5.3",
+        "next-sitemap": "^3.0.5",
         "typescript": "^4.1.3"
     },
     "lint-staged": {

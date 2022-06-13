@@ -12,6 +12,7 @@ import { apolloClient } from "./_app";
 import { GetStaticPropsResult } from "next/types";
 import hljs from "highlight.js";
 import Comments from "@components/Comments";
+import user from "@redux/slices/user";
 
 interface IProps {
     post: GetPostDataQuery["post"];
@@ -100,7 +101,6 @@ export default function Watch({ post }: IProps): JSX.Element {
                             }}
                         />
                     </Flex>
-                    <Comments />
                 </Flex>
             </GridItem>
             <GridItem

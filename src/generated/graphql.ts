@@ -738,6 +738,11 @@ export type CommentWhereUniqueInput = {
   id?: InputMaybe<Scalars['String']>;
 };
 
+export type Count = {
+  __typename?: 'Count';
+  count: Scalars['Float'];
+};
+
 export type DateTimeFieldUpdateOperationsInput = {
   set?: InputMaybe<Scalars['DateTime']>;
 };
@@ -1278,6 +1283,7 @@ export type Post = {
   _count: Maybe<PostCount>;
   author: User;
   categoryId: Maybe<Scalars['String']>;
+  commentCount: Maybe<Count>;
   content: Scalars['String'];
   cover_picture: Maybe<Scalars['String']>;
   created_at: Scalars['DateTime'];
@@ -3683,7 +3689,7 @@ export type GetAllPostsQueryVariables = Exact<{
 }>;
 
 
-export type GetAllPostsQuery = { __typename?: 'Query', posts: Array<{ __typename?: 'Post', id: string, title: string, content: string, isDraft: boolean, cover_picture: string, slug: string, created_at: any, userId: string, categoryId: string, author: { __typename?: 'User', id: string, first_name: string, last_name: string, email: string, avatar: string }, Category: { __typename?: 'Category', id: string, name: string }, Tags: Array<{ __typename?: 'Tag', id: string, name: string }> }> };
+export type GetAllPostsQuery = { __typename?: 'Query', posts: Array<{ __typename?: 'Post', id: string, title: string, content: string, isDraft: boolean, cover_picture: string, slug: string, created_at: any, userId: string, categoryId: string, commentCount: { __typename?: 'Count', count: number }, author: { __typename?: 'User', id: string, first_name: string, last_name: string, email: string, avatar: string }, Category: { __typename?: 'Category', id: string, name: string }, Tags: Array<{ __typename?: 'Tag', id: string, name: string }> }> };
 
 export type GetPostDataQueryVariables = Exact<{
   where: PostWhereUniqueInput;
@@ -3992,6 +3998,9 @@ export const GetAllPostsDocument = gql`
     cover_picture
     slug
     created_at
+    commentCount {
+      count
+    }
     author {
       id
       first_name

@@ -1,6 +1,6 @@
 export default {
-    title: "Tech Wacthers",
-    titleTemplate: " %s | Tech Watchers",
+    title: "Tech Watchers",
+    titleTemplate: " %s | Blog",
     defaultTitle: "Tech Watchers",
     description: "This website regroup all the tech watchs of our community",
     openGraph: {

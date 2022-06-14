@@ -46,15 +46,17 @@ export default function WatchCard({ watch, isMain }: IProps): JSX.Element {
             )}
             <Flex p={5} flexGrow={1}>
                 <Flex mr={2} direction="column">
-                    <Box
-                        overflow="hidden"
-                        position="relative"
-                        width={35}
-                        height={35}
-                        rounded="full"
-                    >
-                        <Image src={watch.author.avatar} layout="fill" />
-                    </Box>
+                    {watch.author.avatar && (
+                        <Box
+                            overflow="hidden"
+                            position="relative"
+                            width={35}
+                            height={35}
+                            rounded="full"
+                        >
+                            <Image src={watch.author.avatar} layout="fill" />
+                        </Box>
+                    )}
                 </Flex>
                 <Flex
                     flexGrow={1}
@@ -89,7 +91,7 @@ export default function WatchCard({ watch, isMain }: IProps): JSX.Element {
                     </Flex>
                     <Flex>
                         <Text mr={5}>12 Likes</Text>
-                        <Text>40 Comments</Text>
+                        <Text>{watch.commentCount.count} Comments</Text>
                     </Flex>
                 </Flex>
             </Flex>

@@ -10,6 +10,9 @@ query GetAllPosts(
         cover_picture
         slug
         created_at
+        commentCount {
+            count
+        }
         author {
             id
             first_name

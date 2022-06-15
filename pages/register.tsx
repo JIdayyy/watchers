@@ -54,7 +54,7 @@ export default function Register(): JSX.Element {
                 p={5}
                 rounded={5}
                 shadow="base"
-                w="30%"
+                w={["90%", "70%", "50%", "30%"]}
                 bg="white"
             >
                 <Text fontSize="24px" fontWeight="bold">

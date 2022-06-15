@@ -48,7 +48,7 @@ export default function Login(): JSX.Element {
                 p={5}
                 rounded={5}
                 shadow="base"
-                w="30%"
+                w={["90%", "70%", "50%", "30%"]}
                 h="50%"
                 bg="white"
             >

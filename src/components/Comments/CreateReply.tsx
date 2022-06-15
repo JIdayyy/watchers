@@ -1,6 +1,5 @@
-import { Box, Button, Flex, Textarea } from "@chakra-ui/react";
+import { Button, Flex, Textarea } from "@chakra-ui/react";
 import { RootState } from "@redux/reducers";
-import Image from "next/image";
 import { useRouter } from "next/router";
 import React from "react";
 import { FieldValues, useForm } from "react-hook-form";
@@ -14,7 +13,11 @@ interface FormData {
     content: string;
 }
 
-export default function CreateComment(): JSX.Element {
+interface IProps {
+    parentId: string;
+}
+
+export default function CreateReply({ parentId }: IProps): JSX.Element {
     const { user } = useSelector((state: RootState) => state.user);
     const { query } = useRouter();
     const [createComment, { loading }] = useCreateCommentMutation();
@@ -35,8 +38,17 @@ export default function CreateComment(): JSX.Element {
                             slug: query.slug as string,
                         },
                     },
+                    parent_id: parentId,
+                    repliesRelation: {
+                        connect: [
+                            {
+                                id: parentId,
+                            },
+                        ],
+                    },
                 },
             },
+
             refetchQueries: [
                 {
                     query: GetAllPostCommentsDocument,
@@ -45,7 +57,22 @@ export default function CreateComment(): JSX.Element {
                             postSlug: {
                                 equals: query.slug as string,
                             },
-                            parent_id: null,
+                            parent_id: {
+                                equals: parentId,
+                            },
+                        },
+                    },
+                },
+                {
+                    query: GetAllPostCommentsDocument,
+                    variables: {
+                        where: {
+                            postSlug: {
+                                equals: query.slug as string,
+                            },
+                            parent_id: {
+                                equals: null,
+                            },
                         },
                     },
                 },
@@ -60,6 +87,7 @@ export default function CreateComment(): JSX.Element {
         <>
             {user.id && (
                 <Flex
+                    minW="400px"
                     my={5}
                     w="full"
                     direction="column"
@@ -67,16 +95,6 @@ export default function CreateComment(): JSX.Element {
                     alignItems="flex-start"
                 >
                     <Flex w="full">
-                        <Box
-                            mr={2}
-                            overflow="hidden"
-                            width={35}
-                            height={35}
-                            position="relative"
-                            rounded="full"
-                        >
-                            <Image layout="fill" src={user.avatar} />
-                        </Box>
                         <Flex
                             w="full"
                             direction="column"
@@ -85,7 +103,7 @@ export default function CreateComment(): JSX.Element {
                         >
                             <Textarea
                                 minH="150px"
-                                placeholder="Add your comment here... 🤗"
+                                placeholder="Add your reaction here... 🤗"
                                 {...register("content")}
                             />
                             <Button

@@ -67,16 +67,16 @@ export default function Watch({ post }: IProps): JSX.Element {
                         direction="column"
                         pb="30px"
                     >
-                        <Flex position="relative" w="full" h="250px">
-                            {post.cover_picture && (
+                        {post.cover_picture && (
+                            <Flex position="relative" w="full" h="250px">
                                 <Image
                                     objectFit="cover"
                                     priority
                                     src={post.cover_picture as string}
                                     layout="fill"
                                 />
-                            )}
-                        </Flex>
+                            </Flex>
+                        )}
                         <Flex
                             direction="column"
                             p={5}

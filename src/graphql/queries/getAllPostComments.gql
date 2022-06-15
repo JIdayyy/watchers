@@ -1,8 +1,5 @@
-query getAllPostComments(
-    $where: CommentWhereInput
-    $orderBy: [CommentOrderByWithRelationInput!]
-) {
-    comments(where: $where, orderBy: $orderBy) {
+query getAllPostComments($where: CommentWhereInput) {
+    comments(where: $where) {
         id
         content
         created_at

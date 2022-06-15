@@ -38,18 +38,18 @@ export type AggregateComment = {
   _min: Maybe<CommentMinAggregate>;
 };
 
+export type AggregateLike = {
+  __typename?: 'AggregateLike';
+  _count: Maybe<LikeCountAggregate>;
+  _max: Maybe<LikeMaxAggregate>;
+  _min: Maybe<LikeMinAggregate>;
+};
+
 export type AggregatePost = {
   __typename?: 'AggregatePost';
   _count: Maybe<PostCountAggregate>;
   _max: Maybe<PostMaxAggregate>;
   _min: Maybe<PostMinAggregate>;
-};
-
-export type AggregateReply = {
-  __typename?: 'AggregateReply';
-  _count: Maybe<ReplyCountAggregate>;
-  _max: Maybe<ReplyMaxAggregate>;
-  _min: Maybe<ReplyMinAggregate>;
 };
 
 export type AggregateResetPassword = {
@@ -300,31 +300,44 @@ export type CategoryWhereUniqueInput = {
 export type Comment = {
   __typename?: 'Comment';
   Post: Post;
-  Reply: Array<Reply>;
   _count: Maybe<CommentCount>;
   author: User;
   content: Scalars['String'];
   created_at: Scalars['DateTime'];
   id: Scalars['String'];
+  parent_id: Maybe<Scalars['String']>;
   picture: Maybe<Scalars['String']>;
   postSlug: Scalars['String'];
+  replies: Array<Comment>;
+  repliesRelation: Array<Comment>;
   updated_at: Scalars['DateTime'];
   userId: Scalars['String'];
 };
 
 
-export type CommentReplyArgs = {
-  cursor: InputMaybe<ReplyWhereUniqueInput>;
-  distinct: InputMaybe<Array<ReplyScalarFieldEnum>>;
-  orderBy: InputMaybe<Array<ReplyOrderByWithRelationInput>>;
+export type CommentRepliesArgs = {
+  cursor: InputMaybe<CommentWhereUniqueInput>;
+  distinct: InputMaybe<Array<CommentScalarFieldEnum>>;
+  orderBy: InputMaybe<Array<CommentOrderByWithRelationInput>>;
   skip: InputMaybe<Scalars['Int']>;
   take: InputMaybe<Scalars['Int']>;
-  where: InputMaybe<ReplyWhereInput>;
+  where: InputMaybe<CommentWhereInput>;
+};
+
+
+export type CommentRepliesRelationArgs = {
+  cursor: InputMaybe<CommentWhereUniqueInput>;
+  distinct: InputMaybe<Array<CommentScalarFieldEnum>>;
+  orderBy: InputMaybe<Array<CommentOrderByWithRelationInput>>;
+  skip: InputMaybe<Scalars['Int']>;
+  take: InputMaybe<Scalars['Int']>;
+  where: InputMaybe<CommentWhereInput>;
 };
 
 export type CommentCount = {
   __typename?: 'CommentCount';
-  Reply: Scalars['Int'];
+  replies: Scalars['Int'];
+  repliesRelation: Scalars['Int'];
 };
 
 export type CommentCountAggregate = {
@@ -333,6 +346,7 @@ export type CommentCountAggregate = {
   content: Scalars['Int'];
   created_at: Scalars['Int'];
   id: Scalars['Int'];
+  parent_id: Scalars['Int'];
   picture: Scalars['Int'];
   postSlug: Scalars['Int'];
   updated_at: Scalars['Int'];
@@ -343,6 +357,7 @@ export type CommentCountOrderByAggregateInput = {
   content?: InputMaybe<SortOrder>;
   created_at?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
+  parent_id?: InputMaybe<SortOrder>;
   picture?: InputMaybe<SortOrder>;
   postSlug?: InputMaybe<SortOrder>;
   updated_at?: InputMaybe<SortOrder>;
@@ -351,12 +366,14 @@ export type CommentCountOrderByAggregateInput = {
 
 export type CommentCreateInput = {
   Post: PostCreateNestedOneWithoutCommentInput;
-  Reply?: InputMaybe<ReplyCreateNestedManyWithoutCommentInput>;
   author: UserCreateNestedOneWithoutCommentInput;
   content: Scalars['String'];
   created_at?: InputMaybe<Scalars['DateTime']>;
   id?: InputMaybe<Scalars['String']>;
+  parent_id?: InputMaybe<Scalars['String']>;
   picture?: InputMaybe<Scalars['String']>;
+  replies?: InputMaybe<CommentCreateNestedManyWithoutRepliesRelationInput>;
+  repliesRelation?: InputMaybe<CommentCreateNestedManyWithoutRepliesInput>;
   updated_at?: InputMaybe<Scalars['DateTime']>;
 };
 
@@ -364,6 +381,7 @@ export type CommentCreateManyAuthorInput = {
   content: Scalars['String'];
   created_at?: InputMaybe<Scalars['DateTime']>;
   id?: InputMaybe<Scalars['String']>;
+  parent_id?: InputMaybe<Scalars['String']>;
   picture?: InputMaybe<Scalars['String']>;
   postSlug: Scalars['String'];
   updated_at?: InputMaybe<Scalars['DateTime']>;
@@ -378,6 +396,7 @@ export type CommentCreateManyInput = {
   content: Scalars['String'];
   created_at?: InputMaybe<Scalars['DateTime']>;
   id?: InputMaybe<Scalars['String']>;
+  parent_id?: InputMaybe<Scalars['String']>;
   picture?: InputMaybe<Scalars['String']>;
   postSlug: Scalars['String'];
   updated_at?: InputMaybe<Scalars['DateTime']>;
@@ -388,6 +407,7 @@ export type CommentCreateManyPostInput = {
   content: Scalars['String'];
   created_at?: InputMaybe<Scalars['DateTime']>;
   id?: InputMaybe<Scalars['String']>;
+  parent_id?: InputMaybe<Scalars['String']>;
   picture?: InputMaybe<Scalars['String']>;
   updated_at?: InputMaybe<Scalars['DateTime']>;
   userId: Scalars['String'];
@@ -412,10 +432,16 @@ export type CommentCreateNestedManyWithoutPostInput = {
   createMany?: InputMaybe<CommentCreateManyPostInputEnvelope>;
 };
 
-export type CommentCreateNestedOneWithoutReplyInput = {
-  connect?: InputMaybe<CommentWhereUniqueInput>;
-  connectOrCreate?: InputMaybe<CommentCreateOrConnectWithoutReplyInput>;
-  create?: InputMaybe<CommentCreateWithoutReplyInput>;
+export type CommentCreateNestedManyWithoutRepliesInput = {
+  connect?: InputMaybe<Array<CommentWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<CommentCreateOrConnectWithoutRepliesInput>>;
+  create?: InputMaybe<Array<CommentCreateWithoutRepliesInput>>;
+};
+
+export type CommentCreateNestedManyWithoutRepliesRelationInput = {
+  connect?: InputMaybe<Array<CommentWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<CommentCreateOrConnectWithoutRepliesRelationInput>>;
+  create?: InputMaybe<Array<CommentCreateWithoutRepliesRelationInput>>;
 };
 
 export type CommentCreateOrConnectWithoutAuthorInput = {
@@ -428,38 +454,61 @@ export type CommentCreateOrConnectWithoutPostInput = {
   where: CommentWhereUniqueInput;
 };
 
-export type CommentCreateOrConnectWithoutReplyInput = {
-  create: CommentCreateWithoutReplyInput;
+export type CommentCreateOrConnectWithoutRepliesInput = {
+  create: CommentCreateWithoutRepliesInput;
+  where: CommentWhereUniqueInput;
+};
+
+export type CommentCreateOrConnectWithoutRepliesRelationInput = {
+  create: CommentCreateWithoutRepliesRelationInput;
   where: CommentWhereUniqueInput;
 };
 
 export type CommentCreateWithoutAuthorInput = {
   Post: PostCreateNestedOneWithoutCommentInput;
-  Reply?: InputMaybe<ReplyCreateNestedManyWithoutCommentInput>;
   content: Scalars['String'];
   created_at?: InputMaybe<Scalars['DateTime']>;
   id?: InputMaybe<Scalars['String']>;
+  parent_id?: InputMaybe<Scalars['String']>;
   picture?: InputMaybe<Scalars['String']>;
+  replies?: InputMaybe<CommentCreateNestedManyWithoutRepliesRelationInput>;
+  repliesRelation?: InputMaybe<CommentCreateNestedManyWithoutRepliesInput>;
   updated_at?: InputMaybe<Scalars['DateTime']>;
 };
 
 export type CommentCreateWithoutPostInput = {
-  Reply?: InputMaybe<ReplyCreateNestedManyWithoutCommentInput>;
   author: UserCreateNestedOneWithoutCommentInput;
   content: Scalars['String'];
   created_at?: InputMaybe<Scalars['DateTime']>;
   id?: InputMaybe<Scalars['String']>;
+  parent_id?: InputMaybe<Scalars['String']>;
   picture?: InputMaybe<Scalars['String']>;
+  replies?: InputMaybe<CommentCreateNestedManyWithoutRepliesRelationInput>;
+  repliesRelation?: InputMaybe<CommentCreateNestedManyWithoutRepliesInput>;
   updated_at?: InputMaybe<Scalars['DateTime']>;
 };
 
-export type CommentCreateWithoutReplyInput = {
+export type CommentCreateWithoutRepliesInput = {
   Post: PostCreateNestedOneWithoutCommentInput;
   author: UserCreateNestedOneWithoutCommentInput;
   content: Scalars['String'];
   created_at?: InputMaybe<Scalars['DateTime']>;
   id?: InputMaybe<Scalars['String']>;
+  parent_id?: InputMaybe<Scalars['String']>;
   picture?: InputMaybe<Scalars['String']>;
+  repliesRelation?: InputMaybe<CommentCreateNestedManyWithoutRepliesInput>;
+  updated_at?: InputMaybe<Scalars['DateTime']>;
+};
+
+export type CommentCreateWithoutRepliesRelationInput = {
+  Post: PostCreateNestedOneWithoutCommentInput;
+  author: UserCreateNestedOneWithoutCommentInput;
+  content: Scalars['String'];
+  created_at?: InputMaybe<Scalars['DateTime']>;
+  id?: InputMaybe<Scalars['String']>;
+  parent_id?: InputMaybe<Scalars['String']>;
+  picture?: InputMaybe<Scalars['String']>;
+  replies?: InputMaybe<CommentCreateNestedManyWithoutRepliesRelationInput>;
   updated_at?: InputMaybe<Scalars['DateTime']>;
 };
 
@@ -471,6 +520,7 @@ export type CommentGroupBy = {
   content: Scalars['String'];
   created_at: Scalars['DateTime'];
   id: Scalars['String'];
+  parent_id: Maybe<Scalars['String']>;
   picture: Maybe<Scalars['String']>;
   postSlug: Scalars['String'];
   updated_at: Scalars['DateTime'];
@@ -488,6 +538,7 @@ export type CommentMaxAggregate = {
   content: Maybe<Scalars['String']>;
   created_at: Maybe<Scalars['DateTime']>;
   id: Maybe<Scalars['String']>;
+  parent_id: Maybe<Scalars['String']>;
   picture: Maybe<Scalars['String']>;
   postSlug: Maybe<Scalars['String']>;
   updated_at: Maybe<Scalars['DateTime']>;
@@ -498,6 +549,7 @@ export type CommentMaxOrderByAggregateInput = {
   content?: InputMaybe<SortOrder>;
   created_at?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
+  parent_id?: InputMaybe<SortOrder>;
   picture?: InputMaybe<SortOrder>;
   postSlug?: InputMaybe<SortOrder>;
   updated_at?: InputMaybe<SortOrder>;
@@ -509,6 +561,7 @@ export type CommentMinAggregate = {
   content: Maybe<Scalars['String']>;
   created_at: Maybe<Scalars['DateTime']>;
   id: Maybe<Scalars['String']>;
+  parent_id: Maybe<Scalars['String']>;
   picture: Maybe<Scalars['String']>;
   postSlug: Maybe<Scalars['String']>;
   updated_at: Maybe<Scalars['DateTime']>;
@@ -519,6 +572,7 @@ export type CommentMinOrderByAggregateInput = {
   content?: InputMaybe<SortOrder>;
   created_at?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
+  parent_id?: InputMaybe<SortOrder>;
   picture?: InputMaybe<SortOrder>;
   postSlug?: InputMaybe<SortOrder>;
   updated_at?: InputMaybe<SortOrder>;
@@ -536,6 +590,7 @@ export type CommentOrderByWithAggregationInput = {
   content?: InputMaybe<SortOrder>;
   created_at?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
+  parent_id?: InputMaybe<SortOrder>;
   picture?: InputMaybe<SortOrder>;
   postSlug?: InputMaybe<SortOrder>;
   updated_at?: InputMaybe<SortOrder>;
@@ -544,26 +599,24 @@ export type CommentOrderByWithAggregationInput = {
 
 export type CommentOrderByWithRelationInput = {
   Post?: InputMaybe<PostOrderByWithRelationInput>;
-  Reply?: InputMaybe<ReplyOrderByRelationAggregateInput>;
   author?: InputMaybe<UserOrderByWithRelationInput>;
   content?: InputMaybe<SortOrder>;
   created_at?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
+  parent_id?: InputMaybe<SortOrder>;
   picture?: InputMaybe<SortOrder>;
   postSlug?: InputMaybe<SortOrder>;
+  replies?: InputMaybe<CommentOrderByRelationAggregateInput>;
+  repliesRelation?: InputMaybe<CommentOrderByRelationAggregateInput>;
   updated_at?: InputMaybe<SortOrder>;
   userId?: InputMaybe<SortOrder>;
-};
-
-export type CommentRelationFilter = {
-  is?: InputMaybe<CommentWhereInput>;
-  isNot?: InputMaybe<CommentWhereInput>;
 };
 
 export enum CommentScalarFieldEnum {
   Content = 'content',
   CreatedAt = 'created_at',
   Id = 'id',
+  ParentId = 'parent_id',
   Picture = 'picture',
   PostSlug = 'postSlug',
   UpdatedAt = 'updated_at',
@@ -577,6 +630,7 @@ export type CommentScalarWhereInput = {
   content?: InputMaybe<StringFilter>;
   created_at?: InputMaybe<DateTimeFilter>;
   id?: InputMaybe<StringFilter>;
+  parent_id?: InputMaybe<StringNullableFilter>;
   picture?: InputMaybe<StringNullableFilter>;
   postSlug?: InputMaybe<StringFilter>;
   updated_at?: InputMaybe<DateTimeFilter>;
@@ -590,6 +644,7 @@ export type CommentScalarWhereWithAggregatesInput = {
   content?: InputMaybe<StringWithAggregatesFilter>;
   created_at?: InputMaybe<DateTimeWithAggregatesFilter>;
   id?: InputMaybe<StringWithAggregatesFilter>;
+  parent_id?: InputMaybe<StringNullableWithAggregatesFilter>;
   picture?: InputMaybe<StringNullableWithAggregatesFilter>;
   postSlug?: InputMaybe<StringWithAggregatesFilter>;
   updated_at?: InputMaybe<DateTimeWithAggregatesFilter>;
@@ -598,12 +653,14 @@ export type CommentScalarWhereWithAggregatesInput = {
 
 export type CommentUpdateInput = {
   Post?: InputMaybe<PostUpdateOneRequiredWithoutCommentInput>;
-  Reply?: InputMaybe<ReplyUpdateManyWithoutCommentInput>;
   author?: InputMaybe<UserUpdateOneRequiredWithoutCommentInput>;
   content?: InputMaybe<StringFieldUpdateOperationsInput>;
   created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  parent_id?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   picture?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  replies?: InputMaybe<CommentUpdateManyWithoutRepliesRelationInput>;
+  repliesRelation?: InputMaybe<CommentUpdateManyWithoutRepliesInput>;
   updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
 };
 
@@ -611,6 +668,7 @@ export type CommentUpdateManyMutationInput = {
   content?: InputMaybe<StringFieldUpdateOperationsInput>;
   created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  parent_id?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   picture?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
 };
@@ -621,6 +679,16 @@ export type CommentUpdateManyWithWhereWithoutAuthorInput = {
 };
 
 export type CommentUpdateManyWithWhereWithoutPostInput = {
+  data: CommentUpdateManyMutationInput;
+  where: CommentScalarWhereInput;
+};
+
+export type CommentUpdateManyWithWhereWithoutRepliesInput = {
+  data: CommentUpdateManyMutationInput;
+  where: CommentScalarWhereInput;
+};
+
+export type CommentUpdateManyWithWhereWithoutRepliesRelationInput = {
   data: CommentUpdateManyMutationInput;
   where: CommentScalarWhereInput;
 };
@@ -653,12 +721,30 @@ export type CommentUpdateManyWithoutPostInput = {
   upsert?: InputMaybe<Array<CommentUpsertWithWhereUniqueWithoutPostInput>>;
 };
 
-export type CommentUpdateOneRequiredWithoutReplyInput = {
-  connect?: InputMaybe<CommentWhereUniqueInput>;
-  connectOrCreate?: InputMaybe<CommentCreateOrConnectWithoutReplyInput>;
-  create?: InputMaybe<CommentCreateWithoutReplyInput>;
-  update?: InputMaybe<CommentUpdateWithoutReplyInput>;
-  upsert?: InputMaybe<CommentUpsertWithoutReplyInput>;
+export type CommentUpdateManyWithoutRepliesInput = {
+  connect?: InputMaybe<Array<CommentWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<CommentCreateOrConnectWithoutRepliesInput>>;
+  create?: InputMaybe<Array<CommentCreateWithoutRepliesInput>>;
+  delete?: InputMaybe<Array<CommentWhereUniqueInput>>;
+  deleteMany?: InputMaybe<Array<CommentScalarWhereInput>>;
+  disconnect?: InputMaybe<Array<CommentWhereUniqueInput>>;
+  set?: InputMaybe<Array<CommentWhereUniqueInput>>;
+  update?: InputMaybe<Array<CommentUpdateWithWhereUniqueWithoutRepliesInput>>;
+  updateMany?: InputMaybe<Array<CommentUpdateManyWithWhereWithoutRepliesInput>>;
+  upsert?: InputMaybe<Array<CommentUpsertWithWhereUniqueWithoutRepliesInput>>;
+};
+
+export type CommentUpdateManyWithoutRepliesRelationInput = {
+  connect?: InputMaybe<Array<CommentWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<CommentCreateOrConnectWithoutRepliesRelationInput>>;
+  create?: InputMaybe<Array<CommentCreateWithoutRepliesRelationInput>>;
+  delete?: InputMaybe<Array<CommentWhereUniqueInput>>;
+  deleteMany?: InputMaybe<Array<CommentScalarWhereInput>>;
+  disconnect?: InputMaybe<Array<CommentWhereUniqueInput>>;
+  set?: InputMaybe<Array<CommentWhereUniqueInput>>;
+  update?: InputMaybe<Array<CommentUpdateWithWhereUniqueWithoutRepliesRelationInput>>;
+  updateMany?: InputMaybe<Array<CommentUpdateManyWithWhereWithoutRepliesRelationInput>>;
+  upsert?: InputMaybe<Array<CommentUpsertWithWhereUniqueWithoutRepliesRelationInput>>;
 };
 
 export type CommentUpdateWithWhereUniqueWithoutAuthorInput = {
@@ -671,33 +757,61 @@ export type CommentUpdateWithWhereUniqueWithoutPostInput = {
   where: CommentWhereUniqueInput;
 };
 
+export type CommentUpdateWithWhereUniqueWithoutRepliesInput = {
+  data: CommentUpdateWithoutRepliesInput;
+  where: CommentWhereUniqueInput;
+};
+
+export type CommentUpdateWithWhereUniqueWithoutRepliesRelationInput = {
+  data: CommentUpdateWithoutRepliesRelationInput;
+  where: CommentWhereUniqueInput;
+};
+
 export type CommentUpdateWithoutAuthorInput = {
   Post?: InputMaybe<PostUpdateOneRequiredWithoutCommentInput>;
-  Reply?: InputMaybe<ReplyUpdateManyWithoutCommentInput>;
   content?: InputMaybe<StringFieldUpdateOperationsInput>;
   created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  parent_id?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   picture?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  replies?: InputMaybe<CommentUpdateManyWithoutRepliesRelationInput>;
+  repliesRelation?: InputMaybe<CommentUpdateManyWithoutRepliesInput>;
   updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
 };
 
 export type CommentUpdateWithoutPostInput = {
-  Reply?: InputMaybe<ReplyUpdateManyWithoutCommentInput>;
   author?: InputMaybe<UserUpdateOneRequiredWithoutCommentInput>;
   content?: InputMaybe<StringFieldUpdateOperationsInput>;
   created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  parent_id?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   picture?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  replies?: InputMaybe<CommentUpdateManyWithoutRepliesRelationInput>;
+  repliesRelation?: InputMaybe<CommentUpdateManyWithoutRepliesInput>;
   updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
 };
 
-export type CommentUpdateWithoutReplyInput = {
+export type CommentUpdateWithoutRepliesInput = {
   Post?: InputMaybe<PostUpdateOneRequiredWithoutCommentInput>;
   author?: InputMaybe<UserUpdateOneRequiredWithoutCommentInput>;
   content?: InputMaybe<StringFieldUpdateOperationsInput>;
   created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  parent_id?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   picture?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  repliesRelation?: InputMaybe<CommentUpdateManyWithoutRepliesInput>;
+  updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+};
+
+export type CommentUpdateWithoutRepliesRelationInput = {
+  Post?: InputMaybe<PostUpdateOneRequiredWithoutCommentInput>;
+  author?: InputMaybe<UserUpdateOneRequiredWithoutCommentInput>;
+  content?: InputMaybe<StringFieldUpdateOperationsInput>;
+  created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  parent_id?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  picture?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  replies?: InputMaybe<CommentUpdateManyWithoutRepliesRelationInput>;
   updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
 };
 
@@ -713,9 +827,16 @@ export type CommentUpsertWithWhereUniqueWithoutPostInput = {
   where: CommentWhereUniqueInput;
 };
 
-export type CommentUpsertWithoutReplyInput = {
-  create: CommentCreateWithoutReplyInput;
-  update: CommentUpdateWithoutReplyInput;
+export type CommentUpsertWithWhereUniqueWithoutRepliesInput = {
+  create: CommentCreateWithoutRepliesInput;
+  update: CommentUpdateWithoutRepliesInput;
+  where: CommentWhereUniqueInput;
+};
+
+export type CommentUpsertWithWhereUniqueWithoutRepliesRelationInput = {
+  create: CommentCreateWithoutRepliesRelationInput;
+  update: CommentUpdateWithoutRepliesRelationInput;
+  where: CommentWhereUniqueInput;
 };
 
 export type CommentWhereInput = {
@@ -723,13 +844,15 @@ export type CommentWhereInput = {
   NOT?: InputMaybe<Array<CommentWhereInput>>;
   OR?: InputMaybe<Array<CommentWhereInput>>;
   Post?: InputMaybe<PostRelationFilter>;
-  Reply?: InputMaybe<ReplyListRelationFilter>;
   author?: InputMaybe<UserRelationFilter>;
   content?: InputMaybe<StringFilter>;
   created_at?: InputMaybe<DateTimeFilter>;
   id?: InputMaybe<StringFilter>;
+  parent_id?: InputMaybe<StringNullableFilter>;
   picture?: InputMaybe<StringNullableFilter>;
   postSlug?: InputMaybe<StringFilter>;
+  replies?: InputMaybe<CommentListRelationFilter>;
+  repliesRelation?: InputMaybe<CommentListRelationFilter>;
   updated_at?: InputMaybe<DateTimeFilter>;
   userId?: InputMaybe<StringFilter>;
 };
@@ -780,6 +903,277 @@ export type EnumRoleNullableListFilter = {
   isEmpty?: InputMaybe<Scalars['Boolean']>;
 };
 
+export type Like = {
+  __typename?: 'Like';
+  id: Scalars['String'];
+  post: Maybe<Post>;
+  post_id: Maybe<Scalars['String']>;
+  user: User;
+  user_id: Scalars['String'];
+};
+
+export type LikeCountAggregate = {
+  __typename?: 'LikeCountAggregate';
+  _all: Scalars['Int'];
+  id: Scalars['Int'];
+  post_id: Scalars['Int'];
+  user_id: Scalars['Int'];
+};
+
+export type LikeCountOrderByAggregateInput = {
+  id?: InputMaybe<SortOrder>;
+  post_id?: InputMaybe<SortOrder>;
+  user_id?: InputMaybe<SortOrder>;
+};
+
+export type LikeCreateInput = {
+  id?: InputMaybe<Scalars['String']>;
+  post?: InputMaybe<PostCreateNestedOneWithoutLikeInput>;
+  user: UserCreateNestedOneWithoutLikeInput;
+};
+
+export type LikeCreateManyInput = {
+  id?: InputMaybe<Scalars['String']>;
+  post_id?: InputMaybe<Scalars['String']>;
+  user_id: Scalars['String'];
+};
+
+export type LikeCreateManyPostInput = {
+  id?: InputMaybe<Scalars['String']>;
+  user_id: Scalars['String'];
+};
+
+export type LikeCreateManyPostInputEnvelope = {
+  data: Array<LikeCreateManyPostInput>;
+  skipDuplicates?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type LikeCreateManyUserInput = {
+  id?: InputMaybe<Scalars['String']>;
+  post_id?: InputMaybe<Scalars['String']>;
+};
+
+export type LikeCreateManyUserInputEnvelope = {
+  data: Array<LikeCreateManyUserInput>;
+  skipDuplicates?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type LikeCreateNestedManyWithoutPostInput = {
+  connect?: InputMaybe<Array<LikeWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<LikeCreateOrConnectWithoutPostInput>>;
+  create?: InputMaybe<Array<LikeCreateWithoutPostInput>>;
+  createMany?: InputMaybe<LikeCreateManyPostInputEnvelope>;
+};
+
+export type LikeCreateNestedManyWithoutUserInput = {
+  connect?: InputMaybe<Array<LikeWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<LikeCreateOrConnectWithoutUserInput>>;
+  create?: InputMaybe<Array<LikeCreateWithoutUserInput>>;
+  createMany?: InputMaybe<LikeCreateManyUserInputEnvelope>;
+};
+
+export type LikeCreateOrConnectWithoutPostInput = {
+  create: LikeCreateWithoutPostInput;
+  where: LikeWhereUniqueInput;
+};
+
+export type LikeCreateOrConnectWithoutUserInput = {
+  create: LikeCreateWithoutUserInput;
+  where: LikeWhereUniqueInput;
+};
+
+export type LikeCreateWithoutPostInput = {
+  id?: InputMaybe<Scalars['String']>;
+  user: UserCreateNestedOneWithoutLikeInput;
+};
+
+export type LikeCreateWithoutUserInput = {
+  id?: InputMaybe<Scalars['String']>;
+  post?: InputMaybe<PostCreateNestedOneWithoutLikeInput>;
+};
+
+export type LikeGroupBy = {
+  __typename?: 'LikeGroupBy';
+  _count: Maybe<LikeCountAggregate>;
+  _max: Maybe<LikeMaxAggregate>;
+  _min: Maybe<LikeMinAggregate>;
+  id: Scalars['String'];
+  post_id: Maybe<Scalars['String']>;
+  user_id: Scalars['String'];
+};
+
+export type LikeListRelationFilter = {
+  every?: InputMaybe<LikeWhereInput>;
+  none?: InputMaybe<LikeWhereInput>;
+  some?: InputMaybe<LikeWhereInput>;
+};
+
+export type LikeMaxAggregate = {
+  __typename?: 'LikeMaxAggregate';
+  id: Maybe<Scalars['String']>;
+  post_id: Maybe<Scalars['String']>;
+  user_id: Maybe<Scalars['String']>;
+};
+
+export type LikeMaxOrderByAggregateInput = {
+  id?: InputMaybe<SortOrder>;
+  post_id?: InputMaybe<SortOrder>;
+  user_id?: InputMaybe<SortOrder>;
+};
+
+export type LikeMinAggregate = {
+  __typename?: 'LikeMinAggregate';
+  id: Maybe<Scalars['String']>;
+  post_id: Maybe<Scalars['String']>;
+  user_id: Maybe<Scalars['String']>;
+};
+
+export type LikeMinOrderByAggregateInput = {
+  id?: InputMaybe<SortOrder>;
+  post_id?: InputMaybe<SortOrder>;
+  user_id?: InputMaybe<SortOrder>;
+};
+
+export type LikeOrderByRelationAggregateInput = {
+  _count?: InputMaybe<SortOrder>;
+};
+
+export type LikeOrderByWithAggregationInput = {
+  _count?: InputMaybe<LikeCountOrderByAggregateInput>;
+  _max?: InputMaybe<LikeMaxOrderByAggregateInput>;
+  _min?: InputMaybe<LikeMinOrderByAggregateInput>;
+  id?: InputMaybe<SortOrder>;
+  post_id?: InputMaybe<SortOrder>;
+  user_id?: InputMaybe<SortOrder>;
+};
+
+export type LikeOrderByWithRelationInput = {
+  id?: InputMaybe<SortOrder>;
+  post?: InputMaybe<PostOrderByWithRelationInput>;
+  post_id?: InputMaybe<SortOrder>;
+  user?: InputMaybe<UserOrderByWithRelationInput>;
+  user_id?: InputMaybe<SortOrder>;
+};
+
+export enum LikeScalarFieldEnum {
+  Id = 'id',
+  PostId = 'post_id',
+  UserId = 'user_id'
+}
+
+export type LikeScalarWhereInput = {
+  AND?: InputMaybe<Array<LikeScalarWhereInput>>;
+  NOT?: InputMaybe<Array<LikeScalarWhereInput>>;
+  OR?: InputMaybe<Array<LikeScalarWhereInput>>;
+  id?: InputMaybe<StringFilter>;
+  post_id?: InputMaybe<StringNullableFilter>;
+  user_id?: InputMaybe<StringFilter>;
+};
+
+export type LikeScalarWhereWithAggregatesInput = {
+  AND?: InputMaybe<Array<LikeScalarWhereWithAggregatesInput>>;
+  NOT?: InputMaybe<Array<LikeScalarWhereWithAggregatesInput>>;
+  OR?: InputMaybe<Array<LikeScalarWhereWithAggregatesInput>>;
+  id?: InputMaybe<StringWithAggregatesFilter>;
+  post_id?: InputMaybe<StringNullableWithAggregatesFilter>;
+  user_id?: InputMaybe<StringWithAggregatesFilter>;
+};
+
+export type LikeUpdateInput = {
+  id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  post?: InputMaybe<PostUpdateOneWithoutLikeInput>;
+  user?: InputMaybe<UserUpdateOneRequiredWithoutLikeInput>;
+};
+
+export type LikeUpdateManyMutationInput = {
+  id?: InputMaybe<StringFieldUpdateOperationsInput>;
+};
+
+export type LikeUpdateManyWithWhereWithoutPostInput = {
+  data: LikeUpdateManyMutationInput;
+  where: LikeScalarWhereInput;
+};
+
+export type LikeUpdateManyWithWhereWithoutUserInput = {
+  data: LikeUpdateManyMutationInput;
+  where: LikeScalarWhereInput;
+};
+
+export type LikeUpdateManyWithoutPostInput = {
+  connect?: InputMaybe<Array<LikeWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<LikeCreateOrConnectWithoutPostInput>>;
+  create?: InputMaybe<Array<LikeCreateWithoutPostInput>>;
+  createMany?: InputMaybe<LikeCreateManyPostInputEnvelope>;
+  delete?: InputMaybe<Array<LikeWhereUniqueInput>>;
+  deleteMany?: InputMaybe<Array<LikeScalarWhereInput>>;
+  disconnect?: InputMaybe<Array<LikeWhereUniqueInput>>;
+  set?: InputMaybe<Array<LikeWhereUniqueInput>>;
+  update?: InputMaybe<Array<LikeUpdateWithWhereUniqueWithoutPostInput>>;
+  updateMany?: InputMaybe<Array<LikeUpdateManyWithWhereWithoutPostInput>>;
+  upsert?: InputMaybe<Array<LikeUpsertWithWhereUniqueWithoutPostInput>>;
+};
+
+export type LikeUpdateManyWithoutUserInput = {
+  connect?: InputMaybe<Array<LikeWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<LikeCreateOrConnectWithoutUserInput>>;
+  create?: InputMaybe<Array<LikeCreateWithoutUserInput>>;
+  createMany?: InputMaybe<LikeCreateManyUserInputEnvelope>;
+  delete?: InputMaybe<Array<LikeWhereUniqueInput>>;
+  deleteMany?: InputMaybe<Array<LikeScalarWhereInput>>;
+  disconnect?: InputMaybe<Array<LikeWhereUniqueInput>>;
+  set?: InputMaybe<Array<LikeWhereUniqueInput>>;
+  update?: InputMaybe<Array<LikeUpdateWithWhereUniqueWithoutUserInput>>;
+  updateMany?: InputMaybe<Array<LikeUpdateManyWithWhereWithoutUserInput>>;
+  upsert?: InputMaybe<Array<LikeUpsertWithWhereUniqueWithoutUserInput>>;
+};
+
+export type LikeUpdateWithWhereUniqueWithoutPostInput = {
+  data: LikeUpdateWithoutPostInput;
+  where: LikeWhereUniqueInput;
+};
+
+export type LikeUpdateWithWhereUniqueWithoutUserInput = {
+  data: LikeUpdateWithoutUserInput;
+  where: LikeWhereUniqueInput;
+};
+
+export type LikeUpdateWithoutPostInput = {
+  id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  user?: InputMaybe<UserUpdateOneRequiredWithoutLikeInput>;
+};
+
+export type LikeUpdateWithoutUserInput = {
+  id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  post?: InputMaybe<PostUpdateOneWithoutLikeInput>;
+};
+
+export type LikeUpsertWithWhereUniqueWithoutPostInput = {
+  create: LikeCreateWithoutPostInput;
+  update: LikeUpdateWithoutPostInput;
+  where: LikeWhereUniqueInput;
+};
+
+export type LikeUpsertWithWhereUniqueWithoutUserInput = {
+  create: LikeCreateWithoutUserInput;
+  update: LikeUpdateWithoutUserInput;
+  where: LikeWhereUniqueInput;
+};
+
+export type LikeWhereInput = {
+  AND?: InputMaybe<Array<LikeWhereInput>>;
+  NOT?: InputMaybe<Array<LikeWhereInput>>;
+  OR?: InputMaybe<Array<LikeWhereInput>>;
+  id?: InputMaybe<StringFilter>;
+  post?: InputMaybe<PostRelationFilter>;
+  post_id?: InputMaybe<StringNullableFilter>;
+  user?: InputMaybe<UserRelationFilter>;
+  user_id?: InputMaybe<StringFilter>;
+};
+
+export type LikeWhereUniqueInput = {
+  id?: InputMaybe<Scalars['String']>;
+};
+
 export type LoginInput = {
   email: Scalars['String'];
   password: Scalars['String'];
@@ -789,29 +1183,29 @@ export type Mutation = {
   __typename?: 'Mutation';
   createCategory: Category;
   createComment: Comment;
+  createLike: Like;
   createManyCategory: AffectedRowsOutput;
   createManyComment: AffectedRowsOutput;
+  createManyLike: AffectedRowsOutput;
   createManyPost: AffectedRowsOutput;
-  createManyReply: AffectedRowsOutput;
   createManyResetPassword: AffectedRowsOutput;
   createManyTag: AffectedRowsOutput;
   createManyUser: AffectedRowsOutput;
   createPost: Post;
-  createReply: Reply;
   createResetPassword: ResetPassword;
   createTag: Tag;
   createUser: User;
   deleteCategory: Maybe<Category>;
   deleteComment: Maybe<Comment>;
+  deleteLike: Maybe<Like>;
   deleteManyCategory: AffectedRowsOutput;
   deleteManyComment: AffectedRowsOutput;
+  deleteManyLike: AffectedRowsOutput;
   deleteManyPost: AffectedRowsOutput;
-  deleteManyReply: AffectedRowsOutput;
   deleteManyResetPassword: AffectedRowsOutput;
   deleteManyTag: AffectedRowsOutput;
   deleteManyUser: AffectedRowsOutput;
   deletePost: Maybe<Post>;
-  deleteReply: Maybe<Reply>;
   deleteResetPassword: Maybe<ResetPassword>;
   deleteTag: Maybe<Tag>;
   deleteUser: Maybe<User>;
@@ -821,15 +1215,15 @@ export type Mutation = {
   register: User;
   updateCategory: Maybe<Category>;
   updateComment: Maybe<Comment>;
+  updateLike: Maybe<Like>;
   updateManyCategory: AffectedRowsOutput;
   updateManyComment: AffectedRowsOutput;
+  updateManyLike: AffectedRowsOutput;
   updateManyPost: AffectedRowsOutput;
-  updateManyReply: AffectedRowsOutput;
   updateManyResetPassword: AffectedRowsOutput;
   updateManyTag: AffectedRowsOutput;
   updateManyUser: AffectedRowsOutput;
   updatePost: Maybe<Post>;
-  updateReply: Maybe<Reply>;
   updateResetPassword: Maybe<ResetPassword>;
   updateTag: Maybe<Tag>;
   updateUser: Maybe<User>;
@@ -837,8 +1231,8 @@ export type Mutation = {
   uploadPostPicture: Picture;
   upsertCategory: Category;
   upsertComment: Comment;
+  upsertLike: Like;
   upsertPost: Post;
-  upsertReply: Reply;
   upsertResetPassword: ResetPassword;
   upsertTag: Tag;
   upsertUser: User;
@@ -855,6 +1249,11 @@ export type MutationCreateCommentArgs = {
 };
 
 
+export type MutationCreateLikeArgs = {
+  data: LikeCreateInput;
+};
+
+
 export type MutationCreateManyCategoryArgs = {
   data: Array<CategoryCreateManyInput>;
   skipDuplicates: InputMaybe<Scalars['Boolean']>;
@@ -867,14 +1266,14 @@ export type MutationCreateManyCommentArgs = {
 };
 
 
-export type MutationCreateManyPostArgs = {
-  data: Array<PostCreateManyInput>;
+export type MutationCreateManyLikeArgs = {
+  data: Array<LikeCreateManyInput>;
   skipDuplicates: InputMaybe<Scalars['Boolean']>;
 };
 
 
-export type MutationCreateManyReplyArgs = {
-  data: Array<ReplyCreateManyInput>;
+export type MutationCreateManyPostArgs = {
+  data: Array<PostCreateManyInput>;
   skipDuplicates: InputMaybe<Scalars['Boolean']>;
 };
 
@@ -899,11 +1298,6 @@ export type MutationCreateManyUserArgs = {
 
 export type MutationCreatePostArgs = {
   data: PostCreateInput;
-};
-
-
-export type MutationCreateReplyArgs = {
-  data: ReplyCreateInput;
 };
 
 
@@ -932,6 +1326,11 @@ export type MutationDeleteCommentArgs = {
 };
 
 
+export type MutationDeleteLikeArgs = {
+  where: LikeWhereUniqueInput;
+};
+
+
 export type MutationDeleteManyCategoryArgs = {
   where: InputMaybe<CategoryWhereInput>;
 };
@@ -942,13 +1341,13 @@ export type MutationDeleteManyCommentArgs = {
 };
 
 
-export type MutationDeleteManyPostArgs = {
-  where: InputMaybe<PostWhereInput>;
+export type MutationDeleteManyLikeArgs = {
+  where: InputMaybe<LikeWhereInput>;
 };
 
 
-export type MutationDeleteManyReplyArgs = {
-  where: InputMaybe<ReplyWhereInput>;
+export type MutationDeleteManyPostArgs = {
+  where: InputMaybe<PostWhereInput>;
 };
 
 
@@ -969,11 +1368,6 @@ export type MutationDeleteManyUserArgs = {
 
 export type MutationDeletePostArgs = {
   where: PostWhereUniqueInput;
-};
-
-
-export type MutationDeleteReplyArgs = {
-  where: ReplyWhereUniqueInput;
 };
 
 
@@ -1014,6 +1408,12 @@ export type MutationUpdateCommentArgs = {
 };
 
 
+export type MutationUpdateLikeArgs = {
+  data: LikeUpdateInput;
+  where: LikeWhereUniqueInput;
+};
+
+
 export type MutationUpdateManyCategoryArgs = {
   data: CategoryUpdateManyMutationInput;
   where: InputMaybe<CategoryWhereInput>;
@@ -1026,15 +1426,15 @@ export type MutationUpdateManyCommentArgs = {
 };
 
 
-export type MutationUpdateManyPostArgs = {
-  data: PostUpdateManyMutationInput;
-  where: InputMaybe<PostWhereInput>;
+export type MutationUpdateManyLikeArgs = {
+  data: LikeUpdateManyMutationInput;
+  where: InputMaybe<LikeWhereInput>;
 };
 
 
-export type MutationUpdateManyReplyArgs = {
-  data: ReplyUpdateManyMutationInput;
-  where: InputMaybe<ReplyWhereInput>;
+export type MutationUpdateManyPostArgs = {
+  data: PostUpdateManyMutationInput;
+  where: InputMaybe<PostWhereInput>;
 };
 
 
@@ -1059,12 +1459,6 @@ export type MutationUpdateManyUserArgs = {
 export type MutationUpdatePostArgs = {
   data: PostUpdateInput;
   where: PostWhereUniqueInput;
-};
-
-
-export type MutationUpdateReplyArgs = {
-  data: ReplyUpdateInput;
-  where: ReplyWhereUniqueInput;
 };
 
 
@@ -1110,17 +1504,17 @@ export type MutationUpsertCommentArgs = {
 };
 
 
+export type MutationUpsertLikeArgs = {
+  create: LikeCreateInput;
+  update: LikeUpdateInput;
+  where: LikeWhereUniqueInput;
+};
+
+
 export type MutationUpsertPostArgs = {
   create: PostCreateInput;
   update: PostUpdateInput;
   where: PostWhereUniqueInput;
-};
-
-
-export type MutationUpsertReplyArgs = {
-  create: ReplyCreateInput;
-  update: ReplyUpdateInput;
-  where: ReplyWhereUniqueInput;
 };
 
 
@@ -1279,6 +1673,7 @@ export type Post = {
   __typename?: 'Post';
   Category: Maybe<Category>;
   Comment: Array<Comment>;
+  Like: Array<Like>;
   Tags: Array<Tag>;
   _count: Maybe<PostCount>;
   author: User;
@@ -1306,6 +1701,16 @@ export type PostCommentArgs = {
 };
 
 
+export type PostLikeArgs = {
+  cursor: InputMaybe<LikeWhereUniqueInput>;
+  distinct: InputMaybe<Array<LikeScalarFieldEnum>>;
+  orderBy: InputMaybe<Array<LikeOrderByWithRelationInput>>;
+  skip: InputMaybe<Scalars['Int']>;
+  take: InputMaybe<Scalars['Int']>;
+  where: InputMaybe<LikeWhereInput>;
+};
+
+
 export type PostTagsArgs = {
   cursor: InputMaybe<TagWhereUniqueInput>;
   distinct: InputMaybe<Array<TagScalarFieldEnum>>;
@@ -1318,6 +1723,7 @@ export type PostTagsArgs = {
 export type PostCount = {
   __typename?: 'PostCount';
   Comment: Scalars['Int'];
+  Like: Scalars['Int'];
   Tags: Scalars['Int'];
 };
 
@@ -1352,6 +1758,7 @@ export type PostCountOrderByAggregateInput = {
 export type PostCreateInput = {
   Category?: InputMaybe<CategoryCreateNestedOneWithoutPostInput>;
   Comment?: InputMaybe<CommentCreateNestedManyWithoutPostInput>;
+  Like?: InputMaybe<LikeCreateNestedManyWithoutPostInput>;
   Tags?: InputMaybe<TagCreateNestedManyWithoutPostInput>;
   author: UserCreateNestedOneWithoutPostInput;
   content: Scalars['String'];
@@ -1437,6 +1844,12 @@ export type PostCreateNestedOneWithoutCommentInput = {
   create?: InputMaybe<PostCreateWithoutCommentInput>;
 };
 
+export type PostCreateNestedOneWithoutLikeInput = {
+  connect?: InputMaybe<PostWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<PostCreateOrConnectWithoutLikeInput>;
+  create?: InputMaybe<PostCreateWithoutLikeInput>;
+};
+
 export type PostCreateOrConnectWithoutAuthorInput = {
   create: PostCreateWithoutAuthorInput;
   where: PostWhereUniqueInput;
@@ -1452,6 +1865,11 @@ export type PostCreateOrConnectWithoutCommentInput = {
   where: PostWhereUniqueInput;
 };
 
+export type PostCreateOrConnectWithoutLikeInput = {
+  create: PostCreateWithoutLikeInput;
+  where: PostWhereUniqueInput;
+};
+
 export type PostCreateOrConnectWithoutTagsInput = {
   create: PostCreateWithoutTagsInput;
   where: PostWhereUniqueInput;
@@ -1460,6 +1878,7 @@ export type PostCreateOrConnectWithoutTagsInput = {
 export type PostCreateWithoutAuthorInput = {
   Category?: InputMaybe<CategoryCreateNestedOneWithoutPostInput>;
   Comment?: InputMaybe<CommentCreateNestedManyWithoutPostInput>;
+  Like?: InputMaybe<LikeCreateNestedManyWithoutPostInput>;
   Tags?: InputMaybe<TagCreateNestedManyWithoutPostInput>;
   content: Scalars['String'];
   cover_picture?: InputMaybe<Scalars['String']>;
@@ -1473,6 +1892,7 @@ export type PostCreateWithoutAuthorInput = {
 
 export type PostCreateWithoutCategoryInput = {
   Comment?: InputMaybe<CommentCreateNestedManyWithoutPostInput>;
+  Like?: InputMaybe<LikeCreateNestedManyWithoutPostInput>;
   Tags?: InputMaybe<TagCreateNestedManyWithoutPostInput>;
   author: UserCreateNestedOneWithoutPostInput;
   content: Scalars['String'];
@@ -1487,6 +1907,22 @@ export type PostCreateWithoutCategoryInput = {
 
 export type PostCreateWithoutCommentInput = {
   Category?: InputMaybe<CategoryCreateNestedOneWithoutPostInput>;
+  Like?: InputMaybe<LikeCreateNestedManyWithoutPostInput>;
+  Tags?: InputMaybe<TagCreateNestedManyWithoutPostInput>;
+  author: UserCreateNestedOneWithoutPostInput;
+  content: Scalars['String'];
+  cover_picture?: InputMaybe<Scalars['String']>;
+  created_at?: InputMaybe<Scalars['DateTime']>;
+  id?: InputMaybe<Scalars['String']>;
+  isDraft?: InputMaybe<Scalars['Boolean']>;
+  slug: Scalars['String'];
+  title: Scalars['String'];
+  updated_at?: InputMaybe<Scalars['DateTime']>;
+};
+
+export type PostCreateWithoutLikeInput = {
+  Category?: InputMaybe<CategoryCreateNestedOneWithoutPostInput>;
+  Comment?: InputMaybe<CommentCreateNestedManyWithoutPostInput>;
   Tags?: InputMaybe<TagCreateNestedManyWithoutPostInput>;
   author: UserCreateNestedOneWithoutPostInput;
   content: Scalars['String'];
@@ -1502,6 +1938,7 @@ export type PostCreateWithoutCommentInput = {
 export type PostCreateWithoutTagsInput = {
   Category?: InputMaybe<CategoryCreateNestedOneWithoutPostInput>;
   Comment?: InputMaybe<CommentCreateNestedManyWithoutPostInput>;
+  Like?: InputMaybe<LikeCreateNestedManyWithoutPostInput>;
   author: UserCreateNestedOneWithoutPostInput;
   content: Scalars['String'];
   cover_picture?: InputMaybe<Scalars['String']>;
@@ -1613,6 +2050,7 @@ export type PostOrderByWithAggregationInput = {
 export type PostOrderByWithRelationInput = {
   Category?: InputMaybe<CategoryOrderByWithRelationInput>;
   Comment?: InputMaybe<CommentOrderByRelationAggregateInput>;
+  Like?: InputMaybe<LikeOrderByRelationAggregateInput>;
   Tags?: InputMaybe<TagOrderByRelationAggregateInput>;
   author?: InputMaybe<UserOrderByWithRelationInput>;
   categoryId?: InputMaybe<SortOrder>;
@@ -1680,6 +2118,7 @@ export type PostScalarWhereWithAggregatesInput = {
 export type PostUpdateInput = {
   Category?: InputMaybe<CategoryUpdateOneWithoutPostInput>;
   Comment?: InputMaybe<CommentUpdateManyWithoutPostInput>;
+  Like?: InputMaybe<LikeUpdateManyWithoutPostInput>;
   Tags?: InputMaybe<TagUpdateManyWithoutPostInput>;
   author?: InputMaybe<UserUpdateOneRequiredWithoutPostInput>;
   content?: InputMaybe<StringFieldUpdateOperationsInput>;
@@ -1767,6 +2206,16 @@ export type PostUpdateOneRequiredWithoutCommentInput = {
   upsert?: InputMaybe<PostUpsertWithoutCommentInput>;
 };
 
+export type PostUpdateOneWithoutLikeInput = {
+  connect?: InputMaybe<PostWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<PostCreateOrConnectWithoutLikeInput>;
+  create?: InputMaybe<PostCreateWithoutLikeInput>;
+  delete?: InputMaybe<Scalars['Boolean']>;
+  disconnect?: InputMaybe<Scalars['Boolean']>;
+  update?: InputMaybe<PostUpdateWithoutLikeInput>;
+  upsert?: InputMaybe<PostUpsertWithoutLikeInput>;
+};
+
 export type PostUpdateWithWhereUniqueWithoutAuthorInput = {
   data: PostUpdateWithoutAuthorInput;
   where: PostWhereUniqueInput;
@@ -1785,6 +2234,7 @@ export type PostUpdateWithWhereUniqueWithoutTagsInput = {
 export type PostUpdateWithoutAuthorInput = {
   Category?: InputMaybe<CategoryUpdateOneWithoutPostInput>;
   Comment?: InputMaybe<CommentUpdateManyWithoutPostInput>;
+  Like?: InputMaybe<LikeUpdateManyWithoutPostInput>;
   Tags?: InputMaybe<TagUpdateManyWithoutPostInput>;
   content?: InputMaybe<StringFieldUpdateOperationsInput>;
   cover_picture?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
@@ -1798,6 +2248,7 @@ export type PostUpdateWithoutAuthorInput = {
 
 export type PostUpdateWithoutCategoryInput = {
   Comment?: InputMaybe<CommentUpdateManyWithoutPostInput>;
+  Like?: InputMaybe<LikeUpdateManyWithoutPostInput>;
   Tags?: InputMaybe<TagUpdateManyWithoutPostInput>;
   author?: InputMaybe<UserUpdateOneRequiredWithoutPostInput>;
   content?: InputMaybe<StringFieldUpdateOperationsInput>;
@@ -1812,6 +2263,22 @@ export type PostUpdateWithoutCategoryInput = {
 
 export type PostUpdateWithoutCommentInput = {
   Category?: InputMaybe<CategoryUpdateOneWithoutPostInput>;
+  Like?: InputMaybe<LikeUpdateManyWithoutPostInput>;
+  Tags?: InputMaybe<TagUpdateManyWithoutPostInput>;
+  author?: InputMaybe<UserUpdateOneRequiredWithoutPostInput>;
+  content?: InputMaybe<StringFieldUpdateOperationsInput>;
+  cover_picture?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  isDraft?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  slug?: InputMaybe<StringFieldUpdateOperationsInput>;
+  title?: InputMaybe<StringFieldUpdateOperationsInput>;
+  updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+};
+
+export type PostUpdateWithoutLikeInput = {
+  Category?: InputMaybe<CategoryUpdateOneWithoutPostInput>;
+  Comment?: InputMaybe<CommentUpdateManyWithoutPostInput>;
   Tags?: InputMaybe<TagUpdateManyWithoutPostInput>;
   author?: InputMaybe<UserUpdateOneRequiredWithoutPostInput>;
   content?: InputMaybe<StringFieldUpdateOperationsInput>;
@@ -1827,6 +2294,7 @@ export type PostUpdateWithoutCommentInput = {
 export type PostUpdateWithoutTagsInput = {
   Category?: InputMaybe<CategoryUpdateOneWithoutPostInput>;
   Comment?: InputMaybe<CommentUpdateManyWithoutPostInput>;
+  Like?: InputMaybe<LikeUpdateManyWithoutPostInput>;
   author?: InputMaybe<UserUpdateOneRequiredWithoutPostInput>;
   content?: InputMaybe<StringFieldUpdateOperationsInput>;
   cover_picture?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
@@ -1861,10 +2329,16 @@ export type PostUpsertWithoutCommentInput = {
   update: PostUpdateWithoutCommentInput;
 };
 
+export type PostUpsertWithoutLikeInput = {
+  create: PostCreateWithoutLikeInput;
+  update: PostUpdateWithoutLikeInput;
+};
+
 export type PostWhereInput = {
   AND?: InputMaybe<Array<PostWhereInput>>;
   Category?: InputMaybe<CategoryRelationFilter>;
   Comment?: InputMaybe<CommentListRelationFilter>;
+  Like?: InputMaybe<LikeListRelationFilter>;
   NOT?: InputMaybe<Array<PostWhereInput>>;
   OR?: InputMaybe<Array<PostWhereInput>>;
   Tags?: InputMaybe<TagListRelationFilter>;
@@ -1890,8 +2364,8 @@ export type Query = {
   __typename?: 'Query';
   aggregateCategory: AggregateCategory;
   aggregateComment: AggregateComment;
+  aggregateLike: AggregateLike;
   aggregatePost: AggregatePost;
-  aggregateReply: AggregateReply;
   aggregateResetPassword: AggregateResetPassword;
   aggregateTag: AggregateTag;
   aggregateUser: AggregateUser;
@@ -1901,22 +2375,22 @@ export type Query = {
   comments: Array<Comment>;
   findFirstCategory: Maybe<Category>;
   findFirstComment: Maybe<Comment>;
+  findFirstLike: Maybe<Like>;
   findFirstPost: Maybe<Post>;
-  findFirstReply: Maybe<Reply>;
   findFirstResetPassword: Maybe<ResetPassword>;
   findFirstTag: Maybe<Tag>;
   findFirstUser: Maybe<User>;
   groupByCategory: Array<CategoryGroupBy>;
   groupByComment: Array<CommentGroupBy>;
+  groupByLike: Array<LikeGroupBy>;
   groupByPost: Array<PostGroupBy>;
-  groupByReply: Array<ReplyGroupBy>;
   groupByResetPassword: Array<ResetPasswordGroupBy>;
   groupByTag: Array<TagGroupBy>;
   groupByUser: Array<UserGroupBy>;
+  like: Maybe<Like>;
+  likes: Array<Like>;
   post: Maybe<Post>;
   posts: Array<Post>;
-  replies: Array<Reply>;
-  reply: Maybe<Reply>;
   resetPassword: Maybe<ResetPassword>;
   resetPasswords: Array<ResetPassword>;
   tag: Maybe<Tag>;
@@ -1944,21 +2418,21 @@ export type QueryAggregateCommentArgs = {
 };
 
 
+export type QueryAggregateLikeArgs = {
+  cursor: InputMaybe<LikeWhereUniqueInput>;
+  orderBy: InputMaybe<Array<LikeOrderByWithRelationInput>>;
+  skip: InputMaybe<Scalars['Int']>;
+  take: InputMaybe<Scalars['Int']>;
+  where: InputMaybe<LikeWhereInput>;
+};
+
+
 export type QueryAggregatePostArgs = {
   cursor: InputMaybe<PostWhereUniqueInput>;
   orderBy: InputMaybe<Array<PostOrderByWithRelationInput>>;
   skip: InputMaybe<Scalars['Int']>;
   take: InputMaybe<Scalars['Int']>;
   where: InputMaybe<PostWhereInput>;
-};
-
-
-export type QueryAggregateReplyArgs = {
-  cursor: InputMaybe<ReplyWhereUniqueInput>;
-  orderBy: InputMaybe<Array<ReplyOrderByWithRelationInput>>;
-  skip: InputMaybe<Scalars['Int']>;
-  take: InputMaybe<Scalars['Int']>;
-  where: InputMaybe<ReplyWhereInput>;
 };
 
 
@@ -2039,6 +2513,16 @@ export type QueryFindFirstCommentArgs = {
 };
 
 
+export type QueryFindFirstLikeArgs = {
+  cursor: InputMaybe<LikeWhereUniqueInput>;
+  distinct: InputMaybe<Array<LikeScalarFieldEnum>>;
+  orderBy: InputMaybe<Array<LikeOrderByWithRelationInput>>;
+  skip: InputMaybe<Scalars['Int']>;
+  take: InputMaybe<Scalars['Int']>;
+  where: InputMaybe<LikeWhereInput>;
+};
+
+
 export type QueryFindFirstPostArgs = {
   cursor: InputMaybe<PostWhereUniqueInput>;
   distinct: InputMaybe<Array<PostScalarFieldEnum>>;
@@ -2046,16 +2530,6 @@ export type QueryFindFirstPostArgs = {
   skip: InputMaybe<Scalars['Int']>;
   take: InputMaybe<Scalars['Int']>;
   where: InputMaybe<PostWhereInput>;
-};
-
-
-export type QueryFindFirstReplyArgs = {
-  cursor: InputMaybe<ReplyWhereUniqueInput>;
-  distinct: InputMaybe<Array<ReplyScalarFieldEnum>>;
-  orderBy: InputMaybe<Array<ReplyOrderByWithRelationInput>>;
-  skip: InputMaybe<Scalars['Int']>;
-  take: InputMaybe<Scalars['Int']>;
-  where: InputMaybe<ReplyWhereInput>;
 };
 
 
@@ -2109,6 +2583,16 @@ export type QueryGroupByCommentArgs = {
 };
 
 
+export type QueryGroupByLikeArgs = {
+  by: Array<LikeScalarFieldEnum>;
+  having: InputMaybe<LikeScalarWhereWithAggregatesInput>;
+  orderBy: InputMaybe<Array<LikeOrderByWithAggregationInput>>;
+  skip: InputMaybe<Scalars['Int']>;
+  take: InputMaybe<Scalars['Int']>;
+  where: InputMaybe<LikeWhereInput>;
+};
+
+
 export type QueryGroupByPostArgs = {
   by: Array<PostScalarFieldEnum>;
   having: InputMaybe<PostScalarWhereWithAggregatesInput>;
@@ -2116,16 +2600,6 @@ export type QueryGroupByPostArgs = {
   skip: InputMaybe<Scalars['Int']>;
   take: InputMaybe<Scalars['Int']>;
   where: InputMaybe<PostWhereInput>;
-};
-
-
-export type QueryGroupByReplyArgs = {
-  by: Array<ReplyScalarFieldEnum>;
-  having: InputMaybe<ReplyScalarWhereWithAggregatesInput>;
-  orderBy: InputMaybe<Array<ReplyOrderByWithAggregationInput>>;
-  skip: InputMaybe<Scalars['Int']>;
-  take: InputMaybe<Scalars['Int']>;
-  where: InputMaybe<ReplyWhereInput>;
 };
 
 
@@ -2159,6 +2633,21 @@ export type QueryGroupByUserArgs = {
 };
 
 
+export type QueryLikeArgs = {
+  where: LikeWhereUniqueInput;
+};
+
+
+export type QueryLikesArgs = {
+  cursor: InputMaybe<LikeWhereUniqueInput>;
+  distinct: InputMaybe<Array<LikeScalarFieldEnum>>;
+  orderBy: InputMaybe<Array<LikeOrderByWithRelationInput>>;
+  skip: InputMaybe<Scalars['Int']>;
+  take: InputMaybe<Scalars['Int']>;
+  where: InputMaybe<LikeWhereInput>;
+};
+
+
 export type QueryPostArgs = {
   where: PostWhereUniqueInput;
 };
@@ -2171,21 +2660,6 @@ export type QueryPostsArgs = {
   skip: InputMaybe<Scalars['Int']>;
   take: InputMaybe<Scalars['Int']>;
   where: InputMaybe<PostWhereInput>;
-};
-
-
-export type QueryRepliesArgs = {
-  cursor: InputMaybe<ReplyWhereUniqueInput>;
-  distinct: InputMaybe<Array<ReplyScalarFieldEnum>>;
-  orderBy: InputMaybe<Array<ReplyOrderByWithRelationInput>>;
-  skip: InputMaybe<Scalars['Int']>;
-  take: InputMaybe<Scalars['Int']>;
-  where: InputMaybe<ReplyWhereInput>;
-};
-
-
-export type QueryReplyArgs = {
-  where: ReplyWhereUniqueInput;
 };
 
 
@@ -2242,373 +2716,6 @@ export type RegisterInput = {
   email: Scalars['String'];
   nickName: Scalars['String'];
   password: Scalars['String'];
-};
-
-export type Reply = {
-  __typename?: 'Reply';
-  Comment: Comment;
-  author: User;
-  commentId: Scalars['String'];
-  content: Scalars['String'];
-  created_at: Scalars['DateTime'];
-  id: Scalars['String'];
-  picture: Maybe<Scalars['String']>;
-  updated_at: Scalars['DateTime'];
-  userId: Scalars['String'];
-};
-
-export type ReplyCountAggregate = {
-  __typename?: 'ReplyCountAggregate';
-  _all: Scalars['Int'];
-  commentId: Scalars['Int'];
-  content: Scalars['Int'];
-  created_at: Scalars['Int'];
-  id: Scalars['Int'];
-  picture: Scalars['Int'];
-  updated_at: Scalars['Int'];
-  userId: Scalars['Int'];
-};
-
-export type ReplyCountOrderByAggregateInput = {
-  commentId?: InputMaybe<SortOrder>;
-  content?: InputMaybe<SortOrder>;
-  created_at?: InputMaybe<SortOrder>;
-  id?: InputMaybe<SortOrder>;
-  picture?: InputMaybe<SortOrder>;
-  updated_at?: InputMaybe<SortOrder>;
-  userId?: InputMaybe<SortOrder>;
-};
-
-export type ReplyCreateInput = {
-  Comment: CommentCreateNestedOneWithoutReplyInput;
-  author: UserCreateNestedOneWithoutReplyInput;
-  content: Scalars['String'];
-  created_at?: InputMaybe<Scalars['DateTime']>;
-  id?: InputMaybe<Scalars['String']>;
-  picture?: InputMaybe<Scalars['String']>;
-  updated_at?: InputMaybe<Scalars['DateTime']>;
-};
-
-export type ReplyCreateManyAuthorInput = {
-  commentId: Scalars['String'];
-  content: Scalars['String'];
-  created_at?: InputMaybe<Scalars['DateTime']>;
-  id?: InputMaybe<Scalars['String']>;
-  picture?: InputMaybe<Scalars['String']>;
-  updated_at?: InputMaybe<Scalars['DateTime']>;
-};
-
-export type ReplyCreateManyAuthorInputEnvelope = {
-  data: Array<ReplyCreateManyAuthorInput>;
-  skipDuplicates?: InputMaybe<Scalars['Boolean']>;
-};
-
-export type ReplyCreateManyCommentInput = {
-  content: Scalars['String'];
-  created_at?: InputMaybe<Scalars['DateTime']>;
-  id?: InputMaybe<Scalars['String']>;
-  picture?: InputMaybe<Scalars['String']>;
-  updated_at?: InputMaybe<Scalars['DateTime']>;
-  userId: Scalars['String'];
-};
-
-export type ReplyCreateManyCommentInputEnvelope = {
-  data: Array<ReplyCreateManyCommentInput>;
-  skipDuplicates?: InputMaybe<Scalars['Boolean']>;
-};
-
-export type ReplyCreateManyInput = {
-  commentId: Scalars['String'];
-  content: Scalars['String'];
-  created_at?: InputMaybe<Scalars['DateTime']>;
-  id?: InputMaybe<Scalars['String']>;
-  picture?: InputMaybe<Scalars['String']>;
-  updated_at?: InputMaybe<Scalars['DateTime']>;
-  userId: Scalars['String'];
-};
-
-export type ReplyCreateNestedManyWithoutAuthorInput = {
-  connect?: InputMaybe<Array<ReplyWhereUniqueInput>>;
-  connectOrCreate?: InputMaybe<Array<ReplyCreateOrConnectWithoutAuthorInput>>;
-  create?: InputMaybe<Array<ReplyCreateWithoutAuthorInput>>;
-  createMany?: InputMaybe<ReplyCreateManyAuthorInputEnvelope>;
-};
-
-export type ReplyCreateNestedManyWithoutCommentInput = {
-  connect?: InputMaybe<Array<ReplyWhereUniqueInput>>;
-  connectOrCreate?: InputMaybe<Array<ReplyCreateOrConnectWithoutCommentInput>>;
-  create?: InputMaybe<Array<ReplyCreateWithoutCommentInput>>;
-  createMany?: InputMaybe<ReplyCreateManyCommentInputEnvelope>;
-};
-
-export type ReplyCreateOrConnectWithoutAuthorInput = {
-  create: ReplyCreateWithoutAuthorInput;
-  where: ReplyWhereUniqueInput;
-};
-
-export type ReplyCreateOrConnectWithoutCommentInput = {
-  create: ReplyCreateWithoutCommentInput;
-  where: ReplyWhereUniqueInput;
-};
-
-export type ReplyCreateWithoutAuthorInput = {
-  Comment: CommentCreateNestedOneWithoutReplyInput;
-  content: Scalars['String'];
-  created_at?: InputMaybe<Scalars['DateTime']>;
-  id?: InputMaybe<Scalars['String']>;
-  picture?: InputMaybe<Scalars['String']>;
-  updated_at?: InputMaybe<Scalars['DateTime']>;
-};
-
-export type ReplyCreateWithoutCommentInput = {
-  author: UserCreateNestedOneWithoutReplyInput;
-  content: Scalars['String'];
-  created_at?: InputMaybe<Scalars['DateTime']>;
-  id?: InputMaybe<Scalars['String']>;
-  picture?: InputMaybe<Scalars['String']>;
-  updated_at?: InputMaybe<Scalars['DateTime']>;
-};
-
-export type ReplyGroupBy = {
-  __typename?: 'ReplyGroupBy';
-  _count: Maybe<ReplyCountAggregate>;
-  _max: Maybe<ReplyMaxAggregate>;
-  _min: Maybe<ReplyMinAggregate>;
-  commentId: Scalars['String'];
-  content: Scalars['String'];
-  created_at: Scalars['DateTime'];
-  id: Scalars['String'];
-  picture: Maybe<Scalars['String']>;
-  updated_at: Scalars['DateTime'];
-  userId: Scalars['String'];
-};
-
-export type ReplyListRelationFilter = {
-  every?: InputMaybe<ReplyWhereInput>;
-  none?: InputMaybe<ReplyWhereInput>;
-  some?: InputMaybe<ReplyWhereInput>;
-};
-
-export type ReplyMaxAggregate = {
-  __typename?: 'ReplyMaxAggregate';
-  commentId: Maybe<Scalars['String']>;
-  content: Maybe<Scalars['String']>;
-  created_at: Maybe<Scalars['DateTime']>;
-  id: Maybe<Scalars['String']>;
-  picture: Maybe<Scalars['String']>;
-  updated_at: Maybe<Scalars['DateTime']>;
-  userId: Maybe<Scalars['String']>;
-};
-
-export type ReplyMaxOrderByAggregateInput = {
-  commentId?: InputMaybe<SortOrder>;
-  content?: InputMaybe<SortOrder>;
-  created_at?: InputMaybe<SortOrder>;
-  id?: InputMaybe<SortOrder>;
-  picture?: InputMaybe<SortOrder>;
-  updated_at?: InputMaybe<SortOrder>;
-  userId?: InputMaybe<SortOrder>;
-};
-
-export type ReplyMinAggregate = {
-  __typename?: 'ReplyMinAggregate';
-  commentId: Maybe<Scalars['String']>;
-  content: Maybe<Scalars['String']>;
-  created_at: Maybe<Scalars['DateTime']>;
-  id: Maybe<Scalars['String']>;
-  picture: Maybe<Scalars['String']>;
-  updated_at: Maybe<Scalars['DateTime']>;
-  userId: Maybe<Scalars['String']>;
-};
-
-export type ReplyMinOrderByAggregateInput = {
-  commentId?: InputMaybe<SortOrder>;
-  content?: InputMaybe<SortOrder>;
-  created_at?: InputMaybe<SortOrder>;
-  id?: InputMaybe<SortOrder>;
-  picture?: InputMaybe<SortOrder>;
-  updated_at?: InputMaybe<SortOrder>;
-  userId?: InputMaybe<SortOrder>;
-};
-
-export type ReplyOrderByRelationAggregateInput = {
-  _count?: InputMaybe<SortOrder>;
-};
-
-export type ReplyOrderByWithAggregationInput = {
-  _count?: InputMaybe<ReplyCountOrderByAggregateInput>;
-  _max?: InputMaybe<ReplyMaxOrderByAggregateInput>;
-  _min?: InputMaybe<ReplyMinOrderByAggregateInput>;
-  commentId?: InputMaybe<SortOrder>;
-  content?: InputMaybe<SortOrder>;
-  created_at?: InputMaybe<SortOrder>;
-  id?: InputMaybe<SortOrder>;
-  picture?: InputMaybe<SortOrder>;
-  updated_at?: InputMaybe<SortOrder>;
-  userId?: InputMaybe<SortOrder>;
-};
-
-export type ReplyOrderByWithRelationInput = {
-  Comment?: InputMaybe<CommentOrderByWithRelationInput>;
-  author?: InputMaybe<UserOrderByWithRelationInput>;
-  commentId?: InputMaybe<SortOrder>;
-  content?: InputMaybe<SortOrder>;
-  created_at?: InputMaybe<SortOrder>;
-  id?: InputMaybe<SortOrder>;
-  picture?: InputMaybe<SortOrder>;
-  updated_at?: InputMaybe<SortOrder>;
-  userId?: InputMaybe<SortOrder>;
-};
-
-export enum ReplyScalarFieldEnum {
-  CommentId = 'commentId',
-  Content = 'content',
-  CreatedAt = 'created_at',
-  Id = 'id',
-  Picture = 'picture',
-  UpdatedAt = 'updated_at',
-  UserId = 'userId'
-}
-
-export type ReplyScalarWhereInput = {
-  AND?: InputMaybe<Array<ReplyScalarWhereInput>>;
-  NOT?: InputMaybe<Array<ReplyScalarWhereInput>>;
-  OR?: InputMaybe<Array<ReplyScalarWhereInput>>;
-  commentId?: InputMaybe<StringFilter>;
-  content?: InputMaybe<StringFilter>;
-  created_at?: InputMaybe<DateTimeFilter>;
-  id?: InputMaybe<StringFilter>;
-  picture?: InputMaybe<StringNullableFilter>;
-  updated_at?: InputMaybe<DateTimeFilter>;
-  userId?: InputMaybe<StringFilter>;
-};
-
-export type ReplyScalarWhereWithAggregatesInput = {
-  AND?: InputMaybe<Array<ReplyScalarWhereWithAggregatesInput>>;
-  NOT?: InputMaybe<Array<ReplyScalarWhereWithAggregatesInput>>;
-  OR?: InputMaybe<Array<ReplyScalarWhereWithAggregatesInput>>;
-  commentId?: InputMaybe<StringWithAggregatesFilter>;
-  content?: InputMaybe<StringWithAggregatesFilter>;
-  created_at?: InputMaybe<DateTimeWithAggregatesFilter>;
-  id?: InputMaybe<StringWithAggregatesFilter>;
-  picture?: InputMaybe<StringNullableWithAggregatesFilter>;
-  updated_at?: InputMaybe<DateTimeWithAggregatesFilter>;
-  userId?: InputMaybe<StringWithAggregatesFilter>;
-};
-
-export type ReplyUpdateInput = {
-  Comment?: InputMaybe<CommentUpdateOneRequiredWithoutReplyInput>;
-  author?: InputMaybe<UserUpdateOneRequiredWithoutReplyInput>;
-  content?: InputMaybe<StringFieldUpdateOperationsInput>;
-  created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  id?: InputMaybe<StringFieldUpdateOperationsInput>;
-  picture?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
-  updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-};
-
-export type ReplyUpdateManyMutationInput = {
-  content?: InputMaybe<StringFieldUpdateOperationsInput>;
-  created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  id?: InputMaybe<StringFieldUpdateOperationsInput>;
-  picture?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
-  updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-};
-
-export type ReplyUpdateManyWithWhereWithoutAuthorInput = {
-  data: ReplyUpdateManyMutationInput;
-  where: ReplyScalarWhereInput;
-};
-
-export type ReplyUpdateManyWithWhereWithoutCommentInput = {
-  data: ReplyUpdateManyMutationInput;
-  where: ReplyScalarWhereInput;
-};
-
-export type ReplyUpdateManyWithoutAuthorInput = {
-  connect?: InputMaybe<Array<ReplyWhereUniqueInput>>;
-  connectOrCreate?: InputMaybe<Array<ReplyCreateOrConnectWithoutAuthorInput>>;
-  create?: InputMaybe<Array<ReplyCreateWithoutAuthorInput>>;
-  createMany?: InputMaybe<ReplyCreateManyAuthorInputEnvelope>;
-  delete?: InputMaybe<Array<ReplyWhereUniqueInput>>;
-  deleteMany?: InputMaybe<Array<ReplyScalarWhereInput>>;
-  disconnect?: InputMaybe<Array<ReplyWhereUniqueInput>>;
-  set?: InputMaybe<Array<ReplyWhereUniqueInput>>;
-  update?: InputMaybe<Array<ReplyUpdateWithWhereUniqueWithoutAuthorInput>>;
-  updateMany?: InputMaybe<Array<ReplyUpdateManyWithWhereWithoutAuthorInput>>;
-  upsert?: InputMaybe<Array<ReplyUpsertWithWhereUniqueWithoutAuthorInput>>;
-};
-
-export type ReplyUpdateManyWithoutCommentInput = {
-  connect?: InputMaybe<Array<ReplyWhereUniqueInput>>;
-  connectOrCreate?: InputMaybe<Array<ReplyCreateOrConnectWithoutCommentInput>>;
-  create?: InputMaybe<Array<ReplyCreateWithoutCommentInput>>;
-  createMany?: InputMaybe<ReplyCreateManyCommentInputEnvelope>;
-  delete?: InputMaybe<Array<ReplyWhereUniqueInput>>;
-  deleteMany?: InputMaybe<Array<ReplyScalarWhereInput>>;
-  disconnect?: InputMaybe<Array<ReplyWhereUniqueInput>>;
-  set?: InputMaybe<Array<ReplyWhereUniqueInput>>;
-  update?: InputMaybe<Array<ReplyUpdateWithWhereUniqueWithoutCommentInput>>;
-  updateMany?: InputMaybe<Array<ReplyUpdateManyWithWhereWithoutCommentInput>>;
-  upsert?: InputMaybe<Array<ReplyUpsertWithWhereUniqueWithoutCommentInput>>;
-};
-
-export type ReplyUpdateWithWhereUniqueWithoutAuthorInput = {
-  data: ReplyUpdateWithoutAuthorInput;
-  where: ReplyWhereUniqueInput;
-};
-
-export type ReplyUpdateWithWhereUniqueWithoutCommentInput = {
-  data: ReplyUpdateWithoutCommentInput;
-  where: ReplyWhereUniqueInput;
-};
-
-export type ReplyUpdateWithoutAuthorInput = {
-  Comment?: InputMaybe<CommentUpdateOneRequiredWithoutReplyInput>;
-  content?: InputMaybe<StringFieldUpdateOperationsInput>;
-  created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  id?: InputMaybe<StringFieldUpdateOperationsInput>;
-  picture?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
-  updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-};
-
-export type ReplyUpdateWithoutCommentInput = {
-  author?: InputMaybe<UserUpdateOneRequiredWithoutReplyInput>;
-  content?: InputMaybe<StringFieldUpdateOperationsInput>;
-  created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  id?: InputMaybe<StringFieldUpdateOperationsInput>;
-  picture?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
-  updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-};
-
-export type ReplyUpsertWithWhereUniqueWithoutAuthorInput = {
-  create: ReplyCreateWithoutAuthorInput;
-  update: ReplyUpdateWithoutAuthorInput;
-  where: ReplyWhereUniqueInput;
-};
-
-export type ReplyUpsertWithWhereUniqueWithoutCommentInput = {
-  create: ReplyCreateWithoutCommentInput;
-  update: ReplyUpdateWithoutCommentInput;
-  where: ReplyWhereUniqueInput;
-};
-
-export type ReplyWhereInput = {
-  AND?: InputMaybe<Array<ReplyWhereInput>>;
-  Comment?: InputMaybe<CommentRelationFilter>;
-  NOT?: InputMaybe<Array<ReplyWhereInput>>;
-  OR?: InputMaybe<Array<ReplyWhereInput>>;
-  author?: InputMaybe<UserRelationFilter>;
-  commentId?: InputMaybe<StringFilter>;
-  content?: InputMaybe<StringFilter>;
-  created_at?: InputMaybe<DateTimeFilter>;
-  id?: InputMaybe<StringFilter>;
-  picture?: InputMaybe<StringNullableFilter>;
-  updated_at?: InputMaybe<DateTimeFilter>;
-  userId?: InputMaybe<StringFilter>;
-};
-
-export type ReplyWhereUniqueInput = {
-  id?: InputMaybe<Scalars['String']>;
 };
 
 export type ResetPassword = {
@@ -3119,8 +3226,8 @@ export type TagWhereUniqueInput = {
 export type User = {
   __typename?: 'User';
   Comment: Array<Comment>;
+  Like: Array<Like>;
   Post: Array<Post>;
-  Reply: Array<Reply>;
   ResetPassword: Array<ResetPassword>;
   _count: Maybe<UserCount>;
   avatar: Maybe<Scalars['String']>;
@@ -3146,6 +3253,16 @@ export type UserCommentArgs = {
 };
 
 
+export type UserLikeArgs = {
+  cursor: InputMaybe<LikeWhereUniqueInput>;
+  distinct: InputMaybe<Array<LikeScalarFieldEnum>>;
+  orderBy: InputMaybe<Array<LikeOrderByWithRelationInput>>;
+  skip: InputMaybe<Scalars['Int']>;
+  take: InputMaybe<Scalars['Int']>;
+  where: InputMaybe<LikeWhereInput>;
+};
+
+
 export type UserPostArgs = {
   cursor: InputMaybe<PostWhereUniqueInput>;
   distinct: InputMaybe<Array<PostScalarFieldEnum>>;
@@ -3153,16 +3270,6 @@ export type UserPostArgs = {
   skip: InputMaybe<Scalars['Int']>;
   take: InputMaybe<Scalars['Int']>;
   where: InputMaybe<PostWhereInput>;
-};
-
-
-export type UserReplyArgs = {
-  cursor: InputMaybe<ReplyWhereUniqueInput>;
-  distinct: InputMaybe<Array<ReplyScalarFieldEnum>>;
-  orderBy: InputMaybe<Array<ReplyOrderByWithRelationInput>>;
-  skip: InputMaybe<Scalars['Int']>;
-  take: InputMaybe<Scalars['Int']>;
-  where: InputMaybe<ReplyWhereInput>;
 };
 
 
@@ -3178,8 +3285,8 @@ export type UserResetPasswordArgs = {
 export type UserCount = {
   __typename?: 'UserCount';
   Comment: Scalars['Int'];
+  Like: Scalars['Int'];
   Post: Scalars['Int'];
-  Reply: Scalars['Int'];
   ResetPassword: Scalars['Int'];
 };
 
@@ -3215,8 +3322,8 @@ export type UserCountOrderByAggregateInput = {
 
 export type UserCreateInput = {
   Comment?: InputMaybe<CommentCreateNestedManyWithoutAuthorInput>;
+  Like?: InputMaybe<LikeCreateNestedManyWithoutUserInput>;
   Post?: InputMaybe<PostCreateNestedManyWithoutAuthorInput>;
-  Reply?: InputMaybe<ReplyCreateNestedManyWithoutAuthorInput>;
   ResetPassword?: InputMaybe<ResetPasswordCreateNestedManyWithoutUserInput>;
   avatar?: InputMaybe<Scalars['String']>;
   created_at?: InputMaybe<Scalars['DateTime']>;
@@ -3251,20 +3358,25 @@ export type UserCreateNestedOneWithoutCommentInput = {
   create?: InputMaybe<UserCreateWithoutCommentInput>;
 };
 
+export type UserCreateNestedOneWithoutLikeInput = {
+  connect?: InputMaybe<UserWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<UserCreateOrConnectWithoutLikeInput>;
+  create?: InputMaybe<UserCreateWithoutLikeInput>;
+};
+
 export type UserCreateNestedOneWithoutPostInput = {
   connect?: InputMaybe<UserWhereUniqueInput>;
   connectOrCreate?: InputMaybe<UserCreateOrConnectWithoutPostInput>;
   create?: InputMaybe<UserCreateWithoutPostInput>;
 };
 
-export type UserCreateNestedOneWithoutReplyInput = {
-  connect?: InputMaybe<UserWhereUniqueInput>;
-  connectOrCreate?: InputMaybe<UserCreateOrConnectWithoutReplyInput>;
-  create?: InputMaybe<UserCreateWithoutReplyInput>;
-};
-
 export type UserCreateOrConnectWithoutCommentInput = {
   create: UserCreateWithoutCommentInput;
+  where: UserWhereUniqueInput;
+};
+
+export type UserCreateOrConnectWithoutLikeInput = {
+  create: UserCreateWithoutLikeInput;
   where: UserWhereUniqueInput;
 };
 
@@ -3273,14 +3385,26 @@ export type UserCreateOrConnectWithoutPostInput = {
   where: UserWhereUniqueInput;
 };
 
-export type UserCreateOrConnectWithoutReplyInput = {
-  create: UserCreateWithoutReplyInput;
-  where: UserWhereUniqueInput;
+export type UserCreateWithoutCommentInput = {
+  Like?: InputMaybe<LikeCreateNestedManyWithoutUserInput>;
+  Post?: InputMaybe<PostCreateNestedManyWithoutAuthorInput>;
+  ResetPassword?: InputMaybe<ResetPasswordCreateNestedManyWithoutUserInput>;
+  avatar?: InputMaybe<Scalars['String']>;
+  created_at?: InputMaybe<Scalars['DateTime']>;
+  email: Scalars['String'];
+  first_name?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']>;
+  is_disabled: Scalars['Boolean'];
+  last_name?: InputMaybe<Scalars['String']>;
+  nickname: Scalars['String'];
+  password: Scalars['String'];
+  role?: InputMaybe<UserCreateroleInput>;
+  updated_at?: InputMaybe<Scalars['DateTime']>;
 };
 
-export type UserCreateWithoutCommentInput = {
+export type UserCreateWithoutLikeInput = {
+  Comment?: InputMaybe<CommentCreateNestedManyWithoutAuthorInput>;
   Post?: InputMaybe<PostCreateNestedManyWithoutAuthorInput>;
-  Reply?: InputMaybe<ReplyCreateNestedManyWithoutAuthorInput>;
   ResetPassword?: InputMaybe<ResetPasswordCreateNestedManyWithoutUserInput>;
   avatar?: InputMaybe<Scalars['String']>;
   created_at?: InputMaybe<Scalars['DateTime']>;
@@ -3297,24 +3421,7 @@ export type UserCreateWithoutCommentInput = {
 
 export type UserCreateWithoutPostInput = {
   Comment?: InputMaybe<CommentCreateNestedManyWithoutAuthorInput>;
-  Reply?: InputMaybe<ReplyCreateNestedManyWithoutAuthorInput>;
-  ResetPassword?: InputMaybe<ResetPasswordCreateNestedManyWithoutUserInput>;
-  avatar?: InputMaybe<Scalars['String']>;
-  created_at?: InputMaybe<Scalars['DateTime']>;
-  email: Scalars['String'];
-  first_name?: InputMaybe<Scalars['String']>;
-  id?: InputMaybe<Scalars['String']>;
-  is_disabled: Scalars['Boolean'];
-  last_name?: InputMaybe<Scalars['String']>;
-  nickname: Scalars['String'];
-  password: Scalars['String'];
-  role?: InputMaybe<UserCreateroleInput>;
-  updated_at?: InputMaybe<Scalars['DateTime']>;
-};
-
-export type UserCreateWithoutReplyInput = {
-  Comment?: InputMaybe<CommentCreateNestedManyWithoutAuthorInput>;
-  Post?: InputMaybe<PostCreateNestedManyWithoutAuthorInput>;
+  Like?: InputMaybe<LikeCreateNestedManyWithoutUserInput>;
   ResetPassword?: InputMaybe<ResetPasswordCreateNestedManyWithoutUserInput>;
   avatar?: InputMaybe<Scalars['String']>;
   created_at?: InputMaybe<Scalars['DateTime']>;
@@ -3424,8 +3531,8 @@ export type UserOrderByWithAggregationInput = {
 
 export type UserOrderByWithRelationInput = {
   Comment?: InputMaybe<CommentOrderByRelationAggregateInput>;
+  Like?: InputMaybe<LikeOrderByRelationAggregateInput>;
   Post?: InputMaybe<PostOrderByRelationAggregateInput>;
-  Reply?: InputMaybe<ReplyOrderByRelationAggregateInput>;
   ResetPassword?: InputMaybe<ResetPasswordOrderByRelationAggregateInput>;
   avatar?: InputMaybe<SortOrder>;
   created_at?: InputMaybe<SortOrder>;
@@ -3478,8 +3585,8 @@ export type UserScalarWhereWithAggregatesInput = {
 
 export type UserUpdateInput = {
   Comment?: InputMaybe<CommentUpdateManyWithoutAuthorInput>;
+  Like?: InputMaybe<LikeUpdateManyWithoutUserInput>;
   Post?: InputMaybe<PostUpdateManyWithoutAuthorInput>;
-  Reply?: InputMaybe<ReplyUpdateManyWithoutAuthorInput>;
   ResetPassword?: InputMaybe<ResetPasswordUpdateManyWithoutUserInput>;
   avatar?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
@@ -3516,6 +3623,14 @@ export type UserUpdateOneRequiredWithoutCommentInput = {
   upsert?: InputMaybe<UserUpsertWithoutCommentInput>;
 };
 
+export type UserUpdateOneRequiredWithoutLikeInput = {
+  connect?: InputMaybe<UserWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<UserCreateOrConnectWithoutLikeInput>;
+  create?: InputMaybe<UserCreateWithoutLikeInput>;
+  update?: InputMaybe<UserUpdateWithoutLikeInput>;
+  upsert?: InputMaybe<UserUpsertWithoutLikeInput>;
+};
+
 export type UserUpdateOneRequiredWithoutPostInput = {
   connect?: InputMaybe<UserWhereUniqueInput>;
   connectOrCreate?: InputMaybe<UserCreateOrConnectWithoutPostInput>;
@@ -3524,17 +3639,26 @@ export type UserUpdateOneRequiredWithoutPostInput = {
   upsert?: InputMaybe<UserUpsertWithoutPostInput>;
 };
 
-export type UserUpdateOneRequiredWithoutReplyInput = {
-  connect?: InputMaybe<UserWhereUniqueInput>;
-  connectOrCreate?: InputMaybe<UserCreateOrConnectWithoutReplyInput>;
-  create?: InputMaybe<UserCreateWithoutReplyInput>;
-  update?: InputMaybe<UserUpdateWithoutReplyInput>;
-  upsert?: InputMaybe<UserUpsertWithoutReplyInput>;
+export type UserUpdateWithoutCommentInput = {
+  Like?: InputMaybe<LikeUpdateManyWithoutUserInput>;
+  Post?: InputMaybe<PostUpdateManyWithoutAuthorInput>;
+  ResetPassword?: InputMaybe<ResetPasswordUpdateManyWithoutUserInput>;
+  avatar?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  email?: InputMaybe<StringFieldUpdateOperationsInput>;
+  first_name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  last_name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  nickname?: InputMaybe<StringFieldUpdateOperationsInput>;
+  password?: InputMaybe<StringFieldUpdateOperationsInput>;
+  role?: InputMaybe<UserUpdateroleInput>;
+  updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
 };
 
-export type UserUpdateWithoutCommentInput = {
+export type UserUpdateWithoutLikeInput = {
+  Comment?: InputMaybe<CommentUpdateManyWithoutAuthorInput>;
   Post?: InputMaybe<PostUpdateManyWithoutAuthorInput>;
-  Reply?: InputMaybe<ReplyUpdateManyWithoutAuthorInput>;
   ResetPassword?: InputMaybe<ResetPasswordUpdateManyWithoutUserInput>;
   avatar?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
@@ -3551,24 +3675,7 @@ export type UserUpdateWithoutCommentInput = {
 
 export type UserUpdateWithoutPostInput = {
   Comment?: InputMaybe<CommentUpdateManyWithoutAuthorInput>;
-  Reply?: InputMaybe<ReplyUpdateManyWithoutAuthorInput>;
-  ResetPassword?: InputMaybe<ResetPasswordUpdateManyWithoutUserInput>;
-  avatar?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
-  created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  email?: InputMaybe<StringFieldUpdateOperationsInput>;
-  first_name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
-  id?: InputMaybe<StringFieldUpdateOperationsInput>;
-  is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
-  last_name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
-  nickname?: InputMaybe<StringFieldUpdateOperationsInput>;
-  password?: InputMaybe<StringFieldUpdateOperationsInput>;
-  role?: InputMaybe<UserUpdateroleInput>;
-  updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-};
-
-export type UserUpdateWithoutReplyInput = {
-  Comment?: InputMaybe<CommentUpdateManyWithoutAuthorInput>;
-  Post?: InputMaybe<PostUpdateManyWithoutAuthorInput>;
+  Like?: InputMaybe<LikeUpdateManyWithoutUserInput>;
   ResetPassword?: InputMaybe<ResetPasswordUpdateManyWithoutUserInput>;
   avatar?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
@@ -3593,23 +3700,23 @@ export type UserUpsertWithoutCommentInput = {
   update: UserUpdateWithoutCommentInput;
 };
 
+export type UserUpsertWithoutLikeInput = {
+  create: UserCreateWithoutLikeInput;
+  update: UserUpdateWithoutLikeInput;
+};
+
 export type UserUpsertWithoutPostInput = {
   create: UserCreateWithoutPostInput;
   update: UserUpdateWithoutPostInput;
 };
 
-export type UserUpsertWithoutReplyInput = {
-  create: UserCreateWithoutReplyInput;
-  update: UserUpdateWithoutReplyInput;
-};
-
 export type UserWhereInput = {
   AND?: InputMaybe<Array<UserWhereInput>>;
   Comment?: InputMaybe<CommentListRelationFilter>;
+  Like?: InputMaybe<LikeListRelationFilter>;
   NOT?: InputMaybe<Array<UserWhereInput>>;
   OR?: InputMaybe<Array<UserWhereInput>>;
   Post?: InputMaybe<PostListRelationFilter>;
-  Reply?: InputMaybe<ReplyListRelationFilter>;
   ResetPassword?: InputMaybe<ResetPasswordListRelationFilter>;
   avatar?: InputMaybe<StringNullableFilter>;
   created_at?: InputMaybe<DateTimeFilter>;
@@ -3677,7 +3784,6 @@ export type GetAllCategoriesQuery = { __typename?: 'Query', categories: Array<{ 
 
 export type GetAllPostCommentsQueryVariables = Exact<{
   where: InputMaybe<CommentWhereInput>;
-  orderBy: InputMaybe<Array<CommentOrderByWithRelationInput> | CommentOrderByWithRelationInput>;
 }>;
 
 
@@ -3945,8 +4051,8 @@ export type GetAllCategoriesQueryHookResult = ReturnType<typeof useGetAllCategor
 export type GetAllCategoriesLazyQueryHookResult = ReturnType<typeof useGetAllCategoriesLazyQuery>;
 export type GetAllCategoriesQueryResult = Apollo.QueryResult<GetAllCategoriesQuery, GetAllCategoriesQueryVariables>;
 export const GetAllPostCommentsDocument = gql`
-    query getAllPostComments($where: CommentWhereInput, $orderBy: [CommentOrderByWithRelationInput!]) {
-  comments(where: $where, orderBy: $orderBy) {
+    query getAllPostComments($where: CommentWhereInput) {
+  comments(where: $where) {
     id
     content
     created_at
@@ -3973,7 +4079,6 @@ export const GetAllPostCommentsDocument = gql`
  * const { data, loading, error } = useGetAllPostCommentsQuery({
  *   variables: {
  *      where: // value for 'where'
- *      orderBy: // value for 'orderBy'
  *   },
  * });
  */

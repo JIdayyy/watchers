@@ -1,12 +1,13 @@
 import { Flex, Text } from "@chakra-ui/react";
 import CommentCard from "@components/Comments/CommentCard";
 import { useRouter } from "next/router";
-import {
-    StringNullableFilter,
-    useGetAllPostCommentsQuery,
-} from "src/generated/graphql";
+import { useGetAllPostCommentsQuery } from "src/generated/graphql";
 
-export default function CommentList(): JSX.Element {
+interface IProps {
+    parentId: string;
+}
+
+export default function ReplyList({ parentId }: IProps): JSX.Element {
     const { query } = useRouter();
     const { data } = useGetAllPostCommentsQuery({
         variables: {
@@ -14,7 +15,9 @@ export default function CommentList(): JSX.Element {
                 postSlug: {
                     equals: query.slug as string,
                 },
-                parent_id: null as unknown as StringNullableFilter,
+                parent_id: {
+                    equals: parentId,
+                },
             },
         },
     });

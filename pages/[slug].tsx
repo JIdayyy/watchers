@@ -47,7 +47,7 @@ export default function Watch({ post }: IProps): JSX.Element {
 
             <Grid
                 alignItems="start"
-                w="7xl"
+                w={["full", "full", "7xl"]}
                 px={[3, 2, 2, 0]}
                 pb={10}
                 gap={7}
@@ -80,6 +80,7 @@ export default function Watch({ post }: IProps): JSX.Element {
                         <Flex
                             direction="column"
                             p={5}
+                            px={5}
                             w="full"
                             justifyContent="flex-start"
                             alignItems="flex-start"

@@ -26,6 +26,7 @@ export default function UserMenu(): JSX.Element {
     return (
         <Menu>
             <MenuButton
+                display={["none", "block"]}
                 px={4}
                 py={2}
                 transition="all 0.2s"

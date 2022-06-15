@@ -3,6 +3,7 @@ import {
     Flex,
     Grid,
     GridItem,
+    Icon,
     Input,
     InputGroup,
     InputRightElement,
@@ -17,6 +18,7 @@ import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import SearchModal from "@components/Modals/SearchModal";
 import UserMenu from "@components/Menu/UserMenu";
+import { FiMenu } from "react-icons/fi";
 
 export default function Navbar(): JSX.Element {
     const router = useRouter();
@@ -55,8 +57,19 @@ export default function Navbar(): JSX.Element {
             justifyContent="center"
             alignItems="center"
         >
-            <Grid w="7xl" gap={7} templateColumns="repeat(5, 1fr)">
-                <GridItem colSpan={1}>
+            <Grid
+                w={["full", "7xl"]}
+                gap={[0, 7]}
+                templateColumns="repeat(5, 1fr)"
+            >
+                <GridItem display="flex" colSpan={1}>
+                    <Button
+                        display={["block", "none"]}
+                        bg="transparent"
+                        size="md"
+                    >
+                        <Icon as={FiMenu} size={20} />
+                    </Button>
                     <Button
                         _focus={{ border: "0px" }}
                         bg="black"
@@ -77,8 +90,8 @@ export default function Navbar(): JSX.Element {
                         />
                     </Button>
                 </GridItem>
-                <GridItem display="flex" colSpan={3}>
-                    <InputGroup>
+                <GridItem display="flex" colSpan={[0, 3]}>
+                    <InputGroup display={["none", "none", "block"]}>
                         <InputRightElement
                             pointerEvents="none"
                             children={
@@ -103,13 +116,15 @@ export default function Navbar(): JSX.Element {
                 <GridItem colSpan={1} display="flex" flexDirection="row">
                     {user.id ? (
                         <Flex
+                            display={["none", "flex"]}
                             w="full"
                             alignItems="center"
-                            justifyContent="flex-end"
+                            justifyContent="space-between"
                         >
                             <Button
-                                mx={2}
-                                w="50%"
+                                mr={2}
+                                px={2}
+                                w={["100%", "70%"]}
                                 color="white"
                                 bg="blue.400"
                                 _focus={{ border: "0px" }}

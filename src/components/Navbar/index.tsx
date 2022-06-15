@@ -16,6 +16,7 @@ import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import SearchModal from "@components/Modals/SearchModal";
+import UserMenu from "@components/Menu/UserMenu";
 
 export default function Navbar(): JSX.Element {
     const router = useRouter();
@@ -101,15 +102,24 @@ export default function Navbar(): JSX.Element {
                 </GridItem>
                 <GridItem colSpan={1} display="flex" flexDirection="row">
                     {user.id ? (
-                        <Button
-                            color="white"
-                            bg="blue.400"
-                            _focus={{ border: "0px" }}
-                            onClick={() => router.push("/new")}
+                        <Flex
                             w="full"
+                            alignItems="center"
+                            justifyContent="flex-end"
                         >
-                            Add Watch
-                        </Button>
+                            <Button
+                                mx={2}
+                                w="50%"
+                                color="white"
+                                bg="blue.400"
+                                _focus={{ border: "0px" }}
+                                onClick={() => router.push("/new")}
+                            >
+                                Add Watch
+                            </Button>
+
+                            <UserMenu />
+                        </Flex>
                     ) : (
                         <>
                             <Button

@@ -1,4 +1,4 @@
-import { Box, Flex, Text } from "@chakra-ui/react";
+import { Box, Flex, Icon, Text } from "@chakra-ui/react";
 import { RootState } from "@redux/reducers";
 import { DateTime } from "luxon";
 import Image from "next/image";
@@ -6,6 +6,8 @@ import { useRouter } from "next/router";
 import React from "react";
 import { useSelector } from "react-redux";
 import { GetAllPostsQuery } from "src/generated/graphql";
+import { AiFillLike } from "react-icons/ai";
+import { TbMessageCircle2 } from "react-icons/tb";
 
 interface IProps {
     watch: GetAllPostsQuery["posts"][number];
@@ -90,8 +92,14 @@ export default function WatchCard({ watch, isMain }: IProps): JSX.Element {
                         ))}
                     </Flex>
                     <Flex>
-                        <Text mr={5}>12 Likes</Text>
-                        <Text>{watch.commentCount.count} Comments</Text>
+                        <Text mr={5}>
+                            <Icon mr={1} as={AiFillLike} size={10} />
+                            10 Likes
+                        </Text>
+                        <Text>
+                            <Icon mr={1} as={TbMessageCircle2} size={10} />
+                            {watch.commentCount.count} Comments
+                        </Text>
                     </Flex>
                 </Flex>
             </Flex>

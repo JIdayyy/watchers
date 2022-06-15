@@ -3,7 +3,6 @@ import {
     Flex,
     Grid,
     GridItem,
-    Icon,
     Input,
     InputGroup,
     InputRightElement,
@@ -18,7 +17,7 @@ import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import SearchModal from "@components/Modals/SearchModal";
 import UserMenu from "@components/Menu/UserMenu";
-import { FiMenu } from "react-icons/fi";
+import DrawerMenu from "@components/Menu/DrawerMenu";
 
 export default function Navbar(): JSX.Element {
     const router = useRouter();
@@ -63,17 +62,12 @@ export default function Navbar(): JSX.Element {
                 templateColumns="repeat(5, 1fr)"
             >
                 <GridItem display="flex" colSpan={1}>
-                    <Button
-                        display={["block", "none"]}
-                        bg="transparent"
-                        size="md"
-                    >
-                        <Icon as={FiMenu} size={20} />
-                    </Button>
+                    <DrawerMenu />
                     <Button
                         _focus={{ border: "0px" }}
                         bg="black"
                         px={5}
+                        ml={1}
                         rounded={5}
                         justifyContent="center"
                         alignItems="center"

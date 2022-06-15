@@ -14,6 +14,8 @@ import fontSizes from "./foundations/fontSizes";
  */
 
 const overrides = {
+    config: { initialColorMode: "light", useSystemColorMode: false },
+
     ...styles,
     colors,
     fontSizes,

@@ -19,8 +19,8 @@ import { useRouter } from "next/router";
 import React, { useRef } from "react";
 import { FiMenu } from "react-icons/fi";
 import { useSelector, useDispatch } from "react-redux";
-import navLinks from "src/config/navLinks";
-import { useLogoutMutation, Role } from "src/generated/graphql";
+import navLinks, { INavLink } from "src/config/navLinks";
+import { useLogoutMutation } from "src/generated/graphql";
 
 export default function DrawerMenu(): JSX.Element {
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -34,6 +34,16 @@ export default function DrawerMenu(): JSX.Element {
             onClose();
         },
     });
+
+    const roleFilter = (link: INavLink) => {
+        if (link.role === "ALL") {
+            return true;
+        }
+        if (user.roles.includes(link.role)) {
+            return true;
+        }
+        return false;
+    };
 
     return (
         <>
@@ -60,7 +70,7 @@ export default function DrawerMenu(): JSX.Element {
 
                     <DrawerBody>
                         <Flex rounded={5} direction="column" w="full">
-                            {navLinks.map((link) => (
+                            {navLinks.filter(roleFilter).map((link) => (
                                 <Flex
                                     onClick={() => {
                                         push(link.path);
@@ -90,37 +100,7 @@ export default function DrawerMenu(): JSX.Element {
                                     </Text>
                                 </Flex>
                             ))}
-                            {user?.roles.includes(
-                                Role.Admin || Role.SuperAdmin,
-                            ) && (
-                                <Flex
-                                    onClick={() => {
-                                        push("/admin");
-                                        onClose();
-                                    }}
-                                    cursor="pointer"
-                                    _hover={{ bg: "gray.200" }}
-                                    rounded="md"
-                                    p={3}
-                                    w="full"
-                                    justifyContent="flex-start"
-                                    alignItems="flex-start"
-                                >
-                                    <Image
-                                        src="/icons/admin.png"
-                                        width={20}
-                                        height={20}
-                                    />
-                                    <Text
-                                        mx={2}
-                                        _hover={{
-                                            textDecoration: "underline",
-                                        }}
-                                    >
-                                        Admin
-                                    </Text>
-                                </Flex>
-                            )}
+
                             {user.id && (
                                 <Flex
                                     onClick={() => mutateLogout()}

@@ -5,8 +5,8 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import navLinks from "src/config/navLinks";
-import { Role, useLogoutMutation } from "src/generated/graphql";
+import navLinks, { INavLink } from "src/config/navLinks";
+import { useLogoutMutation } from "src/generated/graphql";
 
 export default function NavigationCard(): JSX.Element {
     const { user } = useSelector((state: RootState) => state.user);
@@ -15,13 +15,23 @@ export default function NavigationCard(): JSX.Element {
         onCompleted: () => dispatch(logout()),
     });
 
+    const roleFilter = (link: INavLink) => {
+        if (link.role === "ALL") {
+            return true;
+        }
+        if (user.roles.includes(link.role)) {
+            return true;
+        }
+        return false;
+    };
+
     return (
         <Flex rounded={5} direction="column" w="full">
-            {navLinks.map((link) => (
+            {navLinks.filter(roleFilter).map((link) => (
                 <Link key={link.id} href={link.path}>
                     <Flex
+                        _hover={{ textDecoration: "underline", bg: "gray.200" }}
                         cursor="pointer"
-                        _hover={{ bg: "gray.200" }}
                         rounded="md"
                         p={3}
                         key={link.id}
@@ -30,35 +40,16 @@ export default function NavigationCard(): JSX.Element {
                         alignItems="flex-start"
                     >
                         <Image src={link.icon} width={20} height={20} />
-                        <Text mx={2} _hover={{ textDecoration: "underline" }}>
-                            {link.name}
-                        </Text>
+                        <Text mx={2}>{link.name}</Text>
                     </Flex>
                 </Link>
             ))}
-            {user?.roles.includes(Role.Admin || Role.SuperAdmin) && (
-                <Link href="/admin">
-                    <Flex
-                        cursor="pointer"
-                        _hover={{ bg: "gray.200" }}
-                        rounded="md"
-                        p={3}
-                        w="full"
-                        justifyContent="flex-start"
-                        alignItems="flex-start"
-                    >
-                        <Image src="/icons/admin.png" width={20} height={20} />
-                        <Text mx={2} _hover={{ textDecoration: "underline" }}>
-                            Admin
-                        </Text>
-                    </Flex>
-                </Link>
-            )}
+
             {user.id && (
                 <Flex
+                    _hover={{ textDecoration: "underline", bg: "gray.200" }}
                     onClick={() => mutateLogout()}
                     cursor="pointer"
-                    _hover={{ bg: "gray.200" }}
                     rounded="md"
                     p={3}
                     w="full"

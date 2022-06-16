@@ -1,0 +1,7 @@
+query GetUserAdditionalInformations($where: PreferenceWhereUniqueInput!) {
+    preference(where: $where) {
+        website
+        location
+        bio
+    }
+}

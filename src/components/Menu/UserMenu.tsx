@@ -60,7 +60,7 @@ export default function UserMenu(): JSX.Element {
                     New Watch
                 </MenuItem>
                 <MenuItem
-                    onClick={() => push("/settings")}
+                    onClick={() => push("/settings/")}
                     _hover={{ bg: "gray.200", textDecor: "underline" }}
                 >
                     Settings

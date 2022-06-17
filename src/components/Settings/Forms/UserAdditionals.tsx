@@ -10,12 +10,12 @@ import {
     Textarea,
 } from "@chakra-ui/react";
 import { RootState } from "@redux/reducers";
-import { useForm } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { useGetUserAdditionalInformationsQuery } from "src/generated/graphql";
 
 export default function UserAdditionalInformations(): JSX.Element {
-    const { setValue, register } = useForm();
+    const { setValue, register } = useFormContext();
     const { user } = useSelector((state: RootState) => state.user);
     const { data } = useGetUserAdditionalInformationsQuery({
         variables: {
@@ -65,10 +65,10 @@ export default function UserAdditionalInformations(): JSX.Element {
                 <FormLabel mt={1}>Website</FormLabel>
                 <Input {...register("website")} />
 
-                <FormLabel mt={1}>Last Name</FormLabel>
+                <FormLabel mt={1}>Location</FormLabel>
                 <Input {...register("location")} />
 
-                <FormLabel mt={1}>Email</FormLabel>
+                <FormLabel mt={1}>Bio</FormLabel>
                 <Textarea {...register("bio")} />
             </VStack>
         </Flex>

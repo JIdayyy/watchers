@@ -11,12 +11,12 @@ import {
 } from "@chakra-ui/react";
 import { RootState } from "@redux/reducers";
 import Image from "next/image";
-import { useForm } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { useGetUserDataQuery } from "src/generated/graphql";
 
 export default function UserInformations(): JSX.Element {
-    const { setValue, register } = useForm();
+    const { setValue, register } = useFormContext();
     const { user } = useSelector((state: RootState) => state.user);
     const { data } = useGetUserDataQuery({
         variables: {
@@ -25,6 +25,7 @@ export default function UserInformations(): JSX.Element {
             },
         },
         onCompleted: (data) => {
+            console.log("ressss", data);
             setValue("firstName", data.user.first_name);
             setValue("lastName", data.user.last_name);
             setValue("email", data.user.email);

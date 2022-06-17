@@ -1,0 +1,17 @@
+mutation UpdateUserPreferences(
+    $where: PreferenceWhereUniqueInput!
+    $data: PreferenceUpdateInput!
+) {
+    updatePreference(where: $where, data: $data) {
+        id
+        showEmail
+        website
+        location
+        skills
+        job
+        education
+        bio
+        color_1
+        color_2
+    }
+}

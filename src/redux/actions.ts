@@ -1,1 +1,1 @@
-export { login, logout } from "@redux/slices/user";
+export { login, logout, update } from "@redux/slices/user";

@@ -60,6 +60,8 @@ export default function Navbar(): JSX.Element {
                 w={["full", "7xl"]}
                 gap={[0, 7]}
                 templateColumns="repeat(5, 1fr)"
+                display={["flex", "grid"]}
+                justifyContent="space-between"
             >
                 <GridItem display="flex" colSpan={[5, 1]}>
                     <Flex w="full" justifyContent="space-between">
@@ -72,7 +74,7 @@ export default function Navbar(): JSX.Element {
                             rounded={5}
                             justifyContent="center"
                             alignItems="center"
-                            w={["50%", "full"]}
+                            w={["70%", "full"]}
                             onClick={() => router.push("/")}
                         >
                             <Text mr={2} color="white" fontWeight="bold">
@@ -84,11 +86,6 @@ export default function Navbar(): JSX.Element {
                                 height={25}
                             />
                         </Button>
-                        {user.id && (
-                            <Flex display={["flex", "none"]}>
-                                <UserMenu />
-                            </Flex>
-                        )}
                     </Flex>
                 </GridItem>
                 <GridItem display="flex" colSpan={[0, 3]}>
@@ -118,12 +115,13 @@ export default function Navbar(): JSX.Element {
                     {user.id ? (
                         <>
                             <Flex
-                                display={["none", "flex"]}
+                                display={["flex", "flex"]}
                                 w="full"
                                 alignItems="center"
-                                justifyContent="space-between"
+                                justifyContent={["flex-end", "space-between"]}
                             >
                                 <Button
+                                    display={["none", "flex"]}
                                     mr={2}
                                     px={2}
                                     w={["100%", "70%"]}
@@ -139,7 +137,7 @@ export default function Navbar(): JSX.Element {
                             </Flex>
                         </>
                     ) : (
-                        <>
+                        <Flex display={["flex", "flex"]} w="full">
                             <Button
                                 onClick={() => router.push("/register")}
                                 mx={1}
@@ -161,7 +159,7 @@ export default function Navbar(): JSX.Element {
                             >
                                 Log In
                             </Button>
-                        </>
+                        </Flex>
                     )}
                 </GridItem>
             </Grid>

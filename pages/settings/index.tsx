@@ -43,6 +43,7 @@ export default function Settings(): JSX.Element {
                 },
             },
             onCompleted: (data) => {
+                console.log("response", data.updateUser);
                 dispatch(update(data.updateUser));
             },
         });

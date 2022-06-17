@@ -46,6 +46,7 @@ export default {
             },
             code: {
                 borderRadius: "10px",
+                fontSize: "12px",
             },
             ol: {
                 marginLeft: "20px",

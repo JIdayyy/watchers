@@ -29,9 +29,10 @@ export default function Preview({
             return;
         }
         code.forEach((el) => {
-            el.innerHTML = `<code class="hljs">${
-                hljs.highlightAuto(el.innerHTML, ["javascript"]).value
-            }</code>`;
+            el.innerHTML = `<code class="hljs">${hljs
+                .highlightAuto(el.innerHTML, ["javascript"])
+                .value.replaceAll("&amp;gt;", ">")
+                .replaceAll("&amp;lt;", "<")}</code>`;
         });
     }, []);
 

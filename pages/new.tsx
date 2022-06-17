@@ -112,9 +112,9 @@ export default function NewWatch(): JSX.Element {
                     },
                     slug: data.title
                         .toLowerCase()
-                        .replace(/[^a-z0-9 -]/g, "") // remove invalid chars
-                        .replace(/\s+/g, "-") // collapse whitespace and replace by -
-                        .replace(/-+/g, "-"), // collapse dashes,
+                        .replace(/[^a-z0-9 -]/g, "")
+                        .replace(/\s+/g, "-")
+                        .replace(/-+/g, "-"),
                     content: value,
                     title: data.title,
                     Tags: {
@@ -195,11 +195,11 @@ export default function NewWatch(): JSX.Element {
                             direction="column"
                             justifyContent="space-between"
                             p={5}
-                            h="40%"
+                            h={["500px", "500px"]}
                             w="full"
                         >
                             <Flex w="full" justifyContent="space-between">
-                                <Flex w="full">
+                                <Flex>
                                     <Button
                                         mr={4}
                                         onClick={handleClickOnUpload}
@@ -236,7 +236,7 @@ export default function NewWatch(): JSX.Element {
                                 {...register("title")}
                                 color="black"
                                 fontWeight="bold"
-                                fontSize="24px"
+                                fontSize={["18px", "24px"]}
                                 border="0px"
                                 _placeholder={{
                                     color: "black",
@@ -246,7 +246,7 @@ export default function NewWatch(): JSX.Element {
                                 _focus={{ border: "0px" }}
                                 placeholder="Add a title here ..."
                             />
-                            <Flex w="full">
+                            <Flex flexWrap="wrap" w="full">
                                 {tags.map((tag) => (
                                     <Flex
                                         justifyContent="center"
@@ -254,8 +254,9 @@ export default function NewWatch(): JSX.Element {
                                         bg="gray.200"
                                         rounded="md"
                                         px={2}
-                                        py={1}
-                                        mx={2}
+                                        py={[0, 1]}
+                                        my={1}
+                                        mx={[1, 2]}
                                     >
                                         <Text
                                             whiteSpace="nowrap"
@@ -274,6 +275,9 @@ export default function NewWatch(): JSX.Element {
                                     </Flex>
                                 ))}
                                 <Input
+                                    onBlur={(e: any) =>
+                                        handleSetTags(e.target.value)
+                                    }
                                     value={tagInput}
                                     onKeyDown={(e: any) => {
                                         if (e.key === "Enter") {
@@ -285,7 +289,7 @@ export default function NewWatch(): JSX.Element {
                                     ) => setTagInput(e.target.value)}
                                     color="black"
                                     fontWeight="bold"
-                                    fontSize="24px"
+                                    fontSize={["18px", "24px"]}
                                     border="0px"
                                     _placeholder={{
                                         color: "black",

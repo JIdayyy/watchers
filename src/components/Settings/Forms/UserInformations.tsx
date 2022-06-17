@@ -50,7 +50,7 @@ export default function UserInformations(): JSX.Element {
 
     return (
         <Flex
-            p={10}
+            p={[5, 5, 10]}
             w="full"
             rounded="md"
             bg="white"

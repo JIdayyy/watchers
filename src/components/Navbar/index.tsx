@@ -61,28 +61,35 @@ export default function Navbar(): JSX.Element {
                 gap={[0, 7]}
                 templateColumns="repeat(5, 1fr)"
             >
-                <GridItem display="flex" colSpan={1}>
-                    <DrawerMenu />
-                    <Button
-                        _focus={{ border: "0px" }}
-                        bg="black"
-                        px={5}
-                        ml={1}
-                        rounded={5}
-                        justifyContent="center"
-                        alignItems="center"
-                        w="full"
-                        onClick={() => router.push("/")}
-                    >
-                        <Text mr={2} color="white" fontWeight="bold">
-                            Tech Watchers
-                        </Text>
-                        <Image
-                            src="/icons/watchers.png"
-                            width={25}
-                            height={25}
-                        />
-                    </Button>
+                <GridItem display="flex" colSpan={[5, 1]}>
+                    <Flex w="full" justifyContent="space-between">
+                        <DrawerMenu />
+                        <Button
+                            _focus={{ border: "0px" }}
+                            bg="black"
+                            px={5}
+                            ml={1}
+                            rounded={5}
+                            justifyContent="center"
+                            alignItems="center"
+                            w={["50%", "full"]}
+                            onClick={() => router.push("/")}
+                        >
+                            <Text mr={2} color="white" fontWeight="bold">
+                                Tech Watchers
+                            </Text>
+                            <Image
+                                src="/icons/watchers.png"
+                                width={25}
+                                height={25}
+                            />
+                        </Button>
+                        {user.id && (
+                            <Flex display={["flex", "none"]}>
+                                <UserMenu />
+                            </Flex>
+                        )}
+                    </Flex>
                 </GridItem>
                 <GridItem display="flex" colSpan={[0, 3]}>
                     <InputGroup display={["none", "none", "block"]}>
@@ -109,26 +116,28 @@ export default function Navbar(): JSX.Element {
                 </GridItem>
                 <GridItem colSpan={1} display="flex" flexDirection="row">
                     {user.id ? (
-                        <Flex
-                            display={["none", "flex"]}
-                            w="full"
-                            alignItems="center"
-                            justifyContent="space-between"
-                        >
-                            <Button
-                                mr={2}
-                                px={2}
-                                w={["100%", "70%"]}
-                                color="white"
-                                bg="blue.400"
-                                _focus={{ border: "0px" }}
-                                onClick={() => router.push("/new")}
+                        <>
+                            <Flex
+                                display={["none", "flex"]}
+                                w="full"
+                                alignItems="center"
+                                justifyContent="space-between"
                             >
-                                Add Watch
-                            </Button>
+                                <Button
+                                    mr={2}
+                                    px={2}
+                                    w={["100%", "70%"]}
+                                    color="white"
+                                    bg="blue.400"
+                                    _focus={{ border: "0px" }}
+                                    onClick={() => router.push("/new")}
+                                >
+                                    Add Watch
+                                </Button>
 
-                            <UserMenu />
-                        </Flex>
+                                <UserMenu />
+                            </Flex>
+                        </>
                     ) : (
                         <>
                             <Button

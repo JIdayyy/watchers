@@ -52,6 +52,13 @@ export type AggregatePost = {
   _min: Maybe<PostMinAggregate>;
 };
 
+export type AggregatePreference = {
+  __typename?: 'AggregatePreference';
+  _count: Maybe<PreferenceCountAggregate>;
+  _max: Maybe<PreferenceMaxAggregate>;
+  _min: Maybe<PreferenceMinAggregate>;
+};
+
 export type AggregateResetPassword = {
   __typename?: 'AggregateResetPassword';
   _count: Maybe<ResetPasswordCountAggregate>;
@@ -1188,10 +1195,12 @@ export type Mutation = {
   createManyComment: AffectedRowsOutput;
   createManyLike: AffectedRowsOutput;
   createManyPost: AffectedRowsOutput;
+  createManyPreference: AffectedRowsOutput;
   createManyResetPassword: AffectedRowsOutput;
   createManyTag: AffectedRowsOutput;
   createManyUser: AffectedRowsOutput;
   createPost: Post;
+  createPreference: Preference;
   createResetPassword: ResetPassword;
   createTag: Tag;
   createUser: User;
@@ -1202,10 +1211,12 @@ export type Mutation = {
   deleteManyComment: AffectedRowsOutput;
   deleteManyLike: AffectedRowsOutput;
   deleteManyPost: AffectedRowsOutput;
+  deleteManyPreference: AffectedRowsOutput;
   deleteManyResetPassword: AffectedRowsOutput;
   deleteManyTag: AffectedRowsOutput;
   deleteManyUser: AffectedRowsOutput;
   deletePost: Maybe<Post>;
+  deletePreference: Maybe<Preference>;
   deleteResetPassword: Maybe<ResetPassword>;
   deleteTag: Maybe<Tag>;
   deleteUser: Maybe<User>;
@@ -1220,10 +1231,12 @@ export type Mutation = {
   updateManyComment: AffectedRowsOutput;
   updateManyLike: AffectedRowsOutput;
   updateManyPost: AffectedRowsOutput;
+  updateManyPreference: AffectedRowsOutput;
   updateManyResetPassword: AffectedRowsOutput;
   updateManyTag: AffectedRowsOutput;
   updateManyUser: AffectedRowsOutput;
   updatePost: Maybe<Post>;
+  updatePreference: Maybe<Preference>;
   updateResetPassword: Maybe<ResetPassword>;
   updateTag: Maybe<Tag>;
   updateUser: Maybe<User>;
@@ -1233,6 +1246,7 @@ export type Mutation = {
   upsertComment: Comment;
   upsertLike: Like;
   upsertPost: Post;
+  upsertPreference: Preference;
   upsertResetPassword: ResetPassword;
   upsertTag: Tag;
   upsertUser: User;
@@ -1278,6 +1292,12 @@ export type MutationCreateManyPostArgs = {
 };
 
 
+export type MutationCreateManyPreferenceArgs = {
+  data: Array<PreferenceCreateManyInput>;
+  skipDuplicates: InputMaybe<Scalars['Boolean']>;
+};
+
+
 export type MutationCreateManyResetPasswordArgs = {
   data: Array<ResetPasswordCreateManyInput>;
   skipDuplicates: InputMaybe<Scalars['Boolean']>;
@@ -1298,6 +1318,11 @@ export type MutationCreateManyUserArgs = {
 
 export type MutationCreatePostArgs = {
   data: PostCreateInput;
+};
+
+
+export type MutationCreatePreferenceArgs = {
+  data: PreferenceCreateInput;
 };
 
 
@@ -1351,6 +1376,11 @@ export type MutationDeleteManyPostArgs = {
 };
 
 
+export type MutationDeleteManyPreferenceArgs = {
+  where: InputMaybe<PreferenceWhereInput>;
+};
+
+
 export type MutationDeleteManyResetPasswordArgs = {
   where: InputMaybe<ResetPasswordWhereInput>;
 };
@@ -1368,6 +1398,11 @@ export type MutationDeleteManyUserArgs = {
 
 export type MutationDeletePostArgs = {
   where: PostWhereUniqueInput;
+};
+
+
+export type MutationDeletePreferenceArgs = {
+  where: PreferenceWhereUniqueInput;
 };
 
 
@@ -1438,6 +1473,12 @@ export type MutationUpdateManyPostArgs = {
 };
 
 
+export type MutationUpdateManyPreferenceArgs = {
+  data: PreferenceUpdateManyMutationInput;
+  where: InputMaybe<PreferenceWhereInput>;
+};
+
+
 export type MutationUpdateManyResetPasswordArgs = {
   data: ResetPasswordUpdateManyMutationInput;
   where: InputMaybe<ResetPasswordWhereInput>;
@@ -1459,6 +1500,12 @@ export type MutationUpdateManyUserArgs = {
 export type MutationUpdatePostArgs = {
   data: PostUpdateInput;
   where: PostWhereUniqueInput;
+};
+
+
+export type MutationUpdatePreferenceArgs = {
+  data: PreferenceUpdateInput;
+  where: PreferenceWhereUniqueInput;
 };
 
 
@@ -1515,6 +1562,13 @@ export type MutationUpsertPostArgs = {
   create: PostCreateInput;
   update: PostUpdateInput;
   where: PostWhereUniqueInput;
+};
+
+
+export type MutationUpsertPreferenceArgs = {
+  create: PreferenceCreateInput;
+  update: PreferenceUpdateInput;
+  where: PreferenceWhereUniqueInput;
 };
 
 
@@ -2360,12 +2414,371 @@ export type PostWhereUniqueInput = {
   slug?: InputMaybe<Scalars['String']>;
 };
 
+export type Preference = {
+  __typename?: 'Preference';
+  User: User;
+  bio: Maybe<Scalars['String']>;
+  color_1: Maybe<Scalars['String']>;
+  color_2: Maybe<Scalars['String']>;
+  created_at: Scalars['DateTime'];
+  education: Maybe<Scalars['String']>;
+  id: Scalars['String'];
+  job: Maybe<Scalars['String']>;
+  location: Maybe<Scalars['String']>;
+  showEmail: Scalars['Boolean'];
+  skills: Maybe<Scalars['String']>;
+  updated_at: Scalars['DateTime'];
+  userId: Scalars['String'];
+  website: Maybe<Scalars['String']>;
+};
+
+export type PreferenceCountAggregate = {
+  __typename?: 'PreferenceCountAggregate';
+  _all: Scalars['Int'];
+  bio: Scalars['Int'];
+  color_1: Scalars['Int'];
+  color_2: Scalars['Int'];
+  created_at: Scalars['Int'];
+  education: Scalars['Int'];
+  id: Scalars['Int'];
+  job: Scalars['Int'];
+  location: Scalars['Int'];
+  showEmail: Scalars['Int'];
+  skills: Scalars['Int'];
+  updated_at: Scalars['Int'];
+  userId: Scalars['Int'];
+  website: Scalars['Int'];
+};
+
+export type PreferenceCountOrderByAggregateInput = {
+  bio?: InputMaybe<SortOrder>;
+  color_1?: InputMaybe<SortOrder>;
+  color_2?: InputMaybe<SortOrder>;
+  created_at?: InputMaybe<SortOrder>;
+  education?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  job?: InputMaybe<SortOrder>;
+  location?: InputMaybe<SortOrder>;
+  showEmail?: InputMaybe<SortOrder>;
+  skills?: InputMaybe<SortOrder>;
+  updated_at?: InputMaybe<SortOrder>;
+  userId?: InputMaybe<SortOrder>;
+  website?: InputMaybe<SortOrder>;
+};
+
+export type PreferenceCreateInput = {
+  User: UserCreateNestedOneWithoutPreferenceInput;
+  bio?: InputMaybe<Scalars['String']>;
+  color_1?: InputMaybe<Scalars['String']>;
+  color_2?: InputMaybe<Scalars['String']>;
+  created_at?: InputMaybe<Scalars['DateTime']>;
+  education?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']>;
+  job?: InputMaybe<Scalars['String']>;
+  location?: InputMaybe<Scalars['String']>;
+  showEmail?: InputMaybe<Scalars['Boolean']>;
+  skills?: InputMaybe<Scalars['String']>;
+  updated_at?: InputMaybe<Scalars['DateTime']>;
+  website?: InputMaybe<Scalars['String']>;
+};
+
+export type PreferenceCreateManyInput = {
+  bio?: InputMaybe<Scalars['String']>;
+  color_1?: InputMaybe<Scalars['String']>;
+  color_2?: InputMaybe<Scalars['String']>;
+  created_at?: InputMaybe<Scalars['DateTime']>;
+  education?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']>;
+  job?: InputMaybe<Scalars['String']>;
+  location?: InputMaybe<Scalars['String']>;
+  showEmail?: InputMaybe<Scalars['Boolean']>;
+  skills?: InputMaybe<Scalars['String']>;
+  updated_at?: InputMaybe<Scalars['DateTime']>;
+  userId: Scalars['String'];
+  website?: InputMaybe<Scalars['String']>;
+};
+
+export type PreferenceCreateNestedOneWithoutUserInput = {
+  connect?: InputMaybe<PreferenceWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<PreferenceCreateOrConnectWithoutUserInput>;
+  create?: InputMaybe<PreferenceCreateWithoutUserInput>;
+};
+
+export type PreferenceCreateOrConnectWithoutUserInput = {
+  create: PreferenceCreateWithoutUserInput;
+  where: PreferenceWhereUniqueInput;
+};
+
+export type PreferenceCreateWithoutUserInput = {
+  bio?: InputMaybe<Scalars['String']>;
+  color_1?: InputMaybe<Scalars['String']>;
+  color_2?: InputMaybe<Scalars['String']>;
+  created_at?: InputMaybe<Scalars['DateTime']>;
+  education?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']>;
+  job?: InputMaybe<Scalars['String']>;
+  location?: InputMaybe<Scalars['String']>;
+  showEmail?: InputMaybe<Scalars['Boolean']>;
+  skills?: InputMaybe<Scalars['String']>;
+  updated_at?: InputMaybe<Scalars['DateTime']>;
+  website?: InputMaybe<Scalars['String']>;
+};
+
+export type PreferenceGroupBy = {
+  __typename?: 'PreferenceGroupBy';
+  _count: Maybe<PreferenceCountAggregate>;
+  _max: Maybe<PreferenceMaxAggregate>;
+  _min: Maybe<PreferenceMinAggregate>;
+  bio: Maybe<Scalars['String']>;
+  color_1: Maybe<Scalars['String']>;
+  color_2: Maybe<Scalars['String']>;
+  created_at: Scalars['DateTime'];
+  education: Maybe<Scalars['String']>;
+  id: Scalars['String'];
+  job: Maybe<Scalars['String']>;
+  location: Maybe<Scalars['String']>;
+  showEmail: Scalars['Boolean'];
+  skills: Maybe<Scalars['String']>;
+  updated_at: Scalars['DateTime'];
+  userId: Scalars['String'];
+  website: Maybe<Scalars['String']>;
+};
+
+export type PreferenceMaxAggregate = {
+  __typename?: 'PreferenceMaxAggregate';
+  bio: Maybe<Scalars['String']>;
+  color_1: Maybe<Scalars['String']>;
+  color_2: Maybe<Scalars['String']>;
+  created_at: Maybe<Scalars['DateTime']>;
+  education: Maybe<Scalars['String']>;
+  id: Maybe<Scalars['String']>;
+  job: Maybe<Scalars['String']>;
+  location: Maybe<Scalars['String']>;
+  showEmail: Maybe<Scalars['Boolean']>;
+  skills: Maybe<Scalars['String']>;
+  updated_at: Maybe<Scalars['DateTime']>;
+  userId: Maybe<Scalars['String']>;
+  website: Maybe<Scalars['String']>;
+};
+
+export type PreferenceMaxOrderByAggregateInput = {
+  bio?: InputMaybe<SortOrder>;
+  color_1?: InputMaybe<SortOrder>;
+  color_2?: InputMaybe<SortOrder>;
+  created_at?: InputMaybe<SortOrder>;
+  education?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  job?: InputMaybe<SortOrder>;
+  location?: InputMaybe<SortOrder>;
+  showEmail?: InputMaybe<SortOrder>;
+  skills?: InputMaybe<SortOrder>;
+  updated_at?: InputMaybe<SortOrder>;
+  userId?: InputMaybe<SortOrder>;
+  website?: InputMaybe<SortOrder>;
+};
+
+export type PreferenceMinAggregate = {
+  __typename?: 'PreferenceMinAggregate';
+  bio: Maybe<Scalars['String']>;
+  color_1: Maybe<Scalars['String']>;
+  color_2: Maybe<Scalars['String']>;
+  created_at: Maybe<Scalars['DateTime']>;
+  education: Maybe<Scalars['String']>;
+  id: Maybe<Scalars['String']>;
+  job: Maybe<Scalars['String']>;
+  location: Maybe<Scalars['String']>;
+  showEmail: Maybe<Scalars['Boolean']>;
+  skills: Maybe<Scalars['String']>;
+  updated_at: Maybe<Scalars['DateTime']>;
+  userId: Maybe<Scalars['String']>;
+  website: Maybe<Scalars['String']>;
+};
+
+export type PreferenceMinOrderByAggregateInput = {
+  bio?: InputMaybe<SortOrder>;
+  color_1?: InputMaybe<SortOrder>;
+  color_2?: InputMaybe<SortOrder>;
+  created_at?: InputMaybe<SortOrder>;
+  education?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  job?: InputMaybe<SortOrder>;
+  location?: InputMaybe<SortOrder>;
+  showEmail?: InputMaybe<SortOrder>;
+  skills?: InputMaybe<SortOrder>;
+  updated_at?: InputMaybe<SortOrder>;
+  userId?: InputMaybe<SortOrder>;
+  website?: InputMaybe<SortOrder>;
+};
+
+export type PreferenceOrderByWithAggregationInput = {
+  _count?: InputMaybe<PreferenceCountOrderByAggregateInput>;
+  _max?: InputMaybe<PreferenceMaxOrderByAggregateInput>;
+  _min?: InputMaybe<PreferenceMinOrderByAggregateInput>;
+  bio?: InputMaybe<SortOrder>;
+  color_1?: InputMaybe<SortOrder>;
+  color_2?: InputMaybe<SortOrder>;
+  created_at?: InputMaybe<SortOrder>;
+  education?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  job?: InputMaybe<SortOrder>;
+  location?: InputMaybe<SortOrder>;
+  showEmail?: InputMaybe<SortOrder>;
+  skills?: InputMaybe<SortOrder>;
+  updated_at?: InputMaybe<SortOrder>;
+  userId?: InputMaybe<SortOrder>;
+  website?: InputMaybe<SortOrder>;
+};
+
+export type PreferenceOrderByWithRelationInput = {
+  User?: InputMaybe<UserOrderByWithRelationInput>;
+  bio?: InputMaybe<SortOrder>;
+  color_1?: InputMaybe<SortOrder>;
+  color_2?: InputMaybe<SortOrder>;
+  created_at?: InputMaybe<SortOrder>;
+  education?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  job?: InputMaybe<SortOrder>;
+  location?: InputMaybe<SortOrder>;
+  showEmail?: InputMaybe<SortOrder>;
+  skills?: InputMaybe<SortOrder>;
+  updated_at?: InputMaybe<SortOrder>;
+  userId?: InputMaybe<SortOrder>;
+  website?: InputMaybe<SortOrder>;
+};
+
+export type PreferenceRelationFilter = {
+  is?: InputMaybe<PreferenceWhereInput>;
+  isNot?: InputMaybe<PreferenceWhereInput>;
+};
+
+export enum PreferenceScalarFieldEnum {
+  Bio = 'bio',
+  Color_1 = 'color_1',
+  Color_2 = 'color_2',
+  CreatedAt = 'created_at',
+  Education = 'education',
+  Id = 'id',
+  Job = 'job',
+  Location = 'location',
+  ShowEmail = 'showEmail',
+  Skills = 'skills',
+  UpdatedAt = 'updated_at',
+  UserId = 'userId',
+  Website = 'website'
+}
+
+export type PreferenceScalarWhereWithAggregatesInput = {
+  AND?: InputMaybe<Array<PreferenceScalarWhereWithAggregatesInput>>;
+  NOT?: InputMaybe<Array<PreferenceScalarWhereWithAggregatesInput>>;
+  OR?: InputMaybe<Array<PreferenceScalarWhereWithAggregatesInput>>;
+  bio?: InputMaybe<StringNullableWithAggregatesFilter>;
+  color_1?: InputMaybe<StringNullableWithAggregatesFilter>;
+  color_2?: InputMaybe<StringNullableWithAggregatesFilter>;
+  created_at?: InputMaybe<DateTimeWithAggregatesFilter>;
+  education?: InputMaybe<StringNullableWithAggregatesFilter>;
+  id?: InputMaybe<StringWithAggregatesFilter>;
+  job?: InputMaybe<StringNullableWithAggregatesFilter>;
+  location?: InputMaybe<StringNullableWithAggregatesFilter>;
+  showEmail?: InputMaybe<BoolWithAggregatesFilter>;
+  skills?: InputMaybe<StringNullableWithAggregatesFilter>;
+  updated_at?: InputMaybe<DateTimeWithAggregatesFilter>;
+  userId?: InputMaybe<StringWithAggregatesFilter>;
+  website?: InputMaybe<StringNullableWithAggregatesFilter>;
+};
+
+export type PreferenceUpdateInput = {
+  User?: InputMaybe<UserUpdateOneRequiredWithoutPreferenceInput>;
+  bio?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  color_1?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  color_2?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  education?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  job?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  location?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  showEmail?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  skills?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  website?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+};
+
+export type PreferenceUpdateManyMutationInput = {
+  bio?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  color_1?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  color_2?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  education?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  job?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  location?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  showEmail?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  skills?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  website?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+};
+
+export type PreferenceUpdateOneWithoutUserInput = {
+  connect?: InputMaybe<PreferenceWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<PreferenceCreateOrConnectWithoutUserInput>;
+  create?: InputMaybe<PreferenceCreateWithoutUserInput>;
+  delete?: InputMaybe<Scalars['Boolean']>;
+  disconnect?: InputMaybe<Scalars['Boolean']>;
+  update?: InputMaybe<PreferenceUpdateWithoutUserInput>;
+  upsert?: InputMaybe<PreferenceUpsertWithoutUserInput>;
+};
+
+export type PreferenceUpdateWithoutUserInput = {
+  bio?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  color_1?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  color_2?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  education?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  job?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  location?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  showEmail?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  skills?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  website?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+};
+
+export type PreferenceUpsertWithoutUserInput = {
+  create: PreferenceCreateWithoutUserInput;
+  update: PreferenceUpdateWithoutUserInput;
+};
+
+export type PreferenceWhereInput = {
+  AND?: InputMaybe<Array<PreferenceWhereInput>>;
+  NOT?: InputMaybe<Array<PreferenceWhereInput>>;
+  OR?: InputMaybe<Array<PreferenceWhereInput>>;
+  User?: InputMaybe<UserRelationFilter>;
+  bio?: InputMaybe<StringNullableFilter>;
+  color_1?: InputMaybe<StringNullableFilter>;
+  color_2?: InputMaybe<StringNullableFilter>;
+  created_at?: InputMaybe<DateTimeFilter>;
+  education?: InputMaybe<StringNullableFilter>;
+  id?: InputMaybe<StringFilter>;
+  job?: InputMaybe<StringNullableFilter>;
+  location?: InputMaybe<StringNullableFilter>;
+  showEmail?: InputMaybe<BoolFilter>;
+  skills?: InputMaybe<StringNullableFilter>;
+  updated_at?: InputMaybe<DateTimeFilter>;
+  userId?: InputMaybe<StringFilter>;
+  website?: InputMaybe<StringNullableFilter>;
+};
+
+export type PreferenceWhereUniqueInput = {
+  id?: InputMaybe<Scalars['String']>;
+  userId?: InputMaybe<Scalars['String']>;
+};
+
 export type Query = {
   __typename?: 'Query';
   aggregateCategory: AggregateCategory;
   aggregateComment: AggregateComment;
   aggregateLike: AggregateLike;
   aggregatePost: AggregatePost;
+  aggregatePreference: AggregatePreference;
   aggregateResetPassword: AggregateResetPassword;
   aggregateTag: AggregateTag;
   aggregateUser: AggregateUser;
@@ -2377,6 +2790,7 @@ export type Query = {
   findFirstComment: Maybe<Comment>;
   findFirstLike: Maybe<Like>;
   findFirstPost: Maybe<Post>;
+  findFirstPreference: Maybe<Preference>;
   findFirstResetPassword: Maybe<ResetPassword>;
   findFirstTag: Maybe<Tag>;
   findFirstUser: Maybe<User>;
@@ -2384,6 +2798,7 @@ export type Query = {
   groupByComment: Array<CommentGroupBy>;
   groupByLike: Array<LikeGroupBy>;
   groupByPost: Array<PostGroupBy>;
+  groupByPreference: Array<PreferenceGroupBy>;
   groupByResetPassword: Array<ResetPasswordGroupBy>;
   groupByTag: Array<TagGroupBy>;
   groupByUser: Array<UserGroupBy>;
@@ -2391,6 +2806,8 @@ export type Query = {
   likes: Array<Like>;
   post: Maybe<Post>;
   posts: Array<Post>;
+  preference: Maybe<Preference>;
+  preferences: Array<Preference>;
   resetPassword: Maybe<ResetPassword>;
   resetPasswords: Array<ResetPassword>;
   tag: Maybe<Tag>;
@@ -2433,6 +2850,15 @@ export type QueryAggregatePostArgs = {
   skip: InputMaybe<Scalars['Int']>;
   take: InputMaybe<Scalars['Int']>;
   where: InputMaybe<PostWhereInput>;
+};
+
+
+export type QueryAggregatePreferenceArgs = {
+  cursor: InputMaybe<PreferenceWhereUniqueInput>;
+  orderBy: InputMaybe<Array<PreferenceOrderByWithRelationInput>>;
+  skip: InputMaybe<Scalars['Int']>;
+  take: InputMaybe<Scalars['Int']>;
+  where: InputMaybe<PreferenceWhereInput>;
 };
 
 
@@ -2533,6 +2959,16 @@ export type QueryFindFirstPostArgs = {
 };
 
 
+export type QueryFindFirstPreferenceArgs = {
+  cursor: InputMaybe<PreferenceWhereUniqueInput>;
+  distinct: InputMaybe<Array<PreferenceScalarFieldEnum>>;
+  orderBy: InputMaybe<Array<PreferenceOrderByWithRelationInput>>;
+  skip: InputMaybe<Scalars['Int']>;
+  take: InputMaybe<Scalars['Int']>;
+  where: InputMaybe<PreferenceWhereInput>;
+};
+
+
 export type QueryFindFirstResetPasswordArgs = {
   cursor: InputMaybe<ResetPasswordWhereUniqueInput>;
   distinct: InputMaybe<Array<ResetPasswordScalarFieldEnum>>;
@@ -2603,6 +3039,16 @@ export type QueryGroupByPostArgs = {
 };
 
 
+export type QueryGroupByPreferenceArgs = {
+  by: Array<PreferenceScalarFieldEnum>;
+  having: InputMaybe<PreferenceScalarWhereWithAggregatesInput>;
+  orderBy: InputMaybe<Array<PreferenceOrderByWithAggregationInput>>;
+  skip: InputMaybe<Scalars['Int']>;
+  take: InputMaybe<Scalars['Int']>;
+  where: InputMaybe<PreferenceWhereInput>;
+};
+
+
 export type QueryGroupByResetPasswordArgs = {
   by: Array<ResetPasswordScalarFieldEnum>;
   having: InputMaybe<ResetPasswordScalarWhereWithAggregatesInput>;
@@ -2660,6 +3106,21 @@ export type QueryPostsArgs = {
   skip: InputMaybe<Scalars['Int']>;
   take: InputMaybe<Scalars['Int']>;
   where: InputMaybe<PostWhereInput>;
+};
+
+
+export type QueryPreferenceArgs = {
+  where: PreferenceWhereUniqueInput;
+};
+
+
+export type QueryPreferencesArgs = {
+  cursor: InputMaybe<PreferenceWhereUniqueInput>;
+  distinct: InputMaybe<Array<PreferenceScalarFieldEnum>>;
+  orderBy: InputMaybe<Array<PreferenceOrderByWithRelationInput>>;
+  skip: InputMaybe<Scalars['Int']>;
+  take: InputMaybe<Scalars['Int']>;
+  where: InputMaybe<PreferenceWhereInput>;
 };
 
 
@@ -3228,6 +3689,7 @@ export type User = {
   Comment: Array<Comment>;
   Like: Array<Like>;
   Post: Array<Post>;
+  Preference: Maybe<Preference>;
   ResetPassword: Array<ResetPassword>;
   _count: Maybe<UserCount>;
   avatar: Maybe<Scalars['String']>;
@@ -3324,6 +3786,7 @@ export type UserCreateInput = {
   Comment?: InputMaybe<CommentCreateNestedManyWithoutAuthorInput>;
   Like?: InputMaybe<LikeCreateNestedManyWithoutUserInput>;
   Post?: InputMaybe<PostCreateNestedManyWithoutAuthorInput>;
+  Preference?: InputMaybe<PreferenceCreateNestedOneWithoutUserInput>;
   ResetPassword?: InputMaybe<ResetPasswordCreateNestedManyWithoutUserInput>;
   avatar?: InputMaybe<Scalars['String']>;
   created_at?: InputMaybe<Scalars['DateTime']>;
@@ -3370,6 +3833,12 @@ export type UserCreateNestedOneWithoutPostInput = {
   create?: InputMaybe<UserCreateWithoutPostInput>;
 };
 
+export type UserCreateNestedOneWithoutPreferenceInput = {
+  connect?: InputMaybe<UserWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<UserCreateOrConnectWithoutPreferenceInput>;
+  create?: InputMaybe<UserCreateWithoutPreferenceInput>;
+};
+
 export type UserCreateOrConnectWithoutCommentInput = {
   create: UserCreateWithoutCommentInput;
   where: UserWhereUniqueInput;
@@ -3385,9 +3854,15 @@ export type UserCreateOrConnectWithoutPostInput = {
   where: UserWhereUniqueInput;
 };
 
+export type UserCreateOrConnectWithoutPreferenceInput = {
+  create: UserCreateWithoutPreferenceInput;
+  where: UserWhereUniqueInput;
+};
+
 export type UserCreateWithoutCommentInput = {
   Like?: InputMaybe<LikeCreateNestedManyWithoutUserInput>;
   Post?: InputMaybe<PostCreateNestedManyWithoutAuthorInput>;
+  Preference?: InputMaybe<PreferenceCreateNestedOneWithoutUserInput>;
   ResetPassword?: InputMaybe<ResetPasswordCreateNestedManyWithoutUserInput>;
   avatar?: InputMaybe<Scalars['String']>;
   created_at?: InputMaybe<Scalars['DateTime']>;
@@ -3405,6 +3880,7 @@ export type UserCreateWithoutCommentInput = {
 export type UserCreateWithoutLikeInput = {
   Comment?: InputMaybe<CommentCreateNestedManyWithoutAuthorInput>;
   Post?: InputMaybe<PostCreateNestedManyWithoutAuthorInput>;
+  Preference?: InputMaybe<PreferenceCreateNestedOneWithoutUserInput>;
   ResetPassword?: InputMaybe<ResetPasswordCreateNestedManyWithoutUserInput>;
   avatar?: InputMaybe<Scalars['String']>;
   created_at?: InputMaybe<Scalars['DateTime']>;
@@ -3422,6 +3898,25 @@ export type UserCreateWithoutLikeInput = {
 export type UserCreateWithoutPostInput = {
   Comment?: InputMaybe<CommentCreateNestedManyWithoutAuthorInput>;
   Like?: InputMaybe<LikeCreateNestedManyWithoutUserInput>;
+  Preference?: InputMaybe<PreferenceCreateNestedOneWithoutUserInput>;
+  ResetPassword?: InputMaybe<ResetPasswordCreateNestedManyWithoutUserInput>;
+  avatar?: InputMaybe<Scalars['String']>;
+  created_at?: InputMaybe<Scalars['DateTime']>;
+  email: Scalars['String'];
+  first_name?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']>;
+  is_disabled: Scalars['Boolean'];
+  last_name?: InputMaybe<Scalars['String']>;
+  nickname: Scalars['String'];
+  password: Scalars['String'];
+  role?: InputMaybe<UserCreateroleInput>;
+  updated_at?: InputMaybe<Scalars['DateTime']>;
+};
+
+export type UserCreateWithoutPreferenceInput = {
+  Comment?: InputMaybe<CommentCreateNestedManyWithoutAuthorInput>;
+  Like?: InputMaybe<LikeCreateNestedManyWithoutUserInput>;
+  Post?: InputMaybe<PostCreateNestedManyWithoutAuthorInput>;
   ResetPassword?: InputMaybe<ResetPasswordCreateNestedManyWithoutUserInput>;
   avatar?: InputMaybe<Scalars['String']>;
   created_at?: InputMaybe<Scalars['DateTime']>;
@@ -3533,6 +4028,7 @@ export type UserOrderByWithRelationInput = {
   Comment?: InputMaybe<CommentOrderByRelationAggregateInput>;
   Like?: InputMaybe<LikeOrderByRelationAggregateInput>;
   Post?: InputMaybe<PostOrderByRelationAggregateInput>;
+  Preference?: InputMaybe<PreferenceOrderByWithRelationInput>;
   ResetPassword?: InputMaybe<ResetPasswordOrderByRelationAggregateInput>;
   avatar?: InputMaybe<SortOrder>;
   created_at?: InputMaybe<SortOrder>;
@@ -3587,6 +4083,7 @@ export type UserUpdateInput = {
   Comment?: InputMaybe<CommentUpdateManyWithoutAuthorInput>;
   Like?: InputMaybe<LikeUpdateManyWithoutUserInput>;
   Post?: InputMaybe<PostUpdateManyWithoutAuthorInput>;
+  Preference?: InputMaybe<PreferenceUpdateOneWithoutUserInput>;
   ResetPassword?: InputMaybe<ResetPasswordUpdateManyWithoutUserInput>;
   avatar?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
@@ -3639,9 +4136,18 @@ export type UserUpdateOneRequiredWithoutPostInput = {
   upsert?: InputMaybe<UserUpsertWithoutPostInput>;
 };
 
+export type UserUpdateOneRequiredWithoutPreferenceInput = {
+  connect?: InputMaybe<UserWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<UserCreateOrConnectWithoutPreferenceInput>;
+  create?: InputMaybe<UserCreateWithoutPreferenceInput>;
+  update?: InputMaybe<UserUpdateWithoutPreferenceInput>;
+  upsert?: InputMaybe<UserUpsertWithoutPreferenceInput>;
+};
+
 export type UserUpdateWithoutCommentInput = {
   Like?: InputMaybe<LikeUpdateManyWithoutUserInput>;
   Post?: InputMaybe<PostUpdateManyWithoutAuthorInput>;
+  Preference?: InputMaybe<PreferenceUpdateOneWithoutUserInput>;
   ResetPassword?: InputMaybe<ResetPasswordUpdateManyWithoutUserInput>;
   avatar?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
@@ -3659,6 +4165,7 @@ export type UserUpdateWithoutCommentInput = {
 export type UserUpdateWithoutLikeInput = {
   Comment?: InputMaybe<CommentUpdateManyWithoutAuthorInput>;
   Post?: InputMaybe<PostUpdateManyWithoutAuthorInput>;
+  Preference?: InputMaybe<PreferenceUpdateOneWithoutUserInput>;
   ResetPassword?: InputMaybe<ResetPasswordUpdateManyWithoutUserInput>;
   avatar?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
@@ -3676,6 +4183,25 @@ export type UserUpdateWithoutLikeInput = {
 export type UserUpdateWithoutPostInput = {
   Comment?: InputMaybe<CommentUpdateManyWithoutAuthorInput>;
   Like?: InputMaybe<LikeUpdateManyWithoutUserInput>;
+  Preference?: InputMaybe<PreferenceUpdateOneWithoutUserInput>;
+  ResetPassword?: InputMaybe<ResetPasswordUpdateManyWithoutUserInput>;
+  avatar?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  email?: InputMaybe<StringFieldUpdateOperationsInput>;
+  first_name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  last_name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  nickname?: InputMaybe<StringFieldUpdateOperationsInput>;
+  password?: InputMaybe<StringFieldUpdateOperationsInput>;
+  role?: InputMaybe<UserUpdateroleInput>;
+  updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+};
+
+export type UserUpdateWithoutPreferenceInput = {
+  Comment?: InputMaybe<CommentUpdateManyWithoutAuthorInput>;
+  Like?: InputMaybe<LikeUpdateManyWithoutUserInput>;
+  Post?: InputMaybe<PostUpdateManyWithoutAuthorInput>;
   ResetPassword?: InputMaybe<ResetPasswordUpdateManyWithoutUserInput>;
   avatar?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
@@ -3710,6 +4236,11 @@ export type UserUpsertWithoutPostInput = {
   update: UserUpdateWithoutPostInput;
 };
 
+export type UserUpsertWithoutPreferenceInput = {
+  create: UserCreateWithoutPreferenceInput;
+  update: UserUpdateWithoutPreferenceInput;
+};
+
 export type UserWhereInput = {
   AND?: InputMaybe<Array<UserWhereInput>>;
   Comment?: InputMaybe<CommentListRelationFilter>;
@@ -3717,6 +4248,7 @@ export type UserWhereInput = {
   NOT?: InputMaybe<Array<UserWhereInput>>;
   OR?: InputMaybe<Array<UserWhereInput>>;
   Post?: InputMaybe<PostListRelationFilter>;
+  Preference?: InputMaybe<PreferenceRelationFilter>;
   ResetPassword?: InputMaybe<ResetPasswordListRelationFilter>;
   avatar?: InputMaybe<StringNullableFilter>;
   created_at?: InputMaybe<DateTimeFilter>;
@@ -3737,7 +4269,7 @@ export type UserWhereUniqueInput = {
   nickname?: InputMaybe<Scalars['String']>;
 };
 
-export type UserFragment = { __typename?: 'User', id: string, nickname: string, email: string, avatar: string, role: Array<Role> };
+export type UserFragment = { __typename?: 'User', id: string, nickname: string, email: string, avatar: string, role: Array<Role>, created_at: any };
 
 export type CreateCommentMutationVariables = Exact<{
   data: CommentCreateInput;
@@ -3763,19 +4295,35 @@ export type MutateLoginMutationVariables = Exact<{
 }>;
 
 
-export type MutateLoginMutation = { __typename?: 'Mutation', login: { __typename?: 'User', id: string, nickname: string, email: string, avatar: string, role: Array<Role> } };
+export type MutateLoginMutation = { __typename?: 'Mutation', login: { __typename?: 'User', id: string, nickname: string, email: string, avatar: string, role: Array<Role>, created_at: any } };
 
 export type MutateMeMutationVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MutateMeMutation = { __typename?: 'Mutation', me: { __typename?: 'User', id: string, nickname: string, email: string, avatar: string, role: Array<Role> } };
+export type MutateMeMutation = { __typename?: 'Mutation', me: { __typename?: 'User', id: string, nickname: string, email: string, avatar: string, role: Array<Role>, created_at: any } };
 
 export type RegisterMutationVariables = Exact<{
   data: RegisterInput;
 }>;
 
 
-export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'User', id: string, nickname: string, email: string, avatar: string, role: Array<Role> } };
+export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'User', id: string, nickname: string, email: string, avatar: string, role: Array<Role>, created_at: any } };
+
+export type UpdateUserMutationVariables = Exact<{
+  where: UserWhereUniqueInput;
+  data: UserUpdateInput;
+}>;
+
+
+export type UpdateUserMutation = { __typename?: 'Mutation', updateUser: { __typename?: 'User', id: string, first_name: string, last_name: string, email: string, nickname: string } };
+
+export type UpdateUserPreferencesMutationVariables = Exact<{
+  where: PreferenceWhereUniqueInput;
+  data: PreferenceUpdateInput;
+}>;
+
+
+export type UpdateUserPreferencesMutation = { __typename?: 'Mutation', updatePreference: { __typename?: 'Preference', id: string, showEmail: boolean, website: string, location: string, skills: string, job: string, education: string, bio: string, color_1: string, color_2: string } };
 
 export type GetAllCategoriesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -3804,6 +4352,20 @@ export type GetPostDataQueryVariables = Exact<{
 
 export type GetPostDataQuery = { __typename?: 'Query', post: { __typename?: 'Post', id: string, slug: string, title: string, content: string, cover_picture: string, isDraft: boolean, author: { __typename?: 'User', id: string, first_name: string, last_name: string, email: string, avatar: string }, Tags: Array<{ __typename?: 'Tag', id: string, name: string }> } };
 
+export type GetUserDataQueryVariables = Exact<{
+  where: UserWhereUniqueInput;
+}>;
+
+
+export type GetUserDataQuery = { __typename?: 'Query', user: { __typename?: 'User', first_name: string, last_name: string, created_at: any, id: string, nickname: string, email: string, avatar: string, role: Array<Role> } };
+
+export type GetUserAdditionalInformationsQueryVariables = Exact<{
+  where: PreferenceWhereUniqueInput;
+}>;
+
+
+export type GetUserAdditionalInformationsQuery = { __typename?: 'Query', preference: { __typename?: 'Preference', website: string, location: string, bio: string } };
+
 export const UserFragmentDoc = gql`
     fragment User on User {
   id
@@ -3811,6 +4373,7 @@ export const UserFragmentDoc = gql`
   email
   avatar
   role
+  created_at
 }
     `;
 export const CreateCommentDocument = gql`
@@ -4015,6 +4578,87 @@ export function useRegisterMutation(baseOptions?: Apollo.MutationHookOptions<Reg
 export type RegisterMutationHookResult = ReturnType<typeof useRegisterMutation>;
 export type RegisterMutationResult = Apollo.MutationResult<RegisterMutation>;
 export type RegisterMutationOptions = Apollo.BaseMutationOptions<RegisterMutation, RegisterMutationVariables>;
+export const UpdateUserDocument = gql`
+    mutation UpdateUser($where: UserWhereUniqueInput!, $data: UserUpdateInput!) {
+  updateUser(where: $where, data: $data) {
+    id
+    first_name
+    last_name
+    email
+    nickname
+  }
+}
+    `;
+export type UpdateUserMutationFn = Apollo.MutationFunction<UpdateUserMutation, UpdateUserMutationVariables>;
+
+/**
+ * __useUpdateUserMutation__
+ *
+ * To run a mutation, you first call `useUpdateUserMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateUserMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateUserMutation, { data, loading, error }] = useUpdateUserMutation({
+ *   variables: {
+ *      where: // value for 'where'
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useUpdateUserMutation(baseOptions?: Apollo.MutationHookOptions<UpdateUserMutation, UpdateUserMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateUserMutation, UpdateUserMutationVariables>(UpdateUserDocument, options);
+      }
+export type UpdateUserMutationHookResult = ReturnType<typeof useUpdateUserMutation>;
+export type UpdateUserMutationResult = Apollo.MutationResult<UpdateUserMutation>;
+export type UpdateUserMutationOptions = Apollo.BaseMutationOptions<UpdateUserMutation, UpdateUserMutationVariables>;
+export const UpdateUserPreferencesDocument = gql`
+    mutation UpdateUserPreferences($where: PreferenceWhereUniqueInput!, $data: PreferenceUpdateInput!) {
+  updatePreference(where: $where, data: $data) {
+    id
+    showEmail
+    website
+    location
+    skills
+    job
+    education
+    bio
+    color_1
+    color_2
+  }
+}
+    `;
+export type UpdateUserPreferencesMutationFn = Apollo.MutationFunction<UpdateUserPreferencesMutation, UpdateUserPreferencesMutationVariables>;
+
+/**
+ * __useUpdateUserPreferencesMutation__
+ *
+ * To run a mutation, you first call `useUpdateUserPreferencesMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateUserPreferencesMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateUserPreferencesMutation, { data, loading, error }] = useUpdateUserPreferencesMutation({
+ *   variables: {
+ *      where: // value for 'where'
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useUpdateUserPreferencesMutation(baseOptions?: Apollo.MutationHookOptions<UpdateUserPreferencesMutation, UpdateUserPreferencesMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateUserPreferencesMutation, UpdateUserPreferencesMutationVariables>(UpdateUserPreferencesDocument, options);
+      }
+export type UpdateUserPreferencesMutationHookResult = ReturnType<typeof useUpdateUserPreferencesMutation>;
+export type UpdateUserPreferencesMutationResult = Apollo.MutationResult<UpdateUserPreferencesMutation>;
+export type UpdateUserPreferencesMutationOptions = Apollo.BaseMutationOptions<UpdateUserPreferencesMutation, UpdateUserPreferencesMutationVariables>;
 export const GetAllCategoriesDocument = gql`
     query GetAllCategories {
   categories {
@@ -4206,3 +4850,78 @@ export function useGetPostDataLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
 export type GetPostDataQueryHookResult = ReturnType<typeof useGetPostDataQuery>;
 export type GetPostDataLazyQueryHookResult = ReturnType<typeof useGetPostDataLazyQuery>;
 export type GetPostDataQueryResult = Apollo.QueryResult<GetPostDataQuery, GetPostDataQueryVariables>;
+export const GetUserDataDocument = gql`
+    query GetUserData($where: UserWhereUniqueInput!) {
+  user(where: $where) {
+    ...User
+    first_name
+    last_name
+    created_at
+  }
+}
+    ${UserFragmentDoc}`;
+
+/**
+ * __useGetUserDataQuery__
+ *
+ * To run a query within a React component, call `useGetUserDataQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUserDataQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetUserDataQuery({
+ *   variables: {
+ *      where: // value for 'where'
+ *   },
+ * });
+ */
+export function useGetUserDataQuery(baseOptions: Apollo.QueryHookOptions<GetUserDataQuery, GetUserDataQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetUserDataQuery, GetUserDataQueryVariables>(GetUserDataDocument, options);
+      }
+export function useGetUserDataLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetUserDataQuery, GetUserDataQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetUserDataQuery, GetUserDataQueryVariables>(GetUserDataDocument, options);
+        }
+export type GetUserDataQueryHookResult = ReturnType<typeof useGetUserDataQuery>;
+export type GetUserDataLazyQueryHookResult = ReturnType<typeof useGetUserDataLazyQuery>;
+export type GetUserDataQueryResult = Apollo.QueryResult<GetUserDataQuery, GetUserDataQueryVariables>;
+export const GetUserAdditionalInformationsDocument = gql`
+    query GetUserAdditionalInformations($where: PreferenceWhereUniqueInput!) {
+  preference(where: $where) {
+    website
+    location
+    bio
+  }
+}
+    `;
+
+/**
+ * __useGetUserAdditionalInformationsQuery__
+ *
+ * To run a query within a React component, call `useGetUserAdditionalInformationsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUserAdditionalInformationsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetUserAdditionalInformationsQuery({
+ *   variables: {
+ *      where: // value for 'where'
+ *   },
+ * });
+ */
+export function useGetUserAdditionalInformationsQuery(baseOptions: Apollo.QueryHookOptions<GetUserAdditionalInformationsQuery, GetUserAdditionalInformationsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetUserAdditionalInformationsQuery, GetUserAdditionalInformationsQueryVariables>(GetUserAdditionalInformationsDocument, options);
+      }
+export function useGetUserAdditionalInformationsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetUserAdditionalInformationsQuery, GetUserAdditionalInformationsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetUserAdditionalInformationsQuery, GetUserAdditionalInformationsQueryVariables>(GetUserAdditionalInformationsDocument, options);
+        }
+export type GetUserAdditionalInformationsQueryHookResult = ReturnType<typeof useGetUserAdditionalInformationsQuery>;
+export type GetUserAdditionalInformationsLazyQueryHookResult = ReturnType<typeof useGetUserAdditionalInformationsLazyQuery>;
+export type GetUserAdditionalInformationsQueryResult = Apollo.QueryResult<GetUserAdditionalInformationsQuery, GetUserAdditionalInformationsQueryVariables>;

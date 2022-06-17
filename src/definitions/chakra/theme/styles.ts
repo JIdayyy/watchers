@@ -6,7 +6,7 @@ export default {
     styles: {
         global: {
             body: {
-                backgroundColor: "gray.50",
+                backgroundColor: "#F5F5F5",
             },
             h1: {
                 fontWeight: "bold",

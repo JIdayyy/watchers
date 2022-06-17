@@ -15,7 +15,6 @@ import { imageService } from "@services/api/fetcher";
 import axiosInstance from "@services/api/axiosInstance";
 import { GrClose } from "react-icons/gr";
 import Preview from "@components/Preview";
-import hljs from "highlight.js";
 
 const initialValue = "<p> <b>Start to writte your watch here ...</b></p>";
 
@@ -301,13 +300,13 @@ export default function NewWatch(): JSX.Element {
 
                         <RichText
                             modules={{
-                                syntax: {
-                                    highlight: (text: string) => {
-                                        return hljs.highlightAuto(text, [
-                                            "javascript",
-                                        ]).value;
-                                    },
-                                },
+                                // syntax: {
+                                //     highlight: (text: string) => {
+                                //         return hljs.highlightAuto(text, [
+                                //             "javascript",
+                                //         ]).value;
+                                //     },
+                                // },
 
                                 history: {
                                     delay: 2000,

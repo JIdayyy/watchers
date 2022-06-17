@@ -4,4 +4,5 @@ fragment User on User {
     email
     avatar
     role
+    created_at
 }

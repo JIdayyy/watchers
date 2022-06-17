@@ -18,7 +18,8 @@ export default function SaveSettingsButton({
             rounded="md"
             bg="white"
             shadow="base"
-            p={5}
+            py={5}
+            px={[5, 5, 10]}
             alignSelf="end"
             position="sticky"
             bottom={0}

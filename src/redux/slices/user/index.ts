@@ -1,3 +1,4 @@
+import { UserFragment } from "./../../../generated/graphql";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Role } from "src/generated/graphql";
 
@@ -30,8 +31,15 @@ const userSlice = createSlice({
         login: (state: IUser, action: PayloadAction<User>) => {
             state.user = action.payload;
         },
-        update: (state: IUser, action: PayloadAction<Partial<User>>) => {
-            state.user = { ...state.user, ...action.payload };
+        update: (
+            state: IUser,
+            action: PayloadAction<Partial<UserFragment>>,
+        ) => {
+            state.user = {
+                ...state.user,
+                ...action.payload,
+                nickName: action.payload.nickname as string,
+            };
         },
         logout: (state: IUser) => {
             state.user = initialState.user;

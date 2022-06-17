@@ -26,7 +26,7 @@ export default function UserMenu(): JSX.Element {
     return (
         <Menu>
             <MenuButton
-                display={["none", "block"]}
+                display={["block"]}
                 px={4}
                 py={2}
                 transition="all 0.2s"
@@ -45,7 +45,10 @@ export default function UserMenu(): JSX.Element {
                 <Image src={user.avatar} layout="fill" />
             </MenuButton>
 
-            <MenuList shadow="base">
+            <MenuList
+                minWidth={["100vw", "100vw", "30vw", "15vw"]}
+                shadow="base"
+            >
                 <MenuItem
                     onClick={() => push("/profile")}
                     _hover={{ bg: "gray.200", textDecor: "underline" }}

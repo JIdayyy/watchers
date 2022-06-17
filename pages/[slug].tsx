@@ -49,6 +49,7 @@ export default function Watch({ post }: IProps): JSX.Element {
             <Grid
                 alignItems="start"
                 minW={["full", "full", "full", "7xl"]}
+                maxW="7xl"
                 px={[3, 2, 2, 0]}
                 pb={10}
                 gap={7}

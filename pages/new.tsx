@@ -31,6 +31,15 @@ export default function NewWatch(): JSX.Element {
     const [image, setImage] = useState<File | undefined>();
     const [createPost, { loading }] = useCreatePostMutation();
     const [isUploading, setIsUploading] = useState(false);
+    const toolbarOptions = [
+        "bold",
+        "semi-bold",
+        "semibold",
+        "semiBold",
+        "italic",
+        "underline",
+        "strike",
+    ];
 
     useEffect(() => {
         if (!user.id) {
@@ -304,20 +313,12 @@ export default function NewWatch(): JSX.Element {
 
                         <RichText
                             modules={{
-                                // syntax: {
-                                //     highlight: (text: string) => {
-                                //         return hljs.highlightAuto(text, [
-                                //             "javascript",
-                                //         ]).value;
-                                //     },
-                                // },
-
                                 history: {
                                     delay: 2000,
                                     maxStack: 500,
                                     userOnly: true,
                                 },
-                                toolbar: [["code-block"]],
+                                toolbar: toolbarOptions,
                             }}
                             onImageUpload={(image) => handleImageUpload(image)}
                             styles={{

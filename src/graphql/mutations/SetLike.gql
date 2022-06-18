@@ -1,0 +1,5 @@
+mutation SetLike($data: LikeCreateInput!) {
+    createLike(data: $data) {
+        id
+    }
+}

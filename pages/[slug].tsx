@@ -5,14 +5,27 @@ import {
     GetAllPostsQuery,
     GetPostDataDocument,
     GetPostDataQuery,
+    useSetLikeMutation,
 } from "src/generated/graphql";
-import { Flex, Grid, GridItem, Spinner, Text, Box } from "@chakra-ui/react";
+import { AiFillLike } from "react-icons/ai";
+import {
+    Flex,
+    Grid,
+    GridItem,
+    Spinner,
+    Text,
+    Icon,
+    Button,
+} from "@chakra-ui/react";
 import Image from "next/image";
 import { apolloClient } from "./_app";
 import { GetStaticPropsResult } from "next/types";
 import hljs from "highlight.js";
 import Comments from "@components/Comments";
 import { NextSeo } from "next-seo";
+import { useSelector } from "react-redux";
+import { RootState } from "@redux/reducers";
+import UserDetailsPostCard from "@components/Cards/UserDetailsPostCard";
 
 interface IProps {
     post: GetPostDataQuery["post"];
@@ -20,6 +33,8 @@ interface IProps {
 
 export default function Watch({ post }: IProps): JSX.Element {
     if (!post) return <Spinner />;
+    const [setLike] = useSetLikeMutation();
+    const { user } = useSelector((state: RootState) => state.user);
 
     useEffect(() => {
         hljs.highlightAll();
@@ -34,6 +49,23 @@ export default function Watch({ post }: IProps): JSX.Element {
                 .replaceAll("&amp;lt;", "<")}</code>`;
         });
     }, []);
+
+    const handleClick = () => {
+        setLike({
+            variables: {
+                data: {
+                    post: {
+                        connect: { id: post.id },
+                    },
+                    user: {
+                        connect: {
+                            id: user.id,
+                        },
+                    },
+                },
+            },
+        });
+    };
 
     const SEO = {
         title: post.title,
@@ -87,9 +119,20 @@ export default function Watch({ post }: IProps): JSX.Element {
                             justifyContent="flex-start"
                             alignItems="flex-start"
                         >
-                            <Text as="p">
-                                {post.author.first_name} {post.author.last_name}
-                            </Text>
+                            <Flex
+                                alignItems="center"
+                                w="full"
+                                justifyContent="space-between"
+                            >
+                                <Text as="p">
+                                    {post.author.first_name}{" "}
+                                    {post.author.last_name}
+                                </Text>
+                                <Button size="sm" onClick={handleClick} mr={5}>
+                                    <Icon mr={1} as={AiFillLike} size={10} />
+                                    {post.Like.length} Likes
+                                </Button>
+                            </Flex>
                             <Text my={4} as="h1">
                                 {post.title}
                             </Text>
@@ -126,7 +169,7 @@ export default function Watch({ post }: IProps): JSX.Element {
                     colSpan={2}
                     w="full"
                 >
-                    <Flex
+                    {/* <Flex
                         bg="white"
                         shadow="base"
                         rounded="md"
@@ -146,8 +189,9 @@ export default function Watch({ post }: IProps): JSX.Element {
                                 the internet
                             </Text>
                         </Flex>
-                    </Flex>
-                    <Flex
+                    </Flex> */}
+                    <UserDetailsPostCard author={post.author} />
+                    {/* <Flex
                         p={5}
                         my={5}
                         shadow="base"
@@ -167,7 +211,7 @@ export default function Watch({ post }: IProps): JSX.Element {
                                 watches ?
                             </Text>
                         </Flex>
-                    </Flex>
+                    </Flex> */}
                 </GridItem>
             </Grid>
         </>

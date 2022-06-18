@@ -1,13 +1,35 @@
-import { Box, Button, Flex, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, Icon, Spinner, Text } from "@chakra-ui/react";
 import MainLayout from "@components/Layouts/MainLayout";
 import { RootState } from "@redux/reducers";
+import { DateTime } from "luxon";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
+import { FaBirthdayCake } from "react-icons/fa";
+import {
+    useGetUserAdditionalInformationsQuery,
+    useGetUserDataQuery,
+} from "src/generated/graphql";
 
 export default function Profile(): JSX.Element {
     const { user } = useSelector((state: RootState) => state.user);
+    const { data: userData } = useGetUserDataQuery({
+        variables: {
+            where: {
+                id: user.id,
+            },
+        },
+        skip: !user.id,
+    });
     const { push } = useRouter();
+    const { data, loading } = useGetUserAdditionalInformationsQuery({
+        variables: {
+            where: {
+                userId: user.id,
+            },
+        },
+        skip: !user.id,
+    });
 
     if (!user.id) {
         return (
@@ -18,6 +40,10 @@ export default function Profile(): JSX.Element {
                 </Box>
             </MainLayout>
         );
+    }
+
+    if (loading || !data) {
+        return <Spinner />;
     }
 
     return (
@@ -47,7 +73,7 @@ export default function Profile(): JSX.Element {
                 shadow="base"
                 w="full"
                 maxW="5xl"
-                h="300px"
+                minH="300px"
                 p={5}
                 direction="column"
             >
@@ -68,21 +94,28 @@ export default function Profile(): JSX.Element {
                     </Box>
                 </Box>
                 <Flex justifyContent="flex-end" alignItems="center" w="full">
-                    <Button
-                        onClick={() => push("/settings/profile")}
-                        variant="action"
-                    >
+                    <Button onClick={() => push("/settings/profile")}>
                         Edit Profile
                     </Button>
                 </Flex>
                 <Flex
                     w="full"
                     h="full"
-                    justifyContent="center"
+                    justifyContent="space-between"
                     alignItems="center"
+                    direction="column"
                 >
-                    <Text fontSize="30px" fontWeight="bold">
+                    <Text mt={5} fontSize="30px" fontWeight="bold">
                         {user.nickName}
+                    </Text>
+                    <Text fontSize="24px" fontWeight="medium">
+                        {data?.preference.bio}
+                    </Text>
+                    <Text fontSize="18px" fontWeight="medium" color="gray.400">
+                        <Icon as={FaBirthdayCake} size={5} /> Member since{" "}
+                        {DateTime.fromISO(
+                            userData?.user.created_at,
+                        ).toLocaleString()}
                     </Text>
                 </Flex>
             </Flex>

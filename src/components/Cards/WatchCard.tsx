@@ -5,7 +5,10 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import React from "react";
 import { useSelector } from "react-redux";
-import { GetAllPostsQuery } from "src/generated/graphql";
+import {
+    GetAllPostsQuery,
+    useGetAllPostLikesQuery,
+} from "src/generated/graphql";
 import { AiFillLike } from "react-icons/ai";
 import { TbMessageCircle2 } from "react-icons/tb";
 
@@ -16,6 +19,19 @@ interface IProps {
 
 export default function WatchCard({ watch, isMain }: IProps): JSX.Element {
     const router = useRouter();
+    const { data } = useGetAllPostLikesQuery({
+        variables: {
+            where: {
+                post: {
+                    is: {
+                        id: {
+                            equals: watch.id,
+                        },
+                    },
+                },
+            },
+        },
+    });
     const { user } = useSelector((state: RootState) => state.user);
 
     const handleClick = () => {
@@ -94,7 +110,7 @@ export default function WatchCard({ watch, isMain }: IProps): JSX.Element {
                     <Flex>
                         <Text mr={5}>
                             <Icon mr={1} as={AiFillLike} size={10} />
-                            10 Likes
+                            {data?.likes.length} Likes
                         </Text>
                         <Text>
                             <Icon mr={1} as={TbMessageCircle2} size={10} />

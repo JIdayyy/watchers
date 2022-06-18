@@ -6,7 +6,11 @@ query GetPostData($where: PostWhereUniqueInput!) {
         content
         cover_picture
         isDraft
+        Like {
+            id
+        }
         author {
+            nickname
             id
             first_name
             last_name

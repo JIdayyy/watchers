@@ -4309,6 +4309,13 @@ export type RegisterMutationVariables = Exact<{
 
 export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'User', id: string, nickname: string, email: string, avatar: string, role: Array<Role>, created_at: any } };
 
+export type SetLikeMutationVariables = Exact<{
+  data: LikeCreateInput;
+}>;
+
+
+export type SetLikeMutation = { __typename?: 'Mutation', createLike: { __typename?: 'Like', id: string } };
+
 export type UpdateUserMutationVariables = Exact<{
   where: UserWhereUniqueInput;
   data: UserUpdateInput;
@@ -4337,6 +4344,13 @@ export type GetAllPostCommentsQueryVariables = Exact<{
 
 export type GetAllPostCommentsQuery = { __typename?: 'Query', comments: Array<{ __typename?: 'Comment', id: string, content: string, created_at: any, picture: string, author: { __typename?: 'User', id: string, nickname: string, avatar: string } }> };
 
+export type GetAllPostLikesQueryVariables = Exact<{
+  where: LikeWhereInput;
+}>;
+
+
+export type GetAllPostLikesQuery = { __typename?: 'Query', likes: Array<{ __typename?: 'Like', id: string }> };
+
 export type GetAllPostsQueryVariables = Exact<{
   where: PostWhereInput;
   orderBy: InputMaybe<Array<PostOrderByWithRelationInput> | PostOrderByWithRelationInput>;
@@ -4350,7 +4364,7 @@ export type GetPostDataQueryVariables = Exact<{
 }>;
 
 
-export type GetPostDataQuery = { __typename?: 'Query', post: { __typename?: 'Post', id: string, slug: string, title: string, content: string, cover_picture: string, isDraft: boolean, author: { __typename?: 'User', id: string, first_name: string, last_name: string, email: string, avatar: string }, Tags: Array<{ __typename?: 'Tag', id: string, name: string }> } };
+export type GetPostDataQuery = { __typename?: 'Query', post: { __typename?: 'Post', id: string, slug: string, title: string, content: string, cover_picture: string, isDraft: boolean, Like: Array<{ __typename?: 'Like', id: string }>, author: { __typename?: 'User', nickname: string, id: string, first_name: string, last_name: string, email: string, avatar: string }, Tags: Array<{ __typename?: 'Tag', id: string, name: string }> } };
 
 export type GetUserDataQueryVariables = Exact<{
   where: UserWhereUniqueInput;
@@ -4578,6 +4592,39 @@ export function useRegisterMutation(baseOptions?: Apollo.MutationHookOptions<Reg
 export type RegisterMutationHookResult = ReturnType<typeof useRegisterMutation>;
 export type RegisterMutationResult = Apollo.MutationResult<RegisterMutation>;
 export type RegisterMutationOptions = Apollo.BaseMutationOptions<RegisterMutation, RegisterMutationVariables>;
+export const SetLikeDocument = gql`
+    mutation SetLike($data: LikeCreateInput!) {
+  createLike(data: $data) {
+    id
+  }
+}
+    `;
+export type SetLikeMutationFn = Apollo.MutationFunction<SetLikeMutation, SetLikeMutationVariables>;
+
+/**
+ * __useSetLikeMutation__
+ *
+ * To run a mutation, you first call `useSetLikeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSetLikeMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [setLikeMutation, { data, loading, error }] = useSetLikeMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useSetLikeMutation(baseOptions?: Apollo.MutationHookOptions<SetLikeMutation, SetLikeMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SetLikeMutation, SetLikeMutationVariables>(SetLikeDocument, options);
+      }
+export type SetLikeMutationHookResult = ReturnType<typeof useSetLikeMutation>;
+export type SetLikeMutationResult = Apollo.MutationResult<SetLikeMutation>;
+export type SetLikeMutationOptions = Apollo.BaseMutationOptions<SetLikeMutation, SetLikeMutationVariables>;
 export const UpdateUserDocument = gql`
     mutation UpdateUser($where: UserWhereUniqueInput!, $data: UserUpdateInput!) {
   updateUser(where: $where, data: $data) {
@@ -4737,6 +4784,41 @@ export function useGetAllPostCommentsLazyQuery(baseOptions?: Apollo.LazyQueryHoo
 export type GetAllPostCommentsQueryHookResult = ReturnType<typeof useGetAllPostCommentsQuery>;
 export type GetAllPostCommentsLazyQueryHookResult = ReturnType<typeof useGetAllPostCommentsLazyQuery>;
 export type GetAllPostCommentsQueryResult = Apollo.QueryResult<GetAllPostCommentsQuery, GetAllPostCommentsQueryVariables>;
+export const GetAllPostLikesDocument = gql`
+    query GetAllPostLikes($where: LikeWhereInput!) {
+  likes(where: $where) {
+    id
+  }
+}
+    `;
+
+/**
+ * __useGetAllPostLikesQuery__
+ *
+ * To run a query within a React component, call `useGetAllPostLikesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAllPostLikesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAllPostLikesQuery({
+ *   variables: {
+ *      where: // value for 'where'
+ *   },
+ * });
+ */
+export function useGetAllPostLikesQuery(baseOptions: Apollo.QueryHookOptions<GetAllPostLikesQuery, GetAllPostLikesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetAllPostLikesQuery, GetAllPostLikesQueryVariables>(GetAllPostLikesDocument, options);
+      }
+export function useGetAllPostLikesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAllPostLikesQuery, GetAllPostLikesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetAllPostLikesQuery, GetAllPostLikesQueryVariables>(GetAllPostLikesDocument, options);
+        }
+export type GetAllPostLikesQueryHookResult = ReturnType<typeof useGetAllPostLikesQuery>;
+export type GetAllPostLikesLazyQueryHookResult = ReturnType<typeof useGetAllPostLikesLazyQuery>;
+export type GetAllPostLikesQueryResult = Apollo.QueryResult<GetAllPostLikesQuery, GetAllPostLikesQueryVariables>;
 export const GetAllPostsDocument = gql`
     query GetAllPosts($where: PostWhereInput!, $orderBy: [PostOrderByWithRelationInput!]) {
   posts(where: $where, orderBy: $orderBy) {
@@ -4808,7 +4890,11 @@ export const GetPostDataDocument = gql`
     content
     cover_picture
     isDraft
+    Like {
+      id
+    }
     author {
+      nickname
       id
       first_name
       last_name

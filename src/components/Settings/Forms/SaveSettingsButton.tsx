@@ -1,4 +1,5 @@
-import { Flex, Button } from "@chakra-ui/react";
+import { Button } from "@chakra-ui/react";
+import CustomFlex from "@definitions/chakra/theme/components/Box/CustomFlex";
 import React from "react";
 import { FieldValues, useFormContext } from "react-hook-form";
 
@@ -13,10 +14,9 @@ export default function SaveSettingsButton({
 }: IProps): JSX.Element {
     const { handleSubmit } = useFormContext();
     return (
-        <Flex
+        <CustomFlex
             w="full"
             rounded="md"
-            bg="white"
             shadow="base"
             py={5}
             px={[5, 5, 10]}
@@ -32,6 +32,6 @@ export default function SaveSettingsButton({
             >
                 Save Settings
             </Button>
-        </Flex>
+        </CustomFlex>
     );
 }

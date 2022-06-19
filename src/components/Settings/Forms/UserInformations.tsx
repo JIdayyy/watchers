@@ -9,6 +9,7 @@ import {
     SkeletonCircle,
     SkeletonText,
 } from "@chakra-ui/react";
+import CustomFlex from "@definitions/chakra/theme/components/Box/CustomFlex";
 import { RootState } from "@redux/reducers";
 import Image from "next/image";
 import { useFormContext } from "react-hook-form";
@@ -49,11 +50,10 @@ export default function UserInformations(): JSX.Element {
     }
 
     return (
-        <Flex
+        <CustomFlex
             p={[5, 5, 10]}
             w="full"
             rounded="md"
-            bg="white"
             shadow="base"
             flexDirection="column"
         >
@@ -91,6 +91,6 @@ export default function UserInformations(): JSX.Element {
                     Upload
                 </Button>
             </Flex>
-        </Flex>
+        </CustomFlex>
     );
 }

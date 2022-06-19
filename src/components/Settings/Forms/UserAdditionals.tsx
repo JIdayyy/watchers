@@ -1,5 +1,4 @@
 import {
-    Flex,
     VStack,
     FormLabel,
     Input,
@@ -9,6 +8,7 @@ import {
     SkeletonText,
     Textarea,
 } from "@chakra-ui/react";
+import CustomFlex from "@definitions/chakra/theme/components/Box/CustomFlex";
 import { RootState } from "@redux/reducers";
 import { useFormContext } from "react-hook-form";
 import { useSelector } from "react-redux";
@@ -44,11 +44,10 @@ export default function UserAdditionalInformations(): JSX.Element {
     }
 
     return (
-        <Flex
+        <CustomFlex
             p={[5, 5, 10]}
             w="full"
             rounded="md"
-            bg="white"
             shadow="base"
             flexDirection="column"
         >
@@ -71,6 +70,6 @@ export default function UserAdditionalInformations(): JSX.Element {
                 <FormLabel mt={1}>Bio</FormLabel>
                 <Textarea {...register("bio")} />
             </VStack>
-        </Flex>
+        </CustomFlex>
     );
 }

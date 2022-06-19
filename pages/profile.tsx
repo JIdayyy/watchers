@@ -10,6 +10,7 @@ import {
     useGetUserAdditionalInformationsQuery,
     useGetUserDataQuery,
 } from "src/generated/graphql";
+import CustomFlex from "@definitions/chakra/theme/components/Box/CustomFlex";
 
 export default function Profile(): JSX.Element {
     const { user } = useSelector((state: RootState) => state.user);
@@ -62,11 +63,10 @@ export default function Profile(): JSX.Element {
                 bg="black"
                 w="full"
             />
-            <Flex
+            <CustomFlex
                 justifyContent="center"
                 alignItems="center"
                 position="relative"
-                bg="white"
                 rounded="md"
                 my={100}
                 zIndex={999}
@@ -118,7 +118,7 @@ export default function Profile(): JSX.Element {
                         ).toLocaleString()}
                     </Text>
                 </Flex>
-            </Flex>
+            </CustomFlex>
         </Flex>
     );
 }

@@ -46,7 +46,7 @@ export default function MainLayout({ children }: Props): JSX.Element {
 
     return (
         <Flex
-            pt="110px"
+            pt="80px"
             w="100vw"
             h="100vh"
             justifyContent="flex-start"

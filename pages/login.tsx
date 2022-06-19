@@ -1,4 +1,12 @@
-import { Button, Flex, FormLabel, Input, Text, VStack } from "@chakra-ui/react";
+import {
+    Button,
+    Flex,
+    FormLabel,
+    Input,
+    Text,
+    useColorMode,
+    VStack,
+} from "@chakra-ui/react";
 import MainLayout from "@components/Layouts/MainLayout";
 import { login } from "@redux/actions";
 import { useRouter } from "next/router";
@@ -6,6 +14,9 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { useMutateLoginMutation } from "src/generated/graphql";
+import loginFormResolver from "src/Resolvers/LoginFormResolver";
+import { yupResolver } from "@hookform/resolvers/yup";
+import InputError from "@components/Form/InputError";
 
 interface FormData {
     email: string;
@@ -14,8 +25,17 @@ interface FormData {
 
 export default function Login(): JSX.Element {
     const router = useRouter();
+    const { colorMode } = useColorMode();
     const dispatch = useDispatch();
-    const { handleSubmit, register } = useForm<FormData>();
+    const {
+        handleSubmit,
+        register,
+        formState: { errors },
+    } = useForm<FormData>({
+        resolver: yupResolver(loginFormResolver),
+        criteriaMode: "all",
+    });
+
     const [mutateLogin, { loading }] = useMutateLoginMutation();
 
     const onSubmit = (data: FormData) => {
@@ -50,7 +70,7 @@ export default function Login(): JSX.Element {
                 shadow="base"
                 w={["90%", "70%", "50%", "30%"]}
                 h="50%"
-                bg="white"
+                bg={colorMode === "light" ? "white" : "#171717"}
             >
                 <Text fontSize="24px" fontWeight="bold">
                     Welcome back to Tech Watchers
@@ -61,10 +81,13 @@ export default function Login(): JSX.Element {
                 <Button isDisabled color="white" bg="blue.300" w="full">
                     Continue with google
                 </Button>
+
                 <FormLabel w="full" textAlign="left" htmlFor="email">
                     Email
                 </FormLabel>
                 <Input {...register("email")} id="email" w="full" />
+                <InputError name="email" errors={errors} />
+
                 <FormLabel w="full" textAlign="left" htmlFor="password">
                     Password
                 </FormLabel>
@@ -74,6 +97,8 @@ export default function Login(): JSX.Element {
                     id="password"
                     w="full"
                 />
+                <InputError name="password" errors={errors} />
+
                 <Button
                     isLoading={loading}
                     onClick={handleSubmit(onSubmit)}

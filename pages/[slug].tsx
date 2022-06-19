@@ -26,6 +26,7 @@ import { NextSeo } from "next-seo";
 import { useSelector } from "react-redux";
 import { RootState } from "@redux/reducers";
 import UserDetailsPostCard from "@components/Cards/UserDetailsPostCard";
+import CustomBox from "@definitions/chakra/theme/components/Box/CustomBox";
 
 interface IProps {
     post: GetPostDataQuery["post"];
@@ -93,12 +94,12 @@ export default function Watch({ post }: IProps): JSX.Element {
                 ]}
             >
                 <GridItem colSpan={3}>
-                    <Flex
-                        bg="white"
+                    <CustomBox
+                        display="flex"
                         shadow="base"
                         rounded="md"
                         overflow="hidden"
-                        direction="column"
+                        flexDirection="column"
                         pb="30px"
                     >
                         {post.cover_picture && (
@@ -158,12 +159,12 @@ export default function Watch({ post }: IProps): JSX.Element {
                             />
                         </Flex>
                         <Comments />
-                    </Flex>
+                    </CustomBox>
                 </GridItem>
                 <GridItem
                     alignSelf="start"
                     position="sticky"
-                    top="110px"
+                    top="80px"
                     display="flex"
                     flexDir="column"
                     colSpan={2}

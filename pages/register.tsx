@@ -1,11 +1,22 @@
-import { Button, Flex, FormLabel, Input, Text, VStack } from "@chakra-ui/react";
+import {
+    Button,
+    Flex,
+    FormLabel,
+    Input,
+    Text,
+    useColorMode,
+    VStack,
+} from "@chakra-ui/react";
+import InputError from "@components/Form/InputError";
 import MainLayout from "@components/Layouts/MainLayout";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { login } from "@redux/actions";
 import { useRouter } from "next/router";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { useRegisterMutation } from "src/generated/graphql";
+import registerFormResolver from "src/Resolvers/RegisterFormResolver";
 
 interface FormData {
     email: string;
@@ -16,8 +27,17 @@ interface FormData {
 
 export default function Register(): JSX.Element {
     const router = useRouter();
+    const { colorMode } = useColorMode();
+
     const dispatch = useDispatch();
-    const { handleSubmit, register } = useForm<FormData>();
+    const {
+        handleSubmit,
+        register,
+        formState: { errors },
+    } = useForm<FormData>({
+        criteriaMode: "all",
+        resolver: yupResolver(registerFormResolver),
+    });
     const [mutateRegister, { loading }] = useRegisterMutation();
 
     const onSubmit = (data: FormData) => {
@@ -55,7 +75,7 @@ export default function Register(): JSX.Element {
                 rounded={5}
                 shadow="base"
                 w={["90%", "70%", "50%", "30%"]}
-                bg="white"
+                bg={colorMode === "light" ? "white" : "#171717"}
             >
                 <Text fontSize="24px" fontWeight="bold">
                     Welcome to Tech Watchers
@@ -66,14 +86,19 @@ export default function Register(): JSX.Element {
                 <Button isDisabled color="white" bg="blue.300" w="full">
                     Continue with google
                 </Button>
+
                 <FormLabel w="full" textAlign="left" htmlFor="email">
                     Email
                 </FormLabel>
                 <Input {...register("email")} id="email" w="full" />
+                <InputError errors={errors} name="email" />
+
                 <FormLabel w="full" textAlign="left" htmlFor="nickname">
                     Pseudo
                 </FormLabel>
                 <Input {...register("nickname")} id="nickname" w="full" />
+                <InputError errors={errors} name="nickname" />
+
                 <FormLabel w="full" textAlign="left" htmlFor="password">
                     Password
                 </FormLabel>
@@ -83,6 +108,8 @@ export default function Register(): JSX.Element {
                     id="password"
                     w="full"
                 />
+                <InputError errors={errors} name="password" />
+
                 <FormLabel w="full" textAlign="left" htmlFor="confirm_password">
                     Confirm password
                 </FormLabel>
@@ -92,6 +119,8 @@ export default function Register(): JSX.Element {
                     id="confirm_password"
                     w="full"
                 />
+                <InputError errors={errors} name="confirm_password" />
+
                 <Button
                     isLoading={loading}
                     onClick={handleSubmit(onSubmit)}

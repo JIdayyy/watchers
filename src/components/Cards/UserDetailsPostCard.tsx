@@ -1,4 +1,12 @@
-import { Box, Button, Flex, Text } from "@chakra-ui/react";
+import {
+    Box,
+    Button,
+    Flex,
+    SkeletonCircle,
+    SkeletonText,
+    Text,
+} from "@chakra-ui/react";
+import CustomBox from "@definitions/chakra/theme/components/Box/CustomBox";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import {
@@ -13,7 +21,7 @@ interface IProps {
 
 export default function UserDetailsPostCard({ author }: IProps): JSX.Element {
     const { push } = useRouter();
-    const { data } = useGetAllPostsQuery({
+    const { data, loading } = useGetAllPostsQuery({
         variables: {
             where: {
                 userId: {
@@ -30,15 +38,28 @@ export default function UserDetailsPostCard({ author }: IProps): JSX.Element {
         push(`/${slug}`);
     };
 
+    if (loading)
+        return (
+            <Box rounded="md" w="full" padding={10} shadow="base" bg="white">
+                <SkeletonCircle size="10" />
+                <SkeletonText height="40px" mt="2" noOfLines={2} spacing="2" />
+                <SkeletonText height="40px" mt="2" noOfLines={2} spacing="2" />
+                <SkeletonText height="40px" mt="2" noOfLines={2} spacing="2" />
+                <SkeletonText height="40px" mt="2" noOfLines={2} spacing="2" />
+                <SkeletonText height="40px" mt="2" noOfLines={2} spacing="2" />
+                <SkeletonText height="40px" mt="2" noOfLines={2} spacing="2" />
+            </Box>
+        );
+
     return (
-        <Flex
-            direction="column"
+        <CustomBox
+            display="flex"
+            flexDir="column"
             justifyContent="space-between"
             w="full"
             overflow="hidden"
             rounded="md"
             shadow="base"
-            bg="white"
         >
             <Box w="full" h="30px" bg="black"></Box>
             <Flex
@@ -82,6 +103,6 @@ export default function UserDetailsPostCard({ author }: IProps): JSX.Element {
                     </Flex>
                 ))}
             </Flex>
-        </Flex>
+        </CustomBox>
     );
 }

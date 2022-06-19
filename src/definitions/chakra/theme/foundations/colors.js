@@ -1,11 +1,11 @@
 export default {
     brand: {
-        900: "#1a365d",
-        800: "#153e75",
-        700: "#2a69ac",
+        900: "#FFFFF",
+        800: "#FFFFF",
+        700: "#FFFFF",
     },
     header: {
-        100: "#20232a",
+        100: "#FFFFF",
     },
     main: {
         100: "#282c34",

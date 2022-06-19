@@ -4,6 +4,7 @@ import Image from "next/image";
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import hljs from "highlight.js";
+import CustomFlex from "@definitions/chakra/theme/components/Box/CustomFlex";
 
 interface IProps {
     image: File | undefined;
@@ -37,13 +38,12 @@ export default function Preview({
     }, []);
 
     return (
-        <Flex
+        <CustomFlex
             h="full"
             shadow="base"
             rounded="md"
             overflow="hidden"
             direction="column"
-            bg="white"
         >
             <Flex position="relative" w="full" h="250px">
                 {image && (
@@ -81,6 +81,6 @@ export default function Preview({
                     }}
                 />
             </Flex>
-        </Flex>
+        </CustomFlex>
     );
 }

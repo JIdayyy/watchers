@@ -1,5 +1,12 @@
-import React from "react";
-import { Button, Flex, Grid, GridItem, Text } from "@chakra-ui/react";
+import React, { useState } from "react";
+import {
+    Button,
+    Flex,
+    Grid,
+    GridItem,
+    Text,
+    useColorMode,
+} from "@chakra-ui/react";
 import MainLayout from "@components/Layouts/MainLayout";
 import WatchesList from "@components/Lists/Watches/WatchesList";
 import Image from "next/image";
@@ -11,12 +18,16 @@ import {
 } from "src/generated/graphql";
 import { apolloClient } from "./_app";
 import { GetStaticPropsResult } from "next";
+import CustomBox from "@definitions/chakra/theme/components/Box/CustomBox";
 
 interface IProps {
     posts: GetAllPostsQuery["posts"];
 }
 
 const Home = ({ posts }: IProps): JSX.Element => {
+    const [sortOrder, setSortOrder] = useState("relevant");
+    const { toggleColorMode } = useColorMode();
+
     return (
         <Grid
             p={[2, 2, 2, 2, 0]}
@@ -41,6 +52,31 @@ const Home = ({ posts }: IProps): JSX.Element => {
                 <NavigationCard />
             </GridItem>
             <GridItem colSpan={3}>
+                <Flex
+                    p={5}
+                    fontSize="18px"
+                    h="15"
+                    justifyContent="flex-start"
+                    alignItems="center"
+                    w="full"
+                >
+                    <Flex
+                        cursor="pointer"
+                        onClick={() => toggleColorMode()}
+                        fontWeight={sortOrder === "latest" ? "bold" : "normal"}
+                        mr={6}
+                    >
+                        Latest
+                    </Flex>
+                    <Flex
+                        cursor="pointer"
+                        onClick={() => setSortOrder("top")}
+                        fontWeight={sortOrder === "top" ? "bold" : "normal"}
+                        mr={6}
+                    >
+                        Top
+                    </Flex>
+                </Flex>
                 <WatchesList posts={posts} />
             </GridItem>
             <GridItem
@@ -50,13 +86,13 @@ const Home = ({ posts }: IProps): JSX.Element => {
                 display={["none", "none", "none", "block"]}
                 colSpan={1}
             >
-                <Flex
-                    direction="column"
+                <CustomBox
+                    flexDirection="column"
+                    display="flex"
                     p={5}
                     shadow="base"
                     h="300px"
                     rounded="md"
-                    bg="white"
                     justifyContent="space-between"
                     alignItems="flex-start"
                 >
@@ -82,7 +118,7 @@ const Home = ({ posts }: IProps): JSX.Element => {
                         />
                     </Flex>
                     <Button w="full">Add Watch</Button>
-                </Flex>
+                </CustomBox>
             </GridItem>
         </Grid>
     );

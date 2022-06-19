@@ -1,6 +1,13 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Button, Flex, Icon, Input, Text } from "@chakra-ui/react";
+import {
+    Button,
+    Flex,
+    Icon,
+    Input,
+    Text,
+    useColorMode,
+} from "@chakra-ui/react";
 import NewWatchLayout from "@components/Layouts/NewWatch";
 import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import RichText from "@components/RichText";
@@ -13,12 +20,14 @@ import { useSelector } from "react-redux";
 import { RootState } from "@redux/reducers";
 import { imageService } from "@services/api/fetcher";
 import axiosInstance from "@services/api/axiosInstance";
-import { GrClose } from "react-icons/gr";
+import { CloseIcon } from "@chakra-ui/icons";
 import Preview from "@components/Preview";
+import CustomFlex from "@definitions/chakra/theme/components/Box/CustomFlex";
 
 const initialValue = "<p> <b>Start to writte your watch here ...</b></p>";
 
 export default function NewWatch(): JSX.Element {
+    const { colorMode } = useColorMode();
     const [isPreview, setIsPreview] = useState(false);
     const fileInpuRef = useRef<HTMLInputElement>(null);
     const router = useRouter();
@@ -157,6 +166,7 @@ export default function NewWatch(): JSX.Element {
             direction="column"
             justifyContent="center"
             pb={10}
+            minH="100vh"
             w="7xl"
             maxW="7xl"
             px={[2, 2, 2, 2, 0]}
@@ -192,9 +202,9 @@ export default function NewWatch(): JSX.Element {
             </Flex>
             {!isPreview ? (
                 <>
-                    <Flex
-                        bg="white"
+                    <CustomFlex
                         w="full"
+                        display="flex"
                         h="full"
                         rounded="md"
                         border="2px solid #D4D4D4"
@@ -243,12 +253,10 @@ export default function NewWatch(): JSX.Element {
                             </Flex>
                             <Input
                                 {...register("title")}
-                                color="black"
                                 fontWeight="bold"
                                 fontSize={["18px", "24px"]}
                                 border="0px"
                                 _placeholder={{
-                                    color: "black",
                                     fontWeight: "bold",
                                     fontSize: "24px",
                                 }}
@@ -260,7 +268,6 @@ export default function NewWatch(): JSX.Element {
                                     <Flex
                                         justifyContent="center"
                                         alignItems="center"
-                                        bg="gray.200"
                                         rounded="md"
                                         px={2}
                                         py={[0, 1]}
@@ -275,11 +282,20 @@ export default function NewWatch(): JSX.Element {
                                             #{tag}
                                         </Text>
                                         <Button
+                                            size="sm"
+                                            bg="transparent"
                                             _focus={{ border: "0px" }}
-                                            backgroundColor="transparent"
                                             onClick={() => handleRemoveTag(tag)}
                                         >
-                                            <Icon as={GrClose} size={5} />
+                                            <Icon
+                                                color={
+                                                    colorMode === "light"
+                                                        ? "black"
+                                                        : "white"
+                                                }
+                                                as={CloseIcon}
+                                                size={5}
+                                            />
                                         </Button>
                                     </Flex>
                                 ))}
@@ -296,12 +312,10 @@ export default function NewWatch(): JSX.Element {
                                     onChange={(
                                         e: ChangeEvent<HTMLInputElement>,
                                     ) => setTagInput(e.target.value)}
-                                    color="black"
                                     fontWeight="bold"
                                     fontSize={["18px", "24px"]}
                                     border="0px"
                                     _placeholder={{
-                                        color: "black",
                                         fontWeight: "bold",
                                         fontSize: "24px",
                                     }}
@@ -323,8 +337,15 @@ export default function NewWatch(): JSX.Element {
                             onImageUpload={(image) => handleImageUpload(image)}
                             styles={{
                                 root: {
+                                    backgroundColor:
+                                        colorMode === "light"
+                                            ? "white"
+                                            : "#171717",
                                     height: "100%",
-                                    color: "black",
+                                    color:
+                                        colorMode === "light"
+                                            ? "black"
+                                            : "white",
                                     border: "0px",
                                 },
                                 toolbar: {
@@ -340,7 +361,7 @@ export default function NewWatch(): JSX.Element {
                             value={value}
                             onChange={onChange}
                         />
-                    </Flex>
+                    </CustomFlex>
                     <Flex
                         my={1}
                         justifyContent="flex-start"

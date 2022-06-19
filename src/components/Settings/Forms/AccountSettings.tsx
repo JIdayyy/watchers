@@ -1,4 +1,5 @@
-import { Flex, VStack, FormLabel, Input, Button, Text } from "@chakra-ui/react";
+import { VStack, FormLabel, Input, Button, Text } from "@chakra-ui/react";
+import CustomFlex from "@definitions/chakra/theme/components/Box/CustomFlex";
 
 import { useForm } from "react-hook-form";
 
@@ -6,11 +7,10 @@ export default function AccountsSettings(): JSX.Element {
     const { register } = useForm();
 
     return (
-        <Flex
+        <CustomFlex
             p={[5, 5, 10]}
             w="full"
             rounded="md"
-            bg="white"
             shadow="base"
             flexDirection="column"
             alignItems="flex-start"
@@ -35,6 +35,6 @@ export default function AccountsSettings(): JSX.Element {
             <Button mt={10} variant="action">
                 Submit new password
             </Button>
-        </Flex>
+        </CustomFlex>
     );
 }

@@ -11,6 +11,7 @@ import {
 } from "src/generated/graphql";
 import { AiFillLike } from "react-icons/ai";
 import { TbMessageCircle2 } from "react-icons/tb";
+import CustomBox from "@definitions/chakra/theme/components/Box/CustomBox";
 
 interface IProps {
     watch: GetAllPostsQuery["posts"][number];
@@ -41,11 +42,12 @@ export default function WatchCard({ watch, isMain }: IProps): JSX.Element {
     const date = DateTime.fromJSDate(new Date(watch.created_at));
 
     return (
-        <Flex
+        <CustomBox
+            variant="solid"
             onClick={handleClick}
             cursor="pointer"
-            direction="column"
-            bg="white"
+            flexDir="column"
+            display="flex"
             rounded={10}
             shadow="base"
             w="full"
@@ -119,6 +121,6 @@ export default function WatchCard({ watch, isMain }: IProps): JSX.Element {
                     </Flex>
                 </Flex>
             </Flex>
-        </Flex>
+        </CustomBox>
     );
 }

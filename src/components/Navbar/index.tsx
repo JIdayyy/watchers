@@ -3,11 +3,13 @@ import {
     Flex,
     Grid,
     GridItem,
+    Icon,
     Input,
     InputGroup,
     InputRightElement,
     Kbd,
     Text,
+    useColorMode,
     useDisclosure,
 } from "@chakra-ui/react";
 import { RootState } from "@redux/reducers";
@@ -18,11 +20,15 @@ import { useSelector } from "react-redux";
 import SearchModal from "@components/Modals/SearchModal";
 import UserMenu from "@components/Menu/UserMenu";
 import DrawerMenu from "@components/Menu/DrawerMenu";
+import CustomBox from "@definitions/chakra/theme/components/Box/CustomBox";
+import { FaRegMoon } from "react-icons/fa";
+import { ImSun } from "react-icons/im";
 
 export default function Navbar(): JSX.Element {
     const router = useRouter();
     const { user } = useSelector((state: RootState) => state.user);
     const { isOpen, onClose, onOpen } = useDisclosure();
+    const { colorMode, toggleColorMode } = useColorMode();
 
     useEffect(() => {
         let cmdDown = false;
@@ -45,9 +51,10 @@ export default function Navbar(): JSX.Element {
     }, []);
 
     return (
-        <Flex
+        <CustomBox
+            display="flex"
+            variant="solid"
             zIndex={10}
-            bg="white"
             position="fixed"
             top={0}
             shadow="base"
@@ -84,6 +91,16 @@ export default function Navbar(): JSX.Element {
                                 src="/icons/watchers.png"
                                 width={25}
                                 height={25}
+                            />
+                        </Button>
+                        <Button
+                            _focus={{ borderColor: "" }}
+                            onClick={() => toggleColorMode()}
+                            ml={2}
+                        >
+                            <Icon
+                                as={colorMode === "light" ? FaRegMoon : ImSun}
+                                size={10}
                             />
                         </Button>
                     </Flex>
@@ -163,6 +180,6 @@ export default function Navbar(): JSX.Element {
                     )}
                 </GridItem>
             </Grid>
-        </Flex>
+        </CustomBox>
     );
 }

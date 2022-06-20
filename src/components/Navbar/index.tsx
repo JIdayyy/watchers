@@ -143,9 +143,9 @@ export default function Navbar(): JSX.Element {
                                     px={2}
                                     w={["100%", "70%"]}
                                     color="white"
-                                    bg="blue.400"
                                     _focus={{ border: "0px" }}
                                     onClick={() => router.push("/new")}
+                                    variant="action"
                                 >
                                     Add Watch
                                 </Button>

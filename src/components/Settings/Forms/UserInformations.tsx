@@ -9,6 +9,7 @@ import {
     SkeletonCircle,
     SkeletonText,
 } from "@chakra-ui/react";
+import CustomBox from "@definitions/chakra/theme/components/Box/CustomBox";
 import CustomFlex from "@definitions/chakra/theme/components/Box/CustomFlex";
 import { RootState } from "@redux/reducers";
 import Image from "next/image";
@@ -37,7 +38,7 @@ export default function UserInformations(): JSX.Element {
 
     if (!data?.user) {
         return (
-            <Box rounded="md" w="full" padding={10} shadow="base" bg="white">
+            <CustomBox rounded="md" w="full" padding={10} shadow="base">
                 <SkeletonCircle size="10" />
                 <SkeletonText height="40px" mt="2" noOfLines={2} spacing="2" />
                 <SkeletonText height="40px" mt="2" noOfLines={2} spacing="2" />
@@ -45,7 +46,7 @@ export default function UserInformations(): JSX.Element {
                 <SkeletonText height="40px" mt="2" noOfLines={2} spacing="2" />
                 <SkeletonText height="40px" mt="2" noOfLines={2} spacing="2" />
                 <SkeletonText height="40px" mt="2" noOfLines={2} spacing="2" />
-            </Box>
+            </CustomBox>
         );
     }
 

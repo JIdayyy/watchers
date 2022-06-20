@@ -164,7 +164,6 @@ export default function Watch({ post }: IProps): JSX.Element {
                 <GridItem
                     alignSelf="start"
                     position="sticky"
-                    top="80px"
                     display="flex"
                     flexDir="column"
                     colSpan={2}

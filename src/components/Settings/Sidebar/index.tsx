@@ -1,4 +1,4 @@
-import { Flex, Select, Text } from "@chakra-ui/react";
+import { Flex, Select, Text, useColorMode } from "@chakra-ui/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -7,6 +7,7 @@ import settingLinks from "src/config/settingsLinks";
 
 export default function Sidebar(): JSX.Element {
     const { push } = useRouter();
+    const { colorMode } = useColorMode();
 
     // const containsAll = (link: ISettingLink) => {
     //     return asPath.split("/").some((element) => {
@@ -33,7 +34,10 @@ export default function Sidebar(): JSX.Element {
                             my={2}
                             _hover={{
                                 textDecoration: "underline",
-                                bg: "gray.200",
+                                bg:
+                                    colorMode === "light"
+                                        ? "gray.200"
+                                        : "#171717",
                             }}
                             // bg={containsAll(link) ? "white" : "transparent"}
                             cursor="pointer"

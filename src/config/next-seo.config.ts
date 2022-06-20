@@ -8,5 +8,13 @@ export default {
         locale: "en_IE",
         url: "https://tech-watchers.vercel.app/",
         site_name: "Tech Watchers",
+        images: [
+            {
+                url: "/og-image.png",
+                width: 800,
+                height: 420,
+                alt: "TechWatcher Logo",
+            },
+        ],
     },
 };

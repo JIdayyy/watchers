@@ -2,12 +2,12 @@ import {
     VStack,
     FormLabel,
     Input,
-    Box,
     Text,
     SkeletonCircle,
     SkeletonText,
     Textarea,
 } from "@chakra-ui/react";
+import CustomBox from "@definitions/chakra/theme/components/Box/CustomBox";
 import CustomFlex from "@definitions/chakra/theme/components/Box/CustomFlex";
 import { RootState } from "@redux/reducers";
 import { useFormContext } from "react-hook-form";
@@ -33,13 +33,13 @@ export default function UserAdditionalInformations(): JSX.Element {
 
     if (!data?.preference) {
         return (
-            <Box rounded="md" w="full" padding={10} shadow="base" bg="white">
+            <CustomBox rounded="md" w="full" padding={10} shadow="base">
                 <SkeletonCircle size="10" />
                 <SkeletonText height="40px" mt="2" noOfLines={2} spacing="2" />
                 <SkeletonText height="40px" mt="2" noOfLines={2} spacing="2" />
                 <SkeletonText height="40px" mt="2" noOfLines={2} spacing="2" />
                 <SkeletonText height="40px" mt="2" noOfLines={2} spacing="2" />
-            </Box>
+            </CustomBox>
         );
     }
 

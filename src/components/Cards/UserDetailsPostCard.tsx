@@ -5,6 +5,7 @@ import {
     SkeletonCircle,
     SkeletonText,
     Text,
+    useColorMode,
 } from "@chakra-ui/react";
 import CustomBox from "@definitions/chakra/theme/components/Box/CustomBox";
 import Image from "next/image";
@@ -21,6 +22,7 @@ interface IProps {
 
 export default function UserDetailsPostCard({ author }: IProps): JSX.Element {
     const { push } = useRouter();
+    const { colorMode } = useColorMode();
     const { data, loading } = useGetAllPostsQuery({
         variables: {
             where: {
@@ -40,7 +42,7 @@ export default function UserDetailsPostCard({ author }: IProps): JSX.Element {
 
     if (loading)
         return (
-            <Box rounded="md" w="full" padding={10} shadow="base" bg="white">
+            <CustomBox rounded="md" w="full" padding={10} shadow="base">
                 <SkeletonCircle size="10" />
                 <SkeletonText height="40px" mt="2" noOfLines={2} spacing="2" />
                 <SkeletonText height="40px" mt="2" noOfLines={2} spacing="2" />
@@ -48,7 +50,7 @@ export default function UserDetailsPostCard({ author }: IProps): JSX.Element {
                 <SkeletonText height="40px" mt="2" noOfLines={2} spacing="2" />
                 <SkeletonText height="40px" mt="2" noOfLines={2} spacing="2" />
                 <SkeletonText height="40px" mt="2" noOfLines={2} spacing="2" />
-            </Box>
+            </CustomBox>
         );
 
     return (
@@ -61,7 +63,11 @@ export default function UserDetailsPostCard({ author }: IProps): JSX.Element {
             rounded="md"
             shadow="base"
         >
-            <Box w="full" h="30px" bg="black"></Box>
+            <Box
+                w="full"
+                h="30px"
+                bg={colorMode === "light" ? "black" : "orange"}
+            ></Box>
             <Flex
                 p={5}
                 direction="column"

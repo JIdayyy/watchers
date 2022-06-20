@@ -14,9 +14,22 @@ export default {
                 fontSize: "32px",
                 fontFamily: "sans-serif",
             },
+            a: {
+                color: mode("#ffffff", "#000000")(props),
+            },
             h2: {
                 fontWeight: "bold",
                 fontSize: "24px",
+                fontFamily: "sans-serif",
+            },
+            h3: {
+                fontWeight: "bold",
+                fontSize: "18px",
+                fontFamily: "sans-serif",
+            },
+            h4: {
+                fontWeight: "bold",
+                fontSize: "16px",
                 fontFamily: "sans-serif",
             },
             p: {

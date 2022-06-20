@@ -78,20 +78,22 @@ export default function Profile(): JSX.Element {
                 direction="column"
             >
                 <Box position="absolute" top={0} transform="translateY(-80px)">
-                    <Box
-                        border="10px solid black"
-                        width={150}
-                        height={150}
-                        overflow="hidden"
-                        rounded="full"
-                        position="relative"
-                    >
-                        <Image
-                            objectFit="cover"
-                            src={user.avatar}
-                            layout="fill"
-                        />
-                    </Box>
+                    {user.avatar && (
+                        <Box
+                            border="10px solid black"
+                            width={150}
+                            height={150}
+                            overflow="hidden"
+                            rounded="full"
+                            position="relative"
+                        >
+                            <Image
+                                objectFit="cover"
+                                src={user.avatar}
+                                layout="fill"
+                            />
+                        </Box>
+                    )}
                 </Box>
                 <Flex justifyContent="flex-end" alignItems="center" w="full">
                     <Button onClick={() => push("/settings/profile")}>
@@ -109,7 +111,8 @@ export default function Profile(): JSX.Element {
                         {user.nickName}
                     </Text>
                     <Text fontSize="24px" fontWeight="medium">
-                        {data?.preference.bio}
+                        {(data.preference && data?.preference.bio) ||
+                            "Nothing here"}
                     </Text>
                     <Text fontSize="18px" fontWeight="medium" color="gray.400">
                         <Icon as={FaBirthdayCake} size={5} /> Member since{" "}

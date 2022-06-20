@@ -15,7 +15,7 @@ export default {
                 fontFamily: "sans-serif",
             },
             a: {
-                color: mode("#ffffff", "#000000")(props),
+                color: mode("#000000", "#ffffff")(props),
             },
             h2: {
                 fontWeight: "bold",

@@ -84,7 +84,7 @@ export default function WatchCard({ watch, isMain }: IProps): JSX.Element {
                     direction="column"
                 >
                     <Flex direction="column">
-                        <Text>{user.nickName}</Text>
+                        <Text>{watch.author.nickname}</Text>
                         <Text>
                             {date.day} {date.monthShort} {date.year}
                         </Text>

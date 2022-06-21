@@ -4357,7 +4357,7 @@ export type GetAllPostsQueryVariables = Exact<{
 }>;
 
 
-export type GetAllPostsQuery = { __typename?: 'Query', posts: Array<{ __typename?: 'Post', id: string, title: string, content: string, isDraft: boolean, cover_picture: string, slug: string, created_at: any, userId: string, categoryId: string, commentCount: { __typename?: 'Count', count: number }, author: { __typename?: 'User', id: string, first_name: string, last_name: string, email: string, avatar: string }, Category: { __typename?: 'Category', id: string, name: string }, Tags: Array<{ __typename?: 'Tag', id: string, name: string }> }> };
+export type GetAllPostsQuery = { __typename?: 'Query', posts: Array<{ __typename?: 'Post', id: string, title: string, content: string, isDraft: boolean, cover_picture: string, slug: string, created_at: any, userId: string, categoryId: string, commentCount: { __typename?: 'Count', count: number }, author: { __typename?: 'User', id: string, first_name: string, nickname: string, last_name: string, email: string, avatar: string }, Category: { __typename?: 'Category', id: string, name: string }, Tags: Array<{ __typename?: 'Tag', id: string, name: string }> }> };
 
 export type GetPostDataQueryVariables = Exact<{
   where: PostWhereUniqueInput;
@@ -4835,6 +4835,7 @@ export const GetAllPostsDocument = gql`
     author {
       id
       first_name
+      nickname
       last_name
       email
       avatar

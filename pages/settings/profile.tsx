@@ -12,7 +12,6 @@ export default function Settings(): JSX.Element {
     const { user } = useSelector((state: RootState) => state.user);
     const [updatePreferences, { loading }] = useUpdateUserPreferencesMutation();
     const methods = useForm();
-    console.log(user);
     const onSubmit = (data: FieldValues) => {
         updatePreferences({
             variables: {

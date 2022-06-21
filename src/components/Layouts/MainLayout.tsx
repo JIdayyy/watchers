@@ -16,7 +16,6 @@ export default function MainLayout({ children }: Props): JSX.Element {
 
     const [me, { loading }] = useMutateMeMutation({
         onCompleted: (data) => {
-            console.log(data);
             dispatch(
                 login({
                     avatar:

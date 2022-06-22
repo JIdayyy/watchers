@@ -64,7 +64,8 @@ export default function Navbar(): JSX.Element {
             alignItems="center"
         >
             <Grid
-                w={["full", "7xl"]}
+                w="full"
+                maxW="7xl"
                 gap={[0, 7]}
                 templateColumns="repeat(5, 1fr)"
                 display={["flex", "grid"]}
@@ -84,7 +85,12 @@ export default function Navbar(): JSX.Element {
                             w={["70%", "full"]}
                             onClick={() => router.push("/")}
                         >
-                            <Text mr={2} color="white" fontWeight="bold">
+                            <Text
+                                display={["none", "flex"]}
+                                mr={2}
+                                color="white"
+                                fontWeight="bold"
+                            >
                                 Tech Watchers
                             </Text>
                             <Image

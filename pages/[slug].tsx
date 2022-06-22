@@ -70,7 +70,7 @@ export default function Watch({ post }: IProps): JSX.Element {
 
     const SEO = {
         title: post.title,
-        titleTemplate: `%s | ${post.title}`,
+        titleTemplate: `Tech Watchers | ${post.title}`,
         defaultTitle: "Tech Watchers",
         description: post.content,
         openGraph: {

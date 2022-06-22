@@ -10,7 +10,7 @@ export default {
         site_name: "Tech Watchers",
         images: [
             {
-                url: "/og-image.png",
+                url: "https://img2.freepng.fr/20180425/ate/kisspng-lantern-light-oil-lamp-kerosene-lamp-decorative-lantern-5ae0abd45ef5d4.156863131524673492389.jpg",
                 width: 800,
                 height: 420,
                 alt: "TechWatcher Logo",

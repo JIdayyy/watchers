@@ -73,6 +73,20 @@ export default function Watch({ post }: IProps): JSX.Element {
         titleTemplate: `%s | ${post.title}`,
         defaultTitle: "Tech Watchers",
         description: post.content,
+        openGraph: {
+            type: "website",
+            locale: "en_IE",
+            url: `https://tech-watchers.vercel.app/${post.slug}`,
+            site_name: "Tech Watchers",
+            images: [
+                {
+                    url: post.cover_picture,
+                    width: 800,
+                    height: 420,
+                    alt: "post cover",
+                },
+            ],
+        },
     };
 
     return (

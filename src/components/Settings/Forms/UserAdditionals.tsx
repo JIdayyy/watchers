@@ -17,7 +17,7 @@ import { useGetUserAdditionalInformationsQuery } from "src/generated/graphql";
 export default function UserAdditionalInformations(): JSX.Element {
     const { setValue, register } = useFormContext();
     const { user } = useSelector((state: RootState) => state.user);
-    const { data } = useGetUserAdditionalInformationsQuery({
+    const { loading } = useGetUserAdditionalInformationsQuery({
         variables: {
             where: {
                 userId: user.id,
@@ -31,7 +31,7 @@ export default function UserAdditionalInformations(): JSX.Element {
         skip: !user.id,
     });
 
-    if (!data?.preference) {
+    if (loading) {
         return (
             <CustomBox rounded="md" w="full" padding={10} shadow="base">
                 <SkeletonCircle size="10" />

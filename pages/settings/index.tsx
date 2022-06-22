@@ -80,12 +80,12 @@ export default function Settings(): JSX.Element {
                 <VStack spacing={10}>
                     <UserInformations />
 
-                    {/* <UserAdditionalInformations />
+                    <UserAdditionalInformations />
 
                     <SaveSettingsButton
                         isLoading={loading}
                         onSubmit={onSubmit}
-                    /> */}
+                    />
                 </VStack>
             </FormProvider>
         </GridItem>

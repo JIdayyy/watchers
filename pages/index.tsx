@@ -29,7 +29,6 @@ const Home = ({ posts }: IProps): JSX.Element => {
     const [sortOrder, setSortOrder] = useState("relevant");
     const { toggleColorMode } = useColorMode();
     const session = useSession();
-    console.log(session);
     return (
         <Grid
             p={[2, 2, 2, 2, 0]}

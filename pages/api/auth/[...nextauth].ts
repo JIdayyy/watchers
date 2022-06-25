@@ -12,22 +12,6 @@ import { ApolloClient, createHttpLink, InMemoryCache } from "@apollo/client";
 
 const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:5000";
 
-const httpLink = createHttpLink({
-    uri: serverUrl,
-    credentials: "include",
-    headers: {
-        "platform-auth-user-agent": "web-platform",
-        Origin: "https://watchers-khaki.vercel.app",
-    },
-});
-
-export const apolloClient = new ApolloClient({
-    ssrMode: typeof window === "undefined",
-    uri: serverUrl,
-    link: httpLink,
-    cache: new InMemoryCache(),
-});
-
 export default NextAuth({
     // Configure one or more authentication providers
     adapter: PrismaAdapter(client),

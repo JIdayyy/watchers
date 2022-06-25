@@ -41,7 +41,6 @@ export default function Login(): JSX.Element {
             password: data.password,
         });
     };
-    console.log(session.status);
     return (
         <Flex w="full" h="full" justifyContent="center" alignItems="center">
             <VStack

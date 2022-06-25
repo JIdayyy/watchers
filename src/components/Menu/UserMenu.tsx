@@ -23,7 +23,6 @@ export default function UserMenu(): JSX.Element {
             push("/");
         },
     });
-    console.log(user);
     return (
         <Menu>
             <MenuButton

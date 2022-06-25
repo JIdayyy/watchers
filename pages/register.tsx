@@ -18,7 +18,6 @@ import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { useRegisterMutation } from "src/generated/graphql";
 import registerFormResolver from "src/Resolvers/RegisterFormResolver";
-import { useSession } from "next-auth/react";
 
 interface FormData {
     email: string;

@@ -15,16 +15,8 @@ import nProgress from "nprogress";
 import "nprogress/nprogress.css";
 import "../src/styles/highlight.css";
 import { DefaultSeo } from "next-seo";
-import hljs from "highlight.js";
 import SEO from "../src/config/next-seo.config";
-
-import javascript from "highlight.js/lib/languages/javascript";
-
-hljs.registerLanguage("javascript", javascript);
-
-hljs.configure({
-    languages: ["javascript", "ruby", "python", "rust"],
-});
+import { SessionProvider } from "next-auth/react";
 
 const Noop = ({ children }: { children: ReactNode }) => <>{children}</>;
 
@@ -34,7 +26,10 @@ Router.events.on("routeChangeStart", nProgress.start);
 Router.events.on("routeChangeError", nProgress.done);
 Router.events.on("routeChangeComplete", nProgress.done);
 
-function MyApp({ Component, pageProps }: AppProps): JSX.Element {
+function MyApp({
+    Component,
+    pageProps: { session, ...pageProps },
+}: AppProps): JSX.Element {
     const queryClient = new QueryClient();
     const Layout = (Component as any).Layout || Noop;
 
@@ -44,10 +39,12 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
                 <QueryClientProvider client={queryClient}>
                     <Hydrate state={pageProps.dehydratedState}>
                         <Provider store={store}>
-                            <Layout pageProps={pageProps}>
-                                <DefaultSeo {...SEO} />
-                                <Component {...pageProps} />
-                            </Layout>
+                            <SessionProvider session={session}>
+                                <Layout pageProps={pageProps}>
+                                    <DefaultSeo {...SEO} />
+                                    <Component {...pageProps} />
+                                </Layout>
+                            </SessionProvider>
                         </Provider>
                     </Hydrate>
                 </QueryClientProvider>

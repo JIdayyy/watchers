@@ -19,9 +19,442 @@ export type Scalars = {
   Upload: any;
 };
 
+export type Account = {
+  __typename?: 'Account';
+  access_token: Maybe<Scalars['String']>;
+  expires_at: Maybe<Scalars['Int']>;
+  id: Scalars['String'];
+  id_token: Maybe<Scalars['String']>;
+  provider: Scalars['String'];
+  providerAccountId: Scalars['String'];
+  refresh_token: Maybe<Scalars['String']>;
+  scope: Maybe<Scalars['String']>;
+  session_state: Maybe<Scalars['String']>;
+  token_type: Maybe<Scalars['String']>;
+  type: Scalars['String'];
+  user: User;
+  userId: Scalars['String'];
+};
+
+export type AccountAvgAggregate = {
+  __typename?: 'AccountAvgAggregate';
+  expires_at: Maybe<Scalars['Float']>;
+};
+
+export type AccountAvgOrderByAggregateInput = {
+  expires_at?: InputMaybe<SortOrder>;
+};
+
+export type AccountCountAggregate = {
+  __typename?: 'AccountCountAggregate';
+  _all: Scalars['Int'];
+  access_token: Scalars['Int'];
+  expires_at: Scalars['Int'];
+  id: Scalars['Int'];
+  id_token: Scalars['Int'];
+  provider: Scalars['Int'];
+  providerAccountId: Scalars['Int'];
+  refresh_token: Scalars['Int'];
+  scope: Scalars['Int'];
+  session_state: Scalars['Int'];
+  token_type: Scalars['Int'];
+  type: Scalars['Int'];
+  userId: Scalars['Int'];
+};
+
+export type AccountCountOrderByAggregateInput = {
+  access_token?: InputMaybe<SortOrder>;
+  expires_at?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  id_token?: InputMaybe<SortOrder>;
+  provider?: InputMaybe<SortOrder>;
+  providerAccountId?: InputMaybe<SortOrder>;
+  refresh_token?: InputMaybe<SortOrder>;
+  scope?: InputMaybe<SortOrder>;
+  session_state?: InputMaybe<SortOrder>;
+  token_type?: InputMaybe<SortOrder>;
+  type?: InputMaybe<SortOrder>;
+  userId?: InputMaybe<SortOrder>;
+};
+
+export type AccountCreateInput = {
+  access_token?: InputMaybe<Scalars['String']>;
+  expires_at?: InputMaybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['String']>;
+  id_token?: InputMaybe<Scalars['String']>;
+  provider: Scalars['String'];
+  providerAccountId: Scalars['String'];
+  refresh_token?: InputMaybe<Scalars['String']>;
+  scope?: InputMaybe<Scalars['String']>;
+  session_state?: InputMaybe<Scalars['String']>;
+  token_type?: InputMaybe<Scalars['String']>;
+  type: Scalars['String'];
+  user: UserCreateNestedOneWithoutAccountInput;
+};
+
+export type AccountCreateManyInput = {
+  access_token?: InputMaybe<Scalars['String']>;
+  expires_at?: InputMaybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['String']>;
+  id_token?: InputMaybe<Scalars['String']>;
+  provider: Scalars['String'];
+  providerAccountId: Scalars['String'];
+  refresh_token?: InputMaybe<Scalars['String']>;
+  scope?: InputMaybe<Scalars['String']>;
+  session_state?: InputMaybe<Scalars['String']>;
+  token_type?: InputMaybe<Scalars['String']>;
+  type: Scalars['String'];
+  userId: Scalars['String'];
+};
+
+export type AccountCreateManyUserInput = {
+  access_token?: InputMaybe<Scalars['String']>;
+  expires_at?: InputMaybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['String']>;
+  id_token?: InputMaybe<Scalars['String']>;
+  provider: Scalars['String'];
+  providerAccountId: Scalars['String'];
+  refresh_token?: InputMaybe<Scalars['String']>;
+  scope?: InputMaybe<Scalars['String']>;
+  session_state?: InputMaybe<Scalars['String']>;
+  token_type?: InputMaybe<Scalars['String']>;
+  type: Scalars['String'];
+};
+
+export type AccountCreateManyUserInputEnvelope = {
+  data: Array<AccountCreateManyUserInput>;
+  skipDuplicates?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type AccountCreateNestedManyWithoutUserInput = {
+  connect?: InputMaybe<Array<AccountWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<AccountCreateOrConnectWithoutUserInput>>;
+  create?: InputMaybe<Array<AccountCreateWithoutUserInput>>;
+  createMany?: InputMaybe<AccountCreateManyUserInputEnvelope>;
+};
+
+export type AccountCreateOrConnectWithoutUserInput = {
+  create: AccountCreateWithoutUserInput;
+  where: AccountWhereUniqueInput;
+};
+
+export type AccountCreateWithoutUserInput = {
+  access_token?: InputMaybe<Scalars['String']>;
+  expires_at?: InputMaybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['String']>;
+  id_token?: InputMaybe<Scalars['String']>;
+  provider: Scalars['String'];
+  providerAccountId: Scalars['String'];
+  refresh_token?: InputMaybe<Scalars['String']>;
+  scope?: InputMaybe<Scalars['String']>;
+  session_state?: InputMaybe<Scalars['String']>;
+  token_type?: InputMaybe<Scalars['String']>;
+  type: Scalars['String'];
+};
+
+export type AccountGroupBy = {
+  __typename?: 'AccountGroupBy';
+  _avg: Maybe<AccountAvgAggregate>;
+  _count: Maybe<AccountCountAggregate>;
+  _max: Maybe<AccountMaxAggregate>;
+  _min: Maybe<AccountMinAggregate>;
+  _sum: Maybe<AccountSumAggregate>;
+  access_token: Maybe<Scalars['String']>;
+  expires_at: Maybe<Scalars['Int']>;
+  id: Scalars['String'];
+  id_token: Maybe<Scalars['String']>;
+  provider: Scalars['String'];
+  providerAccountId: Scalars['String'];
+  refresh_token: Maybe<Scalars['String']>;
+  scope: Maybe<Scalars['String']>;
+  session_state: Maybe<Scalars['String']>;
+  token_type: Maybe<Scalars['String']>;
+  type: Scalars['String'];
+  userId: Scalars['String'];
+};
+
+export type AccountListRelationFilter = {
+  every?: InputMaybe<AccountWhereInput>;
+  none?: InputMaybe<AccountWhereInput>;
+  some?: InputMaybe<AccountWhereInput>;
+};
+
+export type AccountMaxAggregate = {
+  __typename?: 'AccountMaxAggregate';
+  access_token: Maybe<Scalars['String']>;
+  expires_at: Maybe<Scalars['Int']>;
+  id: Maybe<Scalars['String']>;
+  id_token: Maybe<Scalars['String']>;
+  provider: Maybe<Scalars['String']>;
+  providerAccountId: Maybe<Scalars['String']>;
+  refresh_token: Maybe<Scalars['String']>;
+  scope: Maybe<Scalars['String']>;
+  session_state: Maybe<Scalars['String']>;
+  token_type: Maybe<Scalars['String']>;
+  type: Maybe<Scalars['String']>;
+  userId: Maybe<Scalars['String']>;
+};
+
+export type AccountMaxOrderByAggregateInput = {
+  access_token?: InputMaybe<SortOrder>;
+  expires_at?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  id_token?: InputMaybe<SortOrder>;
+  provider?: InputMaybe<SortOrder>;
+  providerAccountId?: InputMaybe<SortOrder>;
+  refresh_token?: InputMaybe<SortOrder>;
+  scope?: InputMaybe<SortOrder>;
+  session_state?: InputMaybe<SortOrder>;
+  token_type?: InputMaybe<SortOrder>;
+  type?: InputMaybe<SortOrder>;
+  userId?: InputMaybe<SortOrder>;
+};
+
+export type AccountMinAggregate = {
+  __typename?: 'AccountMinAggregate';
+  access_token: Maybe<Scalars['String']>;
+  expires_at: Maybe<Scalars['Int']>;
+  id: Maybe<Scalars['String']>;
+  id_token: Maybe<Scalars['String']>;
+  provider: Maybe<Scalars['String']>;
+  providerAccountId: Maybe<Scalars['String']>;
+  refresh_token: Maybe<Scalars['String']>;
+  scope: Maybe<Scalars['String']>;
+  session_state: Maybe<Scalars['String']>;
+  token_type: Maybe<Scalars['String']>;
+  type: Maybe<Scalars['String']>;
+  userId: Maybe<Scalars['String']>;
+};
+
+export type AccountMinOrderByAggregateInput = {
+  access_token?: InputMaybe<SortOrder>;
+  expires_at?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  id_token?: InputMaybe<SortOrder>;
+  provider?: InputMaybe<SortOrder>;
+  providerAccountId?: InputMaybe<SortOrder>;
+  refresh_token?: InputMaybe<SortOrder>;
+  scope?: InputMaybe<SortOrder>;
+  session_state?: InputMaybe<SortOrder>;
+  token_type?: InputMaybe<SortOrder>;
+  type?: InputMaybe<SortOrder>;
+  userId?: InputMaybe<SortOrder>;
+};
+
+export type AccountOrderByRelationAggregateInput = {
+  _count?: InputMaybe<SortOrder>;
+};
+
+export type AccountOrderByWithAggregationInput = {
+  _avg?: InputMaybe<AccountAvgOrderByAggregateInput>;
+  _count?: InputMaybe<AccountCountOrderByAggregateInput>;
+  _max?: InputMaybe<AccountMaxOrderByAggregateInput>;
+  _min?: InputMaybe<AccountMinOrderByAggregateInput>;
+  _sum?: InputMaybe<AccountSumOrderByAggregateInput>;
+  access_token?: InputMaybe<SortOrder>;
+  expires_at?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  id_token?: InputMaybe<SortOrder>;
+  provider?: InputMaybe<SortOrder>;
+  providerAccountId?: InputMaybe<SortOrder>;
+  refresh_token?: InputMaybe<SortOrder>;
+  scope?: InputMaybe<SortOrder>;
+  session_state?: InputMaybe<SortOrder>;
+  token_type?: InputMaybe<SortOrder>;
+  type?: InputMaybe<SortOrder>;
+  userId?: InputMaybe<SortOrder>;
+};
+
+export type AccountOrderByWithRelationInput = {
+  access_token?: InputMaybe<SortOrder>;
+  expires_at?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  id_token?: InputMaybe<SortOrder>;
+  provider?: InputMaybe<SortOrder>;
+  providerAccountId?: InputMaybe<SortOrder>;
+  refresh_token?: InputMaybe<SortOrder>;
+  scope?: InputMaybe<SortOrder>;
+  session_state?: InputMaybe<SortOrder>;
+  token_type?: InputMaybe<SortOrder>;
+  type?: InputMaybe<SortOrder>;
+  user?: InputMaybe<UserOrderByWithRelationInput>;
+  userId?: InputMaybe<SortOrder>;
+};
+
+export type AccountProviderProviderAccountIdCompoundUniqueInput = {
+  provider: Scalars['String'];
+  providerAccountId: Scalars['String'];
+};
+
+export enum AccountScalarFieldEnum {
+  AccessToken = 'access_token',
+  ExpiresAt = 'expires_at',
+  Id = 'id',
+  IdToken = 'id_token',
+  Provider = 'provider',
+  ProviderAccountId = 'providerAccountId',
+  RefreshToken = 'refresh_token',
+  Scope = 'scope',
+  SessionState = 'session_state',
+  TokenType = 'token_type',
+  Type = 'type',
+  UserId = 'userId'
+}
+
+export type AccountScalarWhereInput = {
+  AND?: InputMaybe<Array<AccountScalarWhereInput>>;
+  NOT?: InputMaybe<Array<AccountScalarWhereInput>>;
+  OR?: InputMaybe<Array<AccountScalarWhereInput>>;
+  access_token?: InputMaybe<StringNullableFilter>;
+  expires_at?: InputMaybe<IntNullableFilter>;
+  id?: InputMaybe<StringFilter>;
+  id_token?: InputMaybe<StringNullableFilter>;
+  provider?: InputMaybe<StringFilter>;
+  providerAccountId?: InputMaybe<StringFilter>;
+  refresh_token?: InputMaybe<StringNullableFilter>;
+  scope?: InputMaybe<StringNullableFilter>;
+  session_state?: InputMaybe<StringNullableFilter>;
+  token_type?: InputMaybe<StringNullableFilter>;
+  type?: InputMaybe<StringFilter>;
+  userId?: InputMaybe<StringFilter>;
+};
+
+export type AccountScalarWhereWithAggregatesInput = {
+  AND?: InputMaybe<Array<AccountScalarWhereWithAggregatesInput>>;
+  NOT?: InputMaybe<Array<AccountScalarWhereWithAggregatesInput>>;
+  OR?: InputMaybe<Array<AccountScalarWhereWithAggregatesInput>>;
+  access_token?: InputMaybe<StringNullableWithAggregatesFilter>;
+  expires_at?: InputMaybe<IntNullableWithAggregatesFilter>;
+  id?: InputMaybe<StringWithAggregatesFilter>;
+  id_token?: InputMaybe<StringNullableWithAggregatesFilter>;
+  provider?: InputMaybe<StringWithAggregatesFilter>;
+  providerAccountId?: InputMaybe<StringWithAggregatesFilter>;
+  refresh_token?: InputMaybe<StringNullableWithAggregatesFilter>;
+  scope?: InputMaybe<StringNullableWithAggregatesFilter>;
+  session_state?: InputMaybe<StringNullableWithAggregatesFilter>;
+  token_type?: InputMaybe<StringNullableWithAggregatesFilter>;
+  type?: InputMaybe<StringWithAggregatesFilter>;
+  userId?: InputMaybe<StringWithAggregatesFilter>;
+};
+
+export type AccountSumAggregate = {
+  __typename?: 'AccountSumAggregate';
+  expires_at: Maybe<Scalars['Int']>;
+};
+
+export type AccountSumOrderByAggregateInput = {
+  expires_at?: InputMaybe<SortOrder>;
+};
+
+export type AccountUpdateInput = {
+  access_token?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  expires_at?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
+  id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  id_token?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  provider?: InputMaybe<StringFieldUpdateOperationsInput>;
+  providerAccountId?: InputMaybe<StringFieldUpdateOperationsInput>;
+  refresh_token?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  scope?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  session_state?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  token_type?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  type?: InputMaybe<StringFieldUpdateOperationsInput>;
+  user?: InputMaybe<UserUpdateOneRequiredWithoutAccountInput>;
+};
+
+export type AccountUpdateManyMutationInput = {
+  access_token?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  expires_at?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
+  id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  id_token?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  provider?: InputMaybe<StringFieldUpdateOperationsInput>;
+  providerAccountId?: InputMaybe<StringFieldUpdateOperationsInput>;
+  refresh_token?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  scope?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  session_state?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  token_type?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  type?: InputMaybe<StringFieldUpdateOperationsInput>;
+};
+
+export type AccountUpdateManyWithWhereWithoutUserInput = {
+  data: AccountUpdateManyMutationInput;
+  where: AccountScalarWhereInput;
+};
+
+export type AccountUpdateManyWithoutUserInput = {
+  connect?: InputMaybe<Array<AccountWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<AccountCreateOrConnectWithoutUserInput>>;
+  create?: InputMaybe<Array<AccountCreateWithoutUserInput>>;
+  createMany?: InputMaybe<AccountCreateManyUserInputEnvelope>;
+  delete?: InputMaybe<Array<AccountWhereUniqueInput>>;
+  deleteMany?: InputMaybe<Array<AccountScalarWhereInput>>;
+  disconnect?: InputMaybe<Array<AccountWhereUniqueInput>>;
+  set?: InputMaybe<Array<AccountWhereUniqueInput>>;
+  update?: InputMaybe<Array<AccountUpdateWithWhereUniqueWithoutUserInput>>;
+  updateMany?: InputMaybe<Array<AccountUpdateManyWithWhereWithoutUserInput>>;
+  upsert?: InputMaybe<Array<AccountUpsertWithWhereUniqueWithoutUserInput>>;
+};
+
+export type AccountUpdateWithWhereUniqueWithoutUserInput = {
+  data: AccountUpdateWithoutUserInput;
+  where: AccountWhereUniqueInput;
+};
+
+export type AccountUpdateWithoutUserInput = {
+  access_token?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  expires_at?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
+  id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  id_token?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  provider?: InputMaybe<StringFieldUpdateOperationsInput>;
+  providerAccountId?: InputMaybe<StringFieldUpdateOperationsInput>;
+  refresh_token?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  scope?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  session_state?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  token_type?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  type?: InputMaybe<StringFieldUpdateOperationsInput>;
+};
+
+export type AccountUpsertWithWhereUniqueWithoutUserInput = {
+  create: AccountCreateWithoutUserInput;
+  update: AccountUpdateWithoutUserInput;
+  where: AccountWhereUniqueInput;
+};
+
+export type AccountWhereInput = {
+  AND?: InputMaybe<Array<AccountWhereInput>>;
+  NOT?: InputMaybe<Array<AccountWhereInput>>;
+  OR?: InputMaybe<Array<AccountWhereInput>>;
+  access_token?: InputMaybe<StringNullableFilter>;
+  expires_at?: InputMaybe<IntNullableFilter>;
+  id?: InputMaybe<StringFilter>;
+  id_token?: InputMaybe<StringNullableFilter>;
+  provider?: InputMaybe<StringFilter>;
+  providerAccountId?: InputMaybe<StringFilter>;
+  refresh_token?: InputMaybe<StringNullableFilter>;
+  scope?: InputMaybe<StringNullableFilter>;
+  session_state?: InputMaybe<StringNullableFilter>;
+  token_type?: InputMaybe<StringNullableFilter>;
+  type?: InputMaybe<StringFilter>;
+  user?: InputMaybe<UserRelationFilter>;
+  userId?: InputMaybe<StringFilter>;
+};
+
+export type AccountWhereUniqueInput = {
+  id?: InputMaybe<Scalars['String']>;
+  provider_providerAccountId?: InputMaybe<AccountProviderProviderAccountIdCompoundUniqueInput>;
+};
+
 export type AffectedRowsOutput = {
   __typename?: 'AffectedRowsOutput';
   count: Scalars['Int'];
+};
+
+export type AggregateAccount = {
+  __typename?: 'AggregateAccount';
+  _avg: Maybe<AccountAvgAggregate>;
+  _count: Maybe<AccountCountAggregate>;
+  _max: Maybe<AccountMaxAggregate>;
+  _min: Maybe<AccountMinAggregate>;
+  _sum: Maybe<AccountSumAggregate>;
 };
 
 export type AggregateCategory = {
@@ -66,6 +499,13 @@ export type AggregateResetPassword = {
   _min: Maybe<ResetPasswordMinAggregate>;
 };
 
+export type AggregateSession = {
+  __typename?: 'AggregateSession';
+  _count: Maybe<SessionCountAggregate>;
+  _max: Maybe<SessionMaxAggregate>;
+  _min: Maybe<SessionMinAggregate>;
+};
+
 export type AggregateTag = {
   __typename?: 'AggregateTag';
   _count: Maybe<TagCountAggregate>;
@@ -78,6 +518,13 @@ export type AggregateUser = {
   _count: Maybe<UserCountAggregate>;
   _max: Maybe<UserMaxAggregate>;
   _min: Maybe<UserMinAggregate>;
+};
+
+export type AggregateVerificationToken = {
+  __typename?: 'AggregateVerificationToken';
+  _count: Maybe<VerificationTokenCountAggregate>;
+  _max: Maybe<VerificationTokenMaxAggregate>;
+  _min: Maybe<VerificationTokenMinAggregate>;
 };
 
 export type BoolFieldUpdateOperationsInput = {
@@ -902,12 +1349,52 @@ export type DateTimeWithAggregatesFilter = {
   notIn?: InputMaybe<Array<Scalars['DateTime']>>;
 };
 
-export type EnumRoleNullableListFilter = {
-  equals?: InputMaybe<Array<Role>>;
-  has?: InputMaybe<Role>;
-  hasEvery?: InputMaybe<Array<Role>>;
-  hasSome?: InputMaybe<Array<Role>>;
-  isEmpty?: InputMaybe<Scalars['Boolean']>;
+export type EnumRoleFieldUpdateOperationsInput = {
+  set?: InputMaybe<Role>;
+};
+
+export type EnumRoleFilter = {
+  equals?: InputMaybe<Role>;
+  in?: InputMaybe<Array<Role>>;
+  not?: InputMaybe<NestedEnumRoleFilter>;
+  notIn?: InputMaybe<Array<Role>>;
+};
+
+export type EnumRoleWithAggregatesFilter = {
+  _count?: InputMaybe<NestedIntFilter>;
+  _max?: InputMaybe<NestedEnumRoleFilter>;
+  _min?: InputMaybe<NestedEnumRoleFilter>;
+  equals?: InputMaybe<Role>;
+  in?: InputMaybe<Array<Role>>;
+  not?: InputMaybe<NestedEnumRoleWithAggregatesFilter>;
+  notIn?: InputMaybe<Array<Role>>;
+};
+
+export type IntNullableFilter = {
+  equals?: InputMaybe<Scalars['Int']>;
+  gt?: InputMaybe<Scalars['Int']>;
+  gte?: InputMaybe<Scalars['Int']>;
+  in?: InputMaybe<Array<Scalars['Int']>>;
+  lt?: InputMaybe<Scalars['Int']>;
+  lte?: InputMaybe<Scalars['Int']>;
+  not?: InputMaybe<NestedIntNullableFilter>;
+  notIn?: InputMaybe<Array<Scalars['Int']>>;
+};
+
+export type IntNullableWithAggregatesFilter = {
+  _avg?: InputMaybe<NestedFloatNullableFilter>;
+  _count?: InputMaybe<NestedIntNullableFilter>;
+  _max?: InputMaybe<NestedIntNullableFilter>;
+  _min?: InputMaybe<NestedIntNullableFilter>;
+  _sum?: InputMaybe<NestedIntNullableFilter>;
+  equals?: InputMaybe<Scalars['Int']>;
+  gt?: InputMaybe<Scalars['Int']>;
+  gte?: InputMaybe<Scalars['Int']>;
+  in?: InputMaybe<Array<Scalars['Int']>>;
+  lt?: InputMaybe<Scalars['Int']>;
+  lte?: InputMaybe<Scalars['Int']>;
+  not?: InputMaybe<NestedIntNullableWithAggregatesFilter>;
+  notIn?: InputMaybe<Array<Scalars['Int']>>;
 };
 
 export type Like = {
@@ -1188,68 +1675,94 @@ export type LoginInput = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  createAccount: Account;
   createCategory: Category;
   createComment: Comment;
   createLike: Like;
+  createManyAccount: AffectedRowsOutput;
   createManyCategory: AffectedRowsOutput;
   createManyComment: AffectedRowsOutput;
   createManyLike: AffectedRowsOutput;
   createManyPost: AffectedRowsOutput;
   createManyPreference: AffectedRowsOutput;
   createManyResetPassword: AffectedRowsOutput;
+  createManySession: AffectedRowsOutput;
   createManyTag: AffectedRowsOutput;
   createManyUser: AffectedRowsOutput;
+  createManyVerificationToken: AffectedRowsOutput;
   createPost: Post;
   createPreference: Preference;
   createResetPassword: ResetPassword;
+  createSession: Session;
   createTag: Tag;
   createUser: User;
+  createVerificationToken: VerificationToken;
+  deleteAccount: Maybe<Account>;
   deleteCategory: Maybe<Category>;
   deleteComment: Maybe<Comment>;
   deleteLike: Maybe<Like>;
+  deleteManyAccount: AffectedRowsOutput;
   deleteManyCategory: AffectedRowsOutput;
   deleteManyComment: AffectedRowsOutput;
   deleteManyLike: AffectedRowsOutput;
   deleteManyPost: AffectedRowsOutput;
   deleteManyPreference: AffectedRowsOutput;
   deleteManyResetPassword: AffectedRowsOutput;
+  deleteManySession: AffectedRowsOutput;
   deleteManyTag: AffectedRowsOutput;
   deleteManyUser: AffectedRowsOutput;
+  deleteManyVerificationToken: AffectedRowsOutput;
   deletePost: Maybe<Post>;
   deletePreference: Maybe<Preference>;
   deleteResetPassword: Maybe<ResetPassword>;
+  deleteSession: Maybe<Session>;
   deleteTag: Maybe<Tag>;
   deleteUser: Maybe<User>;
+  deleteVerificationToken: Maybe<VerificationToken>;
   login: User;
   logout: Scalars['String'];
   me: User;
   register: User;
+  updateAccount: Maybe<Account>;
   updateCategory: Maybe<Category>;
   updateComment: Maybe<Comment>;
   updateLike: Maybe<Like>;
+  updateManyAccount: AffectedRowsOutput;
   updateManyCategory: AffectedRowsOutput;
   updateManyComment: AffectedRowsOutput;
   updateManyLike: AffectedRowsOutput;
   updateManyPost: AffectedRowsOutput;
   updateManyPreference: AffectedRowsOutput;
   updateManyResetPassword: AffectedRowsOutput;
+  updateManySession: AffectedRowsOutput;
   updateManyTag: AffectedRowsOutput;
   updateManyUser: AffectedRowsOutput;
+  updateManyVerificationToken: AffectedRowsOutput;
   updatePost: Maybe<Post>;
   updatePreference: Maybe<Preference>;
   updateResetPassword: Maybe<ResetPassword>;
+  updateSession: Maybe<Session>;
   updateTag: Maybe<Tag>;
   updateUser: Maybe<User>;
+  updateVerificationToken: Maybe<VerificationToken>;
   uploadCoverPicture: Post;
   uploadPostPicture: Picture;
+  upsertAccount: Account;
   upsertCategory: Category;
   upsertComment: Comment;
   upsertLike: Like;
   upsertPost: Post;
   upsertPreference: Preference;
   upsertResetPassword: ResetPassword;
+  upsertSession: Session;
   upsertTag: Tag;
   upsertUser: User;
+  upsertVerificationToken: VerificationToken;
+};
+
+
+export type MutationCreateAccountArgs = {
+  data: AccountCreateInput;
 };
 
 
@@ -1265,6 +1778,12 @@ export type MutationCreateCommentArgs = {
 
 export type MutationCreateLikeArgs = {
   data: LikeCreateInput;
+};
+
+
+export type MutationCreateManyAccountArgs = {
+  data: Array<AccountCreateManyInput>;
+  skipDuplicates: InputMaybe<Scalars['Boolean']>;
 };
 
 
@@ -1304,6 +1823,12 @@ export type MutationCreateManyResetPasswordArgs = {
 };
 
 
+export type MutationCreateManySessionArgs = {
+  data: Array<SessionCreateManyInput>;
+  skipDuplicates: InputMaybe<Scalars['Boolean']>;
+};
+
+
 export type MutationCreateManyTagArgs = {
   data: Array<TagCreateManyInput>;
   skipDuplicates: InputMaybe<Scalars['Boolean']>;
@@ -1312,6 +1837,12 @@ export type MutationCreateManyTagArgs = {
 
 export type MutationCreateManyUserArgs = {
   data: Array<UserCreateManyInput>;
+  skipDuplicates: InputMaybe<Scalars['Boolean']>;
+};
+
+
+export type MutationCreateManyVerificationTokenArgs = {
+  data: Array<VerificationTokenCreateManyInput>;
   skipDuplicates: InputMaybe<Scalars['Boolean']>;
 };
 
@@ -1331,6 +1862,11 @@ export type MutationCreateResetPasswordArgs = {
 };
 
 
+export type MutationCreateSessionArgs = {
+  data: SessionCreateInput;
+};
+
+
 export type MutationCreateTagArgs = {
   data: TagCreateInput;
 };
@@ -1338,6 +1874,16 @@ export type MutationCreateTagArgs = {
 
 export type MutationCreateUserArgs = {
   data: UserCreateInput;
+};
+
+
+export type MutationCreateVerificationTokenArgs = {
+  data: VerificationTokenCreateInput;
+};
+
+
+export type MutationDeleteAccountArgs = {
+  where: AccountWhereUniqueInput;
 };
 
 
@@ -1353,6 +1899,11 @@ export type MutationDeleteCommentArgs = {
 
 export type MutationDeleteLikeArgs = {
   where: LikeWhereUniqueInput;
+};
+
+
+export type MutationDeleteManyAccountArgs = {
+  where: InputMaybe<AccountWhereInput>;
 };
 
 
@@ -1386,6 +1937,11 @@ export type MutationDeleteManyResetPasswordArgs = {
 };
 
 
+export type MutationDeleteManySessionArgs = {
+  where: InputMaybe<SessionWhereInput>;
+};
+
+
 export type MutationDeleteManyTagArgs = {
   where: InputMaybe<TagWhereInput>;
 };
@@ -1393,6 +1949,11 @@ export type MutationDeleteManyTagArgs = {
 
 export type MutationDeleteManyUserArgs = {
   where: InputMaybe<UserWhereInput>;
+};
+
+
+export type MutationDeleteManyVerificationTokenArgs = {
+  where: InputMaybe<VerificationTokenWhereInput>;
 };
 
 
@@ -1411,6 +1972,11 @@ export type MutationDeleteResetPasswordArgs = {
 };
 
 
+export type MutationDeleteSessionArgs = {
+  where: SessionWhereUniqueInput;
+};
+
+
 export type MutationDeleteTagArgs = {
   where: TagWhereUniqueInput;
 };
@@ -1421,6 +1987,11 @@ export type MutationDeleteUserArgs = {
 };
 
 
+export type MutationDeleteVerificationTokenArgs = {
+  where: VerificationTokenWhereUniqueInput;
+};
+
+
 export type MutationLoginArgs = {
   data: LoginInput;
 };
@@ -1428,6 +1999,12 @@ export type MutationLoginArgs = {
 
 export type MutationRegisterArgs = {
   data: RegisterInput;
+};
+
+
+export type MutationUpdateAccountArgs = {
+  data: AccountUpdateInput;
+  where: AccountWhereUniqueInput;
 };
 
 
@@ -1446,6 +2023,12 @@ export type MutationUpdateCommentArgs = {
 export type MutationUpdateLikeArgs = {
   data: LikeUpdateInput;
   where: LikeWhereUniqueInput;
+};
+
+
+export type MutationUpdateManyAccountArgs = {
+  data: AccountUpdateManyMutationInput;
+  where: InputMaybe<AccountWhereInput>;
 };
 
 
@@ -1485,6 +2068,12 @@ export type MutationUpdateManyResetPasswordArgs = {
 };
 
 
+export type MutationUpdateManySessionArgs = {
+  data: SessionUpdateManyMutationInput;
+  where: InputMaybe<SessionWhereInput>;
+};
+
+
 export type MutationUpdateManyTagArgs = {
   data: TagUpdateManyMutationInput;
   where: InputMaybe<TagWhereInput>;
@@ -1494,6 +2083,12 @@ export type MutationUpdateManyTagArgs = {
 export type MutationUpdateManyUserArgs = {
   data: UserUpdateManyMutationInput;
   where: InputMaybe<UserWhereInput>;
+};
+
+
+export type MutationUpdateManyVerificationTokenArgs = {
+  data: VerificationTokenUpdateManyMutationInput;
+  where: InputMaybe<VerificationTokenWhereInput>;
 };
 
 
@@ -1515,6 +2110,12 @@ export type MutationUpdateResetPasswordArgs = {
 };
 
 
+export type MutationUpdateSessionArgs = {
+  data: SessionUpdateInput;
+  where: SessionWhereUniqueInput;
+};
+
+
 export type MutationUpdateTagArgs = {
   data: TagUpdateInput;
   where: TagWhereUniqueInput;
@@ -1527,6 +2128,12 @@ export type MutationUpdateUserArgs = {
 };
 
 
+export type MutationUpdateVerificationTokenArgs = {
+  data: VerificationTokenUpdateInput;
+  where: VerificationTokenWhereUniqueInput;
+};
+
+
 export type MutationUploadCoverPictureArgs = {
   file: Scalars['Upload'];
 };
@@ -1534,6 +2141,13 @@ export type MutationUploadCoverPictureArgs = {
 
 export type MutationUploadPostPictureArgs = {
   file: Scalars['Upload'];
+};
+
+
+export type MutationUpsertAccountArgs = {
+  create: AccountCreateInput;
+  update: AccountUpdateInput;
+  where: AccountWhereUniqueInput;
 };
 
 
@@ -1579,6 +2193,13 @@ export type MutationUpsertResetPasswordArgs = {
 };
 
 
+export type MutationUpsertSessionArgs = {
+  create: SessionCreateInput;
+  update: SessionUpdateInput;
+  where: SessionWhereUniqueInput;
+};
+
+
 export type MutationUpsertTagArgs = {
   create: TagCreateInput;
   update: TagUpdateInput;
@@ -1590,6 +2211,13 @@ export type MutationUpsertUserArgs = {
   create: UserCreateInput;
   update: UserUpdateInput;
   where: UserWhereUniqueInput;
+};
+
+
+export type MutationUpsertVerificationTokenArgs = {
+  create: VerificationTokenCreateInput;
+  update: VerificationTokenUpdateInput;
+  where: VerificationTokenWhereUniqueInput;
 };
 
 export type NestedBoolFilter = {
@@ -1630,6 +2258,34 @@ export type NestedDateTimeWithAggregatesFilter = {
   notIn?: InputMaybe<Array<Scalars['DateTime']>>;
 };
 
+export type NestedEnumRoleFilter = {
+  equals?: InputMaybe<Role>;
+  in?: InputMaybe<Array<Role>>;
+  not?: InputMaybe<NestedEnumRoleFilter>;
+  notIn?: InputMaybe<Array<Role>>;
+};
+
+export type NestedEnumRoleWithAggregatesFilter = {
+  _count?: InputMaybe<NestedIntFilter>;
+  _max?: InputMaybe<NestedEnumRoleFilter>;
+  _min?: InputMaybe<NestedEnumRoleFilter>;
+  equals?: InputMaybe<Role>;
+  in?: InputMaybe<Array<Role>>;
+  not?: InputMaybe<NestedEnumRoleWithAggregatesFilter>;
+  notIn?: InputMaybe<Array<Role>>;
+};
+
+export type NestedFloatNullableFilter = {
+  equals?: InputMaybe<Scalars['Float']>;
+  gt?: InputMaybe<Scalars['Float']>;
+  gte?: InputMaybe<Scalars['Float']>;
+  in?: InputMaybe<Array<Scalars['Float']>>;
+  lt?: InputMaybe<Scalars['Float']>;
+  lte?: InputMaybe<Scalars['Float']>;
+  not?: InputMaybe<NestedFloatNullableFilter>;
+  notIn?: InputMaybe<Array<Scalars['Float']>>;
+};
+
 export type NestedIntFilter = {
   equals?: InputMaybe<Scalars['Int']>;
   gt?: InputMaybe<Scalars['Int']>;
@@ -1649,6 +2305,22 @@ export type NestedIntNullableFilter = {
   lt?: InputMaybe<Scalars['Int']>;
   lte?: InputMaybe<Scalars['Int']>;
   not?: InputMaybe<NestedIntNullableFilter>;
+  notIn?: InputMaybe<Array<Scalars['Int']>>;
+};
+
+export type NestedIntNullableWithAggregatesFilter = {
+  _avg?: InputMaybe<NestedFloatNullableFilter>;
+  _count?: InputMaybe<NestedIntNullableFilter>;
+  _max?: InputMaybe<NestedIntNullableFilter>;
+  _min?: InputMaybe<NestedIntNullableFilter>;
+  _sum?: InputMaybe<NestedIntNullableFilter>;
+  equals?: InputMaybe<Scalars['Int']>;
+  gt?: InputMaybe<Scalars['Int']>;
+  gte?: InputMaybe<Scalars['Int']>;
+  in?: InputMaybe<Array<Scalars['Int']>>;
+  lt?: InputMaybe<Scalars['Int']>;
+  lte?: InputMaybe<Scalars['Int']>;
+  not?: InputMaybe<NestedIntNullableWithAggregatesFilter>;
   notIn?: InputMaybe<Array<Scalars['Int']>>;
 };
 
@@ -1712,6 +2384,14 @@ export type NestedStringWithAggregatesFilter = {
   not?: InputMaybe<NestedStringWithAggregatesFilter>;
   notIn?: InputMaybe<Array<Scalars['String']>>;
   startsWith?: InputMaybe<Scalars['String']>;
+};
+
+export type NullableIntFieldUpdateOperationsInput = {
+  decrement?: InputMaybe<Scalars['Int']>;
+  divide?: InputMaybe<Scalars['Int']>;
+  increment?: InputMaybe<Scalars['Int']>;
+  multiply?: InputMaybe<Scalars['Int']>;
+  set?: InputMaybe<Scalars['Int']>;
 };
 
 export type NullableStringFieldUpdateOperationsInput = {
@@ -2774,34 +3454,45 @@ export type PreferenceWhereUniqueInput = {
 
 export type Query = {
   __typename?: 'Query';
+  account: Maybe<Account>;
+  accounts: Array<Account>;
+  aggregateAccount: AggregateAccount;
   aggregateCategory: AggregateCategory;
   aggregateComment: AggregateComment;
   aggregateLike: AggregateLike;
   aggregatePost: AggregatePost;
   aggregatePreference: AggregatePreference;
   aggregateResetPassword: AggregateResetPassword;
+  aggregateSession: AggregateSession;
   aggregateTag: AggregateTag;
   aggregateUser: AggregateUser;
+  aggregateVerificationToken: AggregateVerificationToken;
   categories: Array<Category>;
   category: Maybe<Category>;
   comment: Maybe<Comment>;
   comments: Array<Comment>;
+  findFirstAccount: Maybe<Account>;
   findFirstCategory: Maybe<Category>;
   findFirstComment: Maybe<Comment>;
   findFirstLike: Maybe<Like>;
   findFirstPost: Maybe<Post>;
   findFirstPreference: Maybe<Preference>;
   findFirstResetPassword: Maybe<ResetPassword>;
+  findFirstSession: Maybe<Session>;
   findFirstTag: Maybe<Tag>;
   findFirstUser: Maybe<User>;
+  findFirstVerificationToken: Maybe<VerificationToken>;
+  groupByAccount: Array<AccountGroupBy>;
   groupByCategory: Array<CategoryGroupBy>;
   groupByComment: Array<CommentGroupBy>;
   groupByLike: Array<LikeGroupBy>;
   groupByPost: Array<PostGroupBy>;
   groupByPreference: Array<PreferenceGroupBy>;
   groupByResetPassword: Array<ResetPasswordGroupBy>;
+  groupBySession: Array<SessionGroupBy>;
   groupByTag: Array<TagGroupBy>;
   groupByUser: Array<UserGroupBy>;
+  groupByVerificationToken: Array<VerificationTokenGroupBy>;
   like: Maybe<Like>;
   likes: Array<Like>;
   post: Maybe<Post>;
@@ -2810,10 +3501,38 @@ export type Query = {
   preferences: Array<Preference>;
   resetPassword: Maybe<ResetPassword>;
   resetPasswords: Array<ResetPassword>;
+  session: Maybe<Session>;
+  sessions: Array<Session>;
   tag: Maybe<Tag>;
   tags: Array<Tag>;
   user: Maybe<User>;
   users: Array<User>;
+  verificationToken: Maybe<VerificationToken>;
+  verificationTokens: Array<VerificationToken>;
+};
+
+
+export type QueryAccountArgs = {
+  where: AccountWhereUniqueInput;
+};
+
+
+export type QueryAccountsArgs = {
+  cursor: InputMaybe<AccountWhereUniqueInput>;
+  distinct: InputMaybe<Array<AccountScalarFieldEnum>>;
+  orderBy: InputMaybe<Array<AccountOrderByWithRelationInput>>;
+  skip: InputMaybe<Scalars['Int']>;
+  take: InputMaybe<Scalars['Int']>;
+  where: InputMaybe<AccountWhereInput>;
+};
+
+
+export type QueryAggregateAccountArgs = {
+  cursor: InputMaybe<AccountWhereUniqueInput>;
+  orderBy: InputMaybe<Array<AccountOrderByWithRelationInput>>;
+  skip: InputMaybe<Scalars['Int']>;
+  take: InputMaybe<Scalars['Int']>;
+  where: InputMaybe<AccountWhereInput>;
 };
 
 
@@ -2871,6 +3590,15 @@ export type QueryAggregateResetPasswordArgs = {
 };
 
 
+export type QueryAggregateSessionArgs = {
+  cursor: InputMaybe<SessionWhereUniqueInput>;
+  orderBy: InputMaybe<Array<SessionOrderByWithRelationInput>>;
+  skip: InputMaybe<Scalars['Int']>;
+  take: InputMaybe<Scalars['Int']>;
+  where: InputMaybe<SessionWhereInput>;
+};
+
+
 export type QueryAggregateTagArgs = {
   cursor: InputMaybe<TagWhereUniqueInput>;
   orderBy: InputMaybe<Array<TagOrderByWithRelationInput>>;
@@ -2886,6 +3614,15 @@ export type QueryAggregateUserArgs = {
   skip: InputMaybe<Scalars['Int']>;
   take: InputMaybe<Scalars['Int']>;
   where: InputMaybe<UserWhereInput>;
+};
+
+
+export type QueryAggregateVerificationTokenArgs = {
+  cursor: InputMaybe<VerificationTokenWhereUniqueInput>;
+  orderBy: InputMaybe<Array<VerificationTokenOrderByWithRelationInput>>;
+  skip: InputMaybe<Scalars['Int']>;
+  take: InputMaybe<Scalars['Int']>;
+  where: InputMaybe<VerificationTokenWhereInput>;
 };
 
 
@@ -2916,6 +3653,16 @@ export type QueryCommentsArgs = {
   skip: InputMaybe<Scalars['Int']>;
   take: InputMaybe<Scalars['Int']>;
   where: InputMaybe<CommentWhereInput>;
+};
+
+
+export type QueryFindFirstAccountArgs = {
+  cursor: InputMaybe<AccountWhereUniqueInput>;
+  distinct: InputMaybe<Array<AccountScalarFieldEnum>>;
+  orderBy: InputMaybe<Array<AccountOrderByWithRelationInput>>;
+  skip: InputMaybe<Scalars['Int']>;
+  take: InputMaybe<Scalars['Int']>;
+  where: InputMaybe<AccountWhereInput>;
 };
 
 
@@ -2979,6 +3726,16 @@ export type QueryFindFirstResetPasswordArgs = {
 };
 
 
+export type QueryFindFirstSessionArgs = {
+  cursor: InputMaybe<SessionWhereUniqueInput>;
+  distinct: InputMaybe<Array<SessionScalarFieldEnum>>;
+  orderBy: InputMaybe<Array<SessionOrderByWithRelationInput>>;
+  skip: InputMaybe<Scalars['Int']>;
+  take: InputMaybe<Scalars['Int']>;
+  where: InputMaybe<SessionWhereInput>;
+};
+
+
 export type QueryFindFirstTagArgs = {
   cursor: InputMaybe<TagWhereUniqueInput>;
   distinct: InputMaybe<Array<TagScalarFieldEnum>>;
@@ -2996,6 +3753,26 @@ export type QueryFindFirstUserArgs = {
   skip: InputMaybe<Scalars['Int']>;
   take: InputMaybe<Scalars['Int']>;
   where: InputMaybe<UserWhereInput>;
+};
+
+
+export type QueryFindFirstVerificationTokenArgs = {
+  cursor: InputMaybe<VerificationTokenWhereUniqueInput>;
+  distinct: InputMaybe<Array<VerificationTokenScalarFieldEnum>>;
+  orderBy: InputMaybe<Array<VerificationTokenOrderByWithRelationInput>>;
+  skip: InputMaybe<Scalars['Int']>;
+  take: InputMaybe<Scalars['Int']>;
+  where: InputMaybe<VerificationTokenWhereInput>;
+};
+
+
+export type QueryGroupByAccountArgs = {
+  by: Array<AccountScalarFieldEnum>;
+  having: InputMaybe<AccountScalarWhereWithAggregatesInput>;
+  orderBy: InputMaybe<Array<AccountOrderByWithAggregationInput>>;
+  skip: InputMaybe<Scalars['Int']>;
+  take: InputMaybe<Scalars['Int']>;
+  where: InputMaybe<AccountWhereInput>;
 };
 
 
@@ -3059,6 +3836,16 @@ export type QueryGroupByResetPasswordArgs = {
 };
 
 
+export type QueryGroupBySessionArgs = {
+  by: Array<SessionScalarFieldEnum>;
+  having: InputMaybe<SessionScalarWhereWithAggregatesInput>;
+  orderBy: InputMaybe<Array<SessionOrderByWithAggregationInput>>;
+  skip: InputMaybe<Scalars['Int']>;
+  take: InputMaybe<Scalars['Int']>;
+  where: InputMaybe<SessionWhereInput>;
+};
+
+
 export type QueryGroupByTagArgs = {
   by: Array<TagScalarFieldEnum>;
   having: InputMaybe<TagScalarWhereWithAggregatesInput>;
@@ -3076,6 +3863,16 @@ export type QueryGroupByUserArgs = {
   skip: InputMaybe<Scalars['Int']>;
   take: InputMaybe<Scalars['Int']>;
   where: InputMaybe<UserWhereInput>;
+};
+
+
+export type QueryGroupByVerificationTokenArgs = {
+  by: Array<VerificationTokenScalarFieldEnum>;
+  having: InputMaybe<VerificationTokenScalarWhereWithAggregatesInput>;
+  orderBy: InputMaybe<Array<VerificationTokenOrderByWithAggregationInput>>;
+  skip: InputMaybe<Scalars['Int']>;
+  take: InputMaybe<Scalars['Int']>;
+  where: InputMaybe<VerificationTokenWhereInput>;
 };
 
 
@@ -3139,6 +3936,21 @@ export type QueryResetPasswordsArgs = {
 };
 
 
+export type QuerySessionArgs = {
+  where: SessionWhereUniqueInput;
+};
+
+
+export type QuerySessionsArgs = {
+  cursor: InputMaybe<SessionWhereUniqueInput>;
+  distinct: InputMaybe<Array<SessionScalarFieldEnum>>;
+  orderBy: InputMaybe<Array<SessionOrderByWithRelationInput>>;
+  skip: InputMaybe<Scalars['Int']>;
+  take: InputMaybe<Scalars['Int']>;
+  where: InputMaybe<SessionWhereInput>;
+};
+
+
 export type QueryTagArgs = {
   where: TagWhereUniqueInput;
 };
@@ -3166,6 +3978,21 @@ export type QueryUsersArgs = {
   skip: InputMaybe<Scalars['Int']>;
   take: InputMaybe<Scalars['Int']>;
   where: InputMaybe<UserWhereInput>;
+};
+
+
+export type QueryVerificationTokenArgs = {
+  where: VerificationTokenWhereUniqueInput;
+};
+
+
+export type QueryVerificationTokensArgs = {
+  cursor: InputMaybe<VerificationTokenWhereUniqueInput>;
+  distinct: InputMaybe<Array<VerificationTokenScalarFieldEnum>>;
+  orderBy: InputMaybe<Array<VerificationTokenOrderByWithRelationInput>>;
+  skip: InputMaybe<Scalars['Int']>;
+  take: InputMaybe<Scalars['Int']>;
+  where: InputMaybe<VerificationTokenWhereInput>;
 };
 
 export enum QueryMode {
@@ -3371,6 +4198,235 @@ export enum Role {
   SuperAdmin = 'SUPER_ADMIN',
   User = 'USER'
 }
+
+export type Session = {
+  __typename?: 'Session';
+  expires: Scalars['DateTime'];
+  id: Scalars['String'];
+  sessionToken: Scalars['String'];
+  user: User;
+  userId: Scalars['String'];
+};
+
+export type SessionCountAggregate = {
+  __typename?: 'SessionCountAggregate';
+  _all: Scalars['Int'];
+  expires: Scalars['Int'];
+  id: Scalars['Int'];
+  sessionToken: Scalars['Int'];
+  userId: Scalars['Int'];
+};
+
+export type SessionCountOrderByAggregateInput = {
+  expires?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  sessionToken?: InputMaybe<SortOrder>;
+  userId?: InputMaybe<SortOrder>;
+};
+
+export type SessionCreateInput = {
+  expires: Scalars['DateTime'];
+  id?: InputMaybe<Scalars['String']>;
+  sessionToken: Scalars['String'];
+  user: UserCreateNestedOneWithoutSessionInput;
+};
+
+export type SessionCreateManyInput = {
+  expires: Scalars['DateTime'];
+  id?: InputMaybe<Scalars['String']>;
+  sessionToken: Scalars['String'];
+  userId: Scalars['String'];
+};
+
+export type SessionCreateManyUserInput = {
+  expires: Scalars['DateTime'];
+  id?: InputMaybe<Scalars['String']>;
+  sessionToken: Scalars['String'];
+};
+
+export type SessionCreateManyUserInputEnvelope = {
+  data: Array<SessionCreateManyUserInput>;
+  skipDuplicates?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type SessionCreateNestedManyWithoutUserInput = {
+  connect?: InputMaybe<Array<SessionWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<SessionCreateOrConnectWithoutUserInput>>;
+  create?: InputMaybe<Array<SessionCreateWithoutUserInput>>;
+  createMany?: InputMaybe<SessionCreateManyUserInputEnvelope>;
+};
+
+export type SessionCreateOrConnectWithoutUserInput = {
+  create: SessionCreateWithoutUserInput;
+  where: SessionWhereUniqueInput;
+};
+
+export type SessionCreateWithoutUserInput = {
+  expires: Scalars['DateTime'];
+  id?: InputMaybe<Scalars['String']>;
+  sessionToken: Scalars['String'];
+};
+
+export type SessionGroupBy = {
+  __typename?: 'SessionGroupBy';
+  _count: Maybe<SessionCountAggregate>;
+  _max: Maybe<SessionMaxAggregate>;
+  _min: Maybe<SessionMinAggregate>;
+  expires: Scalars['DateTime'];
+  id: Scalars['String'];
+  sessionToken: Scalars['String'];
+  userId: Scalars['String'];
+};
+
+export type SessionListRelationFilter = {
+  every?: InputMaybe<SessionWhereInput>;
+  none?: InputMaybe<SessionWhereInput>;
+  some?: InputMaybe<SessionWhereInput>;
+};
+
+export type SessionMaxAggregate = {
+  __typename?: 'SessionMaxAggregate';
+  expires: Maybe<Scalars['DateTime']>;
+  id: Maybe<Scalars['String']>;
+  sessionToken: Maybe<Scalars['String']>;
+  userId: Maybe<Scalars['String']>;
+};
+
+export type SessionMaxOrderByAggregateInput = {
+  expires?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  sessionToken?: InputMaybe<SortOrder>;
+  userId?: InputMaybe<SortOrder>;
+};
+
+export type SessionMinAggregate = {
+  __typename?: 'SessionMinAggregate';
+  expires: Maybe<Scalars['DateTime']>;
+  id: Maybe<Scalars['String']>;
+  sessionToken: Maybe<Scalars['String']>;
+  userId: Maybe<Scalars['String']>;
+};
+
+export type SessionMinOrderByAggregateInput = {
+  expires?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  sessionToken?: InputMaybe<SortOrder>;
+  userId?: InputMaybe<SortOrder>;
+};
+
+export type SessionOrderByRelationAggregateInput = {
+  _count?: InputMaybe<SortOrder>;
+};
+
+export type SessionOrderByWithAggregationInput = {
+  _count?: InputMaybe<SessionCountOrderByAggregateInput>;
+  _max?: InputMaybe<SessionMaxOrderByAggregateInput>;
+  _min?: InputMaybe<SessionMinOrderByAggregateInput>;
+  expires?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  sessionToken?: InputMaybe<SortOrder>;
+  userId?: InputMaybe<SortOrder>;
+};
+
+export type SessionOrderByWithRelationInput = {
+  expires?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  sessionToken?: InputMaybe<SortOrder>;
+  user?: InputMaybe<UserOrderByWithRelationInput>;
+  userId?: InputMaybe<SortOrder>;
+};
+
+export enum SessionScalarFieldEnum {
+  Expires = 'expires',
+  Id = 'id',
+  SessionToken = 'sessionToken',
+  UserId = 'userId'
+}
+
+export type SessionScalarWhereInput = {
+  AND?: InputMaybe<Array<SessionScalarWhereInput>>;
+  NOT?: InputMaybe<Array<SessionScalarWhereInput>>;
+  OR?: InputMaybe<Array<SessionScalarWhereInput>>;
+  expires?: InputMaybe<DateTimeFilter>;
+  id?: InputMaybe<StringFilter>;
+  sessionToken?: InputMaybe<StringFilter>;
+  userId?: InputMaybe<StringFilter>;
+};
+
+export type SessionScalarWhereWithAggregatesInput = {
+  AND?: InputMaybe<Array<SessionScalarWhereWithAggregatesInput>>;
+  NOT?: InputMaybe<Array<SessionScalarWhereWithAggregatesInput>>;
+  OR?: InputMaybe<Array<SessionScalarWhereWithAggregatesInput>>;
+  expires?: InputMaybe<DateTimeWithAggregatesFilter>;
+  id?: InputMaybe<StringWithAggregatesFilter>;
+  sessionToken?: InputMaybe<StringWithAggregatesFilter>;
+  userId?: InputMaybe<StringWithAggregatesFilter>;
+};
+
+export type SessionUpdateInput = {
+  expires?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  sessionToken?: InputMaybe<StringFieldUpdateOperationsInput>;
+  user?: InputMaybe<UserUpdateOneRequiredWithoutSessionInput>;
+};
+
+export type SessionUpdateManyMutationInput = {
+  expires?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  sessionToken?: InputMaybe<StringFieldUpdateOperationsInput>;
+};
+
+export type SessionUpdateManyWithWhereWithoutUserInput = {
+  data: SessionUpdateManyMutationInput;
+  where: SessionScalarWhereInput;
+};
+
+export type SessionUpdateManyWithoutUserInput = {
+  connect?: InputMaybe<Array<SessionWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<SessionCreateOrConnectWithoutUserInput>>;
+  create?: InputMaybe<Array<SessionCreateWithoutUserInput>>;
+  createMany?: InputMaybe<SessionCreateManyUserInputEnvelope>;
+  delete?: InputMaybe<Array<SessionWhereUniqueInput>>;
+  deleteMany?: InputMaybe<Array<SessionScalarWhereInput>>;
+  disconnect?: InputMaybe<Array<SessionWhereUniqueInput>>;
+  set?: InputMaybe<Array<SessionWhereUniqueInput>>;
+  update?: InputMaybe<Array<SessionUpdateWithWhereUniqueWithoutUserInput>>;
+  updateMany?: InputMaybe<Array<SessionUpdateManyWithWhereWithoutUserInput>>;
+  upsert?: InputMaybe<Array<SessionUpsertWithWhereUniqueWithoutUserInput>>;
+};
+
+export type SessionUpdateWithWhereUniqueWithoutUserInput = {
+  data: SessionUpdateWithoutUserInput;
+  where: SessionWhereUniqueInput;
+};
+
+export type SessionUpdateWithoutUserInput = {
+  expires?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  sessionToken?: InputMaybe<StringFieldUpdateOperationsInput>;
+};
+
+export type SessionUpsertWithWhereUniqueWithoutUserInput = {
+  create: SessionCreateWithoutUserInput;
+  update: SessionUpdateWithoutUserInput;
+  where: SessionWhereUniqueInput;
+};
+
+export type SessionWhereInput = {
+  AND?: InputMaybe<Array<SessionWhereInput>>;
+  NOT?: InputMaybe<Array<SessionWhereInput>>;
+  OR?: InputMaybe<Array<SessionWhereInput>>;
+  expires?: InputMaybe<DateTimeFilter>;
+  id?: InputMaybe<StringFilter>;
+  sessionToken?: InputMaybe<StringFilter>;
+  user?: InputMaybe<UserRelationFilter>;
+  userId?: InputMaybe<StringFilter>;
+};
+
+export type SessionWhereUniqueInput = {
+  id?: InputMaybe<Scalars['String']>;
+  sessionToken?: InputMaybe<Scalars['String']>;
+};
 
 export enum SortOrder {
   Asc = 'asc',
@@ -3686,22 +4742,37 @@ export type TagWhereUniqueInput = {
 
 export type User = {
   __typename?: 'User';
+  Account: Array<Account>;
   Comment: Array<Comment>;
   Like: Array<Like>;
   Post: Array<Post>;
   Preference: Maybe<Preference>;
   ResetPassword: Array<ResetPassword>;
+  Session: Array<Session>;
   _count: Maybe<UserCount>;
   avatar: Maybe<Scalars['String']>;
   created_at: Scalars['DateTime'];
   email: Scalars['String'];
+  emailVerified: Maybe<Scalars['String']>;
   first_name: Maybe<Scalars['String']>;
   id: Scalars['String'];
+  image: Scalars['String'];
   is_disabled: Scalars['Boolean'];
   last_name: Maybe<Scalars['String']>;
+  name: Scalars['String'];
   nickname: Scalars['String'];
-  role: Array<Role>;
+  role: Role;
   updated_at: Scalars['DateTime'];
+};
+
+
+export type UserAccountArgs = {
+  cursor: InputMaybe<AccountWhereUniqueInput>;
+  distinct: InputMaybe<Array<AccountScalarFieldEnum>>;
+  orderBy: InputMaybe<Array<AccountOrderByWithRelationInput>>;
+  skip: InputMaybe<Scalars['Int']>;
+  take: InputMaybe<Scalars['Int']>;
+  where: InputMaybe<AccountWhereInput>;
 };
 
 
@@ -3744,12 +4815,24 @@ export type UserResetPasswordArgs = {
   where: InputMaybe<ResetPasswordWhereInput>;
 };
 
+
+export type UserSessionArgs = {
+  cursor: InputMaybe<SessionWhereUniqueInput>;
+  distinct: InputMaybe<Array<SessionScalarFieldEnum>>;
+  orderBy: InputMaybe<Array<SessionOrderByWithRelationInput>>;
+  skip: InputMaybe<Scalars['Int']>;
+  take: InputMaybe<Scalars['Int']>;
+  where: InputMaybe<SessionWhereInput>;
+};
+
 export type UserCount = {
   __typename?: 'UserCount';
+  Account: Scalars['Int'];
   Comment: Scalars['Int'];
   Like: Scalars['Int'];
   Post: Scalars['Int'];
   ResetPassword: Scalars['Int'];
+  Session: Scalars['Int'];
 };
 
 export type UserCountAggregate = {
@@ -3758,10 +4841,13 @@ export type UserCountAggregate = {
   avatar: Scalars['Int'];
   created_at: Scalars['Int'];
   email: Scalars['Int'];
+  emailVerified: Scalars['Int'];
   first_name: Scalars['Int'];
   id: Scalars['Int'];
+  image: Scalars['Int'];
   is_disabled: Scalars['Int'];
   last_name: Scalars['Int'];
+  name: Scalars['Int'];
   nickname: Scalars['Int'];
   password: Scalars['Int'];
   role: Scalars['Int'];
@@ -3772,10 +4858,13 @@ export type UserCountOrderByAggregateInput = {
   avatar?: InputMaybe<SortOrder>;
   created_at?: InputMaybe<SortOrder>;
   email?: InputMaybe<SortOrder>;
+  emailVerified?: InputMaybe<SortOrder>;
   first_name?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
+  image?: InputMaybe<SortOrder>;
   is_disabled?: InputMaybe<SortOrder>;
   last_name?: InputMaybe<SortOrder>;
+  name?: InputMaybe<SortOrder>;
   nickname?: InputMaybe<SortOrder>;
   password?: InputMaybe<SortOrder>;
   role?: InputMaybe<SortOrder>;
@@ -3783,21 +4872,26 @@ export type UserCountOrderByAggregateInput = {
 };
 
 export type UserCreateInput = {
+  Account?: InputMaybe<AccountCreateNestedManyWithoutUserInput>;
   Comment?: InputMaybe<CommentCreateNestedManyWithoutAuthorInput>;
   Like?: InputMaybe<LikeCreateNestedManyWithoutUserInput>;
   Post?: InputMaybe<PostCreateNestedManyWithoutAuthorInput>;
   Preference?: InputMaybe<PreferenceCreateNestedOneWithoutUserInput>;
   ResetPassword?: InputMaybe<ResetPasswordCreateNestedManyWithoutUserInput>;
+  Session?: InputMaybe<SessionCreateNestedManyWithoutUserInput>;
   avatar?: InputMaybe<Scalars['String']>;
   created_at?: InputMaybe<Scalars['DateTime']>;
   email: Scalars['String'];
+  emailVerified?: InputMaybe<Scalars['String']>;
   first_name?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['String']>;
-  is_disabled: Scalars['Boolean'];
+  image: Scalars['String'];
+  is_disabled?: InputMaybe<Scalars['Boolean']>;
   last_name?: InputMaybe<Scalars['String']>;
-  nickname: Scalars['String'];
-  password: Scalars['String'];
-  role?: InputMaybe<UserCreateroleInput>;
+  name: Scalars['String'];
+  nickname?: InputMaybe<Scalars['String']>;
+  password?: InputMaybe<Scalars['String']>;
+  role?: InputMaybe<Role>;
   updated_at?: InputMaybe<Scalars['DateTime']>;
 };
 
@@ -3805,14 +4899,23 @@ export type UserCreateManyInput = {
   avatar?: InputMaybe<Scalars['String']>;
   created_at?: InputMaybe<Scalars['DateTime']>;
   email: Scalars['String'];
+  emailVerified?: InputMaybe<Scalars['String']>;
   first_name?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['String']>;
-  is_disabled: Scalars['Boolean'];
+  image: Scalars['String'];
+  is_disabled?: InputMaybe<Scalars['Boolean']>;
   last_name?: InputMaybe<Scalars['String']>;
-  nickname: Scalars['String'];
-  password: Scalars['String'];
-  role?: InputMaybe<UserCreateroleInput>;
+  name: Scalars['String'];
+  nickname?: InputMaybe<Scalars['String']>;
+  password?: InputMaybe<Scalars['String']>;
+  role?: InputMaybe<Role>;
   updated_at?: InputMaybe<Scalars['DateTime']>;
+};
+
+export type UserCreateNestedOneWithoutAccountInput = {
+  connect?: InputMaybe<UserWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<UserCreateOrConnectWithoutAccountInput>;
+  create?: InputMaybe<UserCreateWithoutAccountInput>;
 };
 
 export type UserCreateNestedOneWithoutCommentInput = {
@@ -3839,6 +4942,17 @@ export type UserCreateNestedOneWithoutPreferenceInput = {
   create?: InputMaybe<UserCreateWithoutPreferenceInput>;
 };
 
+export type UserCreateNestedOneWithoutSessionInput = {
+  connect?: InputMaybe<UserWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<UserCreateOrConnectWithoutSessionInput>;
+  create?: InputMaybe<UserCreateWithoutSessionInput>;
+};
+
+export type UserCreateOrConnectWithoutAccountInput = {
+  create: UserCreateWithoutAccountInput;
+  where: UserWhereUniqueInput;
+};
+
 export type UserCreateOrConnectWithoutCommentInput = {
   create: UserCreateWithoutCommentInput;
   where: UserWhereUniqueInput;
@@ -3859,80 +4973,147 @@ export type UserCreateOrConnectWithoutPreferenceInput = {
   where: UserWhereUniqueInput;
 };
 
-export type UserCreateWithoutCommentInput = {
+export type UserCreateOrConnectWithoutSessionInput = {
+  create: UserCreateWithoutSessionInput;
+  where: UserWhereUniqueInput;
+};
+
+export type UserCreateWithoutAccountInput = {
+  Comment?: InputMaybe<CommentCreateNestedManyWithoutAuthorInput>;
   Like?: InputMaybe<LikeCreateNestedManyWithoutUserInput>;
   Post?: InputMaybe<PostCreateNestedManyWithoutAuthorInput>;
   Preference?: InputMaybe<PreferenceCreateNestedOneWithoutUserInput>;
   ResetPassword?: InputMaybe<ResetPasswordCreateNestedManyWithoutUserInput>;
+  Session?: InputMaybe<SessionCreateNestedManyWithoutUserInput>;
   avatar?: InputMaybe<Scalars['String']>;
   created_at?: InputMaybe<Scalars['DateTime']>;
   email: Scalars['String'];
+  emailVerified?: InputMaybe<Scalars['String']>;
   first_name?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['String']>;
-  is_disabled: Scalars['Boolean'];
+  image: Scalars['String'];
+  is_disabled?: InputMaybe<Scalars['Boolean']>;
   last_name?: InputMaybe<Scalars['String']>;
-  nickname: Scalars['String'];
-  password: Scalars['String'];
-  role?: InputMaybe<UserCreateroleInput>;
+  name: Scalars['String'];
+  nickname?: InputMaybe<Scalars['String']>;
+  password?: InputMaybe<Scalars['String']>;
+  role?: InputMaybe<Role>;
+  updated_at?: InputMaybe<Scalars['DateTime']>;
+};
+
+export type UserCreateWithoutCommentInput = {
+  Account?: InputMaybe<AccountCreateNestedManyWithoutUserInput>;
+  Like?: InputMaybe<LikeCreateNestedManyWithoutUserInput>;
+  Post?: InputMaybe<PostCreateNestedManyWithoutAuthorInput>;
+  Preference?: InputMaybe<PreferenceCreateNestedOneWithoutUserInput>;
+  ResetPassword?: InputMaybe<ResetPasswordCreateNestedManyWithoutUserInput>;
+  Session?: InputMaybe<SessionCreateNestedManyWithoutUserInput>;
+  avatar?: InputMaybe<Scalars['String']>;
+  created_at?: InputMaybe<Scalars['DateTime']>;
+  email: Scalars['String'];
+  emailVerified?: InputMaybe<Scalars['String']>;
+  first_name?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']>;
+  image: Scalars['String'];
+  is_disabled?: InputMaybe<Scalars['Boolean']>;
+  last_name?: InputMaybe<Scalars['String']>;
+  name: Scalars['String'];
+  nickname?: InputMaybe<Scalars['String']>;
+  password?: InputMaybe<Scalars['String']>;
+  role?: InputMaybe<Role>;
   updated_at?: InputMaybe<Scalars['DateTime']>;
 };
 
 export type UserCreateWithoutLikeInput = {
+  Account?: InputMaybe<AccountCreateNestedManyWithoutUserInput>;
   Comment?: InputMaybe<CommentCreateNestedManyWithoutAuthorInput>;
   Post?: InputMaybe<PostCreateNestedManyWithoutAuthorInput>;
   Preference?: InputMaybe<PreferenceCreateNestedOneWithoutUserInput>;
   ResetPassword?: InputMaybe<ResetPasswordCreateNestedManyWithoutUserInput>;
+  Session?: InputMaybe<SessionCreateNestedManyWithoutUserInput>;
   avatar?: InputMaybe<Scalars['String']>;
   created_at?: InputMaybe<Scalars['DateTime']>;
   email: Scalars['String'];
+  emailVerified?: InputMaybe<Scalars['String']>;
   first_name?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['String']>;
-  is_disabled: Scalars['Boolean'];
+  image: Scalars['String'];
+  is_disabled?: InputMaybe<Scalars['Boolean']>;
   last_name?: InputMaybe<Scalars['String']>;
-  nickname: Scalars['String'];
-  password: Scalars['String'];
-  role?: InputMaybe<UserCreateroleInput>;
+  name: Scalars['String'];
+  nickname?: InputMaybe<Scalars['String']>;
+  password?: InputMaybe<Scalars['String']>;
+  role?: InputMaybe<Role>;
   updated_at?: InputMaybe<Scalars['DateTime']>;
 };
 
 export type UserCreateWithoutPostInput = {
+  Account?: InputMaybe<AccountCreateNestedManyWithoutUserInput>;
   Comment?: InputMaybe<CommentCreateNestedManyWithoutAuthorInput>;
   Like?: InputMaybe<LikeCreateNestedManyWithoutUserInput>;
+  Preference?: InputMaybe<PreferenceCreateNestedOneWithoutUserInput>;
+  ResetPassword?: InputMaybe<ResetPasswordCreateNestedManyWithoutUserInput>;
+  Session?: InputMaybe<SessionCreateNestedManyWithoutUserInput>;
+  avatar?: InputMaybe<Scalars['String']>;
+  created_at?: InputMaybe<Scalars['DateTime']>;
+  email: Scalars['String'];
+  emailVerified?: InputMaybe<Scalars['String']>;
+  first_name?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']>;
+  image: Scalars['String'];
+  is_disabled?: InputMaybe<Scalars['Boolean']>;
+  last_name?: InputMaybe<Scalars['String']>;
+  name: Scalars['String'];
+  nickname?: InputMaybe<Scalars['String']>;
+  password?: InputMaybe<Scalars['String']>;
+  role?: InputMaybe<Role>;
+  updated_at?: InputMaybe<Scalars['DateTime']>;
+};
+
+export type UserCreateWithoutPreferenceInput = {
+  Account?: InputMaybe<AccountCreateNestedManyWithoutUserInput>;
+  Comment?: InputMaybe<CommentCreateNestedManyWithoutAuthorInput>;
+  Like?: InputMaybe<LikeCreateNestedManyWithoutUserInput>;
+  Post?: InputMaybe<PostCreateNestedManyWithoutAuthorInput>;
+  ResetPassword?: InputMaybe<ResetPasswordCreateNestedManyWithoutUserInput>;
+  Session?: InputMaybe<SessionCreateNestedManyWithoutUserInput>;
+  avatar?: InputMaybe<Scalars['String']>;
+  created_at?: InputMaybe<Scalars['DateTime']>;
+  email: Scalars['String'];
+  emailVerified?: InputMaybe<Scalars['String']>;
+  first_name?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']>;
+  image: Scalars['String'];
+  is_disabled?: InputMaybe<Scalars['Boolean']>;
+  last_name?: InputMaybe<Scalars['String']>;
+  name: Scalars['String'];
+  nickname?: InputMaybe<Scalars['String']>;
+  password?: InputMaybe<Scalars['String']>;
+  role?: InputMaybe<Role>;
+  updated_at?: InputMaybe<Scalars['DateTime']>;
+};
+
+export type UserCreateWithoutSessionInput = {
+  Account?: InputMaybe<AccountCreateNestedManyWithoutUserInput>;
+  Comment?: InputMaybe<CommentCreateNestedManyWithoutAuthorInput>;
+  Like?: InputMaybe<LikeCreateNestedManyWithoutUserInput>;
+  Post?: InputMaybe<PostCreateNestedManyWithoutAuthorInput>;
   Preference?: InputMaybe<PreferenceCreateNestedOneWithoutUserInput>;
   ResetPassword?: InputMaybe<ResetPasswordCreateNestedManyWithoutUserInput>;
   avatar?: InputMaybe<Scalars['String']>;
   created_at?: InputMaybe<Scalars['DateTime']>;
   email: Scalars['String'];
+  emailVerified?: InputMaybe<Scalars['String']>;
   first_name?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['String']>;
-  is_disabled: Scalars['Boolean'];
+  image: Scalars['String'];
+  is_disabled?: InputMaybe<Scalars['Boolean']>;
   last_name?: InputMaybe<Scalars['String']>;
-  nickname: Scalars['String'];
-  password: Scalars['String'];
-  role?: InputMaybe<UserCreateroleInput>;
+  name: Scalars['String'];
+  nickname?: InputMaybe<Scalars['String']>;
+  password?: InputMaybe<Scalars['String']>;
+  role?: InputMaybe<Role>;
   updated_at?: InputMaybe<Scalars['DateTime']>;
-};
-
-export type UserCreateWithoutPreferenceInput = {
-  Comment?: InputMaybe<CommentCreateNestedManyWithoutAuthorInput>;
-  Like?: InputMaybe<LikeCreateNestedManyWithoutUserInput>;
-  Post?: InputMaybe<PostCreateNestedManyWithoutAuthorInput>;
-  ResetPassword?: InputMaybe<ResetPasswordCreateNestedManyWithoutUserInput>;
-  avatar?: InputMaybe<Scalars['String']>;
-  created_at?: InputMaybe<Scalars['DateTime']>;
-  email: Scalars['String'];
-  first_name?: InputMaybe<Scalars['String']>;
-  id?: InputMaybe<Scalars['String']>;
-  is_disabled: Scalars['Boolean'];
-  last_name?: InputMaybe<Scalars['String']>;
-  nickname: Scalars['String'];
-  password: Scalars['String'];
-  role?: InputMaybe<UserCreateroleInput>;
-  updated_at?: InputMaybe<Scalars['DateTime']>;
-};
-
-export type UserCreateroleInput = {
-  set: Array<Role>;
 };
 
 export type UserGroupBy = {
@@ -3943,13 +5124,16 @@ export type UserGroupBy = {
   avatar: Maybe<Scalars['String']>;
   created_at: Scalars['DateTime'];
   email: Scalars['String'];
+  emailVerified: Maybe<Scalars['String']>;
   first_name: Maybe<Scalars['String']>;
   id: Scalars['String'];
+  image: Scalars['String'];
   is_disabled: Scalars['Boolean'];
   last_name: Maybe<Scalars['String']>;
+  name: Scalars['String'];
   nickname: Scalars['String'];
-  password: Scalars['String'];
-  role: Maybe<Array<Role>>;
+  password: Maybe<Scalars['String']>;
+  role: Role;
   updated_at: Scalars['DateTime'];
 };
 
@@ -3958,12 +5142,16 @@ export type UserMaxAggregate = {
   avatar: Maybe<Scalars['String']>;
   created_at: Maybe<Scalars['DateTime']>;
   email: Maybe<Scalars['String']>;
+  emailVerified: Maybe<Scalars['String']>;
   first_name: Maybe<Scalars['String']>;
   id: Maybe<Scalars['String']>;
+  image: Maybe<Scalars['String']>;
   is_disabled: Maybe<Scalars['Boolean']>;
   last_name: Maybe<Scalars['String']>;
+  name: Maybe<Scalars['String']>;
   nickname: Maybe<Scalars['String']>;
   password: Maybe<Scalars['String']>;
+  role: Maybe<Role>;
   updated_at: Maybe<Scalars['DateTime']>;
 };
 
@@ -3971,12 +5159,16 @@ export type UserMaxOrderByAggregateInput = {
   avatar?: InputMaybe<SortOrder>;
   created_at?: InputMaybe<SortOrder>;
   email?: InputMaybe<SortOrder>;
+  emailVerified?: InputMaybe<SortOrder>;
   first_name?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
+  image?: InputMaybe<SortOrder>;
   is_disabled?: InputMaybe<SortOrder>;
   last_name?: InputMaybe<SortOrder>;
+  name?: InputMaybe<SortOrder>;
   nickname?: InputMaybe<SortOrder>;
   password?: InputMaybe<SortOrder>;
+  role?: InputMaybe<SortOrder>;
   updated_at?: InputMaybe<SortOrder>;
 };
 
@@ -3985,12 +5177,16 @@ export type UserMinAggregate = {
   avatar: Maybe<Scalars['String']>;
   created_at: Maybe<Scalars['DateTime']>;
   email: Maybe<Scalars['String']>;
+  emailVerified: Maybe<Scalars['String']>;
   first_name: Maybe<Scalars['String']>;
   id: Maybe<Scalars['String']>;
+  image: Maybe<Scalars['String']>;
   is_disabled: Maybe<Scalars['Boolean']>;
   last_name: Maybe<Scalars['String']>;
+  name: Maybe<Scalars['String']>;
   nickname: Maybe<Scalars['String']>;
   password: Maybe<Scalars['String']>;
+  role: Maybe<Role>;
   updated_at: Maybe<Scalars['DateTime']>;
 };
 
@@ -3998,12 +5194,16 @@ export type UserMinOrderByAggregateInput = {
   avatar?: InputMaybe<SortOrder>;
   created_at?: InputMaybe<SortOrder>;
   email?: InputMaybe<SortOrder>;
+  emailVerified?: InputMaybe<SortOrder>;
   first_name?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
+  image?: InputMaybe<SortOrder>;
   is_disabled?: InputMaybe<SortOrder>;
   last_name?: InputMaybe<SortOrder>;
+  name?: InputMaybe<SortOrder>;
   nickname?: InputMaybe<SortOrder>;
   password?: InputMaybe<SortOrder>;
+  role?: InputMaybe<SortOrder>;
   updated_at?: InputMaybe<SortOrder>;
 };
 
@@ -4014,10 +5214,13 @@ export type UserOrderByWithAggregationInput = {
   avatar?: InputMaybe<SortOrder>;
   created_at?: InputMaybe<SortOrder>;
   email?: InputMaybe<SortOrder>;
+  emailVerified?: InputMaybe<SortOrder>;
   first_name?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
+  image?: InputMaybe<SortOrder>;
   is_disabled?: InputMaybe<SortOrder>;
   last_name?: InputMaybe<SortOrder>;
+  name?: InputMaybe<SortOrder>;
   nickname?: InputMaybe<SortOrder>;
   password?: InputMaybe<SortOrder>;
   role?: InputMaybe<SortOrder>;
@@ -4025,18 +5228,23 @@ export type UserOrderByWithAggregationInput = {
 };
 
 export type UserOrderByWithRelationInput = {
+  Account?: InputMaybe<AccountOrderByRelationAggregateInput>;
   Comment?: InputMaybe<CommentOrderByRelationAggregateInput>;
   Like?: InputMaybe<LikeOrderByRelationAggregateInput>;
   Post?: InputMaybe<PostOrderByRelationAggregateInput>;
   Preference?: InputMaybe<PreferenceOrderByWithRelationInput>;
   ResetPassword?: InputMaybe<ResetPasswordOrderByRelationAggregateInput>;
+  Session?: InputMaybe<SessionOrderByRelationAggregateInput>;
   avatar?: InputMaybe<SortOrder>;
   created_at?: InputMaybe<SortOrder>;
   email?: InputMaybe<SortOrder>;
+  emailVerified?: InputMaybe<SortOrder>;
   first_name?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
+  image?: InputMaybe<SortOrder>;
   is_disabled?: InputMaybe<SortOrder>;
   last_name?: InputMaybe<SortOrder>;
+  name?: InputMaybe<SortOrder>;
   nickname?: InputMaybe<SortOrder>;
   password?: InputMaybe<SortOrder>;
   role?: InputMaybe<SortOrder>;
@@ -4052,10 +5260,13 @@ export enum UserScalarFieldEnum {
   Avatar = 'avatar',
   CreatedAt = 'created_at',
   Email = 'email',
+  EmailVerified = 'emailVerified',
   FirstName = 'first_name',
   Id = 'id',
+  Image = 'image',
   IsDisabled = 'is_disabled',
   LastName = 'last_name',
+  Name = 'name',
   Nickname = 'nickname',
   Password = 'password',
   Role = 'role',
@@ -4069,32 +5280,40 @@ export type UserScalarWhereWithAggregatesInput = {
   avatar?: InputMaybe<StringNullableWithAggregatesFilter>;
   created_at?: InputMaybe<DateTimeWithAggregatesFilter>;
   email?: InputMaybe<StringWithAggregatesFilter>;
+  emailVerified?: InputMaybe<StringNullableWithAggregatesFilter>;
   first_name?: InputMaybe<StringNullableWithAggregatesFilter>;
   id?: InputMaybe<StringWithAggregatesFilter>;
+  image?: InputMaybe<StringWithAggregatesFilter>;
   is_disabled?: InputMaybe<BoolWithAggregatesFilter>;
   last_name?: InputMaybe<StringNullableWithAggregatesFilter>;
+  name?: InputMaybe<StringWithAggregatesFilter>;
   nickname?: InputMaybe<StringWithAggregatesFilter>;
-  password?: InputMaybe<StringWithAggregatesFilter>;
-  role?: InputMaybe<EnumRoleNullableListFilter>;
+  password?: InputMaybe<StringNullableWithAggregatesFilter>;
+  role?: InputMaybe<EnumRoleWithAggregatesFilter>;
   updated_at?: InputMaybe<DateTimeWithAggregatesFilter>;
 };
 
 export type UserUpdateInput = {
+  Account?: InputMaybe<AccountUpdateManyWithoutUserInput>;
   Comment?: InputMaybe<CommentUpdateManyWithoutAuthorInput>;
   Like?: InputMaybe<LikeUpdateManyWithoutUserInput>;
   Post?: InputMaybe<PostUpdateManyWithoutAuthorInput>;
   Preference?: InputMaybe<PreferenceUpdateOneWithoutUserInput>;
   ResetPassword?: InputMaybe<ResetPasswordUpdateManyWithoutUserInput>;
+  Session?: InputMaybe<SessionUpdateManyWithoutUserInput>;
   avatar?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   email?: InputMaybe<StringFieldUpdateOperationsInput>;
+  emailVerified?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   first_name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  image?: InputMaybe<StringFieldUpdateOperationsInput>;
   is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
   last_name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  name?: InputMaybe<StringFieldUpdateOperationsInput>;
   nickname?: InputMaybe<StringFieldUpdateOperationsInput>;
-  password?: InputMaybe<StringFieldUpdateOperationsInput>;
-  role?: InputMaybe<UserUpdateroleInput>;
+  password?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  role?: InputMaybe<EnumRoleFieldUpdateOperationsInput>;
   updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
 };
 
@@ -4102,14 +5321,25 @@ export type UserUpdateManyMutationInput = {
   avatar?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   email?: InputMaybe<StringFieldUpdateOperationsInput>;
+  emailVerified?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   first_name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  image?: InputMaybe<StringFieldUpdateOperationsInput>;
   is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
   last_name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  name?: InputMaybe<StringFieldUpdateOperationsInput>;
   nickname?: InputMaybe<StringFieldUpdateOperationsInput>;
-  password?: InputMaybe<StringFieldUpdateOperationsInput>;
-  role?: InputMaybe<UserUpdateroleInput>;
+  password?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  role?: InputMaybe<EnumRoleFieldUpdateOperationsInput>;
   updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+};
+
+export type UserUpdateOneRequiredWithoutAccountInput = {
+  connect?: InputMaybe<UserWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<UserCreateOrConnectWithoutAccountInput>;
+  create?: InputMaybe<UserCreateWithoutAccountInput>;
+  update?: InputMaybe<UserUpdateWithoutAccountInput>;
+  upsert?: InputMaybe<UserUpsertWithoutAccountInput>;
 };
 
 export type UserUpdateOneRequiredWithoutCommentInput = {
@@ -4144,81 +5374,155 @@ export type UserUpdateOneRequiredWithoutPreferenceInput = {
   upsert?: InputMaybe<UserUpsertWithoutPreferenceInput>;
 };
 
-export type UserUpdateWithoutCommentInput = {
+export type UserUpdateOneRequiredWithoutSessionInput = {
+  connect?: InputMaybe<UserWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<UserCreateOrConnectWithoutSessionInput>;
+  create?: InputMaybe<UserCreateWithoutSessionInput>;
+  update?: InputMaybe<UserUpdateWithoutSessionInput>;
+  upsert?: InputMaybe<UserUpsertWithoutSessionInput>;
+};
+
+export type UserUpdateWithoutAccountInput = {
+  Comment?: InputMaybe<CommentUpdateManyWithoutAuthorInput>;
   Like?: InputMaybe<LikeUpdateManyWithoutUserInput>;
   Post?: InputMaybe<PostUpdateManyWithoutAuthorInput>;
   Preference?: InputMaybe<PreferenceUpdateOneWithoutUserInput>;
   ResetPassword?: InputMaybe<ResetPasswordUpdateManyWithoutUserInput>;
+  Session?: InputMaybe<SessionUpdateManyWithoutUserInput>;
   avatar?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   email?: InputMaybe<StringFieldUpdateOperationsInput>;
+  emailVerified?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   first_name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  image?: InputMaybe<StringFieldUpdateOperationsInput>;
   is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
   last_name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  name?: InputMaybe<StringFieldUpdateOperationsInput>;
   nickname?: InputMaybe<StringFieldUpdateOperationsInput>;
-  password?: InputMaybe<StringFieldUpdateOperationsInput>;
-  role?: InputMaybe<UserUpdateroleInput>;
+  password?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  role?: InputMaybe<EnumRoleFieldUpdateOperationsInput>;
+  updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+};
+
+export type UserUpdateWithoutCommentInput = {
+  Account?: InputMaybe<AccountUpdateManyWithoutUserInput>;
+  Like?: InputMaybe<LikeUpdateManyWithoutUserInput>;
+  Post?: InputMaybe<PostUpdateManyWithoutAuthorInput>;
+  Preference?: InputMaybe<PreferenceUpdateOneWithoutUserInput>;
+  ResetPassword?: InputMaybe<ResetPasswordUpdateManyWithoutUserInput>;
+  Session?: InputMaybe<SessionUpdateManyWithoutUserInput>;
+  avatar?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  email?: InputMaybe<StringFieldUpdateOperationsInput>;
+  emailVerified?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  first_name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  image?: InputMaybe<StringFieldUpdateOperationsInput>;
+  is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  last_name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  name?: InputMaybe<StringFieldUpdateOperationsInput>;
+  nickname?: InputMaybe<StringFieldUpdateOperationsInput>;
+  password?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  role?: InputMaybe<EnumRoleFieldUpdateOperationsInput>;
   updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
 };
 
 export type UserUpdateWithoutLikeInput = {
+  Account?: InputMaybe<AccountUpdateManyWithoutUserInput>;
   Comment?: InputMaybe<CommentUpdateManyWithoutAuthorInput>;
   Post?: InputMaybe<PostUpdateManyWithoutAuthorInput>;
   Preference?: InputMaybe<PreferenceUpdateOneWithoutUserInput>;
   ResetPassword?: InputMaybe<ResetPasswordUpdateManyWithoutUserInput>;
+  Session?: InputMaybe<SessionUpdateManyWithoutUserInput>;
   avatar?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   email?: InputMaybe<StringFieldUpdateOperationsInput>;
+  emailVerified?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   first_name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  image?: InputMaybe<StringFieldUpdateOperationsInput>;
   is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
   last_name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  name?: InputMaybe<StringFieldUpdateOperationsInput>;
   nickname?: InputMaybe<StringFieldUpdateOperationsInput>;
-  password?: InputMaybe<StringFieldUpdateOperationsInput>;
-  role?: InputMaybe<UserUpdateroleInput>;
+  password?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  role?: InputMaybe<EnumRoleFieldUpdateOperationsInput>;
   updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
 };
 
 export type UserUpdateWithoutPostInput = {
+  Account?: InputMaybe<AccountUpdateManyWithoutUserInput>;
   Comment?: InputMaybe<CommentUpdateManyWithoutAuthorInput>;
   Like?: InputMaybe<LikeUpdateManyWithoutUserInput>;
+  Preference?: InputMaybe<PreferenceUpdateOneWithoutUserInput>;
+  ResetPassword?: InputMaybe<ResetPasswordUpdateManyWithoutUserInput>;
+  Session?: InputMaybe<SessionUpdateManyWithoutUserInput>;
+  avatar?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  email?: InputMaybe<StringFieldUpdateOperationsInput>;
+  emailVerified?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  first_name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  image?: InputMaybe<StringFieldUpdateOperationsInput>;
+  is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  last_name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  name?: InputMaybe<StringFieldUpdateOperationsInput>;
+  nickname?: InputMaybe<StringFieldUpdateOperationsInput>;
+  password?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  role?: InputMaybe<EnumRoleFieldUpdateOperationsInput>;
+  updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+};
+
+export type UserUpdateWithoutPreferenceInput = {
+  Account?: InputMaybe<AccountUpdateManyWithoutUserInput>;
+  Comment?: InputMaybe<CommentUpdateManyWithoutAuthorInput>;
+  Like?: InputMaybe<LikeUpdateManyWithoutUserInput>;
+  Post?: InputMaybe<PostUpdateManyWithoutAuthorInput>;
+  ResetPassword?: InputMaybe<ResetPasswordUpdateManyWithoutUserInput>;
+  Session?: InputMaybe<SessionUpdateManyWithoutUserInput>;
+  avatar?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  email?: InputMaybe<StringFieldUpdateOperationsInput>;
+  emailVerified?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  first_name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  image?: InputMaybe<StringFieldUpdateOperationsInput>;
+  is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  last_name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  name?: InputMaybe<StringFieldUpdateOperationsInput>;
+  nickname?: InputMaybe<StringFieldUpdateOperationsInput>;
+  password?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  role?: InputMaybe<EnumRoleFieldUpdateOperationsInput>;
+  updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+};
+
+export type UserUpdateWithoutSessionInput = {
+  Account?: InputMaybe<AccountUpdateManyWithoutUserInput>;
+  Comment?: InputMaybe<CommentUpdateManyWithoutAuthorInput>;
+  Like?: InputMaybe<LikeUpdateManyWithoutUserInput>;
+  Post?: InputMaybe<PostUpdateManyWithoutAuthorInput>;
   Preference?: InputMaybe<PreferenceUpdateOneWithoutUserInput>;
   ResetPassword?: InputMaybe<ResetPasswordUpdateManyWithoutUserInput>;
   avatar?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   email?: InputMaybe<StringFieldUpdateOperationsInput>;
+  emailVerified?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   first_name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  image?: InputMaybe<StringFieldUpdateOperationsInput>;
   is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
   last_name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  name?: InputMaybe<StringFieldUpdateOperationsInput>;
   nickname?: InputMaybe<StringFieldUpdateOperationsInput>;
-  password?: InputMaybe<StringFieldUpdateOperationsInput>;
-  role?: InputMaybe<UserUpdateroleInput>;
+  password?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  role?: InputMaybe<EnumRoleFieldUpdateOperationsInput>;
   updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
 };
 
-export type UserUpdateWithoutPreferenceInput = {
-  Comment?: InputMaybe<CommentUpdateManyWithoutAuthorInput>;
-  Like?: InputMaybe<LikeUpdateManyWithoutUserInput>;
-  Post?: InputMaybe<PostUpdateManyWithoutAuthorInput>;
-  ResetPassword?: InputMaybe<ResetPasswordUpdateManyWithoutUserInput>;
-  avatar?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
-  created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-  email?: InputMaybe<StringFieldUpdateOperationsInput>;
-  first_name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
-  id?: InputMaybe<StringFieldUpdateOperationsInput>;
-  is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
-  last_name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
-  nickname?: InputMaybe<StringFieldUpdateOperationsInput>;
-  password?: InputMaybe<StringFieldUpdateOperationsInput>;
-  role?: InputMaybe<UserUpdateroleInput>;
-  updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
-};
-
-export type UserUpdateroleInput = {
-  push?: InputMaybe<Array<Role>>;
-  set?: InputMaybe<Array<Role>>;
+export type UserUpsertWithoutAccountInput = {
+  create: UserCreateWithoutAccountInput;
+  update: UserUpdateWithoutAccountInput;
 };
 
 export type UserUpsertWithoutCommentInput = {
@@ -4241,8 +5545,14 @@ export type UserUpsertWithoutPreferenceInput = {
   update: UserUpdateWithoutPreferenceInput;
 };
 
+export type UserUpsertWithoutSessionInput = {
+  create: UserCreateWithoutSessionInput;
+  update: UserUpdateWithoutSessionInput;
+};
+
 export type UserWhereInput = {
   AND?: InputMaybe<Array<UserWhereInput>>;
+  Account?: InputMaybe<AccountListRelationFilter>;
   Comment?: InputMaybe<CommentListRelationFilter>;
   Like?: InputMaybe<LikeListRelationFilter>;
   NOT?: InputMaybe<Array<UserWhereInput>>;
@@ -4250,26 +5560,161 @@ export type UserWhereInput = {
   Post?: InputMaybe<PostListRelationFilter>;
   Preference?: InputMaybe<PreferenceRelationFilter>;
   ResetPassword?: InputMaybe<ResetPasswordListRelationFilter>;
+  Session?: InputMaybe<SessionListRelationFilter>;
   avatar?: InputMaybe<StringNullableFilter>;
   created_at?: InputMaybe<DateTimeFilter>;
   email?: InputMaybe<StringFilter>;
+  emailVerified?: InputMaybe<StringNullableFilter>;
   first_name?: InputMaybe<StringNullableFilter>;
   id?: InputMaybe<StringFilter>;
+  image?: InputMaybe<StringFilter>;
   is_disabled?: InputMaybe<BoolFilter>;
   last_name?: InputMaybe<StringNullableFilter>;
+  name?: InputMaybe<StringFilter>;
   nickname?: InputMaybe<StringFilter>;
-  password?: InputMaybe<StringFilter>;
-  role?: InputMaybe<EnumRoleNullableListFilter>;
+  password?: InputMaybe<StringNullableFilter>;
+  role?: InputMaybe<EnumRoleFilter>;
   updated_at?: InputMaybe<DateTimeFilter>;
 };
 
 export type UserWhereUniqueInput = {
   email?: InputMaybe<Scalars['String']>;
+  emailVerified?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['String']>;
   nickname?: InputMaybe<Scalars['String']>;
 };
 
-export type UserFragment = { __typename?: 'User', id: string, nickname: string, email: string, avatar: string, role: Array<Role>, created_at: any };
+export type VerificationToken = {
+  __typename?: 'VerificationToken';
+  expires: Scalars['DateTime'];
+  identifier: Scalars['String'];
+  token: Scalars['String'];
+};
+
+export type VerificationTokenCountAggregate = {
+  __typename?: 'VerificationTokenCountAggregate';
+  _all: Scalars['Int'];
+  expires: Scalars['Int'];
+  identifier: Scalars['Int'];
+  token: Scalars['Int'];
+};
+
+export type VerificationTokenCountOrderByAggregateInput = {
+  expires?: InputMaybe<SortOrder>;
+  identifier?: InputMaybe<SortOrder>;
+  token?: InputMaybe<SortOrder>;
+};
+
+export type VerificationTokenCreateInput = {
+  expires: Scalars['DateTime'];
+  identifier: Scalars['String'];
+  token: Scalars['String'];
+};
+
+export type VerificationTokenCreateManyInput = {
+  expires: Scalars['DateTime'];
+  identifier: Scalars['String'];
+  token: Scalars['String'];
+};
+
+export type VerificationTokenGroupBy = {
+  __typename?: 'VerificationTokenGroupBy';
+  _count: Maybe<VerificationTokenCountAggregate>;
+  _max: Maybe<VerificationTokenMaxAggregate>;
+  _min: Maybe<VerificationTokenMinAggregate>;
+  expires: Scalars['DateTime'];
+  identifier: Scalars['String'];
+  token: Scalars['String'];
+};
+
+export type VerificationTokenIdentifierTokenCompoundUniqueInput = {
+  identifier: Scalars['String'];
+  token: Scalars['String'];
+};
+
+export type VerificationTokenMaxAggregate = {
+  __typename?: 'VerificationTokenMaxAggregate';
+  expires: Maybe<Scalars['DateTime']>;
+  identifier: Maybe<Scalars['String']>;
+  token: Maybe<Scalars['String']>;
+};
+
+export type VerificationTokenMaxOrderByAggregateInput = {
+  expires?: InputMaybe<SortOrder>;
+  identifier?: InputMaybe<SortOrder>;
+  token?: InputMaybe<SortOrder>;
+};
+
+export type VerificationTokenMinAggregate = {
+  __typename?: 'VerificationTokenMinAggregate';
+  expires: Maybe<Scalars['DateTime']>;
+  identifier: Maybe<Scalars['String']>;
+  token: Maybe<Scalars['String']>;
+};
+
+export type VerificationTokenMinOrderByAggregateInput = {
+  expires?: InputMaybe<SortOrder>;
+  identifier?: InputMaybe<SortOrder>;
+  token?: InputMaybe<SortOrder>;
+};
+
+export type VerificationTokenOrderByWithAggregationInput = {
+  _count?: InputMaybe<VerificationTokenCountOrderByAggregateInput>;
+  _max?: InputMaybe<VerificationTokenMaxOrderByAggregateInput>;
+  _min?: InputMaybe<VerificationTokenMinOrderByAggregateInput>;
+  expires?: InputMaybe<SortOrder>;
+  identifier?: InputMaybe<SortOrder>;
+  token?: InputMaybe<SortOrder>;
+};
+
+export type VerificationTokenOrderByWithRelationInput = {
+  expires?: InputMaybe<SortOrder>;
+  identifier?: InputMaybe<SortOrder>;
+  token?: InputMaybe<SortOrder>;
+};
+
+export enum VerificationTokenScalarFieldEnum {
+  Expires = 'expires',
+  Identifier = 'identifier',
+  Token = 'token'
+}
+
+export type VerificationTokenScalarWhereWithAggregatesInput = {
+  AND?: InputMaybe<Array<VerificationTokenScalarWhereWithAggregatesInput>>;
+  NOT?: InputMaybe<Array<VerificationTokenScalarWhereWithAggregatesInput>>;
+  OR?: InputMaybe<Array<VerificationTokenScalarWhereWithAggregatesInput>>;
+  expires?: InputMaybe<DateTimeWithAggregatesFilter>;
+  identifier?: InputMaybe<StringWithAggregatesFilter>;
+  token?: InputMaybe<StringWithAggregatesFilter>;
+};
+
+export type VerificationTokenUpdateInput = {
+  expires?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  identifier?: InputMaybe<StringFieldUpdateOperationsInput>;
+  token?: InputMaybe<StringFieldUpdateOperationsInput>;
+};
+
+export type VerificationTokenUpdateManyMutationInput = {
+  expires?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  identifier?: InputMaybe<StringFieldUpdateOperationsInput>;
+  token?: InputMaybe<StringFieldUpdateOperationsInput>;
+};
+
+export type VerificationTokenWhereInput = {
+  AND?: InputMaybe<Array<VerificationTokenWhereInput>>;
+  NOT?: InputMaybe<Array<VerificationTokenWhereInput>>;
+  OR?: InputMaybe<Array<VerificationTokenWhereInput>>;
+  expires?: InputMaybe<DateTimeFilter>;
+  identifier?: InputMaybe<StringFilter>;
+  token?: InputMaybe<StringFilter>;
+};
+
+export type VerificationTokenWhereUniqueInput = {
+  identifier_token?: InputMaybe<VerificationTokenIdentifierTokenCompoundUniqueInput>;
+  token?: InputMaybe<Scalars['String']>;
+};
+
+export type UserFragment = { __typename?: 'User', id: string, nickname: string, email: string, avatar: string, role: Role, created_at: any };
 
 export type CreateCommentMutationVariables = Exact<{
   data: CommentCreateInput;
@@ -4295,19 +5740,19 @@ export type MutateLoginMutationVariables = Exact<{
 }>;
 
 
-export type MutateLoginMutation = { __typename?: 'Mutation', login: { __typename?: 'User', id: string, nickname: string, email: string, avatar: string, role: Array<Role>, created_at: any } };
+export type MutateLoginMutation = { __typename?: 'Mutation', login: { __typename?: 'User', id: string, nickname: string, email: string, avatar: string, role: Role, created_at: any } };
 
 export type MutateMeMutationVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MutateMeMutation = { __typename?: 'Mutation', me: { __typename?: 'User', id: string, nickname: string, email: string, avatar: string, role: Array<Role>, created_at: any } };
+export type MutateMeMutation = { __typename?: 'Mutation', me: { __typename?: 'User', id: string, nickname: string, email: string, avatar: string, role: Role, created_at: any } };
 
 export type RegisterMutationVariables = Exact<{
   data: RegisterInput;
 }>;
 
 
-export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'User', id: string, nickname: string, email: string, avatar: string, role: Array<Role>, created_at: any } };
+export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'User', id: string, nickname: string, email: string, avatar: string, role: Role, created_at: any } };
 
 export type SetLikeMutationVariables = Exact<{
   data: LikeCreateInput;
@@ -4371,7 +5816,7 @@ export type GetUserDataQueryVariables = Exact<{
 }>;
 
 
-export type GetUserDataQuery = { __typename?: 'Query', user: { __typename?: 'User', first_name: string, last_name: string, created_at: any, id: string, nickname: string, email: string, avatar: string, role: Array<Role> } };
+export type GetUserDataQuery = { __typename?: 'Query', user: { __typename?: 'User', first_name: string, last_name: string, created_at: any, id: string, nickname: string, email: string, avatar: string, role: Role } };
 
 export type GetUserAdditionalInformationsQueryVariables = Exact<{
   where: PreferenceWhereUniqueInput;

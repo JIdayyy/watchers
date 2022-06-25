@@ -11,6 +11,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { useLogoutMutation } from "src/generated/graphql";
+import { signOut } from "next-auth/react";
 
 export default function UserMenu(): JSX.Element {
     const { user } = useSelector((state: RootState) => state.user);
@@ -22,7 +23,6 @@ export default function UserMenu(): JSX.Element {
             push("/");
         },
     });
-
     return (
         <Menu>
             <MenuButton
@@ -76,7 +76,13 @@ export default function UserMenu(): JSX.Element {
                 </MenuItem>
                 <MenuDivider />
                 <MenuItem
-                    onClick={() => mutateLogout()}
+                    onClick={() => {
+                        mutateLogout({
+                            onCompleted: () => {
+                                signOut();
+                            },
+                        });
+                    }}
                     _hover={{ bg: "gray.200", textDecor: "underline" }}
                 >
                     Sign Out

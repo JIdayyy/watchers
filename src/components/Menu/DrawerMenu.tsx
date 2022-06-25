@@ -39,7 +39,7 @@ export default function DrawerMenu(): JSX.Element {
         if (link.role === "ALL") {
             return true;
         }
-        if (user.roles.includes(link.role)) {
+        if (user.roles === link.role) {
             return true;
         }
         return false;

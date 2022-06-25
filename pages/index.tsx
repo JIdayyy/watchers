@@ -19,6 +19,7 @@ import {
 import { apolloClient } from "./_app";
 import { GetStaticPropsResult } from "next";
 import CustomBox from "@definitions/chakra/theme/components/Box/CustomBox";
+import { useSession } from "next-auth/react";
 
 interface IProps {
     posts: GetAllPostsQuery["posts"];
@@ -27,7 +28,7 @@ interface IProps {
 const Home = ({ posts }: IProps): JSX.Element => {
     const [sortOrder, setSortOrder] = useState("relevant");
     const { toggleColorMode } = useColorMode();
-
+    const session = useSession();
     return (
         <Grid
             p={[2, 2, 2, 2, 0]}

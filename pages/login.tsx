@@ -7,16 +7,15 @@ import {
     useColorMode,
     VStack,
 } from "@chakra-ui/react";
+
+import { signIn, useSession } from "next-auth/react";
 import MainLayout from "@components/Layouts/MainLayout";
-import { login } from "@redux/actions";
-import { useRouter } from "next/router";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
-import { useMutateLoginMutation } from "src/generated/graphql";
 import loginFormResolver from "src/Resolvers/LoginFormResolver";
 import { yupResolver } from "@hookform/resolvers/yup";
 import InputError from "@components/Form/InputError";
+import Link from "next/link";
 
 interface FormData {
     email: string;
@@ -24,9 +23,8 @@ interface FormData {
 }
 
 export default function Login(): JSX.Element {
-    const router = useRouter();
+    const session = useSession();
     const { colorMode } = useColorMode();
-    const dispatch = useDispatch();
     const {
         handleSubmit,
         register,
@@ -36,31 +34,13 @@ export default function Login(): JSX.Element {
         criteriaMode: "all",
     });
 
-    const [mutateLogin, { loading }] = useMutateLoginMutation();
-
-    const onSubmit = (data: FormData) => {
-        mutateLogin({
-            variables: {
-                data: {
-                    email: data.email,
-                    password: data.password,
-                },
-            },
-            onCompleted: (data) => {
-                dispatch(
-                    login({
-                        avatar: data.login.avatar,
-                        nickName: data.login.nickname,
-                        id: data.login.id,
-                        email: data.login.email,
-                        roles: data.login.role,
-                    }),
-                );
-                router.push("/");
-            },
+    const onSubmit = async (data: FormData) => {
+        await signIn("credentials", {
+            redirect: true,
+            email: data.email,
+            password: data.password,
         });
     };
-
     return (
         <Flex w="full" h="full" justifyContent="center" alignItems="center">
             <VStack
@@ -69,16 +49,25 @@ export default function Login(): JSX.Element {
                 rounded={5}
                 shadow="base"
                 w={["90%", "70%", "50%", "30%"]}
-                h="50%"
                 bg={colorMode === "light" ? "white" : "#171717"}
             >
-                <Text fontSize="24px" fontWeight="bold">
+                <Text as="h1" fontWeight="bold">
                     Welcome back to Tech Watchers
                 </Text>
-                <Button isDisabled color="white" bg="black" w="full">
+                <Button
+                    onClick={() => signIn("github")}
+                    color="white"
+                    bg="black"
+                    w="full"
+                >
                     Continue with github
                 </Button>
-                <Button isDisabled color="white" bg="blue.300" w="full">
+                <Button
+                    onClick={() => signIn("google")}
+                    color="white"
+                    bg="blue.300"
+                    w="full"
+                >
                     Continue with google
                 </Button>
 
@@ -100,7 +89,7 @@ export default function Login(): JSX.Element {
                 <InputError name="password" errors={errors} />
 
                 <Button
-                    isLoading={loading}
+                    isLoading={session.status === "loading"}
                     onClick={handleSubmit(onSubmit)}
                     color="white"
                     bg="blue"
@@ -108,6 +97,19 @@ export default function Login(): JSX.Element {
                 >
                     Continue
                 </Button>
+                <Flex>
+                    <Text>No account yet ?</Text>
+                    <Link href="/register">
+                        <Text
+                            cursor="pointer"
+                            _hover={{ textDecoration: "underline" }}
+                            ml={2}
+                            fontWeight="bold"
+                        >
+                            Sign up
+                        </Text>
+                    </Link>
+                </Flex>
             </VStack>
         </Flex>
     );

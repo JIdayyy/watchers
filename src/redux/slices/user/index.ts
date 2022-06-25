@@ -6,7 +6,7 @@ type User = {
     id: string;
     nickName: string;
     email: string;
-    roles: Role[];
+    roles: Role | null;
     avatar: string;
 };
 
@@ -19,7 +19,7 @@ const initialState: IUser = {
         email: "",
         id: "",
         nickName: "",
-        roles: [],
+        roles: null,
         avatar: "",
     },
 };

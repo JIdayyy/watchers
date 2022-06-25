@@ -1,10 +1,8 @@
 import { Box, Flex, Icon, Text } from "@chakra-ui/react";
-import { RootState } from "@redux/reducers";
 import { DateTime } from "luxon";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import React from "react";
-import { useSelector } from "react-redux";
 import {
     GetAllPostsQuery,
     useGetAllPostLikesQuery,
@@ -33,7 +31,6 @@ export default function WatchCard({ watch, isMain }: IProps): JSX.Element {
             },
         },
     });
-    const { user } = useSelector((state: RootState) => state.user);
 
     const handleClick = () => {
         router.push(`/${watch.slug}`);

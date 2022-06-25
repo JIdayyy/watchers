@@ -20,12 +20,11 @@ export default function NavigationCard(): JSX.Element {
         if (link.role === "ALL") {
             return true;
         }
-        if (user.roles.includes(link.role)) {
+        if (user.roles === link.role) {
             return true;
         }
         return false;
     };
-
     return (
         <Flex rounded={5} direction="column" w="full">
             {navLinks.filter(roleFilter).map((link) => (

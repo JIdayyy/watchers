@@ -5,6 +5,8 @@ module.exports = withPlugins([], {
         domains: [
             "minio-dc-s3.digitalcopilote.re",
             "avatarfiles.alphacoders.com",
+            "avatars.githubusercontent.com",
+            "lh3.googleusercontent.com",
         ],
     },
 });

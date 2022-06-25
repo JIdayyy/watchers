@@ -11,12 +11,14 @@ import InputError from "@components/Form/InputError";
 import MainLayout from "@components/Layouts/MainLayout";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { login } from "@redux/actions";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { useRegisterMutation } from "src/generated/graphql";
 import registerFormResolver from "src/Resolvers/RegisterFormResolver";
+import { useSession } from "next-auth/react";
 
 interface FormData {
     email: string;
@@ -130,6 +132,19 @@ export default function Register(): JSX.Element {
                 >
                     Continue
                 </Button>
+                <Flex>
+                    <Text>Allready have an account ?</Text>
+                    <Link href="/login">
+                        <Text
+                            cursor="pointer"
+                            _hover={{ textDecoration: "underline" }}
+                            ml={2}
+                            fontWeight="bold"
+                        >
+                            Sign in
+                        </Text>
+                    </Link>
+                </Flex>
             </VStack>
         </Flex>
     );

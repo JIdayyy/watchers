@@ -51,7 +51,7 @@ export default function WatchCard({ watch, isMain }: IProps): JSX.Element {
             minH="200px"
             overflow="hidden"
         >
-            {isMain && (
+            {isMain && watch.cover_picture && (
                 <Box position="relative" w="full" h="200px">
                     <Image
                         priority

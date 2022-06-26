@@ -64,6 +64,18 @@ export default NextAuth({
         },
     },
 
+    cookies: {
+        sessionToken: {
+            name: `token`,
+            options: {
+                httpOnly: true,
+                sameSite: "none",
+                path: "/",
+                secure: true,
+            },
+        },
+    },
+
     session: {
         strategy: "jwt",
         maxAge: 30 * 24 * 60 * 60, // 30 days

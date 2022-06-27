@@ -87,7 +87,9 @@ export default (req: NextApiRequest, res: NextApiResponse): void => {
         jwt: {
             secret: process.env.JWT_SECRET,
             encode: async ({ secret, token, maxAge }) => {
-                const cookies = new Cookies(req, res);
+                const cookies = new Cookies(req, res, {
+                    secure: process.env.NODE_ENV === "production",
+                });
                 if (!token) {
                     return Promise.reject();
                 }

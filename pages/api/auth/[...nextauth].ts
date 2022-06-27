@@ -114,7 +114,8 @@ export default (req: NextApiRequest, res: NextApiResponse): void => {
                         expiresIn: 30 * 24 * 60 * 60, // 30 days
                     },
                 );
-                const newCookie = cookies.set("token", newToken, {
+                console.log(req.url, res);
+                cookies.set("token", newToken, {
                     domain: process.env.COOKIE_DOMAIN,
                     secure: process.env.NODE_ENV === "production",
                     httpOnly: process.env.NODE_ENV === "production",

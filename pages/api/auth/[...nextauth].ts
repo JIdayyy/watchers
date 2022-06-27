@@ -72,6 +72,7 @@ export default NextAuth({
                 sameSite: "none",
                 path: "/",
                 secure: true,
+                domain: process.env.COOKIE_DOMAIN,
             },
         },
     },

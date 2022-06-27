@@ -88,7 +88,6 @@ export default (req: NextApiRequest, res: NextApiResponse): void => {
             secret: process.env.JWT_SECRET,
             encode: async ({ secret, token, maxAge }) => {
                 const cookies = new Cookies(req, res);
-                console.log(cookies);
                 if (!token) {
                     return Promise.reject();
                 }
@@ -121,8 +120,6 @@ export default (req: NextApiRequest, res: NextApiResponse): void => {
                     httpOnly: process.env.NODE_ENV === "production",
                     sameSite: "lax",
                 });
-
-                console.log(newCookie);
 
                 return newToken;
             },

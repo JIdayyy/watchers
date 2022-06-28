@@ -10,7 +10,7 @@ import {
 
 import { signIn, useSession } from "next-auth/react";
 import MainLayout from "@components/Layouts/MainLayout";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import loginFormResolver from "src/Resolvers/LoginFormResolver";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -25,6 +25,7 @@ interface FormData {
 export default function Login(): JSX.Element {
     const session = useSession();
     const { colorMode } = useColorMode();
+    const [isLoading, setIsLoading] = useState(false);
     const {
         handleSubmit,
         register,
@@ -34,13 +35,35 @@ export default function Login(): JSX.Element {
         criteriaMode: "all",
     });
 
-    const onSubmit = async (data: FormData) => {
-        await signIn("credentials", {
-            redirect: true,
-            email: data.email,
-            password: data.password,
-        });
+    const onSubmit = async (provider: string, data?: FormData) => {
+        setIsLoading(true);
+        if (provider === "credentials" && data) {
+            await signIn("credentials", {
+                redirect: true,
+                email: data.email,
+                password: data.password,
+            });
+        }
+        if (provider === "github") {
+            await signIn("github", {
+                redirect: true,
+            });
+        }
+        if (provider === "google") {
+            await signIn("google", {
+                redirect: true,
+            });
+        }
+        setIsLoading(false);
     };
+
+    useEffect(() => {
+        if (session.status === "loading") {
+            return setIsLoading(true);
+        }
+        return setIsLoading(false);
+    }, [session.status]);
+
     return (
         <Flex w="full" h="full" justifyContent="center" alignItems="center">
             <VStack
@@ -55,7 +78,7 @@ export default function Login(): JSX.Element {
                     Welcome back to Tech Watchers
                 </Text>
                 <Button
-                    onClick={() => signIn("github")}
+                    onClick={() => onSubmit("github")}
                     color="white"
                     bg="black"
                     w="full"
@@ -63,7 +86,7 @@ export default function Login(): JSX.Element {
                     Continue with github
                 </Button>
                 <Button
-                    onClick={() => signIn("google")}
+                    onClick={() => onSubmit("google")}
                     color="white"
                     bg="blue.300"
                     w="full"
@@ -89,8 +112,10 @@ export default function Login(): JSX.Element {
                 <InputError name="password" errors={errors} />
 
                 <Button
-                    isLoading={session.status === "loading"}
-                    onClick={handleSubmit(onSubmit)}
+                    isLoading={isLoading}
+                    onClick={handleSubmit((data) =>
+                        onSubmit("credentials", data),
+                    )}
                     color="white"
                     bg="blue"
                     w="full"

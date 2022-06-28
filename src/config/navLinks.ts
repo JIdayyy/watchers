@@ -40,7 +40,7 @@ const navLinks: INavLink[] = [
     {
         id: 5,
         name: "My Profile",
-        path: "/profile",
+        path: "/settings/profile",
         icon: "/icons/profile.png",
         role: Role.User,
     },

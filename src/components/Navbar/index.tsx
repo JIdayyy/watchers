@@ -167,7 +167,7 @@ export default function Navbar(): JSX.Element {
                                 _hover={{ backgroundColor: "transparent" }}
                                 bg="transparent"
                             >
-                                Sign In
+                                Sign Up
                             </Button>
                             <Button
                                 color="white"

@@ -68,3 +68,23 @@ ul {
     box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.51);
     z-index: 1000;
 }
+
+.scrollbarList::-webkit-scrollbar {
+    width: 5px;
+}
+
+/* Track */
+.scrollbarList::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+.scrollbarList::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 100px;
+}
+
+/* Handle on hover */
+.scrollbarList::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}

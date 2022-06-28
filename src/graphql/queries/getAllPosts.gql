@@ -13,9 +13,13 @@ query GetAllPosts(
         commentCount {
             count
         }
+        likeCount {
+            count
+        }
         author {
             id
             first_name
+            image
             nickname
             last_name
             email

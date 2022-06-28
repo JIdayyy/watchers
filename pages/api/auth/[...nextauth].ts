@@ -9,6 +9,7 @@ import client from "prisma/client";
 import GoogleProvider from "next-auth/providers/google";
 import { JWT } from "next-auth/jwt";
 import Cookies from "cookies";
+import bcrypt from "bcrypt";
 import { NextApiRequest, NextApiResponse } from "next";
 
 const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:5000";
@@ -37,8 +38,14 @@ export default (req: NextApiRequest, res: NextApiResponse): void => {
                         },
                         rejectOnNotFound: true,
                     });
+
+                    const isValid = bcrypt.compareSync(
+                        credentials.password,
+                        prismaUser.password || "",
+                    );
+
                     const { password, ...userWithoutPassword } = prismaUser;
-                    if (prismaUser) {
+                    if (prismaUser && isValid) {
                         return userWithoutPassword;
                     } else {
                         return null;
@@ -96,10 +103,11 @@ export default (req: NextApiRequest, res: NextApiResponse): void => {
 
                 const userFromDatabase = await client.user.findUnique({
                     where: {
-                        id: typeof token.id === "string" ? token.id : "",
+                        email:
+                            typeof token.email === "string" ? token.email : "",
                     },
                 });
-
+                console.log("USER_FROM3DB", userFromDatabase, token.email);
                 const newToken = jwt.sign(
                     {
                         picture: token.picture,
@@ -116,7 +124,6 @@ export default (req: NextApiRequest, res: NextApiResponse): void => {
                         expiresIn: 30 * 24 * 60 * 60, // 30 days
                     },
                 );
-                console.log(req.url, res);
                 cookies.set("token", newToken, {
                     domain: process.env.COOKIE_DOMAIN,
                     secure: process.env.NODE_ENV === "production",

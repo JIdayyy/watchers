@@ -3502,6 +3502,7 @@ export type Query = {
   preferences: Array<Preference>;
   resetPassword: Maybe<ResetPassword>;
   resetPasswords: Array<ResetPassword>;
+  search: Maybe<Array<Post>>;
   session: Maybe<Session>;
   sessions: Array<Session>;
   tag: Maybe<Tag>;
@@ -3937,6 +3938,11 @@ export type QueryResetPasswordsArgs = {
 };
 
 
+export type QuerySearchArgs = {
+  data: SearchInput;
+};
+
+
 export type QuerySessionArgs = {
   where: SessionWhereUniqueInput;
 };
@@ -4199,6 +4205,10 @@ export enum Role {
   SuperAdmin = 'SUPER_ADMIN',
   User = 'USER'
 }
+
+export type SearchInput = {
+  searchValue: Scalars['String'];
+};
 
 export type Session = {
   __typename?: 'Session';
@@ -4509,6 +4519,7 @@ export type Tag = {
   Post: Array<Post>;
   _count: Maybe<TagCount>;
   created_at: Scalars['DateTime'];
+  description: Maybe<Scalars['String']>;
   id: Scalars['String'];
   name: Scalars['String'];
   updated_at: Scalars['DateTime'];
@@ -4533,6 +4544,7 @@ export type TagCountAggregate = {
   __typename?: 'TagCountAggregate';
   _all: Scalars['Int'];
   created_at: Scalars['Int'];
+  description: Scalars['Int'];
   id: Scalars['Int'];
   name: Scalars['Int'];
   updated_at: Scalars['Int'];
@@ -4540,6 +4552,7 @@ export type TagCountAggregate = {
 
 export type TagCountOrderByAggregateInput = {
   created_at?: InputMaybe<SortOrder>;
+  description?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
   name?: InputMaybe<SortOrder>;
   updated_at?: InputMaybe<SortOrder>;
@@ -4548,6 +4561,7 @@ export type TagCountOrderByAggregateInput = {
 export type TagCreateInput = {
   Post?: InputMaybe<PostCreateNestedManyWithoutTagsInput>;
   created_at?: InputMaybe<Scalars['DateTime']>;
+  description?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['String']>;
   name: Scalars['String'];
   updated_at?: InputMaybe<Scalars['DateTime']>;
@@ -4555,6 +4569,7 @@ export type TagCreateInput = {
 
 export type TagCreateManyInput = {
   created_at?: InputMaybe<Scalars['DateTime']>;
+  description?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['String']>;
   name: Scalars['String'];
   updated_at?: InputMaybe<Scalars['DateTime']>;
@@ -4573,6 +4588,7 @@ export type TagCreateOrConnectWithoutPostInput = {
 
 export type TagCreateWithoutPostInput = {
   created_at?: InputMaybe<Scalars['DateTime']>;
+  description?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['String']>;
   name: Scalars['String'];
   updated_at?: InputMaybe<Scalars['DateTime']>;
@@ -4584,6 +4600,7 @@ export type TagGroupBy = {
   _max: Maybe<TagMaxAggregate>;
   _min: Maybe<TagMinAggregate>;
   created_at: Scalars['DateTime'];
+  description: Maybe<Scalars['String']>;
   id: Scalars['String'];
   name: Scalars['String'];
   updated_at: Scalars['DateTime'];
@@ -4598,6 +4615,7 @@ export type TagListRelationFilter = {
 export type TagMaxAggregate = {
   __typename?: 'TagMaxAggregate';
   created_at: Maybe<Scalars['DateTime']>;
+  description: Maybe<Scalars['String']>;
   id: Maybe<Scalars['String']>;
   name: Maybe<Scalars['String']>;
   updated_at: Maybe<Scalars['DateTime']>;
@@ -4605,6 +4623,7 @@ export type TagMaxAggregate = {
 
 export type TagMaxOrderByAggregateInput = {
   created_at?: InputMaybe<SortOrder>;
+  description?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
   name?: InputMaybe<SortOrder>;
   updated_at?: InputMaybe<SortOrder>;
@@ -4613,6 +4632,7 @@ export type TagMaxOrderByAggregateInput = {
 export type TagMinAggregate = {
   __typename?: 'TagMinAggregate';
   created_at: Maybe<Scalars['DateTime']>;
+  description: Maybe<Scalars['String']>;
   id: Maybe<Scalars['String']>;
   name: Maybe<Scalars['String']>;
   updated_at: Maybe<Scalars['DateTime']>;
@@ -4620,6 +4640,7 @@ export type TagMinAggregate = {
 
 export type TagMinOrderByAggregateInput = {
   created_at?: InputMaybe<SortOrder>;
+  description?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
   name?: InputMaybe<SortOrder>;
   updated_at?: InputMaybe<SortOrder>;
@@ -4634,6 +4655,7 @@ export type TagOrderByWithAggregationInput = {
   _max?: InputMaybe<TagMaxOrderByAggregateInput>;
   _min?: InputMaybe<TagMinOrderByAggregateInput>;
   created_at?: InputMaybe<SortOrder>;
+  description?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
   name?: InputMaybe<SortOrder>;
   updated_at?: InputMaybe<SortOrder>;
@@ -4642,6 +4664,7 @@ export type TagOrderByWithAggregationInput = {
 export type TagOrderByWithRelationInput = {
   Post?: InputMaybe<PostOrderByRelationAggregateInput>;
   created_at?: InputMaybe<SortOrder>;
+  description?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
   name?: InputMaybe<SortOrder>;
   updated_at?: InputMaybe<SortOrder>;
@@ -4649,6 +4672,7 @@ export type TagOrderByWithRelationInput = {
 
 export enum TagScalarFieldEnum {
   CreatedAt = 'created_at',
+  Description = 'description',
   Id = 'id',
   Name = 'name',
   UpdatedAt = 'updated_at'
@@ -4659,6 +4683,7 @@ export type TagScalarWhereInput = {
   NOT?: InputMaybe<Array<TagScalarWhereInput>>;
   OR?: InputMaybe<Array<TagScalarWhereInput>>;
   created_at?: InputMaybe<DateTimeFilter>;
+  description?: InputMaybe<StringNullableFilter>;
   id?: InputMaybe<StringFilter>;
   name?: InputMaybe<StringFilter>;
   updated_at?: InputMaybe<DateTimeFilter>;
@@ -4669,6 +4694,7 @@ export type TagScalarWhereWithAggregatesInput = {
   NOT?: InputMaybe<Array<TagScalarWhereWithAggregatesInput>>;
   OR?: InputMaybe<Array<TagScalarWhereWithAggregatesInput>>;
   created_at?: InputMaybe<DateTimeWithAggregatesFilter>;
+  description?: InputMaybe<StringNullableWithAggregatesFilter>;
   id?: InputMaybe<StringWithAggregatesFilter>;
   name?: InputMaybe<StringWithAggregatesFilter>;
   updated_at?: InputMaybe<DateTimeWithAggregatesFilter>;
@@ -4677,6 +4703,7 @@ export type TagScalarWhereWithAggregatesInput = {
 export type TagUpdateInput = {
   Post?: InputMaybe<PostUpdateManyWithoutTagsInput>;
   created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  description?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
   name?: InputMaybe<StringFieldUpdateOperationsInput>;
   updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
@@ -4684,6 +4711,7 @@ export type TagUpdateInput = {
 
 export type TagUpdateManyMutationInput = {
   created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  description?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
   name?: InputMaybe<StringFieldUpdateOperationsInput>;
   updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
@@ -4714,6 +4742,7 @@ export type TagUpdateWithWhereUniqueWithoutPostInput = {
 
 export type TagUpdateWithoutPostInput = {
   created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  description?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
   name?: InputMaybe<StringFieldUpdateOperationsInput>;
   updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
@@ -4731,6 +4760,7 @@ export type TagWhereInput = {
   OR?: InputMaybe<Array<TagWhereInput>>;
   Post?: InputMaybe<PostListRelationFilter>;
   created_at?: InputMaybe<DateTimeFilter>;
+  description?: InputMaybe<StringNullableFilter>;
   id?: InputMaybe<StringFilter>;
   name?: InputMaybe<StringFilter>;
   updated_at?: InputMaybe<DateTimeFilter>;
@@ -5831,6 +5861,13 @@ export type GetUserAdditionalInformationsQueryVariables = Exact<{
 
 export type GetUserAdditionalInformationsQuery = { __typename?: 'Query', preference: { __typename?: 'Preference', website: string, location: string, bio: string } };
 
+export type SearchQueryVariables = Exact<{
+  search: SearchInput;
+}>;
+
+
+export type SearchQuery = { __typename?: 'Query', search: Array<{ __typename?: 'Post', title: string, slug: string, id: string, cover_picture: string, Tags: Array<{ __typename?: 'Tag', name: string, id: string }> }> };
+
 export const UserFragmentDoc = gql`
     fragment User on User {
   id
@@ -6503,3 +6540,45 @@ export function useGetUserAdditionalInformationsLazyQuery(baseOptions?: Apollo.L
 export type GetUserAdditionalInformationsQueryHookResult = ReturnType<typeof useGetUserAdditionalInformationsQuery>;
 export type GetUserAdditionalInformationsLazyQueryHookResult = ReturnType<typeof useGetUserAdditionalInformationsLazyQuery>;
 export type GetUserAdditionalInformationsQueryResult = Apollo.QueryResult<GetUserAdditionalInformationsQuery, GetUserAdditionalInformationsQueryVariables>;
+export const SearchDocument = gql`
+    query search($search: SearchInput!) {
+  search(data: $search) {
+    title
+    slug
+    id
+    cover_picture
+    Tags {
+      name
+      id
+    }
+  }
+}
+    `;
+
+/**
+ * __useSearchQuery__
+ *
+ * To run a query within a React component, call `useSearchQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSearchQuery({
+ *   variables: {
+ *      search: // value for 'search'
+ *   },
+ * });
+ */
+export function useSearchQuery(baseOptions: Apollo.QueryHookOptions<SearchQuery, SearchQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<SearchQuery, SearchQueryVariables>(SearchDocument, options);
+      }
+export function useSearchLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SearchQuery, SearchQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<SearchQuery, SearchQueryVariables>(SearchDocument, options);
+        }
+export type SearchQueryHookResult = ReturnType<typeof useSearchQuery>;
+export type SearchLazyQueryHookResult = ReturnType<typeof useSearchLazyQuery>;
+export type SearchQueryResult = Apollo.QueryResult<SearchQuery, SearchQueryVariables>;

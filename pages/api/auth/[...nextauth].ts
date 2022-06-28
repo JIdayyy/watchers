@@ -79,17 +79,17 @@ export default (req: NextApiRequest, res: NextApiResponse): void => {
             updateAge: 24 * 60 * 60, // 24 hours
         },
 
-        logger: {
-            error: (code, metadata) => {
-                console.error(code, metadata);
-            },
-            warn: (code) => {
-                console.warn(code);
-            },
-            debug: (code, metadata) => {
-                console.debug(code, metadata);
-            },
-        },
+        // logger: {
+        //     error: (code, metadata) => {
+        //         console.error(code, metadata);
+        //     },
+        //     warn: (code) => {
+        //         console.warn(code);
+        //     },
+        //     debug: (code, metadata) => {
+        //         console.debug(code, metadata);
+        //     },
+        // },
 
         jwt: {
             secret: process.env.JWT_SECRET,
@@ -107,7 +107,6 @@ export default (req: NextApiRequest, res: NextApiResponse): void => {
                             typeof token.email === "string" ? token.email : "",
                     },
                 });
-                console.log("USER_FROM3DB", userFromDatabase, token.email);
                 const newToken = jwt.sign(
                     {
                         picture: token.picture,

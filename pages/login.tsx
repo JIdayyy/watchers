@@ -44,16 +44,14 @@ export default function Login(): JSX.Element {
                 password: data.password,
             });
         }
-        if (provider === "github") {
-            await signIn("github", {
-                redirect: true,
-            });
-        }
-        if (provider === "google") {
-            await signIn("google", {
-                redirect: true,
-            });
-        }
+        setIsLoading(false);
+    };
+
+    const handleProviderSignMethod = async (provider: string) => {
+        setIsLoading(true);
+        await signIn(provider, {
+            redirect: true,
+        });
         setIsLoading(false);
     };
 
@@ -78,7 +76,7 @@ export default function Login(): JSX.Element {
                     Welcome back to Tech Watchers
                 </Text>
                 <Button
-                    onClick={() => onSubmit("github")}
+                    onClick={() => handleProviderSignMethod("github")}
                     color="white"
                     bg="black"
                     w="full"
@@ -86,7 +84,7 @@ export default function Login(): JSX.Element {
                     Continue with github
                 </Button>
                 <Button
-                    onClick={() => onSubmit("google")}
+                    onClick={() => handleProviderSignMethod("google")}
                     color="white"
                     bg="blue.300"
                     w="full"

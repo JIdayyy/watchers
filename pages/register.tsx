@@ -11,9 +11,10 @@ import InputError from "@components/Form/InputError";
 import MainLayout from "@components/Layouts/MainLayout";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { login } from "@redux/actions";
+import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { useRegisterMutation } from "src/generated/graphql";
@@ -29,7 +30,7 @@ interface FormData {
 export default function Register(): JSX.Element {
     const router = useRouter();
     const { colorMode } = useColorMode();
-
+    const [isLoading, setIsLoading] = useState(false);
     const dispatch = useDispatch();
     const {
         handleSubmit,
@@ -68,6 +69,14 @@ export default function Register(): JSX.Element {
         });
     };
 
+    const handleProviderSignMethod = async (provider: string) => {
+        setIsLoading(true);
+        await signIn(provider, {
+            redirect: true,
+        });
+        setIsLoading(false);
+    };
+
     return (
         <Flex w="full" h="full" justifyContent="center" alignItems="center">
             <VStack
@@ -81,10 +90,20 @@ export default function Register(): JSX.Element {
                 <Text fontSize="24px" fontWeight="bold">
                     Welcome to Tech Watchers
                 </Text>
-                <Button isDisabled color="white" bg="black" w="full">
+                <Button
+                    onClick={() => handleProviderSignMethod("github")}
+                    color="white"
+                    bg="black"
+                    w="full"
+                >
                     Continue with github
                 </Button>
-                <Button isDisabled color="white" bg="blue.300" w="full">
+                <Button
+                    onClick={() => handleProviderSignMethod("google")}
+                    color="white"
+                    bg="blue.300"
+                    w="full"
+                >
                     Continue with google
                 </Button>
 
@@ -123,7 +142,7 @@ export default function Register(): JSX.Element {
                 <InputError errors={errors} name="confirm_password" />
 
                 <Button
-                    isLoading={loading}
+                    isLoading={isLoading || loading}
                     onClick={handleSubmit(onSubmit)}
                     color="white"
                     bg="blue"

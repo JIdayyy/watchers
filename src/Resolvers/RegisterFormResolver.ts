@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 import * as yup from "yup";
 
 const registerFormResolver = yup
@@ -10,9 +11,16 @@ const registerFormResolver = yup
 
         nickname: yup.string().required("This field is required"),
 
-        confirm_password: yup.string().required("This field is required"),
-
-        password: yup.string().required("password is required"),
+        confirm_password: yup
+            .string()
+            .oneOf([yup.ref("password"), null], "Passwords must match"),
+        password: yup
+            .string()
+            .matches(
+                /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
+                "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character",
+            )
+            .required(),
     })
     .required();
 

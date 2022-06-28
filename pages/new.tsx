@@ -7,6 +7,7 @@ import {
     Input,
     Text,
     useColorMode,
+    useToast,
 } from "@chakra-ui/react";
 import NewWatchLayout from "@components/Layouts/NewWatch";
 import React, { ChangeEvent, useEffect, useRef, useState } from "react";
@@ -23,10 +24,14 @@ import axiosInstance from "@services/api/axiosInstance";
 import { CloseIcon } from "@chakra-ui/icons";
 import Preview from "@components/Preview";
 import CustomFlex from "@definitions/chakra/theme/components/Box/CustomFlex";
+import TagsList from "@components/Tags/TagsList";
 
 const initialValue = "<p> <b>Start to writte your watch here ...</b></p>";
 
 export default function NewWatch(): JSX.Element {
+    const toast = useToast();
+    const inputRef = useRef<HTMLInputElement>(null);
+    const [isFocus, setIsFocus] = useState(false);
     const { colorMode } = useColorMode();
     const [isPreview, setIsPreview] = useState(false);
     const fileInpuRef = useRef<HTMLInputElement>(null);
@@ -57,9 +62,15 @@ export default function NewWatch(): JSX.Element {
     }, []);
 
     const handleSetTags = (e: string) => {
-        if (tags.length < 4) {
-            setTags([...tags, e.split(" ").join("").toLowerCase()]);
+        if (tags.length < 4 && e.length > 0) {
+            setTags([
+                ...tags.filter(
+                    (tag) => tag !== e.split(" ").join("").toLowerCase(),
+                ),
+                e.split(" ").join("").toLowerCase(),
+            ]);
             setTagInput("");
+            setIsFocus(false);
         }
     };
 
@@ -115,6 +126,13 @@ export default function NewWatch(): JSX.Element {
         });
 
     const onSubmit = (data: FieldValues) => {
+        if (!selectedCategory) {
+            return toast({
+                title: "Please select a category",
+                status: "error",
+                duration: 4000,
+            });
+        }
         createPost({
             variables: {
                 data: {
@@ -263,7 +281,7 @@ export default function NewWatch(): JSX.Element {
                                 _focus={{ border: "0px" }}
                                 placeholder="Add a title here ..."
                             />
-                            <Flex flexWrap="wrap" w="full">
+                            <Flex position="relative" flexWrap="wrap" w="full">
                                 {tags.map((tag) => (
                                     <Flex
                                         justifyContent="center"
@@ -300,9 +318,12 @@ export default function NewWatch(): JSX.Element {
                                     </Flex>
                                 ))}
                                 <Input
-                                    onBlur={(e: any) =>
-                                        handleSetTags(e.target.value)
-                                    }
+                                    ref={inputRef}
+                                    onBlur={(e: any) => {
+                                        if (e.target.value) {
+                                            handleSetTags(e.target.value);
+                                        }
+                                    }}
                                     value={tagInput}
                                     onKeyDown={(e: any) => {
                                         if (e.key === "Enter") {
@@ -315,12 +336,19 @@ export default function NewWatch(): JSX.Element {
                                     fontWeight="bold"
                                     fontSize={["18px", "24px"]}
                                     border="0px"
+                                    onFocus={() => setIsFocus(true)}
                                     _placeholder={{
                                         fontWeight: "bold",
                                         fontSize: "24px",
                                     }}
                                     _focus={{ border: "0px" }}
                                     placeholder="Add up to 4 tags here ..."
+                                />
+                                <TagsList
+                                    inputRef={inputRef}
+                                    handleSetTags={handleSetTags}
+                                    isFocus={isFocus}
+                                    setIsFocus={setIsFocus}
                                 />
                             </Flex>
                         </Flex>

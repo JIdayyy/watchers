@@ -1,0 +1,6 @@
+query getAllTags {
+    tags {
+        id
+        name
+    }
+}

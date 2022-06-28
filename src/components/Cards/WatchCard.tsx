@@ -63,7 +63,7 @@ export default function WatchCard({ watch, isMain }: IProps): JSX.Element {
             )}
             <Flex p={5} flexGrow={1}>
                 <Flex mr={2} direction="column">
-                    {watch.author.avatar && (
+                    {(watch.author.avatar || watch.author.image) && (
                         <Box
                             overflow="hidden"
                             position="relative"
@@ -71,7 +71,10 @@ export default function WatchCard({ watch, isMain }: IProps): JSX.Element {
                             height={35}
                             rounded="full"
                         >
-                            <Image src={watch.author.avatar} layout="fill" />
+                            <Image
+                                src={watch.author.avatar || watch.author.image}
+                                layout="fill"
+                            />
                         </Box>
                     )}
                 </Flex>

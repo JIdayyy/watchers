@@ -9,8 +9,9 @@ import {
     ModalBody,
     Text,
 } from "@chakra-ui/react";
-import React, { Dispatch, SetStateAction, useEffect } from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import { useGetAllCategoriesQuery } from "src/generated/graphql";
+import { mode } from "@chakra-ui/theme-tools";
 
 interface IProps {
     setSelectedCategory: Dispatch<SetStateAction<string>>;
@@ -24,13 +25,14 @@ export default function CategoriesModal({
     const { isOpen, onOpen, onClose } = useDisclosure();
     const { data } = useGetAllCategoriesQuery();
 
-    useEffect(() => {
-        onClose();
-    }, [category]);
-
     return (
         <>
-            <Button onClick={onOpen}>Select a category</Button>
+            <Button onClick={onOpen}>
+                {category
+                    ? data?.categories.filter((cate) => cate.id === category)[0]
+                          .name
+                    : "Select a Category"}
+            </Button>
 
             <Modal isCentered isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay />
@@ -46,11 +48,17 @@ export default function CategoriesModal({
                         {data?.categories.map((category) => (
                             <Text
                                 key={category.id}
-                                onClick={() => setSelectedCategory(category.id)}
+                                onClick={async () => {
+                                    await setSelectedCategory(category.id);
+                                    onClose();
+                                }}
                                 cursor="pointer"
                                 rounded="md"
                                 p={3}
-                                _hover={{ backgroundColor: "gray.200" }}
+                                _hover={{
+                                    backgroundColor: mode("#FFFFFF", "#000000"),
+                                    color: mode("#000000", "#FFFFFF"),
+                                }}
                             >
                                 {category.name}
                             </Text>

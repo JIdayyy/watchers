@@ -1,12 +1,5 @@
-import React, { useState } from "react";
-import {
-    Button,
-    Flex,
-    Grid,
-    GridItem,
-    Text,
-    useColorMode,
-} from "@chakra-ui/react";
+import React, { useCallback, useState } from "react";
+import { Button, Flex, Grid, GridItem, Text } from "@chakra-ui/react";
 import MainLayout from "@components/Layouts/MainLayout";
 import WatchesList from "@components/Lists/Watches/WatchesList";
 import Image from "next/image";
@@ -24,9 +17,38 @@ interface IProps {
     posts: GetAllPostsQuery["posts"];
 }
 
+enum SortBy {
+    Latest,
+    Oldest,
+    MostLiked,
+}
+
 const Home = ({ posts }: IProps): JSX.Element => {
-    const [sortOrder, setSortOrder] = useState("relevant");
-    const { toggleColorMode } = useColorMode();
+    const [sortOrder, setSortOrder] = useState(SortBy.Latest);
+
+    const sortFilter = useCallback(
+        () =>
+            posts.sort((a, b) => {
+                if (sortOrder === SortBy.Latest) {
+                    return (
+                        new Date(a.created_at).getTime() -
+                        new Date(b.created_at).getTime()
+                    );
+                }
+                if (sortOrder === SortBy.Oldest) {
+                    return (
+                        new Date(b.created_at).getTime() -
+                        new Date(a.created_at).getTime()
+                    );
+                }
+                if (sortOrder === SortBy.MostLiked) {
+                    return a.likeCount.count - b.likeCount.count;
+                }
+                return 0;
+            }),
+        [sortOrder],
+    );
+
     return (
         <Grid
             p={[2, 2, 2, 2, 0]}
@@ -60,23 +82,37 @@ const Home = ({ posts }: IProps): JSX.Element => {
                     w="full"
                 >
                     <Flex
+                        onClick={() => setSortOrder(SortBy.Latest)}
                         cursor="pointer"
-                        onClick={() => toggleColorMode()}
-                        fontWeight={sortOrder === "latest" ? "bold" : "normal"}
+                        fontWeight={
+                            sortOrder === SortBy.Latest ? "bold" : "normal"
+                        }
                         mr={6}
                     >
                         Latest
                     </Flex>
                     <Flex
+                        onClick={() => setSortOrder(SortBy.Oldest)}
                         cursor="pointer"
-                        onClick={() => setSortOrder("top")}
-                        fontWeight={sortOrder === "top" ? "bold" : "normal"}
+                        fontWeight={
+                            sortOrder === SortBy.Oldest ? "bold" : "normal"
+                        }
+                        mr={6}
+                    >
+                        Oldest
+                    </Flex>
+                    <Flex
+                        onClick={() => setSortOrder(SortBy.MostLiked)}
+                        cursor="pointer"
+                        fontWeight={
+                            sortOrder === SortBy.MostLiked ? "bold" : "normal"
+                        }
                         mr={6}
                     >
                         Top
                     </Flex>
                 </Flex>
-                <WatchesList posts={posts} />
+                <WatchesList posts={sortFilter()} />
             </GridItem>
             <GridItem
                 alignSelf="start"

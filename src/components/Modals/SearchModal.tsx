@@ -8,54 +8,37 @@ import {
     InputRightElement,
     Flex,
     Text,
+    useColorMode,
+    Spinner,
 } from "@chakra-ui/react";
 import { BiSearchAlt } from "react-icons/bi";
 
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent } from "react";
+import { useSearchLazyQuery } from "src/generated/graphql";
+import { useRouter } from "next/router";
 
 type Props = {
     isOpen: boolean;
     onClose: () => void;
 };
 
-const fakeResults = [
-    {
-        id: 1,
-        title: "Super post",
-        description: "This is a super post",
-        tags: [
-            {
-                id: 1,
-                name: "super",
-            },
-            {
-                id: 2,
-                name: "post",
-            },
-        ],
-    },
-    {
-        id: 2,
-        title: "Super post",
-        description: "This is a super post",
-        tags: [
-            {
-                id: 1,
-                name: "super",
-            },
-            {
-                id: 2,
-                name: "post",
-            },
-        ],
-    },
-];
-
 export default function SearchModal({ isOpen, onClose }: Props): JSX.Element {
-    const [value, setValue] = useState("");
+    const [search, { data, loading }] = useSearchLazyQuery();
+    const { push } = useRouter();
+    const { colorMode } = useColorMode();
+
+    const handleSearch = (value: string) => {
+        search({
+            variables: {
+                search: {
+                    searchValue: value,
+                },
+            },
+        });
+    };
 
     return (
-        <Modal isOpen={isOpen} onClose={onClose}>
+        <Modal size="2xl" isOpen={isOpen} onClose={onClose}>
             <ModalOverlay />
             <ModalContent>
                 <ModalBody
@@ -68,15 +51,16 @@ export default function SearchModal({ isOpen, onClose }: Props): JSX.Element {
                     <InputGroup>
                         <InputRightElement children={<BiSearchAlt />} />
                         <Input
+                            size="lg"
                             onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                                setValue(e.target.value)
+                                handleSearch(e.target.value)
                             }
-                            value={value}
                             w="full"
                             placeholder="Search something"
                         />
                     </InputGroup>
-                    {value && (
+                    {loading && <Spinner />}
+                    {data && (
                         <Flex
                             direction="column"
                             overflowY="auto"
@@ -84,22 +68,40 @@ export default function SearchModal({ isOpen, onClose }: Props): JSX.Element {
                             w="full"
                             p={3}
                         >
-                            {/* <Spinner /> */}
-                            {fakeResults.map((result) => (
+                            {data.search.map((result) => (
                                 <Flex
+                                    my={1}
+                                    bg={
+                                        colorMode == "dark"
+                                            ? "gray.800"
+                                            : "gray.200"
+                                    }
                                     cursor="pointer"
-                                    rounded={3}
-                                    _hover={{ backgroundColor: "gray.200" }}
+                                    rounded="md"
+                                    _hover={{
+                                        backgroundColor:
+                                            colorMode == "dark"
+                                                ? "gray.600"
+                                                : "gray.100",
+                                    }}
                                     justifyContent="space-between"
                                     w="full"
                                     p={3}
                                 >
-                                    <Text>{result.title}</Text>
+                                    <Text
+                                        w="full"
+                                        isTruncated
+                                        _hover={{ textDecoration: "underline" }}
+                                        onClick={() => {
+                                            onClose();
+                                            push(`/${result.slug}`);
+                                        }}
+                                    >
+                                        {result.title}
+                                    </Text>
                                     <Flex>
-                                        {result.tags.map((tag) => (
-                                            <Text key={tag.id} mx={1}>
-                                                #{tag.name}
-                                            </Text>
+                                        {result.Tags.map((tag) => (
+                                            <Text ml={1}>#{tag.name}</Text>
                                         ))}
                                     </Flex>
                                 </Flex>

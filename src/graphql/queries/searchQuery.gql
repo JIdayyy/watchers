@@ -1,0 +1,12 @@
+query search($search: SearchInput!) {
+    search(data: $search) {
+        title
+        slug
+        id
+        cover_picture
+        Tags {
+            name
+            id
+        }
+    }
+}

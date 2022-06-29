@@ -32,12 +32,12 @@ ul {
 
 /* Track */
 ::-webkit-scrollbar-track {
-    background: #f1f1f1;
+    background: rgb(0, 0, 0, 0.1);
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-    background: #888;
+    background: rgb(57, 57, 57);
     border-radius: 100px;
 }
 

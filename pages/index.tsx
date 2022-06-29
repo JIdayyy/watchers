@@ -37,8 +37,8 @@ const Home = ({ posts }: IProps): JSX.Element => {
                 }
                 if (sortOrder === SortBy.Oldest) {
                     return (
-                        new Date(b.created_at).getTime() -
-                        new Date(a.created_at).getTime()
+                        new Date(a.created_at).getTime() -
+                        new Date(b.created_at).getTime()
                     );
                 }
                 if (sortOrder === SortBy.MostLiked) {

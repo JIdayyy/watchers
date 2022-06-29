@@ -31,8 +31,8 @@ const Home = ({ posts }: IProps): JSX.Element => {
             posts.sort((a, b) => {
                 if (sortOrder === SortBy.Latest) {
                     return (
-                        new Date(a.created_at).getTime() -
-                        new Date(b.created_at).getTime()
+                        new Date(b.created_at).getTime() -
+                        new Date(a.created_at).getTime()
                     );
                 }
                 if (sortOrder === SortBy.Oldest) {

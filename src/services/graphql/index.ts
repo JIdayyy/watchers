@@ -1,9 +1,11 @@
 import {
     ApolloClient,
     createHttpLink,
+    from,
     InMemoryCache,
     NormalizedCacheObject,
 } from "@apollo/client";
+import { onError } from "@apollo/client/link/error";
 
 let apolloClient: ApolloClient<NormalizedCacheObject> | null = null;
 
@@ -14,15 +16,24 @@ const httpLink = createHttpLink({
     credentials: "include",
     headers: {
         "platform-auth-user-agent": "web-platform",
-        Origin: "https://watchers-khaki.vercel.app", // <- Added this and now builds are no longer 500 erroring on vercel
+        Origin: "http://watchers-khaki.vercel.app", // <- Added this and now builds are no longer 500 erroring on vercel
     },
 });
 
+const errorLink = onError(({ graphQLErrors, networkError }) => {
+    if (graphQLErrors)
+        graphQLErrors.forEach(({ message, locations, path }) =>
+            console.log(
+                `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`,
+            ),
+        );
+    if (networkError) console.log(`[Network error]: ${networkError}`);
+});
 const createApolloClient = new ApolloClient({
     ssrMode: typeof window === "undefined",
     uri: serverUrl,
     cache: new InMemoryCache(),
-    link: httpLink,
+    link: from([errorLink, httpLink]),
 });
 
 export const initializeApollo = (): ApolloClient<NormalizedCacheObject> => {

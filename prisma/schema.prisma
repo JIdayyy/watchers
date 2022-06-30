@@ -63,7 +63,7 @@ model User {
   ResetPassword ResetPassword[]
   Post          Post[]
   Comment       Comment[]
-  nickname      String          @unique @default("username")
+  nickname      String?         @unique
   Like          Like[]
   Preference    Preference?
   Account       Account[]

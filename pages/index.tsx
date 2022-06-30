@@ -42,7 +42,7 @@ const Home = ({ posts }: IProps): JSX.Element => {
                     );
                 }
                 if (sortOrder === SortBy.MostLiked) {
-                    return a.likeCount.count - b.likeCount.count;
+                    return b.likeCount.count - a.likeCount.count;
                 }
                 return 0;
             }),

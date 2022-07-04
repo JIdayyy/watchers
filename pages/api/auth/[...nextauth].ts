@@ -127,8 +127,7 @@ export default (req: NextApiRequest, res: NextApiResponse): void => {
                     domain: process.env.COOKIE_DOMAIN,
                     secure: process.env.NODE_ENV === "production",
                     httpOnly: true,
-                    sameSite:
-                        process.env.NODE_ENV === "production" ? "none" : "lax",
+                    sameSite: "lax",
                 });
                 cookies.set("unsafe-token", newToken, {
                     secure: false,

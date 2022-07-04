@@ -1,0 +1,5 @@
+mutation SetFollower($where: UserWhereUniqueInput!, $data: UserUpdateInput!) {
+    updateUser(where: $where, data: $data) {
+        ...User
+    }
+}

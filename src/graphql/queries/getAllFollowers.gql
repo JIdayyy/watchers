@@ -1,0 +1,8 @@
+query GetAllFollowers($where: UserWhereUniqueInput!) {
+    user(where: $where) {
+        followersCount {
+            count
+            isFollowing
+        }
+    }
+}

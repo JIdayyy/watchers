@@ -4,16 +4,22 @@ import {
     Flex,
     SkeletonCircle,
     SkeletonText,
+    Spinner,
     Text,
     useColorMode,
 } from "@chakra-ui/react";
 import CustomBox from "@definitions/chakra/theme/components/Box/CustomBox";
+import { RootState } from "@redux/reducers";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
 import {
+    GetAllFollowersDocument,
     GetPostDataQuery,
     SortOrder,
+    useGetAllFollowersQuery,
     useGetAllPostsQuery,
+    useSetFollowerMutation,
 } from "src/generated/graphql";
 
 interface IProps {
@@ -21,6 +27,31 @@ interface IProps {
 }
 
 export default function UserDetailsPostCard({ author }: IProps): JSX.Element {
+    const { user } = useSelector((state: RootState) => state.user);
+    const { data: allFollowers, loading: allFollowersLoading } =
+        useGetAllFollowersQuery({
+            notifyOnNetworkStatusChange: true,
+            variables: {
+                where: {
+                    id: author.id,
+                },
+            },
+        });
+    const [setFollower, { loading: setFollowLoading }] = useSetFollowerMutation(
+        {
+            refetchQueries: [
+                {
+                    query: GetAllFollowersDocument,
+                    variables: {
+                        where: {
+                            id: author.id,
+                        },
+                    },
+                },
+            ],
+        },
+    );
+    console.log(allFollowers);
     const { push } = useRouter();
     const { colorMode } = useColorMode();
     const { data, loading } = useGetAllPostsQuery({
@@ -38,6 +69,43 @@ export default function UserDetailsPostCard({ author }: IProps): JSX.Element {
 
     const handleClick = (slug: string) => {
         push(`/${slug}`);
+    };
+
+    const handleFollow = {
+        follow: () =>
+            setFollower({
+                variables: {
+                    data: {
+                        followers: {
+                            connect: [
+                                {
+                                    id: user.id,
+                                },
+                            ],
+                        },
+                    },
+                    where: {
+                        id: author.id,
+                    },
+                },
+            }),
+        unfollow: () =>
+            setFollower({
+                variables: {
+                    data: {
+                        followers: {
+                            disconnect: [
+                                {
+                                    id: user.id,
+                                },
+                            ],
+                        },
+                    },
+                    where: {
+                        id: author.id,
+                    },
+                },
+            }),
     };
 
     if (loading)
@@ -94,8 +162,27 @@ export default function UserDetailsPostCard({ author }: IProps): JSX.Element {
                         {author.nickname}
                     </Text>
                 </Flex>
-                <Button my={4} variant="action">
-                    FOLLOW
+                <Text>
+                    {allFollowersLoading ? (
+                        <Spinner />
+                    ) : (
+                        allFollowers?.user.followersCount.count
+                    )}{" "}
+                    Followers
+                </Text>
+                <Button
+                    isLoading={setFollowLoading}
+                    onClick={
+                        allFollowers?.user.followersCount.isFollowing
+                            ? handleFollow["unfollow"]
+                            : handleFollow["follow"]
+                    }
+                    my={4}
+                    variant="action"
+                >
+                    {allFollowers?.user.followersCount.isFollowing
+                        ? "Unfollow"
+                        : "Follow"}
                 </Button>
                 {data?.posts.map((watch) => (
                     <Flex

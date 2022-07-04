@@ -1370,6 +1370,12 @@ export type EnumRoleWithAggregatesFilter = {
   notIn?: InputMaybe<Array<Role>>;
 };
 
+export type Follow = {
+  __typename?: 'Follow';
+  count: Scalars['Float'];
+  isFollowing: Scalars['Boolean'];
+};
+
 export type IntNullableFilter = {
   equals?: InputMaybe<Scalars['Int']>;
   gt?: InputMaybe<Scalars['Int']>;
@@ -4786,12 +4792,16 @@ export type User = {
   email: Scalars['String'];
   emailVerified: Maybe<Scalars['String']>;
   first_name: Maybe<Scalars['String']>;
+  followed_users: Array<User>;
+  follower_id: Maybe<Scalars['String']>;
+  followers: Array<User>;
+  followersCount: Maybe<Follow>;
   id: Scalars['String'];
   image: Scalars['String'];
   is_disabled: Scalars['Boolean'];
   last_name: Maybe<Scalars['String']>;
   name: Scalars['String'];
-  nickname: Scalars['String'];
+  nickname: Maybe<Scalars['String']>;
   role: Role;
   updated_at: Scalars['DateTime'];
 };
@@ -4856,6 +4866,26 @@ export type UserSessionArgs = {
   where: InputMaybe<SessionWhereInput>;
 };
 
+
+export type UserFollowed_UsersArgs = {
+  cursor: InputMaybe<UserWhereUniqueInput>;
+  distinct: InputMaybe<Array<UserScalarFieldEnum>>;
+  orderBy: InputMaybe<Array<UserOrderByWithRelationInput>>;
+  skip: InputMaybe<Scalars['Int']>;
+  take: InputMaybe<Scalars['Int']>;
+  where: InputMaybe<UserWhereInput>;
+};
+
+
+export type UserFollowersArgs = {
+  cursor: InputMaybe<UserWhereUniqueInput>;
+  distinct: InputMaybe<Array<UserScalarFieldEnum>>;
+  orderBy: InputMaybe<Array<UserOrderByWithRelationInput>>;
+  skip: InputMaybe<Scalars['Int']>;
+  take: InputMaybe<Scalars['Int']>;
+  where: InputMaybe<UserWhereInput>;
+};
+
 export type UserCount = {
   __typename?: 'UserCount';
   Account: Scalars['Int'];
@@ -4864,6 +4894,8 @@ export type UserCount = {
   Post: Scalars['Int'];
   ResetPassword: Scalars['Int'];
   Session: Scalars['Int'];
+  followed_users: Scalars['Int'];
+  followers: Scalars['Int'];
 };
 
 export type UserCountAggregate = {
@@ -4874,6 +4906,7 @@ export type UserCountAggregate = {
   email: Scalars['Int'];
   emailVerified: Scalars['Int'];
   first_name: Scalars['Int'];
+  follower_id: Scalars['Int'];
   id: Scalars['Int'];
   image: Scalars['Int'];
   is_disabled: Scalars['Int'];
@@ -4891,6 +4924,7 @@ export type UserCountOrderByAggregateInput = {
   email?: InputMaybe<SortOrder>;
   emailVerified?: InputMaybe<SortOrder>;
   first_name?: InputMaybe<SortOrder>;
+  follower_id?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
   image?: InputMaybe<SortOrder>;
   is_disabled?: InputMaybe<SortOrder>;
@@ -4915,6 +4949,9 @@ export type UserCreateInput = {
   email: Scalars['String'];
   emailVerified?: InputMaybe<Scalars['String']>;
   first_name?: InputMaybe<Scalars['String']>;
+  followed_users?: InputMaybe<UserCreateNestedManyWithoutFollowersInput>;
+  follower_id?: InputMaybe<Scalars['String']>;
+  followers?: InputMaybe<UserCreateNestedManyWithoutFollowed_UsersInput>;
   id?: InputMaybe<Scalars['String']>;
   image: Scalars['String'];
   is_disabled?: InputMaybe<Scalars['Boolean']>;
@@ -4932,6 +4969,7 @@ export type UserCreateManyInput = {
   email: Scalars['String'];
   emailVerified?: InputMaybe<Scalars['String']>;
   first_name?: InputMaybe<Scalars['String']>;
+  follower_id?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['String']>;
   image: Scalars['String'];
   is_disabled?: InputMaybe<Scalars['Boolean']>;
@@ -4941,6 +4979,18 @@ export type UserCreateManyInput = {
   password?: InputMaybe<Scalars['String']>;
   role?: InputMaybe<Role>;
   updated_at?: InputMaybe<Scalars['DateTime']>;
+};
+
+export type UserCreateNestedManyWithoutFollowed_UsersInput = {
+  connect?: InputMaybe<Array<UserWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<UserCreateOrConnectWithoutFollowed_UsersInput>>;
+  create?: InputMaybe<Array<UserCreateWithoutFollowed_UsersInput>>;
+};
+
+export type UserCreateNestedManyWithoutFollowersInput = {
+  connect?: InputMaybe<Array<UserWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<UserCreateOrConnectWithoutFollowersInput>>;
+  create?: InputMaybe<Array<UserCreateWithoutFollowersInput>>;
 };
 
 export type UserCreateNestedOneWithoutAccountInput = {
@@ -4989,6 +5039,16 @@ export type UserCreateOrConnectWithoutCommentInput = {
   where: UserWhereUniqueInput;
 };
 
+export type UserCreateOrConnectWithoutFollowed_UsersInput = {
+  create: UserCreateWithoutFollowed_UsersInput;
+  where: UserWhereUniqueInput;
+};
+
+export type UserCreateOrConnectWithoutFollowersInput = {
+  create: UserCreateWithoutFollowersInput;
+  where: UserWhereUniqueInput;
+};
+
 export type UserCreateOrConnectWithoutLikeInput = {
   create: UserCreateWithoutLikeInput;
   where: UserWhereUniqueInput;
@@ -5021,6 +5081,9 @@ export type UserCreateWithoutAccountInput = {
   email: Scalars['String'];
   emailVerified?: InputMaybe<Scalars['String']>;
   first_name?: InputMaybe<Scalars['String']>;
+  followed_users?: InputMaybe<UserCreateNestedManyWithoutFollowersInput>;
+  follower_id?: InputMaybe<Scalars['String']>;
+  followers?: InputMaybe<UserCreateNestedManyWithoutFollowed_UsersInput>;
   id?: InputMaybe<Scalars['String']>;
   image: Scalars['String'];
   is_disabled?: InputMaybe<Scalars['Boolean']>;
@@ -5044,6 +5107,61 @@ export type UserCreateWithoutCommentInput = {
   email: Scalars['String'];
   emailVerified?: InputMaybe<Scalars['String']>;
   first_name?: InputMaybe<Scalars['String']>;
+  followed_users?: InputMaybe<UserCreateNestedManyWithoutFollowersInput>;
+  follower_id?: InputMaybe<Scalars['String']>;
+  followers?: InputMaybe<UserCreateNestedManyWithoutFollowed_UsersInput>;
+  id?: InputMaybe<Scalars['String']>;
+  image: Scalars['String'];
+  is_disabled?: InputMaybe<Scalars['Boolean']>;
+  last_name?: InputMaybe<Scalars['String']>;
+  name: Scalars['String'];
+  nickname?: InputMaybe<Scalars['String']>;
+  password?: InputMaybe<Scalars['String']>;
+  role?: InputMaybe<Role>;
+  updated_at?: InputMaybe<Scalars['DateTime']>;
+};
+
+export type UserCreateWithoutFollowed_UsersInput = {
+  Account?: InputMaybe<AccountCreateNestedManyWithoutUserInput>;
+  Comment?: InputMaybe<CommentCreateNestedManyWithoutAuthorInput>;
+  Like?: InputMaybe<LikeCreateNestedManyWithoutUserInput>;
+  Post?: InputMaybe<PostCreateNestedManyWithoutAuthorInput>;
+  Preference?: InputMaybe<PreferenceCreateNestedOneWithoutUserInput>;
+  ResetPassword?: InputMaybe<ResetPasswordCreateNestedManyWithoutUserInput>;
+  Session?: InputMaybe<SessionCreateNestedManyWithoutUserInput>;
+  avatar?: InputMaybe<Scalars['String']>;
+  created_at?: InputMaybe<Scalars['DateTime']>;
+  email: Scalars['String'];
+  emailVerified?: InputMaybe<Scalars['String']>;
+  first_name?: InputMaybe<Scalars['String']>;
+  follower_id?: InputMaybe<Scalars['String']>;
+  followers?: InputMaybe<UserCreateNestedManyWithoutFollowed_UsersInput>;
+  id?: InputMaybe<Scalars['String']>;
+  image: Scalars['String'];
+  is_disabled?: InputMaybe<Scalars['Boolean']>;
+  last_name?: InputMaybe<Scalars['String']>;
+  name: Scalars['String'];
+  nickname?: InputMaybe<Scalars['String']>;
+  password?: InputMaybe<Scalars['String']>;
+  role?: InputMaybe<Role>;
+  updated_at?: InputMaybe<Scalars['DateTime']>;
+};
+
+export type UserCreateWithoutFollowersInput = {
+  Account?: InputMaybe<AccountCreateNestedManyWithoutUserInput>;
+  Comment?: InputMaybe<CommentCreateNestedManyWithoutAuthorInput>;
+  Like?: InputMaybe<LikeCreateNestedManyWithoutUserInput>;
+  Post?: InputMaybe<PostCreateNestedManyWithoutAuthorInput>;
+  Preference?: InputMaybe<PreferenceCreateNestedOneWithoutUserInput>;
+  ResetPassword?: InputMaybe<ResetPasswordCreateNestedManyWithoutUserInput>;
+  Session?: InputMaybe<SessionCreateNestedManyWithoutUserInput>;
+  avatar?: InputMaybe<Scalars['String']>;
+  created_at?: InputMaybe<Scalars['DateTime']>;
+  email: Scalars['String'];
+  emailVerified?: InputMaybe<Scalars['String']>;
+  first_name?: InputMaybe<Scalars['String']>;
+  followed_users?: InputMaybe<UserCreateNestedManyWithoutFollowersInput>;
+  follower_id?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['String']>;
   image: Scalars['String'];
   is_disabled?: InputMaybe<Scalars['Boolean']>;
@@ -5067,6 +5185,9 @@ export type UserCreateWithoutLikeInput = {
   email: Scalars['String'];
   emailVerified?: InputMaybe<Scalars['String']>;
   first_name?: InputMaybe<Scalars['String']>;
+  followed_users?: InputMaybe<UserCreateNestedManyWithoutFollowersInput>;
+  follower_id?: InputMaybe<Scalars['String']>;
+  followers?: InputMaybe<UserCreateNestedManyWithoutFollowed_UsersInput>;
   id?: InputMaybe<Scalars['String']>;
   image: Scalars['String'];
   is_disabled?: InputMaybe<Scalars['Boolean']>;
@@ -5090,6 +5211,9 @@ export type UserCreateWithoutPostInput = {
   email: Scalars['String'];
   emailVerified?: InputMaybe<Scalars['String']>;
   first_name?: InputMaybe<Scalars['String']>;
+  followed_users?: InputMaybe<UserCreateNestedManyWithoutFollowersInput>;
+  follower_id?: InputMaybe<Scalars['String']>;
+  followers?: InputMaybe<UserCreateNestedManyWithoutFollowed_UsersInput>;
   id?: InputMaybe<Scalars['String']>;
   image: Scalars['String'];
   is_disabled?: InputMaybe<Scalars['Boolean']>;
@@ -5113,6 +5237,9 @@ export type UserCreateWithoutPreferenceInput = {
   email: Scalars['String'];
   emailVerified?: InputMaybe<Scalars['String']>;
   first_name?: InputMaybe<Scalars['String']>;
+  followed_users?: InputMaybe<UserCreateNestedManyWithoutFollowersInput>;
+  follower_id?: InputMaybe<Scalars['String']>;
+  followers?: InputMaybe<UserCreateNestedManyWithoutFollowed_UsersInput>;
   id?: InputMaybe<Scalars['String']>;
   image: Scalars['String'];
   is_disabled?: InputMaybe<Scalars['Boolean']>;
@@ -5136,6 +5263,9 @@ export type UserCreateWithoutSessionInput = {
   email: Scalars['String'];
   emailVerified?: InputMaybe<Scalars['String']>;
   first_name?: InputMaybe<Scalars['String']>;
+  followed_users?: InputMaybe<UserCreateNestedManyWithoutFollowersInput>;
+  follower_id?: InputMaybe<Scalars['String']>;
+  followers?: InputMaybe<UserCreateNestedManyWithoutFollowed_UsersInput>;
   id?: InputMaybe<Scalars['String']>;
   image: Scalars['String'];
   is_disabled?: InputMaybe<Scalars['Boolean']>;
@@ -5157,15 +5287,22 @@ export type UserGroupBy = {
   email: Scalars['String'];
   emailVerified: Maybe<Scalars['String']>;
   first_name: Maybe<Scalars['String']>;
+  follower_id: Maybe<Scalars['String']>;
   id: Scalars['String'];
   image: Scalars['String'];
   is_disabled: Scalars['Boolean'];
   last_name: Maybe<Scalars['String']>;
   name: Scalars['String'];
-  nickname: Scalars['String'];
+  nickname: Maybe<Scalars['String']>;
   password: Maybe<Scalars['String']>;
   role: Role;
   updated_at: Scalars['DateTime'];
+};
+
+export type UserListRelationFilter = {
+  every?: InputMaybe<UserWhereInput>;
+  none?: InputMaybe<UserWhereInput>;
+  some?: InputMaybe<UserWhereInput>;
 };
 
 export type UserMaxAggregate = {
@@ -5175,6 +5312,7 @@ export type UserMaxAggregate = {
   email: Maybe<Scalars['String']>;
   emailVerified: Maybe<Scalars['String']>;
   first_name: Maybe<Scalars['String']>;
+  follower_id: Maybe<Scalars['String']>;
   id: Maybe<Scalars['String']>;
   image: Maybe<Scalars['String']>;
   is_disabled: Maybe<Scalars['Boolean']>;
@@ -5192,6 +5330,7 @@ export type UserMaxOrderByAggregateInput = {
   email?: InputMaybe<SortOrder>;
   emailVerified?: InputMaybe<SortOrder>;
   first_name?: InputMaybe<SortOrder>;
+  follower_id?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
   image?: InputMaybe<SortOrder>;
   is_disabled?: InputMaybe<SortOrder>;
@@ -5210,6 +5349,7 @@ export type UserMinAggregate = {
   email: Maybe<Scalars['String']>;
   emailVerified: Maybe<Scalars['String']>;
   first_name: Maybe<Scalars['String']>;
+  follower_id: Maybe<Scalars['String']>;
   id: Maybe<Scalars['String']>;
   image: Maybe<Scalars['String']>;
   is_disabled: Maybe<Scalars['Boolean']>;
@@ -5227,6 +5367,7 @@ export type UserMinOrderByAggregateInput = {
   email?: InputMaybe<SortOrder>;
   emailVerified?: InputMaybe<SortOrder>;
   first_name?: InputMaybe<SortOrder>;
+  follower_id?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
   image?: InputMaybe<SortOrder>;
   is_disabled?: InputMaybe<SortOrder>;
@@ -5238,6 +5379,10 @@ export type UserMinOrderByAggregateInput = {
   updated_at?: InputMaybe<SortOrder>;
 };
 
+export type UserOrderByRelationAggregateInput = {
+  _count?: InputMaybe<SortOrder>;
+};
+
 export type UserOrderByWithAggregationInput = {
   _count?: InputMaybe<UserCountOrderByAggregateInput>;
   _max?: InputMaybe<UserMaxOrderByAggregateInput>;
@@ -5247,6 +5392,7 @@ export type UserOrderByWithAggregationInput = {
   email?: InputMaybe<SortOrder>;
   emailVerified?: InputMaybe<SortOrder>;
   first_name?: InputMaybe<SortOrder>;
+  follower_id?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
   image?: InputMaybe<SortOrder>;
   is_disabled?: InputMaybe<SortOrder>;
@@ -5271,6 +5417,9 @@ export type UserOrderByWithRelationInput = {
   email?: InputMaybe<SortOrder>;
   emailVerified?: InputMaybe<SortOrder>;
   first_name?: InputMaybe<SortOrder>;
+  followed_users?: InputMaybe<UserOrderByRelationAggregateInput>;
+  follower_id?: InputMaybe<SortOrder>;
+  followers?: InputMaybe<UserOrderByRelationAggregateInput>;
   id?: InputMaybe<SortOrder>;
   image?: InputMaybe<SortOrder>;
   is_disabled?: InputMaybe<SortOrder>;
@@ -5293,6 +5442,7 @@ export enum UserScalarFieldEnum {
   Email = 'email',
   EmailVerified = 'emailVerified',
   FirstName = 'first_name',
+  FollowerId = 'follower_id',
   Id = 'id',
   Image = 'image',
   IsDisabled = 'is_disabled',
@@ -5304,6 +5454,27 @@ export enum UserScalarFieldEnum {
   UpdatedAt = 'updated_at'
 }
 
+export type UserScalarWhereInput = {
+  AND?: InputMaybe<Array<UserScalarWhereInput>>;
+  NOT?: InputMaybe<Array<UserScalarWhereInput>>;
+  OR?: InputMaybe<Array<UserScalarWhereInput>>;
+  avatar?: InputMaybe<StringNullableFilter>;
+  created_at?: InputMaybe<DateTimeFilter>;
+  email?: InputMaybe<StringFilter>;
+  emailVerified?: InputMaybe<StringNullableFilter>;
+  first_name?: InputMaybe<StringNullableFilter>;
+  follower_id?: InputMaybe<StringNullableFilter>;
+  id?: InputMaybe<StringFilter>;
+  image?: InputMaybe<StringFilter>;
+  is_disabled?: InputMaybe<BoolFilter>;
+  last_name?: InputMaybe<StringNullableFilter>;
+  name?: InputMaybe<StringFilter>;
+  nickname?: InputMaybe<StringNullableFilter>;
+  password?: InputMaybe<StringNullableFilter>;
+  role?: InputMaybe<EnumRoleFilter>;
+  updated_at?: InputMaybe<DateTimeFilter>;
+};
+
 export type UserScalarWhereWithAggregatesInput = {
   AND?: InputMaybe<Array<UserScalarWhereWithAggregatesInput>>;
   NOT?: InputMaybe<Array<UserScalarWhereWithAggregatesInput>>;
@@ -5313,12 +5484,13 @@ export type UserScalarWhereWithAggregatesInput = {
   email?: InputMaybe<StringWithAggregatesFilter>;
   emailVerified?: InputMaybe<StringNullableWithAggregatesFilter>;
   first_name?: InputMaybe<StringNullableWithAggregatesFilter>;
+  follower_id?: InputMaybe<StringNullableWithAggregatesFilter>;
   id?: InputMaybe<StringWithAggregatesFilter>;
   image?: InputMaybe<StringWithAggregatesFilter>;
   is_disabled?: InputMaybe<BoolWithAggregatesFilter>;
   last_name?: InputMaybe<StringNullableWithAggregatesFilter>;
   name?: InputMaybe<StringWithAggregatesFilter>;
-  nickname?: InputMaybe<StringWithAggregatesFilter>;
+  nickname?: InputMaybe<StringNullableWithAggregatesFilter>;
   password?: InputMaybe<StringNullableWithAggregatesFilter>;
   role?: InputMaybe<EnumRoleWithAggregatesFilter>;
   updated_at?: InputMaybe<DateTimeWithAggregatesFilter>;
@@ -5337,12 +5509,15 @@ export type UserUpdateInput = {
   email?: InputMaybe<StringFieldUpdateOperationsInput>;
   emailVerified?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   first_name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  followed_users?: InputMaybe<UserUpdateManyWithoutFollowersInput>;
+  follower_id?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  followers?: InputMaybe<UserUpdateManyWithoutFollowed_UsersInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
   image?: InputMaybe<StringFieldUpdateOperationsInput>;
   is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
   last_name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   name?: InputMaybe<StringFieldUpdateOperationsInput>;
-  nickname?: InputMaybe<StringFieldUpdateOperationsInput>;
+  nickname?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   password?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   role?: InputMaybe<EnumRoleFieldUpdateOperationsInput>;
   updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
@@ -5354,15 +5529,52 @@ export type UserUpdateManyMutationInput = {
   email?: InputMaybe<StringFieldUpdateOperationsInput>;
   emailVerified?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   first_name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  follower_id?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
   image?: InputMaybe<StringFieldUpdateOperationsInput>;
   is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
   last_name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   name?: InputMaybe<StringFieldUpdateOperationsInput>;
-  nickname?: InputMaybe<StringFieldUpdateOperationsInput>;
+  nickname?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   password?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   role?: InputMaybe<EnumRoleFieldUpdateOperationsInput>;
   updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+};
+
+export type UserUpdateManyWithWhereWithoutFollowed_UsersInput = {
+  data: UserUpdateManyMutationInput;
+  where: UserScalarWhereInput;
+};
+
+export type UserUpdateManyWithWhereWithoutFollowersInput = {
+  data: UserUpdateManyMutationInput;
+  where: UserScalarWhereInput;
+};
+
+export type UserUpdateManyWithoutFollowed_UsersInput = {
+  connect?: InputMaybe<Array<UserWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<UserCreateOrConnectWithoutFollowed_UsersInput>>;
+  create?: InputMaybe<Array<UserCreateWithoutFollowed_UsersInput>>;
+  delete?: InputMaybe<Array<UserWhereUniqueInput>>;
+  deleteMany?: InputMaybe<Array<UserScalarWhereInput>>;
+  disconnect?: InputMaybe<Array<UserWhereUniqueInput>>;
+  set?: InputMaybe<Array<UserWhereUniqueInput>>;
+  update?: InputMaybe<Array<UserUpdateWithWhereUniqueWithoutFollowed_UsersInput>>;
+  updateMany?: InputMaybe<Array<UserUpdateManyWithWhereWithoutFollowed_UsersInput>>;
+  upsert?: InputMaybe<Array<UserUpsertWithWhereUniqueWithoutFollowed_UsersInput>>;
+};
+
+export type UserUpdateManyWithoutFollowersInput = {
+  connect?: InputMaybe<Array<UserWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<UserCreateOrConnectWithoutFollowersInput>>;
+  create?: InputMaybe<Array<UserCreateWithoutFollowersInput>>;
+  delete?: InputMaybe<Array<UserWhereUniqueInput>>;
+  deleteMany?: InputMaybe<Array<UserScalarWhereInput>>;
+  disconnect?: InputMaybe<Array<UserWhereUniqueInput>>;
+  set?: InputMaybe<Array<UserWhereUniqueInput>>;
+  update?: InputMaybe<Array<UserUpdateWithWhereUniqueWithoutFollowersInput>>;
+  updateMany?: InputMaybe<Array<UserUpdateManyWithWhereWithoutFollowersInput>>;
+  upsert?: InputMaybe<Array<UserUpsertWithWhereUniqueWithoutFollowersInput>>;
 };
 
 export type UserUpdateOneRequiredWithoutAccountInput = {
@@ -5413,6 +5625,16 @@ export type UserUpdateOneRequiredWithoutSessionInput = {
   upsert?: InputMaybe<UserUpsertWithoutSessionInput>;
 };
 
+export type UserUpdateWithWhereUniqueWithoutFollowed_UsersInput = {
+  data: UserUpdateWithoutFollowed_UsersInput;
+  where: UserWhereUniqueInput;
+};
+
+export type UserUpdateWithWhereUniqueWithoutFollowersInput = {
+  data: UserUpdateWithoutFollowersInput;
+  where: UserWhereUniqueInput;
+};
+
 export type UserUpdateWithoutAccountInput = {
   Comment?: InputMaybe<CommentUpdateManyWithoutAuthorInput>;
   Like?: InputMaybe<LikeUpdateManyWithoutUserInput>;
@@ -5425,12 +5647,15 @@ export type UserUpdateWithoutAccountInput = {
   email?: InputMaybe<StringFieldUpdateOperationsInput>;
   emailVerified?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   first_name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  followed_users?: InputMaybe<UserUpdateManyWithoutFollowersInput>;
+  follower_id?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  followers?: InputMaybe<UserUpdateManyWithoutFollowed_UsersInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
   image?: InputMaybe<StringFieldUpdateOperationsInput>;
   is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
   last_name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   name?: InputMaybe<StringFieldUpdateOperationsInput>;
-  nickname?: InputMaybe<StringFieldUpdateOperationsInput>;
+  nickname?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   password?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   role?: InputMaybe<EnumRoleFieldUpdateOperationsInput>;
   updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
@@ -5448,12 +5673,67 @@ export type UserUpdateWithoutCommentInput = {
   email?: InputMaybe<StringFieldUpdateOperationsInput>;
   emailVerified?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   first_name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  followed_users?: InputMaybe<UserUpdateManyWithoutFollowersInput>;
+  follower_id?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  followers?: InputMaybe<UserUpdateManyWithoutFollowed_UsersInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
   image?: InputMaybe<StringFieldUpdateOperationsInput>;
   is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
   last_name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   name?: InputMaybe<StringFieldUpdateOperationsInput>;
-  nickname?: InputMaybe<StringFieldUpdateOperationsInput>;
+  nickname?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  password?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  role?: InputMaybe<EnumRoleFieldUpdateOperationsInput>;
+  updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+};
+
+export type UserUpdateWithoutFollowed_UsersInput = {
+  Account?: InputMaybe<AccountUpdateManyWithoutUserInput>;
+  Comment?: InputMaybe<CommentUpdateManyWithoutAuthorInput>;
+  Like?: InputMaybe<LikeUpdateManyWithoutUserInput>;
+  Post?: InputMaybe<PostUpdateManyWithoutAuthorInput>;
+  Preference?: InputMaybe<PreferenceUpdateOneWithoutUserInput>;
+  ResetPassword?: InputMaybe<ResetPasswordUpdateManyWithoutUserInput>;
+  Session?: InputMaybe<SessionUpdateManyWithoutUserInput>;
+  avatar?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  email?: InputMaybe<StringFieldUpdateOperationsInput>;
+  emailVerified?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  first_name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  follower_id?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  followers?: InputMaybe<UserUpdateManyWithoutFollowed_UsersInput>;
+  id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  image?: InputMaybe<StringFieldUpdateOperationsInput>;
+  is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  last_name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  name?: InputMaybe<StringFieldUpdateOperationsInput>;
+  nickname?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  password?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  role?: InputMaybe<EnumRoleFieldUpdateOperationsInput>;
+  updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+};
+
+export type UserUpdateWithoutFollowersInput = {
+  Account?: InputMaybe<AccountUpdateManyWithoutUserInput>;
+  Comment?: InputMaybe<CommentUpdateManyWithoutAuthorInput>;
+  Like?: InputMaybe<LikeUpdateManyWithoutUserInput>;
+  Post?: InputMaybe<PostUpdateManyWithoutAuthorInput>;
+  Preference?: InputMaybe<PreferenceUpdateOneWithoutUserInput>;
+  ResetPassword?: InputMaybe<ResetPasswordUpdateManyWithoutUserInput>;
+  Session?: InputMaybe<SessionUpdateManyWithoutUserInput>;
+  avatar?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  email?: InputMaybe<StringFieldUpdateOperationsInput>;
+  emailVerified?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  first_name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  followed_users?: InputMaybe<UserUpdateManyWithoutFollowersInput>;
+  follower_id?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  image?: InputMaybe<StringFieldUpdateOperationsInput>;
+  is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  last_name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  name?: InputMaybe<StringFieldUpdateOperationsInput>;
+  nickname?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   password?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   role?: InputMaybe<EnumRoleFieldUpdateOperationsInput>;
   updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
@@ -5471,12 +5751,15 @@ export type UserUpdateWithoutLikeInput = {
   email?: InputMaybe<StringFieldUpdateOperationsInput>;
   emailVerified?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   first_name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  followed_users?: InputMaybe<UserUpdateManyWithoutFollowersInput>;
+  follower_id?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  followers?: InputMaybe<UserUpdateManyWithoutFollowed_UsersInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
   image?: InputMaybe<StringFieldUpdateOperationsInput>;
   is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
   last_name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   name?: InputMaybe<StringFieldUpdateOperationsInput>;
-  nickname?: InputMaybe<StringFieldUpdateOperationsInput>;
+  nickname?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   password?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   role?: InputMaybe<EnumRoleFieldUpdateOperationsInput>;
   updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
@@ -5494,12 +5777,15 @@ export type UserUpdateWithoutPostInput = {
   email?: InputMaybe<StringFieldUpdateOperationsInput>;
   emailVerified?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   first_name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  followed_users?: InputMaybe<UserUpdateManyWithoutFollowersInput>;
+  follower_id?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  followers?: InputMaybe<UserUpdateManyWithoutFollowed_UsersInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
   image?: InputMaybe<StringFieldUpdateOperationsInput>;
   is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
   last_name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   name?: InputMaybe<StringFieldUpdateOperationsInput>;
-  nickname?: InputMaybe<StringFieldUpdateOperationsInput>;
+  nickname?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   password?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   role?: InputMaybe<EnumRoleFieldUpdateOperationsInput>;
   updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
@@ -5517,12 +5803,15 @@ export type UserUpdateWithoutPreferenceInput = {
   email?: InputMaybe<StringFieldUpdateOperationsInput>;
   emailVerified?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   first_name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  followed_users?: InputMaybe<UserUpdateManyWithoutFollowersInput>;
+  follower_id?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  followers?: InputMaybe<UserUpdateManyWithoutFollowed_UsersInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
   image?: InputMaybe<StringFieldUpdateOperationsInput>;
   is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
   last_name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   name?: InputMaybe<StringFieldUpdateOperationsInput>;
-  nickname?: InputMaybe<StringFieldUpdateOperationsInput>;
+  nickname?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   password?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   role?: InputMaybe<EnumRoleFieldUpdateOperationsInput>;
   updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
@@ -5540,15 +5829,30 @@ export type UserUpdateWithoutSessionInput = {
   email?: InputMaybe<StringFieldUpdateOperationsInput>;
   emailVerified?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   first_name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  followed_users?: InputMaybe<UserUpdateManyWithoutFollowersInput>;
+  follower_id?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  followers?: InputMaybe<UserUpdateManyWithoutFollowed_UsersInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
   image?: InputMaybe<StringFieldUpdateOperationsInput>;
   is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
   last_name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   name?: InputMaybe<StringFieldUpdateOperationsInput>;
-  nickname?: InputMaybe<StringFieldUpdateOperationsInput>;
+  nickname?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   password?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   role?: InputMaybe<EnumRoleFieldUpdateOperationsInput>;
   updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+};
+
+export type UserUpsertWithWhereUniqueWithoutFollowed_UsersInput = {
+  create: UserCreateWithoutFollowed_UsersInput;
+  update: UserUpdateWithoutFollowed_UsersInput;
+  where: UserWhereUniqueInput;
+};
+
+export type UserUpsertWithWhereUniqueWithoutFollowersInput = {
+  create: UserCreateWithoutFollowersInput;
+  update: UserUpdateWithoutFollowersInput;
+  where: UserWhereUniqueInput;
 };
 
 export type UserUpsertWithoutAccountInput = {
@@ -5597,12 +5901,15 @@ export type UserWhereInput = {
   email?: InputMaybe<StringFilter>;
   emailVerified?: InputMaybe<StringNullableFilter>;
   first_name?: InputMaybe<StringNullableFilter>;
+  followed_users?: InputMaybe<UserListRelationFilter>;
+  follower_id?: InputMaybe<StringNullableFilter>;
+  followers?: InputMaybe<UserListRelationFilter>;
   id?: InputMaybe<StringFilter>;
   image?: InputMaybe<StringFilter>;
   is_disabled?: InputMaybe<BoolFilter>;
   last_name?: InputMaybe<StringNullableFilter>;
   name?: InputMaybe<StringFilter>;
-  nickname?: InputMaybe<StringFilter>;
+  nickname?: InputMaybe<StringNullableFilter>;
   password?: InputMaybe<StringNullableFilter>;
   role?: InputMaybe<EnumRoleFilter>;
   updated_at?: InputMaybe<DateTimeFilter>;
@@ -5785,6 +6092,14 @@ export type RegisterMutationVariables = Exact<{
 
 export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'User', id: string, nickname: string, email: string, avatar: string, role: Role, created_at: any } };
 
+export type SetFollowerMutationVariables = Exact<{
+  where: UserWhereUniqueInput;
+  data: UserUpdateInput;
+}>;
+
+
+export type SetFollowerMutation = { __typename?: 'Mutation', updateUser: { __typename?: 'User', id: string, nickname: string, email: string, avatar: string, role: Role, created_at: any } };
+
 export type SetLikeMutationVariables = Exact<{
   data: LikeCreateInput;
 }>;
@@ -5812,6 +6127,13 @@ export type GetAllCategoriesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetAllCategoriesQuery = { __typename?: 'Query', categories: Array<{ __typename?: 'Category', id: string, name: string }> };
+
+export type GetAllFollowersQueryVariables = Exact<{
+  where: UserWhereUniqueInput;
+}>;
+
+
+export type GetAllFollowersQuery = { __typename?: 'Query', user: { __typename?: 'User', followersCount: { __typename?: 'Follow', count: number, isFollowing: boolean } } };
 
 export type GetAllPostCommentsQueryVariables = Exact<{
   where: InputMaybe<CommentWhereInput>;
@@ -6080,6 +6402,40 @@ export function useRegisterMutation(baseOptions?: Apollo.MutationHookOptions<Reg
 export type RegisterMutationHookResult = ReturnType<typeof useRegisterMutation>;
 export type RegisterMutationResult = Apollo.MutationResult<RegisterMutation>;
 export type RegisterMutationOptions = Apollo.BaseMutationOptions<RegisterMutation, RegisterMutationVariables>;
+export const SetFollowerDocument = gql`
+    mutation SetFollower($where: UserWhereUniqueInput!, $data: UserUpdateInput!) {
+  updateUser(where: $where, data: $data) {
+    ...User
+  }
+}
+    ${UserFragmentDoc}`;
+export type SetFollowerMutationFn = Apollo.MutationFunction<SetFollowerMutation, SetFollowerMutationVariables>;
+
+/**
+ * __useSetFollowerMutation__
+ *
+ * To run a mutation, you first call `useSetFollowerMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSetFollowerMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [setFollowerMutation, { data, loading, error }] = useSetFollowerMutation({
+ *   variables: {
+ *      where: // value for 'where'
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useSetFollowerMutation(baseOptions?: Apollo.MutationHookOptions<SetFollowerMutation, SetFollowerMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SetFollowerMutation, SetFollowerMutationVariables>(SetFollowerDocument, options);
+      }
+export type SetFollowerMutationHookResult = ReturnType<typeof useSetFollowerMutation>;
+export type SetFollowerMutationResult = Apollo.MutationResult<SetFollowerMutation>;
+export type SetFollowerMutationOptions = Apollo.BaseMutationOptions<SetFollowerMutation, SetFollowerMutationVariables>;
 export const SetLikeDocument = gql`
     mutation SetLike($data: LikeCreateInput!) {
   createLike(data: $data) {
@@ -6229,6 +6585,44 @@ export function useGetAllCategoriesLazyQuery(baseOptions?: Apollo.LazyQueryHookO
 export type GetAllCategoriesQueryHookResult = ReturnType<typeof useGetAllCategoriesQuery>;
 export type GetAllCategoriesLazyQueryHookResult = ReturnType<typeof useGetAllCategoriesLazyQuery>;
 export type GetAllCategoriesQueryResult = Apollo.QueryResult<GetAllCategoriesQuery, GetAllCategoriesQueryVariables>;
+export const GetAllFollowersDocument = gql`
+    query GetAllFollowers($where: UserWhereUniqueInput!) {
+  user(where: $where) {
+    followersCount {
+      count
+      isFollowing
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetAllFollowersQuery__
+ *
+ * To run a query within a React component, call `useGetAllFollowersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAllFollowersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAllFollowersQuery({
+ *   variables: {
+ *      where: // value for 'where'
+ *   },
+ * });
+ */
+export function useGetAllFollowersQuery(baseOptions: Apollo.QueryHookOptions<GetAllFollowersQuery, GetAllFollowersQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetAllFollowersQuery, GetAllFollowersQueryVariables>(GetAllFollowersDocument, options);
+      }
+export function useGetAllFollowersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAllFollowersQuery, GetAllFollowersQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetAllFollowersQuery, GetAllFollowersQueryVariables>(GetAllFollowersDocument, options);
+        }
+export type GetAllFollowersQueryHookResult = ReturnType<typeof useGetAllFollowersQuery>;
+export type GetAllFollowersLazyQueryHookResult = ReturnType<typeof useGetAllFollowersLazyQuery>;
+export type GetAllFollowersQueryResult = Apollo.QueryResult<GetAllFollowersQuery, GetAllFollowersQueryVariables>;
 export const GetAllPostCommentsDocument = gql`
     query getAllPostComments($where: CommentWhereInput) {
   comments(where: $where) {

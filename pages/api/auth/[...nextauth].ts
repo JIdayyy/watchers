@@ -79,17 +79,17 @@ export default (req: NextApiRequest, res: NextApiResponse): void => {
             updateAge: 24 * 60 * 60, // 24 hours
         },
 
-        // logger: {
-        //     error: (code, metadata) => {
-        //         console.error(code, metadata);
-        //     },
-        //     warn: (code) => {
-        //         console.warn(code);
-        //     },
-        //     debug: (code, metadata) => {
-        //         console.debug(code, metadata);
-        //     },
-        // },
+        logger: {
+            error: (code, metadata) => {
+                console.error(code, metadata);
+            },
+            warn: (code) => {
+                console.warn(code);
+            },
+            debug: (code, metadata) => {
+                console.debug(code, metadata);
+            },
+        },
 
         jwt: {
             secret: process.env.JWT_SECRET,
@@ -127,11 +127,13 @@ export default (req: NextApiRequest, res: NextApiResponse): void => {
                     domain: process.env.COOKIE_DOMAIN,
                     secure: process.env.NODE_ENV === "production",
                     httpOnly: true,
-                    sameSite: "lax",
+                    sameSite: "none",
                 });
                 cookies.set("unsafe-token", newToken, {
-                    secure: false,
-                    httpOnly: false,
+                    domain: process.env.COOKIE_DOMAIN,
+                    secure: process.env.NODE_ENV === "production",
+                    httpOnly: true,
+                    sameSite: "none",
                 });
 
                 return newToken;

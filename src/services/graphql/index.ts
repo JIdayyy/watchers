@@ -16,7 +16,10 @@ const httpLink = createHttpLink({
     credentials: "include",
     headers: {
         "platform-auth-user-agent": "web-platform",
-        Origin: "http://watchers-khaki.vercel.app", // <- Added this and now builds are no longer 500 erroring on vercel
+        Origin:
+            process.env.NODE_ENV === "production"
+                ? "http://watchers-khaki.vercel.app"
+                : "localhost", // <- Added this and now builds are no longer 500 erroring on vercel
     },
 });
 

@@ -1,6 +1,8 @@
 import { Center, Flex, Spinner } from "@chakra-ui/react";
 import Navbar from "@components/Navbar";
 import { login, logout } from "@redux/actions";
+import axios from "axios";
+import { getToken } from "next-auth/jwt";
 import { useSession } from "next-auth/react";
 import { ReactNode, useEffect } from "react";
 import { useDispatch } from "react-redux";
@@ -15,6 +17,7 @@ export default function MainLayout({ children }: Props): JSX.Element {
     const session = useSession();
 
     useEffect(() => {
+        console.log(session);
         if (session.status === "authenticated") {
             dispatch(
                 login({
@@ -28,6 +31,7 @@ export default function MainLayout({ children }: Props): JSX.Element {
                 }),
             );
         }
+
         if (session.status === "unauthenticated") {
             dispatch(logout());
         }

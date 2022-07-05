@@ -1,3 +1,4 @@
+import axiosInstance from "@services/api/axiosInstance";
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import NextAuth from "next-auth";
 import GithubProvider from "next-auth/providers/github";
@@ -11,6 +12,7 @@ import { JWT } from "next-auth/jwt";
 import Cookies from "cookies";
 import bcrypt from "bcrypt";
 import { NextApiRequest, NextApiResponse } from "next";
+import axios from "axios";
 
 const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:5000";
 
@@ -123,15 +125,18 @@ export default (req: NextApiRequest, res: NextApiResponse): void => {
                         expiresIn: 30 * 24 * 60 * 60, // 30 days
                     },
                 );
-                cookies.set("token", newToken, {
-                    secure: process.env.NODE_ENV === "production",
-                    httpOnly: true,
-                    sameSite: "none",
-                });
+
                 cookies.set("unsafe-token", newToken, {
-                    secure: process.env.NODE_ENV === "production",
                     httpOnly: true,
-                    sameSite: "none",
+                    secure: process.env.NODE_ENV === "production",
+                    sameSite:
+                        process.env.NODE_ENV === "production" ? "none" : "lax",
+                });
+                cookies.set("token", newToken, {
+                    httpOnly: true,
+                    secure: process.env.NODE_ENV === "production",
+                    sameSite:
+                        process.env.NODE_ENV === "production" ? "none" : "lax",
                 });
 
                 return newToken;
@@ -156,12 +161,14 @@ export default (req: NextApiRequest, res: NextApiResponse): void => {
                     return false;
                 }
             },
-            async session({ session, token, user }) {
+            async session({ session, token, user, ...rest }) {
+                console.log(rest);
                 const { expires } = session;
                 session.token = token;
                 return { ...session, ...token, ...user };
             },
             async jwt({ token, account, isNewUser, profile, user }) {
+                console.log("token", token);
                 return { ...token, ...user };
             },
         },

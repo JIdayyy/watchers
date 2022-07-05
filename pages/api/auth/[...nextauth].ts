@@ -124,13 +124,11 @@ export default (req: NextApiRequest, res: NextApiResponse): void => {
                     },
                 );
                 cookies.set("token", newToken, {
-                    domain: process.env.COOKIE_DOMAIN,
                     secure: process.env.NODE_ENV === "production",
                     httpOnly: true,
                     sameSite: "none",
                 });
                 cookies.set("unsafe-token", newToken, {
-                    domain: process.env.COOKIE_DOMAIN,
                     secure: process.env.NODE_ENV === "production",
                     httpOnly: true,
                     sameSite: "none",

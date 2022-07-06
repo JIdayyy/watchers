@@ -9,4 +9,13 @@ module.exports = withPlugins([], {
             "lh3.googleusercontent.com",
         ],
     },
+
+    async rewrites() {
+        return [
+            {
+                source: "/api/data",
+                destination: "http://192.168.1.12:4000/graphql", // Proxy to Backend
+            },
+        ];
+    },
 });

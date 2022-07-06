@@ -1,4 +1,4 @@
-import { Box, Flex, Icon, Text } from "@chakra-ui/react";
+import { Box, Flex, Icon, Text, useColorMode } from "@chakra-ui/react";
 import { DateTime } from "luxon";
 import Image from "next/image";
 import React from "react";
@@ -17,6 +17,7 @@ interface IProps {
 }
 
 export default function WatchCard({ watch, isMain }: IProps): JSX.Element {
+    const { colorMode } = useColorMode();
     const { data } = useGetAllPostLikesQuery({
         variables: {
             where: {
@@ -36,7 +37,7 @@ export default function WatchCard({ watch, isMain }: IProps): JSX.Element {
     return (
         <Link prefetch href={`/${watch.slug}`}>
             <CustomBox
-                border="1px solid #D6D6D6"
+                border={colorMode == "light" ? "1px solid #D6D6D6" : ""}
                 variant="solid"
                 cursor="pointer"
                 flexDir="column"

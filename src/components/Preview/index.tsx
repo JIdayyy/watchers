@@ -1,4 +1,4 @@
-import { Flex, Text } from "@chakra-ui/react";
+import { Flex, Text, useColorMode } from "@chakra-ui/react";
 import { RootState } from "@redux/reducers";
 import Image from "next/image";
 import React, { useEffect } from "react";
@@ -20,6 +20,7 @@ export default function Preview({
     content,
 }: IProps): JSX.Element {
     const { user } = useSelector((state: RootState) => state.user);
+    const { colorMode } = useColorMode();
 
     if (!user.id) return <></>;
 
@@ -40,7 +41,7 @@ export default function Preview({
     return (
         <CustomFlex
             h="full"
-            border="1px solid #D6D6D6"
+            border={colorMode == "light" ? "1px solid #D6D6D6" : ""}
             rounded="md"
             overflow="hidden"
             direction="column"

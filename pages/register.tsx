@@ -83,7 +83,7 @@ export default function Register(): JSX.Element {
                 spacing={2}
                 p={5}
                 rounded={5}
-                border="1px solid #D6D6D6"
+                border={colorMode == "light" ? "1px solid #D6D6D6" : ""}
                 w={["90%", "70%", "50%", "30%"]}
                 bg={colorMode === "light" ? "white" : "#171717"}
             >

@@ -133,7 +133,7 @@ export default function UserDetailsPostCard({ author }: IProps): JSX.Element {
             w="full"
             overflow="hidden"
             rounded="md"
-            border="1px solid #D6D6D6"
+            border={colorMode == "light" ? "1px solid #D6D6D6" : ""}
         >
             <Box
                 display={["none", "none", "block"]}

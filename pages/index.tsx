@@ -1,5 +1,12 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Button, Flex, Grid, GridItem, Text } from "@chakra-ui/react";
+import {
+    Button,
+    Flex,
+    Grid,
+    GridItem,
+    Text,
+    useColorMode,
+} from "@chakra-ui/react";
 import MainLayout from "@components/Layouts/MainLayout";
 import WatchesList from "@components/Lists/Watches/WatchesList";
 import Image from "next/image";
@@ -28,6 +35,7 @@ enum SortBy {
 const Home = ({ posts }: IProps): JSX.Element => {
     const { ref, inView } = useInView();
     const [isClient, setIsClient] = useState(false);
+    const { colorMode } = useColorMode();
 
     const [sortOrder, setSortOrder] = useState(SortBy.Latest);
 
@@ -189,7 +197,7 @@ const Home = ({ posts }: IProps): JSX.Element => {
                     flexDirection="column"
                     display="flex"
                     p={5}
-                    border="1px solid #D6D6D6"
+                    border={colorMode === "light" ? "1px solid #D6D6D6" : ""}
                     h="300px"
                     rounded="md"
                     justifyContent="space-between"

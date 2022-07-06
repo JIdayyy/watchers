@@ -1,17 +1,25 @@
-import { VStack, FormLabel, Input, Button, Text } from "@chakra-ui/react";
+import {
+    VStack,
+    FormLabel,
+    Input,
+    Button,
+    Text,
+    useColorMode,
+} from "@chakra-ui/react";
 import CustomFlex from "@definitions/chakra/theme/components/Box/CustomFlex";
 
 import { useForm } from "react-hook-form";
 
 export default function AccountsSettings(): JSX.Element {
     const { register } = useForm();
+    const { colorMode } = useColorMode();
 
     return (
         <CustomFlex
             p={[5, 5, 10]}
             w="full"
             rounded="md"
-            border="1px solid #D6D6D6"
+            border={colorMode == "light" ? "1px solid #D6D6D6" : ""}
             flexDirection="column"
             alignItems="flex-start"
         >

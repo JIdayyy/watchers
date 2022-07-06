@@ -8,6 +8,7 @@ import {
     Text,
     SkeletonCircle,
     SkeletonText,
+    useColorMode,
 } from "@chakra-ui/react";
 import CustomBox from "@definitions/chakra/theme/components/Box/CustomBox";
 import CustomFlex from "@definitions/chakra/theme/components/Box/CustomFlex";
@@ -20,6 +21,7 @@ import { useGetUserDataQuery } from "src/generated/graphql";
 export default function UserInformations(): JSX.Element {
     const { setValue, register } = useFormContext();
     const { user } = useSelector((state: RootState) => state.user);
+    const { colorMode } = useColorMode();
     const { data } = useGetUserDataQuery({
         variables: {
             where: {
@@ -41,7 +43,7 @@ export default function UserInformations(): JSX.Element {
                 rounded="md"
                 w="full"
                 padding={10}
-                border="1px solid #D6D6D6"
+                border={colorMode == "light" ? "1px solid #D6D6D6" : ""}
             >
                 <SkeletonCircle size="10" />
                 <SkeletonText height="40px" mt="2" noOfLines={2} spacing="2" />
@@ -59,7 +61,7 @@ export default function UserInformations(): JSX.Element {
             p={[5, 5, 10]}
             w="full"
             rounded="md"
-            border="1px solid #D6D6D6"
+            border={colorMode == "light" ? "1px solid #D6D6D6" : ""}
             flexDirection="column"
         >
             <Text mb={5} fontSize="24px" fontWeight="bold">

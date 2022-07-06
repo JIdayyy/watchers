@@ -18,6 +18,7 @@ import {
     Text,
     Icon,
     Button,
+    useColorMode,
 } from "@chakra-ui/react";
 import Image from "next/image";
 import { apolloClient } from "./_app";
@@ -38,6 +39,7 @@ export default function Watch({ post }: IProps): JSX.Element {
     if (!post) return <Spinner />;
     const [setLike, { loading }] = useSetLikeMutation();
     const { user } = useSelector((state: RootState) => state.user);
+    const { colorMode } = useColorMode();
 
     const { data } = useGetAllLikesQuery({
         notifyOnNetworkStatusChange: true,
@@ -139,7 +141,9 @@ export default function Watch({ post }: IProps): JSX.Element {
                 <GridItem colSpan={[5, 3]}>
                     <CustomBox
                         display="flex"
-                        border="1px solid #D6D6D6"
+                        border={
+                            colorMode === "light" ? "1px solid #D6D6D6" : ""
+                        }
                         rounded={[0, 0, "md"]}
                         overflow="hidden"
                         flexDirection="column"

@@ -1,4 +1,12 @@
-import { Box, Button, Flex, Icon, Spinner, Text } from "@chakra-ui/react";
+import {
+    Box,
+    Button,
+    Flex,
+    Icon,
+    Spinner,
+    Text,
+    useColorMode,
+} from "@chakra-ui/react";
 import MainLayout from "@components/Layouts/MainLayout";
 import { RootState } from "@redux/reducers";
 import { DateTime } from "luxon";
@@ -14,6 +22,8 @@ import CustomFlex from "@definitions/chakra/theme/components/Box/CustomFlex";
 
 export default function Profile(): JSX.Element {
     const { user } = useSelector((state: RootState) => state.user);
+    const { colorMode } = useColorMode();
+
     const { data: userData } = useGetUserDataQuery({
         variables: {
             where: {
@@ -70,7 +80,7 @@ export default function Profile(): JSX.Element {
                 rounded="md"
                 my={100}
                 zIndex={999}
-                border="1px solid #D6D6D6"
+                border={colorMode == "light" ? "1px solid #D6D6D6" : ""}
                 w="full"
                 maxW="5xl"
                 minH="300px"

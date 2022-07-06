@@ -12,10 +12,7 @@ let apolloClient: ApolloClient<NormalizedCacheObject> | null = null;
 const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:5000";
 
 const httpLink = createHttpLink({
-    uri:
-        typeof window === "undefined"
-            ? "http://localhost:4000/graphql"
-            : serverUrl,
+    uri: typeof window === "undefined" ? process.env.SERVER_URL : serverUrl,
     credentials: "include",
     headers: {
         "platform-auth-user-agent": "web-platform",

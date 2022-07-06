@@ -11,7 +11,7 @@ export default function AccountsSettings(): JSX.Element {
             p={[5, 5, 10]}
             w="full"
             rounded="md"
-            shadow="base"
+            border="1px solid #D6D6D6"
             flexDirection="column"
             alignItems="flex-start"
         >

@@ -1,10 +1,12 @@
 import MainLayout from "@components/Layouts/MainLayout";
 import React, { useEffect } from "react";
 import {
+    GetAllLikesDocument,
     GetAllPostsDocument,
     GetAllPostsQuery,
     GetPostDataDocument,
     GetPostDataQuery,
+    useGetAllLikesQuery,
     useSetLikeMutation,
 } from "src/generated/graphql";
 import { AiFillLike } from "react-icons/ai";
@@ -34,8 +36,20 @@ interface IProps {
 
 export default function Watch({ post }: IProps): JSX.Element {
     if (!post) return <Spinner />;
-    const [setLike] = useSetLikeMutation();
+    const [setLike, { loading }] = useSetLikeMutation();
     const { user } = useSelector((state: RootState) => state.user);
+
+    const { data } = useGetAllLikesQuery({
+        notifyOnNetworkStatusChange: true,
+
+        variables: {
+            where: {
+                post_id: {
+                    equals: post.id,
+                },
+            },
+        },
+    });
 
     useEffect(() => {
         hljs.highlightAll();
@@ -53,6 +67,7 @@ export default function Watch({ post }: IProps): JSX.Element {
 
     const handleClick = () => {
         setLike({
+            notifyOnNetworkStatusChange: true,
             variables: {
                 data: {
                     post: {
@@ -65,6 +80,18 @@ export default function Watch({ post }: IProps): JSX.Element {
                     },
                 },
             },
+            refetchQueries: [
+                {
+                    query: GetAllLikesDocument,
+                    variables: {
+                        where: {
+                            post_id: {
+                                equals: post.id,
+                            },
+                        },
+                    },
+                },
+            ],
         });
     };
 
@@ -89,6 +116,8 @@ export default function Watch({ post }: IProps): JSX.Element {
         },
     };
 
+    console.log(loading);
+
     return (
         <>
             <NextSeo {...SEO} title="About Me" />
@@ -97,9 +126,9 @@ export default function Watch({ post }: IProps): JSX.Element {
                 alignItems="start"
                 minW={["full", "full", "full", "7xl"]}
                 maxW="7xl"
-                px={[3, 2, 2, 0]}
+                px={[0, 0, 2, 0]}
                 pb={10}
-                gap={7}
+                gap={[0, 0, 7]}
                 templateColumns={[
                     "repeat(1, 1fr)",
                     "repeat(1, 1fr)",
@@ -107,11 +136,11 @@ export default function Watch({ post }: IProps): JSX.Element {
                     "repeat(5, 1fr)",
                 ]}
             >
-                <GridItem colSpan={3}>
+                <GridItem colSpan={[5, 3]}>
                     <CustomBox
                         display="flex"
-                        shadow="base"
-                        rounded="md"
+                        border="1px solid #D6D6D6"
+                        rounded={[0, 0, "md"]}
                         overflow="hidden"
                         flexDirection="column"
                         pb="30px"
@@ -143,9 +172,14 @@ export default function Watch({ post }: IProps): JSX.Element {
                                     {post.author.first_name}{" "}
                                     {post.author.last_name}
                                 </Text>
-                                <Button size="sm" onClick={handleClick} mr={5}>
+                                <Button
+                                    isLoading={loading}
+                                    size="sm"
+                                    onClick={handleClick}
+                                    mr={5}
+                                >
                                     <Icon mr={1} as={AiFillLike} size={10} />
-                                    {post.Like.length} Likes
+                                    {data?.likes.length} Likes
                                 </Button>
                             </Flex>
                             <Text my={4} as="h1">
@@ -180,52 +214,10 @@ export default function Watch({ post }: IProps): JSX.Element {
                     position="sticky"
                     display="flex"
                     flexDir="column"
-                    colSpan={2}
+                    colSpan={[5, 2]}
                     w="full"
                 >
-                    {/* <Flex
-                        bg="white"
-                        shadow="base"
-                        rounded="md"
-                        flexDirection="column"
-                        w="full"
-                        direction="column"
-                        overflow="hidden"
-                    >
-                        <Box w="full" h="50px" bg="black" />
-                        <Flex direction="column" w="full" h="full" p={5}>
-                            <Text as="h2">
-                                Watchers is made by love by our wonderful
-                                community
-                            </Text>
-                            <Text as="p">
-                                We are proud to release our brand new website on
-                                the internet
-                            </Text>
-                        </Flex>
-                    </Flex> */}
                     <UserDetailsPostCard author={post.author} />
-                    {/* <Flex
-                        p={5}
-                        my={5}
-                        shadow="base"
-                        rounded="md"
-                        direction="column"
-                        w="full"
-                        bg="white"
-                    >
-                        <Flex flexWrap="wrap">
-                            <Text as="h2" fontWeight="bold">
-                                Want to see other
-                            </Text>
-                            <Text mx={1} as="h2" color="blue">
-                                Jidayyy
-                            </Text>
-                            <Text as="h2" fontWeight="bold">
-                                watches ?
-                            </Text>
-                        </Flex>
-                    </Flex> */}
                 </GridItem>
             </Grid>
         </>

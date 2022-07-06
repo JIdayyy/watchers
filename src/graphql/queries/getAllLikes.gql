@@ -1,0 +1,5 @@
+query GetAllLikes($where: LikeWhereInput!) {
+    likes(where: $where) {
+        id
+    }
+}

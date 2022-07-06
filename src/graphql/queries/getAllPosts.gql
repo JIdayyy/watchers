@@ -1,8 +1,10 @@
 query GetAllPosts(
     $where: PostWhereInput!
     $orderBy: [PostOrderByWithRelationInput!]
+    $take: Int
+    $skip: Int
 ) {
-    posts(where: $where, orderBy: $orderBy) {
+    posts(where: $where, orderBy: $orderBy, skip: $skip, take: $take) {
         id
         title
         content

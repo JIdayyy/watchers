@@ -16,15 +16,18 @@ export default function Myposts(): JSX.Element {
                 author: {
                     is: {
                         id: {
-                            equals: user!.id,
+                            equals: user.id,
                         },
                     },
                 },
             },
+            skip: 0,
+            take: 5,
             orderBy: {
                 created_at: SortOrder.Desc,
             },
         },
+        fetchPolicy: "no-cache",
         skip: !user.id,
     });
 

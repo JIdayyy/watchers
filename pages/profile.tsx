@@ -70,7 +70,7 @@ export default function Profile(): JSX.Element {
                 rounded="md"
                 my={100}
                 zIndex={999}
-                shadow="base"
+                border="1px solid #D6D6D6"
                 w="full"
                 maxW="5xl"
                 minH="300px"

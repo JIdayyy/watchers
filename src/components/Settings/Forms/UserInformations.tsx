@@ -37,7 +37,12 @@ export default function UserInformations(): JSX.Element {
 
     if (!data?.user) {
         return (
-            <CustomBox rounded="md" w="full" padding={10} shadow="base">
+            <CustomBox
+                rounded="md"
+                w="full"
+                padding={10}
+                border="1px solid #D6D6D6"
+            >
                 <SkeletonCircle size="10" />
                 <SkeletonText height="40px" mt="2" noOfLines={2} spacing="2" />
                 <SkeletonText height="40px" mt="2" noOfLines={2} spacing="2" />
@@ -54,7 +59,7 @@ export default function UserInformations(): JSX.Element {
             p={[5, 5, 10]}
             w="full"
             rounded="md"
-            shadow="base"
+            border="1px solid #D6D6D6"
             flexDirection="column"
         >
             <Text mb={5} fontSize="24px" fontWeight="bold">

@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Button, Flex, Grid, GridItem, Text } from "@chakra-ui/react";
 import MainLayout from "@components/Layouts/MainLayout";
 import WatchesList from "@components/Lists/Watches/WatchesList";
@@ -8,10 +8,12 @@ import {
     GetAllPostsDocument,
     GetAllPostsQuery,
     SortOrder,
+    useGetAllPostsQuery,
 } from "src/generated/graphql";
 import { apolloClient } from "./_app";
 import { GetStaticPropsResult } from "next";
 import CustomBox from "@definitions/chakra/theme/components/Box/CustomBox";
+import { useInView } from "react-intersection-observer";
 
 interface IProps {
     posts: GetAllPostsQuery["posts"];
@@ -24,11 +26,73 @@ enum SortBy {
 }
 
 const Home = ({ posts }: IProps): JSX.Element => {
+    const { ref, inView } = useInView();
+    const [isClient, setIsClient] = useState(false);
+
     const [sortOrder, setSortOrder] = useState(SortBy.Latest);
+
+    const { data: postsData, fetchMore } = useGetAllPostsQuery({
+        notifyOnNetworkStatusChange: true,
+        variables: {
+            where: {
+                isDraft: {
+                    equals: false,
+                },
+            },
+            skip: 0,
+            take: 6,
+            orderBy: {
+                created_at: SortOrder.Desc,
+            },
+        },
+        skip: isClient === false,
+    });
+
+    useEffect(() => {
+        apolloClient.writeQuery({
+            query: GetAllPostsDocument,
+            data: {
+                posts: [...posts],
+            },
+            variables: {
+                where: {
+                    isDraft: {
+                        equals: false,
+                    },
+                },
+                skip: 0,
+                take: 5,
+                orderBy: {
+                    created_at: SortOrder.Desc,
+                },
+            },
+            overwrite: true,
+        });
+        setIsClient(true);
+    }, []);
+
+    useEffect(() => {
+        console.log(inView);
+        if (inView) {
+            fetchMore({
+                variables: {
+                    skip: postsData?.posts.length,
+                    take: 6,
+                    where: {
+                        isDraft: {
+                            equals: false,
+                        },
+                    },
+                },
+            });
+        }
+    }, [inView]);
+
+    const copy = postsData ? [...postsData?.posts] : [];
 
     const sortFilter = useCallback(
         () =>
-            posts.sort((a, b) => {
+            copy.sort((a, b) => {
                 if (sortOrder === SortBy.Latest) {
                     return (
                         new Date(b.created_at).getTime() -
@@ -46,12 +110,12 @@ const Home = ({ posts }: IProps): JSX.Element => {
                 }
                 return 0;
             }),
-        [sortOrder],
+        [postsData, sortOrder],
     );
 
     return (
         <Grid
-            p={[2, 2, 2, 2, 0]}
+            p={[0, 0, 2, 2, 0]}
             mb="100px"
             gap={7}
             templateColumns={[
@@ -72,7 +136,7 @@ const Home = ({ posts }: IProps): JSX.Element => {
             >
                 <NavigationCard />
             </GridItem>
-            <GridItem colSpan={3}>
+            <GridItem position="relative" colSpan={3}>
                 <Flex
                     p={5}
                     fontSize="18px"
@@ -112,12 +176,12 @@ const Home = ({ posts }: IProps): JSX.Element => {
                         Top
                     </Flex>
                 </Flex>
-                <WatchesList posts={sortFilter()} />
+                <WatchesList ref={ref} posts={sortFilter() || posts} />
             </GridItem>
             <GridItem
                 alignSelf="start"
                 position="sticky"
-                top="110px"
+                top="120px"
                 display={["none", "none", "none", "block"]}
                 colSpan={1}
             >
@@ -125,7 +189,7 @@ const Home = ({ posts }: IProps): JSX.Element => {
                     flexDirection="column"
                     display="flex"
                     p={5}
-                    shadow="base"
+                    border="1px solid #D6D6D6"
                     h="300px"
                     rounded="md"
                     justifyContent="space-between"
@@ -170,6 +234,8 @@ export const getStaticProps = async (): Promise<
                     equals: false,
                 },
             },
+            skip: 0,
+            take: 6,
             orderBy: {
                 created_at: SortOrder.Desc,
             },

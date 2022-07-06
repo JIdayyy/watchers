@@ -53,7 +53,7 @@ export default function UserMenu(): JSX.Element {
 
             <MenuList
                 minWidth={["100vw", "100vw", "30vw", "15vw"]}
-                shadow="base"
+                border="1px solid #D6D6D6"
             >
                 <MenuItem
                     onClick={() => push("/profile")}

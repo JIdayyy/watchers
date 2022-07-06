@@ -12,7 +12,10 @@ let apolloClient: ApolloClient<NormalizedCacheObject> | null = null;
 const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:5000";
 
 const httpLink = createHttpLink({
-    uri: serverUrl,
+    uri:
+        typeof window === "undefined"
+            ? "http://localhost:4000/graphql"
+            : serverUrl,
     credentials: "include",
     headers: {
         "platform-auth-user-agent": "web-platform",
@@ -32,10 +35,24 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
         );
     if (networkError) console.log(`[Network error]: ${networkError}`);
 });
+
 const createApolloClient = new ApolloClient({
     ssrMode: typeof window === "undefined",
     uri: serverUrl,
-    cache: new InMemoryCache(),
+    cache: new InMemoryCache({
+        typePolicies: {
+            Query: {
+                fields: {
+                    posts: {
+                        keyArgs: false,
+                        merge(existing = [], incoming) {
+                            return [...existing, ...incoming];
+                        },
+                    },
+                },
+            },
+        },
+    }),
     link: from([errorLink, httpLink]),
 });
 

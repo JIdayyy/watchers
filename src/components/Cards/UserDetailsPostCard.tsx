@@ -37,6 +37,7 @@ export default function UserDetailsPostCard({ author }: IProps): JSX.Element {
                 },
             },
         });
+
     const [setFollower, { loading: setFollowLoading }] = useSetFollowerMutation(
         {
             refetchQueries: [
@@ -53,13 +54,17 @@ export default function UserDetailsPostCard({ author }: IProps): JSX.Element {
     );
     const { push } = useRouter();
     const { colorMode } = useColorMode();
+
     const { data, loading } = useGetAllPostsQuery({
+        fetchPolicy: "no-cache",
         variables: {
             where: {
                 userId: {
                     equals: author.id,
                 },
             },
+            skip: 0,
+            take: 5,
             orderBy: {
                 created_at: SortOrder.Desc,
             },
@@ -109,7 +114,7 @@ export default function UserDetailsPostCard({ author }: IProps): JSX.Element {
 
     if (loading)
         return (
-            <CustomBox rounded="md" w="full" padding={10} shadow="base">
+            <CustomBox rounded="md" w="full" padding={10} shadow="sm">
                 <SkeletonCircle size="10" />
                 <SkeletonText height="40px" mt="2" noOfLines={2} spacing="2" />
                 <SkeletonText height="40px" mt="2" noOfLines={2} spacing="2" />
@@ -128,13 +133,14 @@ export default function UserDetailsPostCard({ author }: IProps): JSX.Element {
             w="full"
             overflow="hidden"
             rounded="md"
-            shadow="base"
+            border="1px solid #D6D6D6"
         >
             <Box
+                display={["none", "none", "block"]}
                 w="full"
                 h="30px"
                 bg={colorMode === "light" ? "black" : "orange"}
-            ></Box>
+            />
             <Flex
                 p={5}
                 direction="column"

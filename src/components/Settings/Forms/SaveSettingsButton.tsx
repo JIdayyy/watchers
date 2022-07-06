@@ -17,7 +17,7 @@ export default function SaveSettingsButton({
         <CustomFlex
             w="full"
             rounded="md"
-            shadow="base"
+            border="1px solid #D6D6D6"
             py={5}
             px={[5, 5, 10]}
             alignSelf="end"

@@ -68,7 +68,7 @@ export default function Login(): JSX.Element {
                 spacing={2}
                 p={5}
                 rounded={5}
-                shadow="base"
+                border="1px solid #D6D6D6"
                 w={["90%", "70%", "50%", "30%"]}
                 bg={colorMode === "light" ? "white" : "#171717"}
             >

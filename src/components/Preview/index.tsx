@@ -40,7 +40,7 @@ export default function Preview({
     return (
         <CustomFlex
             h="full"
-            shadow="base"
+            border="1px solid #D6D6D6"
             rounded="md"
             overflow="hidden"
             direction="column"

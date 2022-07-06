@@ -39,6 +39,7 @@ export default (req: NextApiRequest, res: NextApiResponse): void => {
                         },
                         rejectOnNotFound: true,
                     });
+                    client.$disconnect();
 
                     const isValid = bcrypt.compareSync(
                         credentials.password,
@@ -108,6 +109,7 @@ export default (req: NextApiRequest, res: NextApiResponse): void => {
                             typeof token.email === "string" ? token.email : "",
                     },
                 });
+                client.$disconnect();
                 const newToken = jwt.sign(
                     {
                         picture: token.picture,

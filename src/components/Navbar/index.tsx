@@ -57,7 +57,7 @@ export default function Navbar(): JSX.Element {
             zIndex={10}
             position="fixed"
             top={0}
-            shadow="base"
+            border="1px solid #D6D6D6"
             w="100vw"
             p={3}
             justifyContent="center"

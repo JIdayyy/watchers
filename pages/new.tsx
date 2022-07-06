@@ -187,7 +187,7 @@ export default function NewWatch(): JSX.Element {
             minH="100vh"
             w="7xl"
             maxW="7xl"
-            px={[2, 2, 2, 2, 0]}
+            px={[0, 0, 2, 2, 0]}
         >
             <Flex py={3} mb={10} w="full" justifyContent="space-between">
                 <Button

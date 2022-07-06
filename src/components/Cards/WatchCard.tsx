@@ -36,12 +36,12 @@ export default function WatchCard({ watch, isMain }: IProps): JSX.Element {
     return (
         <Link prefetch href={`/${watch.slug}`}>
             <CustomBox
+                border="1px solid #D6D6D6"
                 variant="solid"
                 cursor="pointer"
                 flexDir="column"
                 display="flex"
-                rounded={10}
-                shadow="base"
+                rounded={[0, 0, "md"]}
                 w="full"
                 minH="200px"
                 overflow="hidden"

@@ -6135,6 +6135,13 @@ export type GetAllFollowersQueryVariables = Exact<{
 
 export type GetAllFollowersQuery = { __typename?: 'Query', user: { __typename?: 'User', followersCount: { __typename?: 'Follow', count: number, isFollowing: boolean } } };
 
+export type GetAllLikesQueryVariables = Exact<{
+  where: LikeWhereInput;
+}>;
+
+
+export type GetAllLikesQuery = { __typename?: 'Query', likes: Array<{ __typename?: 'Like', id: string }> };
+
 export type GetAllPostCommentsQueryVariables = Exact<{
   where: InputMaybe<CommentWhereInput>;
 }>;
@@ -6152,6 +6159,8 @@ export type GetAllPostLikesQuery = { __typename?: 'Query', likes: Array<{ __type
 export type GetAllPostsQueryVariables = Exact<{
   where: PostWhereInput;
   orderBy: InputMaybe<Array<PostOrderByWithRelationInput> | PostOrderByWithRelationInput>;
+  take: InputMaybe<Scalars['Int']>;
+  skip: InputMaybe<Scalars['Int']>;
 }>;
 
 
@@ -6623,6 +6632,41 @@ export function useGetAllFollowersLazyQuery(baseOptions?: Apollo.LazyQueryHookOp
 export type GetAllFollowersQueryHookResult = ReturnType<typeof useGetAllFollowersQuery>;
 export type GetAllFollowersLazyQueryHookResult = ReturnType<typeof useGetAllFollowersLazyQuery>;
 export type GetAllFollowersQueryResult = Apollo.QueryResult<GetAllFollowersQuery, GetAllFollowersQueryVariables>;
+export const GetAllLikesDocument = gql`
+    query GetAllLikes($where: LikeWhereInput!) {
+  likes(where: $where) {
+    id
+  }
+}
+    `;
+
+/**
+ * __useGetAllLikesQuery__
+ *
+ * To run a query within a React component, call `useGetAllLikesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAllLikesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAllLikesQuery({
+ *   variables: {
+ *      where: // value for 'where'
+ *   },
+ * });
+ */
+export function useGetAllLikesQuery(baseOptions: Apollo.QueryHookOptions<GetAllLikesQuery, GetAllLikesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetAllLikesQuery, GetAllLikesQueryVariables>(GetAllLikesDocument, options);
+      }
+export function useGetAllLikesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAllLikesQuery, GetAllLikesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetAllLikesQuery, GetAllLikesQueryVariables>(GetAllLikesDocument, options);
+        }
+export type GetAllLikesQueryHookResult = ReturnType<typeof useGetAllLikesQuery>;
+export type GetAllLikesLazyQueryHookResult = ReturnType<typeof useGetAllLikesLazyQuery>;
+export type GetAllLikesQueryResult = Apollo.QueryResult<GetAllLikesQuery, GetAllLikesQueryVariables>;
 export const GetAllPostCommentsDocument = gql`
     query getAllPostComments($where: CommentWhereInput) {
   comments(where: $where) {
@@ -6702,8 +6746,8 @@ export type GetAllPostLikesQueryHookResult = ReturnType<typeof useGetAllPostLike
 export type GetAllPostLikesLazyQueryHookResult = ReturnType<typeof useGetAllPostLikesLazyQuery>;
 export type GetAllPostLikesQueryResult = Apollo.QueryResult<GetAllPostLikesQuery, GetAllPostLikesQueryVariables>;
 export const GetAllPostsDocument = gql`
-    query GetAllPosts($where: PostWhereInput!, $orderBy: [PostOrderByWithRelationInput!]) {
-  posts(where: $where, orderBy: $orderBy) {
+    query GetAllPosts($where: PostWhereInput!, $orderBy: [PostOrderByWithRelationInput!], $take: Int, $skip: Int) {
+  posts(where: $where, orderBy: $orderBy, skip: $skip, take: $take) {
     id
     title
     content
@@ -6754,6 +6798,8 @@ export const GetAllPostsDocument = gql`
  *   variables: {
  *      where: // value for 'where'
  *      orderBy: // value for 'orderBy'
+ *      take: // value for 'take'
+ *      skip: // value for 'skip'
  *   },
  * });
  */

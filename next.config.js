@@ -14,7 +14,7 @@ module.exports = withPlugins([], {
         return [
             {
                 source: "/api/data",
-                destination: "http://192.168.1.12:4000/graphql", // Proxy to Backend
+                destination: "https://watchers-api.digitalcopilote.re/graphql", // Proxy to Backend
             },
         ];
     },

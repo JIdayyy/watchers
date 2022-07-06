@@ -9,7 +9,7 @@ import { onError } from "@apollo/client/link/error";
 
 let apolloClient: ApolloClient<NormalizedCacheObject> | null = null;
 
-const serverUrl = "https://watchers-api.digitalcopilote.re/graphql";
+const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:5000";
 
 const httpLink = createHttpLink({
     uri: serverUrl,
@@ -36,7 +36,7 @@ const createApolloClient = new ApolloClient({
     ssrMode: typeof window === "undefined",
     uri: serverUrl,
     cache: new InMemoryCache(),
-    link: from([httpLink, errorLink]),
+    link: from([errorLink, httpLink]),
 });
 
 export const initializeApollo = (): ApolloClient<NormalizedCacheObject> => {

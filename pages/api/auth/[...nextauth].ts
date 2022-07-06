@@ -1,4 +1,3 @@
-import axiosInstance from "@services/api/axiosInstance";
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import NextAuth from "next-auth";
 import GithubProvider from "next-auth/providers/github";
@@ -126,12 +125,6 @@ export default (req: NextApiRequest, res: NextApiResponse): void => {
                     },
                 );
 
-                cookies.set("unsafe-token", newToken, {
-                    httpOnly: true,
-                    secure: process.env.NODE_ENV === "production",
-                    sameSite:
-                        process.env.NODE_ENV === "production" ? "none" : "lax",
-                });
                 cookies.set("token", newToken, {
                     httpOnly: true,
                     secure: process.env.NODE_ENV === "production",
@@ -162,13 +155,12 @@ export default (req: NextApiRequest, res: NextApiResponse): void => {
                 }
             },
             async session({ session, token, user, ...rest }) {
-                console.log(rest);
                 const { expires } = session;
                 session.token = token;
+
                 return { ...session, ...token, ...user };
             },
             async jwt({ token, account, isNewUser, profile, user }) {
-                console.log("token", token);
                 return { ...token, ...user };
             },
         },

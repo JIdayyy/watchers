@@ -36,7 +36,7 @@ const createApolloClient = new ApolloClient({
     ssrMode: typeof window === "undefined",
     uri: serverUrl,
     cache: new InMemoryCache(),
-    link: from([errorLink, httpLink]),
+    link: from([httpLink, errorLink]),
 });
 
 export const initializeApollo = (): ApolloClient<NormalizedCacheObject> => {

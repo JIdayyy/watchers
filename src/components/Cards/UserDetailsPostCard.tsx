@@ -51,7 +51,6 @@ export default function UserDetailsPostCard({ author }: IProps): JSX.Element {
             ],
         },
     );
-    console.log(allFollowers);
     const { push } = useRouter();
     const { colorMode } = useColorMode();
     const { data, loading } = useGetAllPostsQuery({

@@ -84,7 +84,6 @@ export default function TagsList({
                         {data?.tags.map((tag) => (
                             <Flex
                                 onClick={async () => {
-                                    console.log(tag.name);
                                     await handleSelectTag(tag.name);
                                 }}
                                 p={2}

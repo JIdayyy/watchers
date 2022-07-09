@@ -23,7 +23,10 @@ type Props = {
 };
 
 export default function SearchModal({ isOpen, onClose }: Props): JSX.Element {
-    const [search, { data, loading }] = useSearchLazyQuery();
+    const [search, { data, loading }] = useSearchLazyQuery({
+        notifyOnNetworkStatusChange: true,
+        fetchPolicy: "no-cache",
+    });
     const { push } = useRouter();
     const { colorMode } = useColorMode();
 

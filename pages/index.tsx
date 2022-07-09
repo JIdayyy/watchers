@@ -48,7 +48,7 @@ const Home = ({ posts }: IProps): JSX.Element => {
                 },
             },
             skip: 0,
-            take: 6,
+            take: 10,
             orderBy: {
                 created_at: SortOrder.Desc,
             },
@@ -69,7 +69,7 @@ const Home = ({ posts }: IProps): JSX.Element => {
                     },
                 },
                 skip: 0,
-                take: 5,
+                take: 10,
                 orderBy: {
                     created_at: SortOrder.Desc,
                 },
@@ -80,7 +80,6 @@ const Home = ({ posts }: IProps): JSX.Element => {
     }, []);
 
     useEffect(() => {
-        console.log(inView);
         if (inView) {
             fetchMore({
                 variables: {
@@ -243,7 +242,7 @@ export const getStaticProps = async (): Promise<
                 },
             },
             skip: 0,
-            take: 6,
+            take: 10,
             orderBy: {
                 created_at: SortOrder.Desc,
             },

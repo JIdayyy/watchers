@@ -39,7 +39,7 @@ export default function CreateReply({ parentId }: IProps): JSX.Element {
                         },
                     },
                     parent_id: parentId,
-                    repliesRelation: {
+                    Comment_B: {
                         connect: [
                             {
                                 id: parentId,

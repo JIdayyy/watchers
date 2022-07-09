@@ -80,7 +80,7 @@ export default function UserDetailsPostCard({ author }: IProps): JSX.Element {
             setFollower({
                 variables: {
                     data: {
-                        followers: {
+                        User_B: {
                             connect: [
                                 {
                                     id: user.id,
@@ -97,7 +97,7 @@ export default function UserDetailsPostCard({ author }: IProps): JSX.Element {
             setFollower({
                 variables: {
                     data: {
-                        followers: {
+                        User_B: {
                             disconnect: [
                                 {
                                     id: user.id,

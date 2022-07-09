@@ -2,6 +2,11 @@ generator client {
   provider = "prisma-client-js"
 }
 
+generator typegraphql {
+  provider = "typegraphql-prisma"
+  output   = "../src/generated/graphql"
+}
+
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
@@ -60,14 +65,13 @@ model User {
   follower_id   String?
   Account       Account[]
   Comment       Comment[]
-  Like          Like[]
   Post          Post[]
   Preference    Preference?
   ResetPassword ResetPassword[]
   Session       Session[]
   User_B        User[]          @relation("following")
   User_A        User[]          @relation("following")
-  liked_posts  Post[]          @relation("likes")
+  Post_likes    Post[]          @relation("likes")
 }
 
 model Preference {
@@ -101,17 +105,8 @@ model Post {
   Category      Category? @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   author        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   Comment       Comment[]
-  Like          Like[]
   Tags          Tag[]
-  likes        User[]    @relation("likes")
-}
-
-model Like {
-  id      String  @id @default(uuid())
-  post_id String?
-  user_id String
-  post    Post?   @relation(fields: [post_id], references: [id], onDelete: Cascade)
-  user    User    @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  User_likes    User[]    @relation("likes")
 }
 
 model Comment {

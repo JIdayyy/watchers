@@ -5,24 +5,16 @@ import {
     MenuItem,
     MenuDivider,
 } from "@chakra-ui/react";
-import { logout } from "@redux/actions";
 import { RootState } from "@redux/reducers";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useDispatch, useSelector } from "react-redux";
-import { useLogoutMutation } from "src/generated/graphql";
+import { useSelector } from "react-redux";
 import { signOut } from "next-auth/react";
 
 export default function UserMenu(): JSX.Element {
     const { user } = useSelector((state: RootState) => state.user);
     const { push } = useRouter();
-    const dispatch = useDispatch();
-    const [mutateLogout] = useLogoutMutation({
-        onCompleted: () => {
-            dispatch(logout());
-            push("/");
-        },
-    });
+
     return (
         <Menu>
             <MenuButton
@@ -77,11 +69,7 @@ export default function UserMenu(): JSX.Element {
                 <MenuDivider />
                 <MenuItem
                     onClick={() => {
-                        mutateLogout({
-                            onCompleted: () => {
-                                signOut();
-                            },
-                        });
+                        signOut();
                     }}
                     _hover={{ bg: "gray.200", textDecor: "underline" }}
                 >

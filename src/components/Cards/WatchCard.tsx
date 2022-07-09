@@ -21,13 +21,7 @@ export default function WatchCard({ watch, isMain }: IProps): JSX.Element {
     const { data } = useGetAllPostLikesQuery({
         variables: {
             where: {
-                post: {
-                    is: {
-                        id: {
-                            equals: watch.id,
-                        },
-                    },
-                },
+                id: watch.id,
             },
         },
     });
@@ -111,7 +105,7 @@ export default function WatchCard({ watch, isMain }: IProps): JSX.Element {
                         <Flex>
                             <Text mr={5}>
                                 <Icon mr={1} as={AiFillLike} size={10} />
-                                {data?.likes.length} Likes
+                                {data?.post.User_likes.length} Likes
                             </Text>
                             <Text>
                                 <Icon mr={1} as={TbMessageCircle2} size={10} />

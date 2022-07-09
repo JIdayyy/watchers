@@ -6,6 +6,7 @@ import {
     NormalizedCacheObject,
 } from "@apollo/client";
 import { onError } from "@apollo/client/link/error";
+import { LocalStorageWrapper, persistCache } from "apollo3-cache-persist";
 
 let apolloClient: ApolloClient<NormalizedCacheObject> | null = null;
 
@@ -33,23 +34,42 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
     if (networkError) console.log(`[Network error]: ${networkError}`);
 });
 
-const createApolloClient = new ApolloClient({
-    ssrMode: typeof window === "undefined",
-    uri: serverUrl,
-    cache: new InMemoryCache({
-        typePolicies: {
-            Query: {
-                fields: {
-                    posts: {
-                        keyArgs: false,
-                        merge(existing = [], incoming) {
-                            return [...existing, ...incoming];
-                        },
+const cache = new InMemoryCache({
+    typePolicies: {
+        Query: {
+            fields: {
+                posts: {
+                    keyArgs: ["id"],
+                    merge(existing = [], incoming) {
+                        const myFinalArray = [];
+                        // first concatenating two arrays.
+                        const myArray3 = existing.concat(incoming);
+                        let length = myArray3.length;
+                        // iterating the concatenated array to its length and removing the repeating element
+                        // from the final array.
+                        while (length--) {
+                            const item = myArray3[length];
+                            if (myFinalArray.indexOf(item) === -1) {
+                                myFinalArray.unshift(item);
+                            }
+                        }
+                        return myFinalArray;
                     },
                 },
             },
         },
-    }),
+    },
+});
+const getCache = async () =>
+    await persistCache({
+        cache,
+        storage: new LocalStorageWrapper(window.localStorage),
+    });
+
+const createApolloClient = new ApolloClient({
+    ssrMode: typeof window === "undefined",
+    uri: serverUrl,
+    cache: cache,
     link: from([errorLink, httpLink]),
 });
 
@@ -61,5 +81,6 @@ export const initializeApollo = (): ApolloClient<NormalizedCacheObject> => {
         apolloClient = createApolloClient;
     }
 
+    // getCache();
     return apolloClient;
 };

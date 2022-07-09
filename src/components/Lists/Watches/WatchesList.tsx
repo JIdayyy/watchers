@@ -8,7 +8,6 @@ interface IProps {
 }
 
 const WatchesList = forwardRef(({ posts }: IProps, ref): JSX.Element => {
-    console.log(posts);
     return (
         <VStack
             position="relative"
@@ -26,6 +25,8 @@ const WatchesList = forwardRef(({ posts }: IProps, ref): JSX.Element => {
                     {index === posts.length - 3 && posts.length > 5 && (
                         <span
                             style={{
+                                margin: 0,
+                                height: 0,
                                 visibility: "hidden",
                             }}
                             ref={ref}

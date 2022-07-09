@@ -43,12 +43,9 @@ export default function Watch({ post }: IProps): JSX.Element {
 
     const { data } = useGetAllLikesQuery({
         notifyOnNetworkStatusChange: true,
-
         variables: {
             where: {
-                post_id: {
-                    equals: post.id,
-                },
+                id: post.id,
             },
         },
     });
@@ -67,18 +64,51 @@ export default function Watch({ post }: IProps): JSX.Element {
         });
     }, []);
 
+    const isLiked = data?.post.User_likes.find((like) => like.id === user.id);
+
     const handleClick = () => {
+        if (isLiked) {
+            setLike({
+                notifyOnNetworkStatusChange: true,
+                variables: {
+                    where: {
+                        id: post.id,
+                    },
+                    data: {
+                        User_likes: {
+                            disconnect: [
+                                {
+                                    id: user.id,
+                                },
+                            ],
+                        },
+                    },
+                },
+                refetchQueries: [
+                    {
+                        query: GetAllLikesDocument,
+                        variables: {
+                            where: {
+                                id: post.id,
+                            },
+                        },
+                    },
+                ],
+            });
+        }
         setLike({
             notifyOnNetworkStatusChange: true,
             variables: {
+                where: {
+                    id: post.id,
+                },
                 data: {
-                    post: {
-                        connect: { id: post.id },
-                    },
-                    user: {
-                        connect: {
-                            id: user.id,
-                        },
+                    User_likes: {
+                        connect: [
+                            {
+                                id: user.id,
+                            },
+                        ],
                     },
                 },
             },
@@ -87,9 +117,7 @@ export default function Watch({ post }: IProps): JSX.Element {
                     query: GetAllLikesDocument,
                     variables: {
                         where: {
-                            post_id: {
-                                equals: post.id,
-                            },
+                            id: post.id,
                         },
                     },
                 },
@@ -117,8 +145,6 @@ export default function Watch({ post }: IProps): JSX.Element {
             ],
         },
     };
-
-    console.log(loading);
 
     return (
         <>
@@ -177,13 +203,17 @@ export default function Watch({ post }: IProps): JSX.Element {
                                     {post.author.last_name}
                                 </Text>
                                 <Button
+                                    bg={isLiked ? "red" : "blue.400"}
                                     isLoading={loading}
                                     size="sm"
                                     onClick={handleClick}
                                     mr={5}
                                 >
                                     <Icon mr={1} as={AiFillLike} size={10} />
-                                    {data?.likes.length} Likes
+                                    {data?.post.User_likes.length}{" "}
+                                    {data?.post.User_likes.length === 1
+                                        ? "like"
+                                        : "likes"}
                                 </Button>
                             </Flex>
                             <Text my={4} as="h1">

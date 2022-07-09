@@ -5,7 +5,7 @@
     "scripts": {
         "dev": "next dev",
         "build": "next build",
-        "start": "next start",
+        "start": "npx prisma generate && next start",
         "apollo:download-schema": "apollo client:download-schema schema.graphql",
         "apollo:generate-types": "rm -rf __generated__ && apollo client:codegen --target typescript --outputFlat",
         "apollo:sync": "npm run apollo:download-schema && npm run apollo:generate-types",

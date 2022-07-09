@@ -1,5 +1,7 @@
-query GetAllPostLikes($where: LikeWhereInput!) {
-    likes(where: $where) {
-        id
+query GetAllPostLikes($where: PostWhereUniqueInput!) {
+    post(where: $where) {
+        User_likes {
+            id
+        }
     }
 }

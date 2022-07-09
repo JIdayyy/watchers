@@ -139,7 +139,7 @@ export default function CommentCard({ comment }: IProps): JSX.Element {
                 </Flex>
             </Flex>
             {showReplies && (
-                <Flex direction="column" w="95%" minW={["full", "400px"]}>
+                <Flex direction="column" w="95%" minW={["full", "500px"]}>
                     {data?.comments.map((comment) => (
                         <CommentCard comment={comment} />
                     ))}

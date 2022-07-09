@@ -3,7 +3,7 @@ import { RootState } from "@redux/reducers";
 import { signOut } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useCallback } from "react";
 import { useSelector } from "react-redux";
 import navLinks, { INavLink } from "src/config/navLinks";
 
@@ -11,37 +11,49 @@ export default function NavigationCard(): JSX.Element {
     const { user } = useSelector((state: RootState) => state.user);
     const { colorMode } = useColorMode();
 
-    const roleFilter = (link: INavLink) => {
-        if (link.role === "ALL") {
-            return true;
-        }
-        if (user.roles === link.role) {
-            return true;
-        }
-        return false;
-    };
+    const roleFilter = useCallback(
+        (link: INavLink, user: RootState["user"]["user"]) => {
+            if (link.role === "ALL") {
+                return true;
+            }
+            if (user.roles === "ADMIN" || user.roles === "SUPER_ADMIN") {
+                return true;
+            }
+            if (user.roles === link.role) {
+                return true;
+            }
+            return false;
+        },
+        [user],
+    );
+
     return (
         <Flex rounded={5} direction="column" w="full">
-            {navLinks.filter(roleFilter).map((link) => (
-                <Link key={link.id} href={link.path}>
-                    <Flex
-                        _hover={{
-                            textDecoration: "underline",
-                            bg: colorMode === "light" ? "gray.200" : "#171717",
-                        }}
-                        cursor="pointer"
-                        rounded="md"
-                        p={3}
-                        key={link.id}
-                        w="full"
-                        justifyContent="flex-start"
-                        alignItems="flex-start"
-                    >
-                        <Image src={link.icon} width={20} height={20} />
-                        <Text mx={2}>{link.name}</Text>
-                    </Flex>
-                </Link>
-            ))}
+            {navLinks
+                .filter((link) => roleFilter(link, user))
+                .map((link) => (
+                    <Link key={link.id} href={link.path}>
+                        <Flex
+                            _hover={{
+                                textDecoration: "underline",
+                                bg:
+                                    colorMode === "light"
+                                        ? "gray.200"
+                                        : "#171717",
+                            }}
+                            cursor="pointer"
+                            rounded="md"
+                            p={3}
+                            key={link.id}
+                            w="full"
+                            justifyContent="flex-start"
+                            alignItems="flex-start"
+                        >
+                            <Image src={link.icon} width={20} height={20} />
+                            <Text mx={2}>{link.name}</Text>
+                        </Flex>
+                    </Link>
+                ))}
 
             {user.id && (
                 <Flex

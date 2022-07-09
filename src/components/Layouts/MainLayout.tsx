@@ -4,7 +4,7 @@ import { login, logout } from "@redux/actions";
 import { useSession } from "next-auth/react";
 import { ReactNode, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Role } from "src/generated/graphql";
+import { Role, useLogoutMutation } from "src/generated/graphql";
 
 type Props = {
     children: ReactNode;
@@ -13,6 +13,7 @@ type Props = {
 export default function MainLayout({ children }: Props): JSX.Element {
     const dispatch = useDispatch();
     const session = useSession();
+    const [logoutMutation] = useLogoutMutation();
 
     useEffect(() => {
         if (session.status === "authenticated") {
@@ -30,6 +31,7 @@ export default function MainLayout({ children }: Props): JSX.Element {
         }
 
         if (session.status === "unauthenticated") {
+            logoutMutation();
             dispatch(logout());
         }
     }, [session]);

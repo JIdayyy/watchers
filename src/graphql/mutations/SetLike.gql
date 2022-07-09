@@ -1,5 +1,5 @@
-mutation SetLike($data: LikeCreateInput!) {
-    createLike(data: $data) {
+mutation SetLike($where: PostWhereUniqueInput!, $data: PostUpdateInput!) {
+    updatePost(where: $where, data: $data) {
         id
     }
 }

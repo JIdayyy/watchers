@@ -1,0 +1,41 @@
+query GetAllPostByInput(
+    $where: PostWhereInput
+    $orderBy: [PostOrderByWithRelationInput!]
+    $skip: Int
+    $take: Int
+) {
+    posts(where: $where, orderBy: $orderBy, skip: $skip, take: $take) {
+        id
+        title
+        content
+        isDraft
+        cover_picture
+        slug
+        created_at
+        commentCount {
+            count
+        }
+        likeCount {
+            count
+        }
+        author {
+            id
+            first_name
+            image
+            nickname
+            last_name
+            email
+            avatar
+        }
+        userId
+        Category {
+            id
+            name
+        }
+        categoryId
+        Tags {
+            id
+            name
+        }
+    }
+}

@@ -28,7 +28,7 @@ const navLinks: INavLink[] = [
         name: "My Posts",
         path: "/myposts",
         icon: "/icons/posts.png",
-        role: "ALL",
+        role: Role.User,
     },
     {
         id: 4,

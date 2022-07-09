@@ -59,7 +59,8 @@ export default function Navbar(): JSX.Element {
             top={0}
             border={colorMode == "light" ? "1px solid #D6D6D6" : ""}
             w="100vw"
-            p={3}
+            px={3}
+            py={2}
             justifyContent="center"
             alignItems="center"
         >

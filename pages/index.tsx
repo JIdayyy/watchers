@@ -9,6 +9,7 @@ import {
 } from "@chakra-ui/react";
 import MainLayout from "@components/Layouts/MainLayout";
 import WatchesList from "@components/Lists/Watches/WatchesList";
+import settingsConfig from "../website-config/settings.json";
 import Image from "next/image";
 import NavigationCard from "@components/Navigation/NavigationCard";
 import {
@@ -223,7 +224,9 @@ const Home = ({ posts }: IProps): JSX.Element => {
                             height={39}
                         />
                     </Flex>
-                    <Button w="full">Add Watch</Button>
+                    <Button w="full">
+                        {settingsConfig["add-post-button"]}
+                    </Button>
                 </CustomBox>
             </GridItem>
         </Grid>

@@ -2,7 +2,10 @@ import {
     Button,
     Flex,
     FormLabel,
+    Icon,
     Input,
+    InputGroup,
+    InputRightElement,
     Text,
     useColorMode,
     VStack,
@@ -13,12 +16,16 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { login } from "@redux/actions";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
+import { BsFillKeyFill } from "react-icons/bs";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
+import globalWebsiteConfig from "../website-config/global.json";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { useRegisterMutation } from "src/generated/graphql";
 import registerFormResolver from "src/Resolvers/RegisterFormResolver";
+import { CheckIcon, EmailIcon } from "@chakra-ui/icons";
+import Image from "next/image";
 
 interface FormData {
     email: string;
@@ -28,6 +35,7 @@ interface FormData {
 }
 
 export default function Register(): JSX.Element {
+    const [isVisible, setIsVisible] = useState(false);
     const router = useRouter();
     const { colorMode } = useColorMode();
     const [isLoading, setIsLoading] = useState(false);
@@ -80,15 +88,15 @@ export default function Register(): JSX.Element {
     return (
         <Flex w="full" h="full" justifyContent="center" alignItems="center">
             <VStack
-                spacing={2}
-                p={5}
+                spacing={3}
+                p={10}
                 rounded={5}
                 border={colorMode == "light" ? "1px solid #D6D6D6" : ""}
                 w={["90%", "70%", "50%", "30%"]}
                 bg={colorMode === "light" ? "white" : "#171717"}
             >
                 <Text fontSize="24px" fontWeight="bold">
-                    Welcome to Tech Watchers
+                    Welcome to {globalWebsiteConfig["website-title"]}
                 </Text>
                 <Button
                     onClick={() => handleProviderSignMethod("github")}
@@ -96,7 +104,12 @@ export default function Register(): JSX.Element {
                     bg="black"
                     w="full"
                 >
-                    Continue with github
+                    <Image
+                        src="/icons/github-icon.svg"
+                        width={20}
+                        height={20}
+                    />
+                    <Text ml={2}>Continue with github</Text>
                 </Button>
                 <Button
                     onClick={() => handleProviderSignMethod("google")}
@@ -104,42 +117,79 @@ export default function Register(): JSX.Element {
                     bg="blue.300"
                     w="full"
                 >
-                    Continue with google
+                    <Image src="/icons/google.png" width={20} height={20} />
+                    <Text ml={2}>Continue with google</Text>
                 </Button>
 
                 <FormLabel w="full" textAlign="left" htmlFor="email">
                     Email
                 </FormLabel>
-                <Input {...register("email")} id="email" w="full" />
-                <InputError errors={errors} name="email" />
+                <InputGroup>
+                    <Input {...register("email")} id="email" w="full" />
+                    <InputRightElement children={<EmailIcon />} />
+                    <InputError errors={errors} name="email" />
+                </InputGroup>
 
                 <FormLabel w="full" textAlign="left" htmlFor="nickname">
                     Pseudo
                 </FormLabel>
-                <Input {...register("nickname")} id="nickname" w="full" />
-                <InputError errors={errors} name="nickname" />
+                <InputGroup>
+                    <Input {...register("nickname")} id="nickname" w="full" />
+                    <InputRightElement children={<CheckIcon />} />
+
+                    <InputError errors={errors} name="nickname" />
+                </InputGroup>
 
                 <FormLabel w="full" textAlign="left" htmlFor="password">
                     Password
                 </FormLabel>
-                <Input
-                    {...register("password")}
-                    type="password"
-                    id="password"
-                    w="full"
-                />
-                <InputError errors={errors} name="password" />
+
+                <InputGroup>
+                    <Input
+                        type={isVisible ? "text" : "password"}
+                        {...register("password")}
+                        id="password"
+                        w="full"
+                    />
+                    <InputRightElement
+                        children={
+                            <Button
+                                bg="transparent"
+                                _hover={{ bg: "transparent" }}
+                                size="sm"
+                                onClick={() => setIsVisible((c) => !c)}
+                            >
+                                <Icon as={BsFillKeyFill} />
+                            </Button>
+                        }
+                    />
+                    <InputError errors={errors} name="password" />
+                </InputGroup>
 
                 <FormLabel w="full" textAlign="left" htmlFor="confirm_password">
                     Confirm password
                 </FormLabel>
-                <Input
-                    {...register("confirm_password")}
-                    type="password"
-                    id="confirm_password"
-                    w="full"
-                />
-                <InputError errors={errors} name="confirm_password" />
+                <InputGroup>
+                    <InputRightElement
+                        children={
+                            <Button
+                                bg="transparent"
+                                _hover={{ bg: "transparent" }}
+                                size="sm"
+                                onClick={() => setIsVisible((c) => !c)}
+                            >
+                                <Icon as={BsFillKeyFill} />
+                            </Button>
+                        }
+                    />
+                    <Input
+                        {...register("confirm_password")}
+                        type={isVisible ? "text" : "password"}
+                        id="confirm_password"
+                        w="full"
+                    />
+                    <InputError errors={errors} name="confirm_password" />
+                </InputGroup>
 
                 <Button
                     isLoading={isLoading || loading}

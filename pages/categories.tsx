@@ -18,10 +18,11 @@ import {
 
 export default function Categories(): JSX.Element {
     const { colorMode } = useColorMode();
-    const { data } = useGetAllCategoriesQuery();
-    const [selectedCategory, setSelectedCategory] = useState("dev");
+    const [selectedCategory, setSelectedCategory] = useState("");
+    const { data } = useGetAllCategoriesQuery({
+        onCompleted: (data) => setSelectedCategory(data.categories[0].name),
+    });
     const { ref, inView } = useInView();
-    console.log(selectedCategory);
     const { data: posts, fetchMore } = useGetAllPostByInputQuery({
         fetchPolicy: "no-cache",
         notifyOnNetworkStatusChange: true,
@@ -41,6 +42,7 @@ export default function Categories(): JSX.Element {
                 created_at: SortOrder.Desc,
             },
         },
+        skip: !selectedCategory,
     });
 
     useEffect(() => {

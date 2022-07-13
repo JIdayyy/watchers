@@ -1,20 +1,3 @@
-export default {
-    title: "Tech Watchers",
-    titleTemplate: " %s | Blog",
-    defaultTitle: "Tech Watchers",
-    description: "This website regroup all the tech watchs of our community",
-    openGraph: {
-        type: "website",
-        locale: "en_IE",
-        url: "https://tech-watchers.vercel.app/",
-        site_name: "Tech Watchers",
-        images: [
-            {
-                url: "https://img2.freepng.fr/20180425/ate/kisspng-lantern-light-oil-lamp-kerosene-lamp-decorative-lantern-5ae0abd45ef5d4.156863131524673492389.jpg",
-                width: 800,
-                height: 420,
-                alt: "TechWatcher Logo",
-            },
-        ],
-    },
-};
+import SEOConfig from "../../website-config/seo.json";
+
+export default SEOConfig;

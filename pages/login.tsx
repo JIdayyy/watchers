@@ -12,10 +12,12 @@ import { signIn, useSession } from "next-auth/react";
 import MainLayout from "@components/Layouts/MainLayout";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import globalWebsiteConfig from "../website-config/global.json";
 import loginFormResolver from "src/Resolvers/LoginFormResolver";
 import { yupResolver } from "@hookform/resolvers/yup";
 import InputError from "@components/Form/InputError";
 import Link from "next/link";
+import Image from "next/image";
 
 interface FormData {
     email: string;
@@ -65,15 +67,15 @@ export default function Login(): JSX.Element {
     return (
         <Flex w="full" h="full" justifyContent="center" alignItems="center">
             <VStack
-                spacing={2}
-                p={5}
+                spacing={3}
+                p={10}
                 rounded={5}
                 border={colorMode === "light" ? "1px solid #D6D6D6" : ""}
                 w={["90%", "70%", "50%", "30%"]}
                 bg={colorMode === "light" ? "white" : "#171717"}
             >
-                <Text as="h1" fontWeight="bold">
-                    Welcome back to Tech Watchers
+                <Text textAlign="center" as="h1" fontWeight="bold">
+                    Welcome back to {globalWebsiteConfig["website-title"]}
                 </Text>
                 <Button
                     onClick={() => handleProviderSignMethod("github")}
@@ -81,7 +83,12 @@ export default function Login(): JSX.Element {
                     bg="black"
                     w="full"
                 >
-                    Continue with github
+                    <Image
+                        src="/icons/github-icon.svg"
+                        width={20}
+                        height={20}
+                    />
+                    <Text ml={2}>Continue with github</Text>
                 </Button>
                 <Button
                     onClick={() => handleProviderSignMethod("google")}
@@ -89,7 +96,8 @@ export default function Login(): JSX.Element {
                     bg="blue.300"
                     w="full"
                 >
-                    Continue with google
+                    <Image src="/icons/google.png" width={20} height={20} />
+                    <Text ml={2}>Continue with google</Text>
                 </Button>
 
                 <FormLabel w="full" textAlign="left" htmlFor="email">

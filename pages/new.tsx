@@ -11,10 +11,9 @@ import {
 } from "@chakra-ui/react";
 import NewWatchLayout from "@components/Layouts/NewWatch";
 import React, { ChangeEvent, useEffect, useRef, useState } from "react";
-import RichText from "@components/RichText";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import CategoriesModal from "@components/Modals/Categories.modal";
+import globalWebsiteConfig from "../website-config/global.json";
 import { FieldValues, useForm } from "react-hook-form";
 import { useCreatePostMutation } from "src/generated/graphql";
 import { useSelector } from "react-redux";
@@ -22,11 +21,17 @@ import { RootState } from "@redux/reducers";
 import { imageService } from "@services/api/fetcher";
 import axiosInstance from "@services/api/axiosInstance";
 import { CloseIcon } from "@chakra-ui/icons";
-import Preview from "@components/Preview";
 import CustomFlex from "@definitions/chakra/theme/components/Box/CustomFlex";
-import TagsList from "@components/Tags/TagsList";
+import dynamic from "next/dynamic";
 
 const initialValue = "<p> <b>Start to writte your watch here ...</b></p>";
+
+const RichText = dynamic(() => import("@components/RichText"));
+const Preview = dynamic(() => import("@components/Preview"));
+const CategoriesModal = dynamic(
+    () => import("@components/Modals/Categories.modal"),
+);
+const TagsList = dynamic(() => import("@components/Tags/TagsList"));
 
 export default function NewWatch(): JSX.Element {
     const toast = useToast();
@@ -200,7 +205,7 @@ export default function NewWatch(): JSX.Element {
                     onClick={() => router.push("/")}
                 >
                     <Text mr={2} color="white" fontWeight="bold">
-                        Tech Watchers
+                        {globalWebsiteConfig["website-title"]}
                     </Text>
                     <Image src="/icons/watchers.png" width={25} height={25} />
                 </Button>
@@ -208,7 +213,7 @@ export default function NewWatch(): JSX.Element {
             </Flex>
             <Flex my={1} justifyContent="space-between" w="full">
                 <Text fontSize="24px" fontWeight="bold">
-                    Create Watch
+                    Create Post
                 </Text>
                 <Button
                     bg="blue.400"

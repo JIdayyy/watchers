@@ -6,7 +6,7 @@ import {
     NormalizedCacheObject,
 } from "@apollo/client";
 import { onError } from "@apollo/client/link/error";
-import { LocalStorageWrapper, persistCache } from "apollo3-cache-persist";
+// import { LocalStorageWrapper, persistCache } from "apollo3-cache-persist";
 
 let apolloClient: ApolloClient<NormalizedCacheObject> | null = null;
 
@@ -60,11 +60,11 @@ const cache = new InMemoryCache({
         },
     },
 });
-const getCache = async () =>
-    await persistCache({
-        cache,
-        storage: new LocalStorageWrapper(window.localStorage),
-    });
+// const getCache = async () =>
+//     await persistCache({
+//         cache,
+//         storage: new LocalStorageWrapper(window.localStorage),
+//     });
 
 const createApolloClient = new ApolloClient({
     ssrMode: typeof window === "undefined",

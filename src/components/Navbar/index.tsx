@@ -14,6 +14,8 @@ import {
 } from "@chakra-ui/react";
 import { RootState } from "@redux/reducers";
 import Image from "next/image";
+import globalWebsiteConfig from "../../../website-config/global.json";
+import settingsConfig from "../../../website-config/settings.json";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
@@ -92,10 +94,10 @@ export default function Navbar(): JSX.Element {
                                 color="white"
                                 fontWeight="bold"
                             >
-                                Tech Watchers
+                                {globalWebsiteConfig["website-title"]}
                             </Text>
                             <Image
-                                src="/icons/watchers.png"
+                                src={globalWebsiteConfig["website-logo"]}
                                 width={25}
                                 height={25}
                             />
@@ -154,7 +156,7 @@ export default function Navbar(): JSX.Element {
                                     onClick={() => router.push("/new")}
                                     variant="action"
                                 >
-                                    Add Watch
+                                    {settingsConfig["add-post-button"]}
                                 </Button>
 
                                 <UserMenu />

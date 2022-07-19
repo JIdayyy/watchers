@@ -1,0 +1,12 @@
+query GetAllForums {
+    forums {
+        id
+        name
+        forum_categories {
+            id
+            name
+            description
+            icon
+        }
+    }
+}

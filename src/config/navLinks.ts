@@ -18,31 +18,39 @@ const navLinks: INavLink[] = [
     },
     {
         id: 2,
+        name: "Forum",
+        path: "/forum",
+        icon: "/icons/profile.png",
+        role: Role.User,
+    },
+    {
+        id: 3,
         name: "Categories",
         path: "/categories",
         icon: "/icons/categories.png",
         role: "ALL",
     },
     {
-        id: 3,
+        id: 4,
         name: "My Posts",
         path: "/myposts",
         icon: "/icons/posts.png",
         role: Role.User,
     },
     {
-        id: 4,
+        id: 5,
         name: "Admin",
         path: "/admin",
         icon: "/icons/admin.png",
         role: Role.Admin,
     },
     {
-        id: 5,
+        id: 6,
         name: "My Profile",
         path: "/settings/profile",
         icon: "/icons/profile.png",
         role: Role.User,
     },
 ];
+
 export default navLinks;

@@ -1,0 +1,23 @@
+query GetTopicsByForumCategory($where: TopicWhereInput!) {
+    topics(where: $where) {
+        id
+        name
+        created_at
+        updated_at
+        articles {
+            id
+            name
+            author {
+                id
+                name
+            }
+            content
+            created_at
+            updated_at
+        }
+        forum_category {
+            id
+            name
+        }
+    }
+}

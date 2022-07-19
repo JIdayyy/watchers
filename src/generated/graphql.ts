@@ -457,6 +457,13 @@ export type AggregateAccount = {
   _sum: Maybe<AccountSumAggregate>;
 };
 
+export type AggregateArticle = {
+  __typename?: 'AggregateArticle';
+  _count: Maybe<ArticleCountAggregate>;
+  _max: Maybe<ArticleMaxAggregate>;
+  _min: Maybe<ArticleMinAggregate>;
+};
+
 export type AggregateCategory = {
   __typename?: 'AggregateCategory';
   _count: Maybe<CategoryCountAggregate>;
@@ -469,6 +476,20 @@ export type AggregateComment = {
   _count: Maybe<CommentCountAggregate>;
   _max: Maybe<CommentMaxAggregate>;
   _min: Maybe<CommentMinAggregate>;
+};
+
+export type AggregateForum = {
+  __typename?: 'AggregateForum';
+  _count: Maybe<ForumCountAggregate>;
+  _max: Maybe<ForumMaxAggregate>;
+  _min: Maybe<ForumMinAggregate>;
+};
+
+export type AggregateForumCategory = {
+  __typename?: 'AggregateForumCategory';
+  _count: Maybe<ForumCategoryCountAggregate>;
+  _max: Maybe<ForumCategoryMaxAggregate>;
+  _min: Maybe<ForumCategoryMinAggregate>;
 };
 
 export type AggregatePost = {
@@ -506,6 +527,13 @@ export type AggregateTag = {
   _min: Maybe<TagMinAggregate>;
 };
 
+export type AggregateTopic = {
+  __typename?: 'AggregateTopic';
+  _count: Maybe<TopicCountAggregate>;
+  _max: Maybe<TopicMaxAggregate>;
+  _min: Maybe<TopicMinAggregate>;
+};
+
 export type AggregateUser = {
   __typename?: 'AggregateUser';
   _count: Maybe<UserCountAggregate>;
@@ -518,6 +546,373 @@ export type AggregateVerificationToken = {
   _count: Maybe<VerificationTokenCountAggregate>;
   _max: Maybe<VerificationTokenMaxAggregate>;
   _min: Maybe<VerificationTokenMinAggregate>;
+};
+
+export type Article = {
+  __typename?: 'Article';
+  author: User;
+  author_id: Scalars['String'];
+  content: Scalars['String'];
+  created_at: Scalars['DateTime'];
+  id: Scalars['String'];
+  is_disabled: Scalars['Boolean'];
+  name: Scalars['String'];
+  topic: Topic;
+  updated_at: Scalars['DateTime'];
+};
+
+export type ArticleCountAggregate = {
+  __typename?: 'ArticleCountAggregate';
+  _all: Scalars['Int'];
+  author_id: Scalars['Int'];
+  content: Scalars['Int'];
+  created_at: Scalars['Int'];
+  id: Scalars['Int'];
+  is_disabled: Scalars['Int'];
+  name: Scalars['Int'];
+  updated_at: Scalars['Int'];
+};
+
+export type ArticleCountOrderByAggregateInput = {
+  author_id?: InputMaybe<SortOrder>;
+  content?: InputMaybe<SortOrder>;
+  created_at?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  is_disabled?: InputMaybe<SortOrder>;
+  name?: InputMaybe<SortOrder>;
+  updated_at?: InputMaybe<SortOrder>;
+};
+
+export type ArticleCreateInput = {
+  author: UserCreateNestedOneWithoutForum_ArticlesInput;
+  content: Scalars['String'];
+  created_at?: InputMaybe<Scalars['DateTime']>;
+  is_disabled?: InputMaybe<Scalars['Boolean']>;
+  name: Scalars['String'];
+  topic?: InputMaybe<TopicCreateNestedOneWithoutArticlesInput>;
+  updated_at?: InputMaybe<Scalars['DateTime']>;
+};
+
+export type ArticleCreateManyAuthorInput = {
+  content: Scalars['String'];
+  created_at?: InputMaybe<Scalars['DateTime']>;
+  id?: InputMaybe<Scalars['String']>;
+  is_disabled?: InputMaybe<Scalars['Boolean']>;
+  name: Scalars['String'];
+  updated_at?: InputMaybe<Scalars['DateTime']>;
+};
+
+export type ArticleCreateManyAuthorInputEnvelope = {
+  data: Array<ArticleCreateManyAuthorInput>;
+  skipDuplicates?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type ArticleCreateManyInput = {
+  author_id: Scalars['String'];
+  content: Scalars['String'];
+  created_at?: InputMaybe<Scalars['DateTime']>;
+  id?: InputMaybe<Scalars['String']>;
+  is_disabled?: InputMaybe<Scalars['Boolean']>;
+  name: Scalars['String'];
+  updated_at?: InputMaybe<Scalars['DateTime']>;
+};
+
+export type ArticleCreateManyTopicInput = {
+  author_id: Scalars['String'];
+  content: Scalars['String'];
+  created_at?: InputMaybe<Scalars['DateTime']>;
+  is_disabled?: InputMaybe<Scalars['Boolean']>;
+  name: Scalars['String'];
+  updated_at?: InputMaybe<Scalars['DateTime']>;
+};
+
+export type ArticleCreateManyTopicInputEnvelope = {
+  data: Array<ArticleCreateManyTopicInput>;
+  skipDuplicates?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type ArticleCreateNestedManyWithoutAuthorInput = {
+  connect?: InputMaybe<Array<ArticleWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<ArticleCreateOrConnectWithoutAuthorInput>>;
+  create?: InputMaybe<Array<ArticleCreateWithoutAuthorInput>>;
+  createMany?: InputMaybe<ArticleCreateManyAuthorInputEnvelope>;
+};
+
+export type ArticleCreateNestedManyWithoutTopicInput = {
+  connect?: InputMaybe<Array<ArticleWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<ArticleCreateOrConnectWithoutTopicInput>>;
+  create?: InputMaybe<Array<ArticleCreateWithoutTopicInput>>;
+  createMany?: InputMaybe<ArticleCreateManyTopicInputEnvelope>;
+};
+
+export type ArticleCreateOrConnectWithoutAuthorInput = {
+  create: ArticleCreateWithoutAuthorInput;
+  where: ArticleWhereUniqueInput;
+};
+
+export type ArticleCreateOrConnectWithoutTopicInput = {
+  create: ArticleCreateWithoutTopicInput;
+  where: ArticleWhereUniqueInput;
+};
+
+export type ArticleCreateWithoutAuthorInput = {
+  content: Scalars['String'];
+  created_at?: InputMaybe<Scalars['DateTime']>;
+  is_disabled?: InputMaybe<Scalars['Boolean']>;
+  name: Scalars['String'];
+  topic?: InputMaybe<TopicCreateNestedOneWithoutArticlesInput>;
+  updated_at?: InputMaybe<Scalars['DateTime']>;
+};
+
+export type ArticleCreateWithoutTopicInput = {
+  author: UserCreateNestedOneWithoutForum_ArticlesInput;
+  content: Scalars['String'];
+  created_at?: InputMaybe<Scalars['DateTime']>;
+  is_disabled?: InputMaybe<Scalars['Boolean']>;
+  name: Scalars['String'];
+  updated_at?: InputMaybe<Scalars['DateTime']>;
+};
+
+export type ArticleGroupBy = {
+  __typename?: 'ArticleGroupBy';
+  _count: Maybe<ArticleCountAggregate>;
+  _max: Maybe<ArticleMaxAggregate>;
+  _min: Maybe<ArticleMinAggregate>;
+  author_id: Scalars['String'];
+  content: Scalars['String'];
+  created_at: Scalars['DateTime'];
+  id: Scalars['String'];
+  is_disabled: Scalars['Boolean'];
+  name: Scalars['String'];
+  updated_at: Scalars['DateTime'];
+};
+
+export type ArticleListRelationFilter = {
+  every?: InputMaybe<ArticleWhereInput>;
+  none?: InputMaybe<ArticleWhereInput>;
+  some?: InputMaybe<ArticleWhereInput>;
+};
+
+export type ArticleMaxAggregate = {
+  __typename?: 'ArticleMaxAggregate';
+  author_id: Maybe<Scalars['String']>;
+  content: Maybe<Scalars['String']>;
+  created_at: Maybe<Scalars['DateTime']>;
+  id: Maybe<Scalars['String']>;
+  is_disabled: Maybe<Scalars['Boolean']>;
+  name: Maybe<Scalars['String']>;
+  updated_at: Maybe<Scalars['DateTime']>;
+};
+
+export type ArticleMaxOrderByAggregateInput = {
+  author_id?: InputMaybe<SortOrder>;
+  content?: InputMaybe<SortOrder>;
+  created_at?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  is_disabled?: InputMaybe<SortOrder>;
+  name?: InputMaybe<SortOrder>;
+  updated_at?: InputMaybe<SortOrder>;
+};
+
+export type ArticleMinAggregate = {
+  __typename?: 'ArticleMinAggregate';
+  author_id: Maybe<Scalars['String']>;
+  content: Maybe<Scalars['String']>;
+  created_at: Maybe<Scalars['DateTime']>;
+  id: Maybe<Scalars['String']>;
+  is_disabled: Maybe<Scalars['Boolean']>;
+  name: Maybe<Scalars['String']>;
+  updated_at: Maybe<Scalars['DateTime']>;
+};
+
+export type ArticleMinOrderByAggregateInput = {
+  author_id?: InputMaybe<SortOrder>;
+  content?: InputMaybe<SortOrder>;
+  created_at?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  is_disabled?: InputMaybe<SortOrder>;
+  name?: InputMaybe<SortOrder>;
+  updated_at?: InputMaybe<SortOrder>;
+};
+
+export type ArticleOrderByRelationAggregateInput = {
+  _count?: InputMaybe<SortOrder>;
+};
+
+export type ArticleOrderByWithAggregationInput = {
+  _count?: InputMaybe<ArticleCountOrderByAggregateInput>;
+  _max?: InputMaybe<ArticleMaxOrderByAggregateInput>;
+  _min?: InputMaybe<ArticleMinOrderByAggregateInput>;
+  author_id?: InputMaybe<SortOrder>;
+  content?: InputMaybe<SortOrder>;
+  created_at?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  is_disabled?: InputMaybe<SortOrder>;
+  name?: InputMaybe<SortOrder>;
+  updated_at?: InputMaybe<SortOrder>;
+};
+
+export type ArticleOrderByWithRelationInput = {
+  author?: InputMaybe<UserOrderByWithRelationInput>;
+  author_id?: InputMaybe<SortOrder>;
+  content?: InputMaybe<SortOrder>;
+  created_at?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  is_disabled?: InputMaybe<SortOrder>;
+  name?: InputMaybe<SortOrder>;
+  topic?: InputMaybe<TopicOrderByWithRelationInput>;
+  updated_at?: InputMaybe<SortOrder>;
+};
+
+export enum ArticleScalarFieldEnum {
+  AuthorId = 'author_id',
+  Content = 'content',
+  CreatedAt = 'created_at',
+  Id = 'id',
+  IsDisabled = 'is_disabled',
+  Name = 'name',
+  UpdatedAt = 'updated_at'
+}
+
+export type ArticleScalarWhereInput = {
+  AND?: InputMaybe<Array<ArticleScalarWhereInput>>;
+  NOT?: InputMaybe<Array<ArticleScalarWhereInput>>;
+  OR?: InputMaybe<Array<ArticleScalarWhereInput>>;
+  author_id?: InputMaybe<StringFilter>;
+  content?: InputMaybe<StringFilter>;
+  created_at?: InputMaybe<DateTimeFilter>;
+  id?: InputMaybe<StringFilter>;
+  is_disabled?: InputMaybe<BoolFilter>;
+  name?: InputMaybe<StringFilter>;
+  updated_at?: InputMaybe<DateTimeFilter>;
+};
+
+export type ArticleScalarWhereWithAggregatesInput = {
+  AND?: InputMaybe<Array<ArticleScalarWhereWithAggregatesInput>>;
+  NOT?: InputMaybe<Array<ArticleScalarWhereWithAggregatesInput>>;
+  OR?: InputMaybe<Array<ArticleScalarWhereWithAggregatesInput>>;
+  author_id?: InputMaybe<StringWithAggregatesFilter>;
+  content?: InputMaybe<StringWithAggregatesFilter>;
+  created_at?: InputMaybe<DateTimeWithAggregatesFilter>;
+  id?: InputMaybe<StringWithAggregatesFilter>;
+  is_disabled?: InputMaybe<BoolWithAggregatesFilter>;
+  name?: InputMaybe<StringWithAggregatesFilter>;
+  updated_at?: InputMaybe<DateTimeWithAggregatesFilter>;
+};
+
+export type ArticleUpdateInput = {
+  author?: InputMaybe<UserUpdateOneRequiredWithoutForum_ArticlesInput>;
+  content?: InputMaybe<StringFieldUpdateOperationsInput>;
+  created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  name?: InputMaybe<StringFieldUpdateOperationsInput>;
+  topic?: InputMaybe<TopicUpdateOneRequiredWithoutArticlesInput>;
+  updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+};
+
+export type ArticleUpdateManyMutationInput = {
+  content?: InputMaybe<StringFieldUpdateOperationsInput>;
+  created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  name?: InputMaybe<StringFieldUpdateOperationsInput>;
+  updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+};
+
+export type ArticleUpdateManyWithWhereWithoutAuthorInput = {
+  data: ArticleUpdateManyMutationInput;
+  where: ArticleScalarWhereInput;
+};
+
+export type ArticleUpdateManyWithWhereWithoutTopicInput = {
+  data: ArticleUpdateManyMutationInput;
+  where: ArticleScalarWhereInput;
+};
+
+export type ArticleUpdateManyWithoutAuthorInput = {
+  connect?: InputMaybe<Array<ArticleWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<ArticleCreateOrConnectWithoutAuthorInput>>;
+  create?: InputMaybe<Array<ArticleCreateWithoutAuthorInput>>;
+  createMany?: InputMaybe<ArticleCreateManyAuthorInputEnvelope>;
+  delete?: InputMaybe<Array<ArticleWhereUniqueInput>>;
+  deleteMany?: InputMaybe<Array<ArticleScalarWhereInput>>;
+  disconnect?: InputMaybe<Array<ArticleWhereUniqueInput>>;
+  set?: InputMaybe<Array<ArticleWhereUniqueInput>>;
+  update?: InputMaybe<Array<ArticleUpdateWithWhereUniqueWithoutAuthorInput>>;
+  updateMany?: InputMaybe<Array<ArticleUpdateManyWithWhereWithoutAuthorInput>>;
+  upsert?: InputMaybe<Array<ArticleUpsertWithWhereUniqueWithoutAuthorInput>>;
+};
+
+export type ArticleUpdateManyWithoutTopicInput = {
+  connect?: InputMaybe<Array<ArticleWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<ArticleCreateOrConnectWithoutTopicInput>>;
+  create?: InputMaybe<Array<ArticleCreateWithoutTopicInput>>;
+  createMany?: InputMaybe<ArticleCreateManyTopicInputEnvelope>;
+  delete?: InputMaybe<Array<ArticleWhereUniqueInput>>;
+  deleteMany?: InputMaybe<Array<ArticleScalarWhereInput>>;
+  disconnect?: InputMaybe<Array<ArticleWhereUniqueInput>>;
+  set?: InputMaybe<Array<ArticleWhereUniqueInput>>;
+  update?: InputMaybe<Array<ArticleUpdateWithWhereUniqueWithoutTopicInput>>;
+  updateMany?: InputMaybe<Array<ArticleUpdateManyWithWhereWithoutTopicInput>>;
+  upsert?: InputMaybe<Array<ArticleUpsertWithWhereUniqueWithoutTopicInput>>;
+};
+
+export type ArticleUpdateWithWhereUniqueWithoutAuthorInput = {
+  data: ArticleUpdateWithoutAuthorInput;
+  where: ArticleWhereUniqueInput;
+};
+
+export type ArticleUpdateWithWhereUniqueWithoutTopicInput = {
+  data: ArticleUpdateWithoutTopicInput;
+  where: ArticleWhereUniqueInput;
+};
+
+export type ArticleUpdateWithoutAuthorInput = {
+  content?: InputMaybe<StringFieldUpdateOperationsInput>;
+  created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  name?: InputMaybe<StringFieldUpdateOperationsInput>;
+  topic?: InputMaybe<TopicUpdateOneRequiredWithoutArticlesInput>;
+  updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+};
+
+export type ArticleUpdateWithoutTopicInput = {
+  author?: InputMaybe<UserUpdateOneRequiredWithoutForum_ArticlesInput>;
+  content?: InputMaybe<StringFieldUpdateOperationsInput>;
+  created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  name?: InputMaybe<StringFieldUpdateOperationsInput>;
+  updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+};
+
+export type ArticleUpsertWithWhereUniqueWithoutAuthorInput = {
+  create: ArticleCreateWithoutAuthorInput;
+  update: ArticleUpdateWithoutAuthorInput;
+  where: ArticleWhereUniqueInput;
+};
+
+export type ArticleUpsertWithWhereUniqueWithoutTopicInput = {
+  create: ArticleCreateWithoutTopicInput;
+  update: ArticleUpdateWithoutTopicInput;
+  where: ArticleWhereUniqueInput;
+};
+
+export type ArticleWhereInput = {
+  AND?: InputMaybe<Array<ArticleWhereInput>>;
+  NOT?: InputMaybe<Array<ArticleWhereInput>>;
+  OR?: InputMaybe<Array<ArticleWhereInput>>;
+  author?: InputMaybe<UserRelationFilter>;
+  author_id?: InputMaybe<StringFilter>;
+  content?: InputMaybe<StringFilter>;
+  created_at?: InputMaybe<DateTimeFilter>;
+  id?: InputMaybe<StringFilter>;
+  is_disabled?: InputMaybe<BoolFilter>;
+  name?: InputMaybe<StringFilter>;
+  topic?: InputMaybe<TopicRelationFilter>;
+  updated_at?: InputMaybe<DateTimeFilter>;
+};
+
+export type ArticleWhereUniqueInput = {
+  id?: InputMaybe<Scalars['String']>;
 };
 
 export type BoolFieldUpdateOperationsInput = {
@@ -1353,6 +1748,14 @@ export type EnumRoleFilter = {
   notIn?: InputMaybe<Array<Role>>;
 };
 
+export type EnumRoleNullableListFilter = {
+  equals?: InputMaybe<Array<Role>>;
+  has?: InputMaybe<Role>;
+  hasEvery?: InputMaybe<Array<Role>>;
+  hasSome?: InputMaybe<Array<Role>>;
+  isEmpty?: InputMaybe<Scalars['Boolean']>;
+};
+
 export type EnumRoleWithAggregatesFilter = {
   _count?: InputMaybe<NestedIntFilter>;
   _max?: InputMaybe<NestedEnumRoleFilter>;
@@ -1367,6 +1770,640 @@ export type Follow = {
   __typename?: 'Follow';
   count: Scalars['Float'];
   isFollowing: Scalars['Boolean'];
+};
+
+export type Forum = {
+  __typename?: 'Forum';
+  _count: Maybe<ForumCount>;
+  created_at: Scalars['DateTime'];
+  forum_categories: Array<ForumCategory>;
+  id: Scalars['String'];
+  is_disabled: Scalars['Boolean'];
+  name: Scalars['String'];
+  roles: Array<Role>;
+  updated_at: Scalars['DateTime'];
+};
+
+
+export type ForumForum_CategoriesArgs = {
+  cursor: InputMaybe<ForumCategoryWhereUniqueInput>;
+  distinct: InputMaybe<Array<ForumCategoryScalarFieldEnum>>;
+  orderBy: InputMaybe<Array<ForumCategoryOrderByWithRelationInput>>;
+  skip: InputMaybe<Scalars['Int']>;
+  take: InputMaybe<Scalars['Int']>;
+  where: InputMaybe<ForumCategoryWhereInput>;
+};
+
+export type ForumCategory = {
+  __typename?: 'ForumCategory';
+  _count: Maybe<ForumCategoryCount>;
+  created_at: Scalars['DateTime'];
+  description: Maybe<Scalars['String']>;
+  forum: Forum;
+  forum_id: Scalars['String'];
+  icon: Maybe<Scalars['String']>;
+  id: Scalars['String'];
+  is_disabled: Scalars['Boolean'];
+  name: Scalars['String'];
+  topics: Array<Topic>;
+  updated_at: Scalars['DateTime'];
+};
+
+
+export type ForumCategoryTopicsArgs = {
+  cursor: InputMaybe<TopicWhereUniqueInput>;
+  distinct: InputMaybe<Array<TopicScalarFieldEnum>>;
+  orderBy: InputMaybe<Array<TopicOrderByWithRelationInput>>;
+  skip: InputMaybe<Scalars['Int']>;
+  take: InputMaybe<Scalars['Int']>;
+  where: InputMaybe<TopicWhereInput>;
+};
+
+export type ForumCategoryCount = {
+  __typename?: 'ForumCategoryCount';
+  topics: Scalars['Int'];
+};
+
+export type ForumCategoryCountAggregate = {
+  __typename?: 'ForumCategoryCountAggregate';
+  _all: Scalars['Int'];
+  created_at: Scalars['Int'];
+  description: Scalars['Int'];
+  forum_id: Scalars['Int'];
+  icon: Scalars['Int'];
+  id: Scalars['Int'];
+  is_disabled: Scalars['Int'];
+  name: Scalars['Int'];
+  updated_at: Scalars['Int'];
+};
+
+export type ForumCategoryCountOrderByAggregateInput = {
+  created_at?: InputMaybe<SortOrder>;
+  description?: InputMaybe<SortOrder>;
+  forum_id?: InputMaybe<SortOrder>;
+  icon?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  is_disabled?: InputMaybe<SortOrder>;
+  name?: InputMaybe<SortOrder>;
+  updated_at?: InputMaybe<SortOrder>;
+};
+
+export type ForumCategoryCreateInput = {
+  created_at?: InputMaybe<Scalars['DateTime']>;
+  description?: InputMaybe<Scalars['String']>;
+  forum: ForumCreateNestedOneWithoutForum_CategoriesInput;
+  icon?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']>;
+  is_disabled?: InputMaybe<Scalars['Boolean']>;
+  name: Scalars['String'];
+  topics?: InputMaybe<TopicCreateNestedManyWithoutForum_CategoryInput>;
+  updated_at?: InputMaybe<Scalars['DateTime']>;
+};
+
+export type ForumCategoryCreateManyForumInput = {
+  created_at?: InputMaybe<Scalars['DateTime']>;
+  description?: InputMaybe<Scalars['String']>;
+  icon?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']>;
+  is_disabled?: InputMaybe<Scalars['Boolean']>;
+  name: Scalars['String'];
+  updated_at?: InputMaybe<Scalars['DateTime']>;
+};
+
+export type ForumCategoryCreateManyForumInputEnvelope = {
+  data: Array<ForumCategoryCreateManyForumInput>;
+  skipDuplicates?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type ForumCategoryCreateManyInput = {
+  created_at?: InputMaybe<Scalars['DateTime']>;
+  description?: InputMaybe<Scalars['String']>;
+  forum_id: Scalars['String'];
+  icon?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']>;
+  is_disabled?: InputMaybe<Scalars['Boolean']>;
+  name: Scalars['String'];
+  updated_at?: InputMaybe<Scalars['DateTime']>;
+};
+
+export type ForumCategoryCreateNestedManyWithoutForumInput = {
+  connect?: InputMaybe<Array<ForumCategoryWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<ForumCategoryCreateOrConnectWithoutForumInput>>;
+  create?: InputMaybe<Array<ForumCategoryCreateWithoutForumInput>>;
+  createMany?: InputMaybe<ForumCategoryCreateManyForumInputEnvelope>;
+};
+
+export type ForumCategoryCreateNestedOneWithoutTopicsInput = {
+  connect?: InputMaybe<ForumCategoryWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<ForumCategoryCreateOrConnectWithoutTopicsInput>;
+  create?: InputMaybe<ForumCategoryCreateWithoutTopicsInput>;
+};
+
+export type ForumCategoryCreateOrConnectWithoutForumInput = {
+  create: ForumCategoryCreateWithoutForumInput;
+  where: ForumCategoryWhereUniqueInput;
+};
+
+export type ForumCategoryCreateOrConnectWithoutTopicsInput = {
+  create: ForumCategoryCreateWithoutTopicsInput;
+  where: ForumCategoryWhereUniqueInput;
+};
+
+export type ForumCategoryCreateWithoutForumInput = {
+  created_at?: InputMaybe<Scalars['DateTime']>;
+  description?: InputMaybe<Scalars['String']>;
+  icon?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']>;
+  is_disabled?: InputMaybe<Scalars['Boolean']>;
+  name: Scalars['String'];
+  topics?: InputMaybe<TopicCreateNestedManyWithoutForum_CategoryInput>;
+  updated_at?: InputMaybe<Scalars['DateTime']>;
+};
+
+export type ForumCategoryCreateWithoutTopicsInput = {
+  created_at?: InputMaybe<Scalars['DateTime']>;
+  description?: InputMaybe<Scalars['String']>;
+  forum: ForumCreateNestedOneWithoutForum_CategoriesInput;
+  icon?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']>;
+  is_disabled?: InputMaybe<Scalars['Boolean']>;
+  name: Scalars['String'];
+  updated_at?: InputMaybe<Scalars['DateTime']>;
+};
+
+export type ForumCategoryGroupBy = {
+  __typename?: 'ForumCategoryGroupBy';
+  _count: Maybe<ForumCategoryCountAggregate>;
+  _max: Maybe<ForumCategoryMaxAggregate>;
+  _min: Maybe<ForumCategoryMinAggregate>;
+  created_at: Scalars['DateTime'];
+  description: Maybe<Scalars['String']>;
+  forum_id: Scalars['String'];
+  icon: Maybe<Scalars['String']>;
+  id: Scalars['String'];
+  is_disabled: Scalars['Boolean'];
+  name: Scalars['String'];
+  updated_at: Scalars['DateTime'];
+};
+
+export type ForumCategoryListRelationFilter = {
+  every?: InputMaybe<ForumCategoryWhereInput>;
+  none?: InputMaybe<ForumCategoryWhereInput>;
+  some?: InputMaybe<ForumCategoryWhereInput>;
+};
+
+export type ForumCategoryMaxAggregate = {
+  __typename?: 'ForumCategoryMaxAggregate';
+  created_at: Maybe<Scalars['DateTime']>;
+  description: Maybe<Scalars['String']>;
+  forum_id: Maybe<Scalars['String']>;
+  icon: Maybe<Scalars['String']>;
+  id: Maybe<Scalars['String']>;
+  is_disabled: Maybe<Scalars['Boolean']>;
+  name: Maybe<Scalars['String']>;
+  updated_at: Maybe<Scalars['DateTime']>;
+};
+
+export type ForumCategoryMaxOrderByAggregateInput = {
+  created_at?: InputMaybe<SortOrder>;
+  description?: InputMaybe<SortOrder>;
+  forum_id?: InputMaybe<SortOrder>;
+  icon?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  is_disabled?: InputMaybe<SortOrder>;
+  name?: InputMaybe<SortOrder>;
+  updated_at?: InputMaybe<SortOrder>;
+};
+
+export type ForumCategoryMinAggregate = {
+  __typename?: 'ForumCategoryMinAggregate';
+  created_at: Maybe<Scalars['DateTime']>;
+  description: Maybe<Scalars['String']>;
+  forum_id: Maybe<Scalars['String']>;
+  icon: Maybe<Scalars['String']>;
+  id: Maybe<Scalars['String']>;
+  is_disabled: Maybe<Scalars['Boolean']>;
+  name: Maybe<Scalars['String']>;
+  updated_at: Maybe<Scalars['DateTime']>;
+};
+
+export type ForumCategoryMinOrderByAggregateInput = {
+  created_at?: InputMaybe<SortOrder>;
+  description?: InputMaybe<SortOrder>;
+  forum_id?: InputMaybe<SortOrder>;
+  icon?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  is_disabled?: InputMaybe<SortOrder>;
+  name?: InputMaybe<SortOrder>;
+  updated_at?: InputMaybe<SortOrder>;
+};
+
+export type ForumCategoryOrderByRelationAggregateInput = {
+  _count?: InputMaybe<SortOrder>;
+};
+
+export type ForumCategoryOrderByWithAggregationInput = {
+  _count?: InputMaybe<ForumCategoryCountOrderByAggregateInput>;
+  _max?: InputMaybe<ForumCategoryMaxOrderByAggregateInput>;
+  _min?: InputMaybe<ForumCategoryMinOrderByAggregateInput>;
+  created_at?: InputMaybe<SortOrder>;
+  description?: InputMaybe<SortOrder>;
+  forum_id?: InputMaybe<SortOrder>;
+  icon?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  is_disabled?: InputMaybe<SortOrder>;
+  name?: InputMaybe<SortOrder>;
+  updated_at?: InputMaybe<SortOrder>;
+};
+
+export type ForumCategoryOrderByWithRelationInput = {
+  created_at?: InputMaybe<SortOrder>;
+  description?: InputMaybe<SortOrder>;
+  forum?: InputMaybe<ForumOrderByWithRelationInput>;
+  forum_id?: InputMaybe<SortOrder>;
+  icon?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  is_disabled?: InputMaybe<SortOrder>;
+  name?: InputMaybe<SortOrder>;
+  topics?: InputMaybe<TopicOrderByRelationAggregateInput>;
+  updated_at?: InputMaybe<SortOrder>;
+};
+
+export type ForumCategoryRelationFilter = {
+  is?: InputMaybe<ForumCategoryWhereInput>;
+  isNot?: InputMaybe<ForumCategoryWhereInput>;
+};
+
+export enum ForumCategoryScalarFieldEnum {
+  CreatedAt = 'created_at',
+  Description = 'description',
+  ForumId = 'forum_id',
+  Icon = 'icon',
+  Id = 'id',
+  IsDisabled = 'is_disabled',
+  Name = 'name',
+  UpdatedAt = 'updated_at'
+}
+
+export type ForumCategoryScalarWhereInput = {
+  AND?: InputMaybe<Array<ForumCategoryScalarWhereInput>>;
+  NOT?: InputMaybe<Array<ForumCategoryScalarWhereInput>>;
+  OR?: InputMaybe<Array<ForumCategoryScalarWhereInput>>;
+  created_at?: InputMaybe<DateTimeFilter>;
+  description?: InputMaybe<StringNullableFilter>;
+  forum_id?: InputMaybe<StringFilter>;
+  icon?: InputMaybe<StringNullableFilter>;
+  id?: InputMaybe<StringFilter>;
+  is_disabled?: InputMaybe<BoolFilter>;
+  name?: InputMaybe<StringFilter>;
+  updated_at?: InputMaybe<DateTimeFilter>;
+};
+
+export type ForumCategoryScalarWhereWithAggregatesInput = {
+  AND?: InputMaybe<Array<ForumCategoryScalarWhereWithAggregatesInput>>;
+  NOT?: InputMaybe<Array<ForumCategoryScalarWhereWithAggregatesInput>>;
+  OR?: InputMaybe<Array<ForumCategoryScalarWhereWithAggregatesInput>>;
+  created_at?: InputMaybe<DateTimeWithAggregatesFilter>;
+  description?: InputMaybe<StringNullableWithAggregatesFilter>;
+  forum_id?: InputMaybe<StringWithAggregatesFilter>;
+  icon?: InputMaybe<StringNullableWithAggregatesFilter>;
+  id?: InputMaybe<StringWithAggregatesFilter>;
+  is_disabled?: InputMaybe<BoolWithAggregatesFilter>;
+  name?: InputMaybe<StringWithAggregatesFilter>;
+  updated_at?: InputMaybe<DateTimeWithAggregatesFilter>;
+};
+
+export type ForumCategoryUpdateInput = {
+  created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  description?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  forum?: InputMaybe<ForumUpdateOneRequiredWithoutForum_CategoriesInput>;
+  icon?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  name?: InputMaybe<StringFieldUpdateOperationsInput>;
+  topics?: InputMaybe<TopicUpdateManyWithoutForum_CategoryInput>;
+  updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+};
+
+export type ForumCategoryUpdateManyMutationInput = {
+  created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  description?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  icon?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  name?: InputMaybe<StringFieldUpdateOperationsInput>;
+  updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+};
+
+export type ForumCategoryUpdateManyWithWhereWithoutForumInput = {
+  data: ForumCategoryUpdateManyMutationInput;
+  where: ForumCategoryScalarWhereInput;
+};
+
+export type ForumCategoryUpdateManyWithoutForumInput = {
+  connect?: InputMaybe<Array<ForumCategoryWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<ForumCategoryCreateOrConnectWithoutForumInput>>;
+  create?: InputMaybe<Array<ForumCategoryCreateWithoutForumInput>>;
+  createMany?: InputMaybe<ForumCategoryCreateManyForumInputEnvelope>;
+  delete?: InputMaybe<Array<ForumCategoryWhereUniqueInput>>;
+  deleteMany?: InputMaybe<Array<ForumCategoryScalarWhereInput>>;
+  disconnect?: InputMaybe<Array<ForumCategoryWhereUniqueInput>>;
+  set?: InputMaybe<Array<ForumCategoryWhereUniqueInput>>;
+  update?: InputMaybe<Array<ForumCategoryUpdateWithWhereUniqueWithoutForumInput>>;
+  updateMany?: InputMaybe<Array<ForumCategoryUpdateManyWithWhereWithoutForumInput>>;
+  upsert?: InputMaybe<Array<ForumCategoryUpsertWithWhereUniqueWithoutForumInput>>;
+};
+
+export type ForumCategoryUpdateOneRequiredWithoutTopicsInput = {
+  connect?: InputMaybe<ForumCategoryWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<ForumCategoryCreateOrConnectWithoutTopicsInput>;
+  create?: InputMaybe<ForumCategoryCreateWithoutTopicsInput>;
+  update?: InputMaybe<ForumCategoryUpdateWithoutTopicsInput>;
+  upsert?: InputMaybe<ForumCategoryUpsertWithoutTopicsInput>;
+};
+
+export type ForumCategoryUpdateWithWhereUniqueWithoutForumInput = {
+  data: ForumCategoryUpdateWithoutForumInput;
+  where: ForumCategoryWhereUniqueInput;
+};
+
+export type ForumCategoryUpdateWithoutForumInput = {
+  created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  description?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  icon?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  name?: InputMaybe<StringFieldUpdateOperationsInput>;
+  topics?: InputMaybe<TopicUpdateManyWithoutForum_CategoryInput>;
+  updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+};
+
+export type ForumCategoryUpdateWithoutTopicsInput = {
+  created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  description?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  forum?: InputMaybe<ForumUpdateOneRequiredWithoutForum_CategoriesInput>;
+  icon?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  name?: InputMaybe<StringFieldUpdateOperationsInput>;
+  updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+};
+
+export type ForumCategoryUpsertWithWhereUniqueWithoutForumInput = {
+  create: ForumCategoryCreateWithoutForumInput;
+  update: ForumCategoryUpdateWithoutForumInput;
+  where: ForumCategoryWhereUniqueInput;
+};
+
+export type ForumCategoryUpsertWithoutTopicsInput = {
+  create: ForumCategoryCreateWithoutTopicsInput;
+  update: ForumCategoryUpdateWithoutTopicsInput;
+};
+
+export type ForumCategoryWhereInput = {
+  AND?: InputMaybe<Array<ForumCategoryWhereInput>>;
+  NOT?: InputMaybe<Array<ForumCategoryWhereInput>>;
+  OR?: InputMaybe<Array<ForumCategoryWhereInput>>;
+  created_at?: InputMaybe<DateTimeFilter>;
+  description?: InputMaybe<StringNullableFilter>;
+  forum?: InputMaybe<ForumRelationFilter>;
+  forum_id?: InputMaybe<StringFilter>;
+  icon?: InputMaybe<StringNullableFilter>;
+  id?: InputMaybe<StringFilter>;
+  is_disabled?: InputMaybe<BoolFilter>;
+  name?: InputMaybe<StringFilter>;
+  topics?: InputMaybe<TopicListRelationFilter>;
+  updated_at?: InputMaybe<DateTimeFilter>;
+};
+
+export type ForumCategoryWhereUniqueInput = {
+  id?: InputMaybe<Scalars['String']>;
+};
+
+export type ForumCount = {
+  __typename?: 'ForumCount';
+  forum_categories: Scalars['Int'];
+};
+
+export type ForumCountAggregate = {
+  __typename?: 'ForumCountAggregate';
+  _all: Scalars['Int'];
+  created_at: Scalars['Int'];
+  id: Scalars['Int'];
+  is_disabled: Scalars['Int'];
+  name: Scalars['Int'];
+  roles: Scalars['Int'];
+  updated_at: Scalars['Int'];
+};
+
+export type ForumCountOrderByAggregateInput = {
+  created_at?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  is_disabled?: InputMaybe<SortOrder>;
+  name?: InputMaybe<SortOrder>;
+  roles?: InputMaybe<SortOrder>;
+  updated_at?: InputMaybe<SortOrder>;
+};
+
+export type ForumCreateInput = {
+  created_at?: InputMaybe<Scalars['DateTime']>;
+  forum_categories?: InputMaybe<ForumCategoryCreateNestedManyWithoutForumInput>;
+  id?: InputMaybe<Scalars['String']>;
+  is_disabled?: InputMaybe<Scalars['Boolean']>;
+  name: Scalars['String'];
+  roles?: InputMaybe<ForumCreaterolesInput>;
+  updated_at?: InputMaybe<Scalars['DateTime']>;
+};
+
+export type ForumCreateManyInput = {
+  created_at?: InputMaybe<Scalars['DateTime']>;
+  id?: InputMaybe<Scalars['String']>;
+  is_disabled?: InputMaybe<Scalars['Boolean']>;
+  name: Scalars['String'];
+  roles?: InputMaybe<ForumCreaterolesInput>;
+  updated_at?: InputMaybe<Scalars['DateTime']>;
+};
+
+export type ForumCreateNestedOneWithoutForum_CategoriesInput = {
+  connect?: InputMaybe<ForumWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<ForumCreateOrConnectWithoutForum_CategoriesInput>;
+  create?: InputMaybe<ForumCreateWithoutForum_CategoriesInput>;
+};
+
+export type ForumCreateOrConnectWithoutForum_CategoriesInput = {
+  create: ForumCreateWithoutForum_CategoriesInput;
+  where: ForumWhereUniqueInput;
+};
+
+export type ForumCreateWithoutForum_CategoriesInput = {
+  created_at?: InputMaybe<Scalars['DateTime']>;
+  id?: InputMaybe<Scalars['String']>;
+  is_disabled?: InputMaybe<Scalars['Boolean']>;
+  name: Scalars['String'];
+  roles?: InputMaybe<ForumCreaterolesInput>;
+  updated_at?: InputMaybe<Scalars['DateTime']>;
+};
+
+export type ForumCreaterolesInput = {
+  set: Array<Role>;
+};
+
+export type ForumGroupBy = {
+  __typename?: 'ForumGroupBy';
+  _count: Maybe<ForumCountAggregate>;
+  _max: Maybe<ForumMaxAggregate>;
+  _min: Maybe<ForumMinAggregate>;
+  created_at: Scalars['DateTime'];
+  id: Scalars['String'];
+  is_disabled: Scalars['Boolean'];
+  name: Scalars['String'];
+  roles: Maybe<Array<Role>>;
+  updated_at: Scalars['DateTime'];
+};
+
+export type ForumMaxAggregate = {
+  __typename?: 'ForumMaxAggregate';
+  created_at: Maybe<Scalars['DateTime']>;
+  id: Maybe<Scalars['String']>;
+  is_disabled: Maybe<Scalars['Boolean']>;
+  name: Maybe<Scalars['String']>;
+  updated_at: Maybe<Scalars['DateTime']>;
+};
+
+export type ForumMaxOrderByAggregateInput = {
+  created_at?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  is_disabled?: InputMaybe<SortOrder>;
+  name?: InputMaybe<SortOrder>;
+  updated_at?: InputMaybe<SortOrder>;
+};
+
+export type ForumMinAggregate = {
+  __typename?: 'ForumMinAggregate';
+  created_at: Maybe<Scalars['DateTime']>;
+  id: Maybe<Scalars['String']>;
+  is_disabled: Maybe<Scalars['Boolean']>;
+  name: Maybe<Scalars['String']>;
+  updated_at: Maybe<Scalars['DateTime']>;
+};
+
+export type ForumMinOrderByAggregateInput = {
+  created_at?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  is_disabled?: InputMaybe<SortOrder>;
+  name?: InputMaybe<SortOrder>;
+  updated_at?: InputMaybe<SortOrder>;
+};
+
+export type ForumOrderByWithAggregationInput = {
+  _count?: InputMaybe<ForumCountOrderByAggregateInput>;
+  _max?: InputMaybe<ForumMaxOrderByAggregateInput>;
+  _min?: InputMaybe<ForumMinOrderByAggregateInput>;
+  created_at?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  is_disabled?: InputMaybe<SortOrder>;
+  name?: InputMaybe<SortOrder>;
+  roles?: InputMaybe<SortOrder>;
+  updated_at?: InputMaybe<SortOrder>;
+};
+
+export type ForumOrderByWithRelationInput = {
+  created_at?: InputMaybe<SortOrder>;
+  forum_categories?: InputMaybe<ForumCategoryOrderByRelationAggregateInput>;
+  id?: InputMaybe<SortOrder>;
+  is_disabled?: InputMaybe<SortOrder>;
+  name?: InputMaybe<SortOrder>;
+  roles?: InputMaybe<SortOrder>;
+  updated_at?: InputMaybe<SortOrder>;
+};
+
+export type ForumRelationFilter = {
+  is?: InputMaybe<ForumWhereInput>;
+  isNot?: InputMaybe<ForumWhereInput>;
+};
+
+export enum ForumScalarFieldEnum {
+  CreatedAt = 'created_at',
+  Id = 'id',
+  IsDisabled = 'is_disabled',
+  Name = 'name',
+  Roles = 'roles',
+  UpdatedAt = 'updated_at'
+}
+
+export type ForumScalarWhereWithAggregatesInput = {
+  AND?: InputMaybe<Array<ForumScalarWhereWithAggregatesInput>>;
+  NOT?: InputMaybe<Array<ForumScalarWhereWithAggregatesInput>>;
+  OR?: InputMaybe<Array<ForumScalarWhereWithAggregatesInput>>;
+  created_at?: InputMaybe<DateTimeWithAggregatesFilter>;
+  id?: InputMaybe<StringWithAggregatesFilter>;
+  is_disabled?: InputMaybe<BoolWithAggregatesFilter>;
+  name?: InputMaybe<StringWithAggregatesFilter>;
+  roles?: InputMaybe<EnumRoleNullableListFilter>;
+  updated_at?: InputMaybe<DateTimeWithAggregatesFilter>;
+};
+
+export type ForumUpdateInput = {
+  created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  forum_categories?: InputMaybe<ForumCategoryUpdateManyWithoutForumInput>;
+  id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  name?: InputMaybe<StringFieldUpdateOperationsInput>;
+  roles?: InputMaybe<ForumUpdaterolesInput>;
+  updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+};
+
+export type ForumUpdateManyMutationInput = {
+  created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  name?: InputMaybe<StringFieldUpdateOperationsInput>;
+  roles?: InputMaybe<ForumUpdaterolesInput>;
+  updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+};
+
+export type ForumUpdateOneRequiredWithoutForum_CategoriesInput = {
+  connect?: InputMaybe<ForumWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<ForumCreateOrConnectWithoutForum_CategoriesInput>;
+  create?: InputMaybe<ForumCreateWithoutForum_CategoriesInput>;
+  update?: InputMaybe<ForumUpdateWithoutForum_CategoriesInput>;
+  upsert?: InputMaybe<ForumUpsertWithoutForum_CategoriesInput>;
+};
+
+export type ForumUpdateWithoutForum_CategoriesInput = {
+  created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  name?: InputMaybe<StringFieldUpdateOperationsInput>;
+  roles?: InputMaybe<ForumUpdaterolesInput>;
+  updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+};
+
+export type ForumUpdaterolesInput = {
+  push?: InputMaybe<Array<Role>>;
+  set?: InputMaybe<Array<Role>>;
+};
+
+export type ForumUpsertWithoutForum_CategoriesInput = {
+  create: ForumCreateWithoutForum_CategoriesInput;
+  update: ForumUpdateWithoutForum_CategoriesInput;
+};
+
+export type ForumWhereInput = {
+  AND?: InputMaybe<Array<ForumWhereInput>>;
+  NOT?: InputMaybe<Array<ForumWhereInput>>;
+  OR?: InputMaybe<Array<ForumWhereInput>>;
+  created_at?: InputMaybe<DateTimeFilter>;
+  forum_categories?: InputMaybe<ForumCategoryListRelationFilter>;
+  id?: InputMaybe<StringFilter>;
+  is_disabled?: InputMaybe<BoolFilter>;
+  name?: InputMaybe<StringFilter>;
+  roles?: InputMaybe<EnumRoleNullableListFilter>;
+  updated_at?: InputMaybe<DateTimeFilter>;
+};
+
+export type ForumWhereUniqueInput = {
+  id?: InputMaybe<Scalars['String']>;
 };
 
 export type IntNullableFilter = {
@@ -1404,16 +2441,23 @@ export type LoginInput = {
 export type Mutation = {
   __typename?: 'Mutation';
   createAccount: Account;
+  createArticle: Article;
   createCategory: Category;
   createComment: Comment;
+  createForum: Forum;
+  createForumCategory: ForumCategory;
   createManyAccount: AffectedRowsOutput;
+  createManyArticle: AffectedRowsOutput;
   createManyCategory: AffectedRowsOutput;
   createManyComment: AffectedRowsOutput;
+  createManyForum: AffectedRowsOutput;
+  createManyForumCategory: AffectedRowsOutput;
   createManyPost: AffectedRowsOutput;
   createManyPreference: AffectedRowsOutput;
   createManyResetPassword: AffectedRowsOutput;
   createManySession: AffectedRowsOutput;
   createManyTag: AffectedRowsOutput;
+  createManyTopic: AffectedRowsOutput;
   createManyUser: AffectedRowsOutput;
   createManyVerificationToken: AffectedRowsOutput;
   createPost: Post;
@@ -1421,19 +2465,27 @@ export type Mutation = {
   createResetPassword: ResetPassword;
   createSession: Session;
   createTag: Tag;
+  createTopic: Topic;
   createUser: User;
   createVerificationToken: VerificationToken;
   deleteAccount: Maybe<Account>;
+  deleteArticle: Maybe<Article>;
   deleteCategory: Maybe<Category>;
   deleteComment: Maybe<Comment>;
+  deleteForum: Maybe<Forum>;
+  deleteForumCategory: Maybe<ForumCategory>;
   deleteManyAccount: AffectedRowsOutput;
+  deleteManyArticle: AffectedRowsOutput;
   deleteManyCategory: AffectedRowsOutput;
   deleteManyComment: AffectedRowsOutput;
+  deleteManyForum: AffectedRowsOutput;
+  deleteManyForumCategory: AffectedRowsOutput;
   deleteManyPost: AffectedRowsOutput;
   deleteManyPreference: AffectedRowsOutput;
   deleteManyResetPassword: AffectedRowsOutput;
   deleteManySession: AffectedRowsOutput;
   deleteManyTag: AffectedRowsOutput;
+  deleteManyTopic: AffectedRowsOutput;
   deleteManyUser: AffectedRowsOutput;
   deleteManyVerificationToken: AffectedRowsOutput;
   deletePost: Maybe<Post>;
@@ -1441,6 +2493,7 @@ export type Mutation = {
   deleteResetPassword: Maybe<ResetPassword>;
   deleteSession: Maybe<Session>;
   deleteTag: Maybe<Tag>;
+  deleteTopic: Maybe<Topic>;
   deleteUser: Maybe<User>;
   deleteVerificationToken: Maybe<VerificationToken>;
   login: User;
@@ -1448,16 +2501,23 @@ export type Mutation = {
   me: User;
   register: User;
   updateAccount: Maybe<Account>;
+  updateArticle: Maybe<Article>;
   updateCategory: Maybe<Category>;
   updateComment: Maybe<Comment>;
+  updateForum: Maybe<Forum>;
+  updateForumCategory: Maybe<ForumCategory>;
   updateManyAccount: AffectedRowsOutput;
+  updateManyArticle: AffectedRowsOutput;
   updateManyCategory: AffectedRowsOutput;
   updateManyComment: AffectedRowsOutput;
+  updateManyForum: AffectedRowsOutput;
+  updateManyForumCategory: AffectedRowsOutput;
   updateManyPost: AffectedRowsOutput;
   updateManyPreference: AffectedRowsOutput;
   updateManyResetPassword: AffectedRowsOutput;
   updateManySession: AffectedRowsOutput;
   updateManyTag: AffectedRowsOutput;
+  updateManyTopic: AffectedRowsOutput;
   updateManyUser: AffectedRowsOutput;
   updateManyVerificationToken: AffectedRowsOutput;
   updatePost: Maybe<Post>;
@@ -1465,18 +2525,23 @@ export type Mutation = {
   updateResetPassword: Maybe<ResetPassword>;
   updateSession: Maybe<Session>;
   updateTag: Maybe<Tag>;
+  updateTopic: Maybe<Topic>;
   updateUser: Maybe<User>;
   updateVerificationToken: Maybe<VerificationToken>;
   uploadCoverPicture: Post;
   uploadPostPicture: Picture;
   upsertAccount: Account;
+  upsertArticle: Article;
   upsertCategory: Category;
   upsertComment: Comment;
+  upsertForum: Forum;
+  upsertForumCategory: ForumCategory;
   upsertPost: Post;
   upsertPreference: Preference;
   upsertResetPassword: ResetPassword;
   upsertSession: Session;
   upsertTag: Tag;
+  upsertTopic: Topic;
   upsertUser: User;
   upsertVerificationToken: VerificationToken;
 };
@@ -1484,6 +2549,11 @@ export type Mutation = {
 
 export type MutationCreateAccountArgs = {
   data: AccountCreateInput;
+};
+
+
+export type MutationCreateArticleArgs = {
+  data: ArticleCreateInput;
 };
 
 
@@ -1497,8 +2567,24 @@ export type MutationCreateCommentArgs = {
 };
 
 
+export type MutationCreateForumArgs = {
+  data: ForumCreateInput;
+};
+
+
+export type MutationCreateForumCategoryArgs = {
+  data: ForumCategoryCreateInput;
+};
+
+
 export type MutationCreateManyAccountArgs = {
   data: Array<AccountCreateManyInput>;
+  skipDuplicates: InputMaybe<Scalars['Boolean']>;
+};
+
+
+export type MutationCreateManyArticleArgs = {
+  data: Array<ArticleCreateManyInput>;
   skipDuplicates: InputMaybe<Scalars['Boolean']>;
 };
 
@@ -1511,6 +2597,18 @@ export type MutationCreateManyCategoryArgs = {
 
 export type MutationCreateManyCommentArgs = {
   data: Array<CommentCreateManyInput>;
+  skipDuplicates: InputMaybe<Scalars['Boolean']>;
+};
+
+
+export type MutationCreateManyForumArgs = {
+  data: Array<ForumCreateManyInput>;
+  skipDuplicates: InputMaybe<Scalars['Boolean']>;
+};
+
+
+export type MutationCreateManyForumCategoryArgs = {
+  data: Array<ForumCategoryCreateManyInput>;
   skipDuplicates: InputMaybe<Scalars['Boolean']>;
 };
 
@@ -1541,6 +2639,12 @@ export type MutationCreateManySessionArgs = {
 
 export type MutationCreateManyTagArgs = {
   data: Array<TagCreateManyInput>;
+  skipDuplicates: InputMaybe<Scalars['Boolean']>;
+};
+
+
+export type MutationCreateManyTopicArgs = {
+  data: Array<TopicCreateManyInput>;
   skipDuplicates: InputMaybe<Scalars['Boolean']>;
 };
 
@@ -1582,6 +2686,11 @@ export type MutationCreateTagArgs = {
 };
 
 
+export type MutationCreateTopicArgs = {
+  data: TopicCreateInput;
+};
+
+
 export type MutationCreateUserArgs = {
   data: UserCreateInput;
 };
@@ -1597,6 +2706,11 @@ export type MutationDeleteAccountArgs = {
 };
 
 
+export type MutationDeleteArticleArgs = {
+  where: ArticleWhereUniqueInput;
+};
+
+
 export type MutationDeleteCategoryArgs = {
   where: CategoryWhereUniqueInput;
 };
@@ -1607,8 +2721,23 @@ export type MutationDeleteCommentArgs = {
 };
 
 
+export type MutationDeleteForumArgs = {
+  where: ForumWhereUniqueInput;
+};
+
+
+export type MutationDeleteForumCategoryArgs = {
+  where: ForumCategoryWhereUniqueInput;
+};
+
+
 export type MutationDeleteManyAccountArgs = {
   where: InputMaybe<AccountWhereInput>;
+};
+
+
+export type MutationDeleteManyArticleArgs = {
+  where: InputMaybe<ArticleWhereInput>;
 };
 
 
@@ -1619,6 +2748,16 @@ export type MutationDeleteManyCategoryArgs = {
 
 export type MutationDeleteManyCommentArgs = {
   where: InputMaybe<CommentWhereInput>;
+};
+
+
+export type MutationDeleteManyForumArgs = {
+  where: InputMaybe<ForumWhereInput>;
+};
+
+
+export type MutationDeleteManyForumCategoryArgs = {
+  where: InputMaybe<ForumCategoryWhereInput>;
 };
 
 
@@ -1644,6 +2783,11 @@ export type MutationDeleteManySessionArgs = {
 
 export type MutationDeleteManyTagArgs = {
   where: InputMaybe<TagWhereInput>;
+};
+
+
+export type MutationDeleteManyTopicArgs = {
+  where: InputMaybe<TopicWhereInput>;
 };
 
 
@@ -1682,6 +2826,11 @@ export type MutationDeleteTagArgs = {
 };
 
 
+export type MutationDeleteTopicArgs = {
+  where: TopicWhereUniqueInput;
+};
+
+
 export type MutationDeleteUserArgs = {
   where: UserWhereUniqueInput;
 };
@@ -1708,6 +2857,12 @@ export type MutationUpdateAccountArgs = {
 };
 
 
+export type MutationUpdateArticleArgs = {
+  data: ArticleUpdateInput;
+  where: ArticleWhereUniqueInput;
+};
+
+
 export type MutationUpdateCategoryArgs = {
   data: CategoryUpdateInput;
   where: CategoryWhereUniqueInput;
@@ -1720,9 +2875,27 @@ export type MutationUpdateCommentArgs = {
 };
 
 
+export type MutationUpdateForumArgs = {
+  data: ForumUpdateInput;
+  where: ForumWhereUniqueInput;
+};
+
+
+export type MutationUpdateForumCategoryArgs = {
+  data: ForumCategoryUpdateInput;
+  where: ForumCategoryWhereUniqueInput;
+};
+
+
 export type MutationUpdateManyAccountArgs = {
   data: AccountUpdateManyMutationInput;
   where: InputMaybe<AccountWhereInput>;
+};
+
+
+export type MutationUpdateManyArticleArgs = {
+  data: ArticleUpdateManyMutationInput;
+  where: InputMaybe<ArticleWhereInput>;
 };
 
 
@@ -1735,6 +2908,18 @@ export type MutationUpdateManyCategoryArgs = {
 export type MutationUpdateManyCommentArgs = {
   data: CommentUpdateManyMutationInput;
   where: InputMaybe<CommentWhereInput>;
+};
+
+
+export type MutationUpdateManyForumArgs = {
+  data: ForumUpdateManyMutationInput;
+  where: InputMaybe<ForumWhereInput>;
+};
+
+
+export type MutationUpdateManyForumCategoryArgs = {
+  data: ForumCategoryUpdateManyMutationInput;
+  where: InputMaybe<ForumCategoryWhereInput>;
 };
 
 
@@ -1765,6 +2950,12 @@ export type MutationUpdateManySessionArgs = {
 export type MutationUpdateManyTagArgs = {
   data: TagUpdateManyMutationInput;
   where: InputMaybe<TagWhereInput>;
+};
+
+
+export type MutationUpdateManyTopicArgs = {
+  data: TopicUpdateManyMutationInput;
+  where: InputMaybe<TopicWhereInput>;
 };
 
 
@@ -1810,6 +3001,12 @@ export type MutationUpdateTagArgs = {
 };
 
 
+export type MutationUpdateTopicArgs = {
+  data: TopicUpdateInput;
+  where: TopicWhereUniqueInput;
+};
+
+
 export type MutationUpdateUserArgs = {
   data: UserUpdateInput;
   where: UserWhereUniqueInput;
@@ -1839,6 +3036,13 @@ export type MutationUpsertAccountArgs = {
 };
 
 
+export type MutationUpsertArticleArgs = {
+  create: ArticleCreateInput;
+  update: ArticleUpdateInput;
+  where: ArticleWhereUniqueInput;
+};
+
+
 export type MutationUpsertCategoryArgs = {
   create: CategoryCreateInput;
   update: CategoryUpdateInput;
@@ -1850,6 +3054,20 @@ export type MutationUpsertCommentArgs = {
   create: CommentCreateInput;
   update: CommentUpdateInput;
   where: CommentWhereUniqueInput;
+};
+
+
+export type MutationUpsertForumArgs = {
+  create: ForumCreateInput;
+  update: ForumUpdateInput;
+  where: ForumWhereUniqueInput;
+};
+
+
+export type MutationUpsertForumCategoryArgs = {
+  create: ForumCategoryCreateInput;
+  update: ForumCategoryUpdateInput;
+  where: ForumCategoryWhereUniqueInput;
 };
 
 
@@ -1885,6 +3103,13 @@ export type MutationUpsertTagArgs = {
   create: TagCreateInput;
   update: TagUpdateInput;
   where: TagWhereUniqueInput;
+};
+
+
+export type MutationUpsertTopicArgs = {
+  create: TopicCreateInput;
+  update: TopicUpdateInput;
+  where: TopicWhereUniqueInput;
 };
 
 
@@ -3153,37 +4378,55 @@ export type Query = {
   account: Maybe<Account>;
   accounts: Array<Account>;
   aggregateAccount: AggregateAccount;
+  aggregateArticle: AggregateArticle;
   aggregateCategory: AggregateCategory;
   aggregateComment: AggregateComment;
+  aggregateForum: AggregateForum;
+  aggregateForumCategory: AggregateForumCategory;
   aggregatePost: AggregatePost;
   aggregatePreference: AggregatePreference;
   aggregateResetPassword: AggregateResetPassword;
   aggregateSession: AggregateSession;
   aggregateTag: AggregateTag;
+  aggregateTopic: AggregateTopic;
   aggregateUser: AggregateUser;
   aggregateVerificationToken: AggregateVerificationToken;
+  article: Maybe<Article>;
+  articles: Array<Article>;
   categories: Array<Category>;
   category: Maybe<Category>;
   comment: Maybe<Comment>;
   comments: Array<Comment>;
   findFirstAccount: Maybe<Account>;
+  findFirstArticle: Maybe<Article>;
   findFirstCategory: Maybe<Category>;
   findFirstComment: Maybe<Comment>;
+  findFirstForum: Maybe<Forum>;
+  findFirstForumCategory: Maybe<ForumCategory>;
   findFirstPost: Maybe<Post>;
   findFirstPreference: Maybe<Preference>;
   findFirstResetPassword: Maybe<ResetPassword>;
   findFirstSession: Maybe<Session>;
   findFirstTag: Maybe<Tag>;
+  findFirstTopic: Maybe<Topic>;
   findFirstUser: Maybe<User>;
   findFirstVerificationToken: Maybe<VerificationToken>;
+  forum: Maybe<Forum>;
+  forumCategories: Array<ForumCategory>;
+  forumCategory: Maybe<ForumCategory>;
+  forums: Array<Forum>;
   groupByAccount: Array<AccountGroupBy>;
+  groupByArticle: Array<ArticleGroupBy>;
   groupByCategory: Array<CategoryGroupBy>;
   groupByComment: Array<CommentGroupBy>;
+  groupByForum: Array<ForumGroupBy>;
+  groupByForumCategory: Array<ForumCategoryGroupBy>;
   groupByPost: Array<PostGroupBy>;
   groupByPreference: Array<PreferenceGroupBy>;
   groupByResetPassword: Array<ResetPasswordGroupBy>;
   groupBySession: Array<SessionGroupBy>;
   groupByTag: Array<TagGroupBy>;
+  groupByTopic: Array<TopicGroupBy>;
   groupByUser: Array<UserGroupBy>;
   groupByVerificationToken: Array<VerificationTokenGroupBy>;
   post: Maybe<Post>;
@@ -3197,6 +4440,8 @@ export type Query = {
   sessions: Array<Session>;
   tag: Maybe<Tag>;
   tags: Array<Tag>;
+  topic: Maybe<Topic>;
+  topics: Array<Topic>;
   user: Maybe<User>;
   users: Array<User>;
   verificationToken: Maybe<VerificationToken>;
@@ -3228,6 +4473,15 @@ export type QueryAggregateAccountArgs = {
 };
 
 
+export type QueryAggregateArticleArgs = {
+  cursor: InputMaybe<ArticleWhereUniqueInput>;
+  orderBy: InputMaybe<Array<ArticleOrderByWithRelationInput>>;
+  skip: InputMaybe<Scalars['Int']>;
+  take: InputMaybe<Scalars['Int']>;
+  where: InputMaybe<ArticleWhereInput>;
+};
+
+
 export type QueryAggregateCategoryArgs = {
   cursor: InputMaybe<CategoryWhereUniqueInput>;
   orderBy: InputMaybe<Array<CategoryOrderByWithRelationInput>>;
@@ -3243,6 +4497,24 @@ export type QueryAggregateCommentArgs = {
   skip: InputMaybe<Scalars['Int']>;
   take: InputMaybe<Scalars['Int']>;
   where: InputMaybe<CommentWhereInput>;
+};
+
+
+export type QueryAggregateForumArgs = {
+  cursor: InputMaybe<ForumWhereUniqueInput>;
+  orderBy: InputMaybe<Array<ForumOrderByWithRelationInput>>;
+  skip: InputMaybe<Scalars['Int']>;
+  take: InputMaybe<Scalars['Int']>;
+  where: InputMaybe<ForumWhereInput>;
+};
+
+
+export type QueryAggregateForumCategoryArgs = {
+  cursor: InputMaybe<ForumCategoryWhereUniqueInput>;
+  orderBy: InputMaybe<Array<ForumCategoryOrderByWithRelationInput>>;
+  skip: InputMaybe<Scalars['Int']>;
+  take: InputMaybe<Scalars['Int']>;
+  where: InputMaybe<ForumCategoryWhereInput>;
 };
 
 
@@ -3291,6 +4563,15 @@ export type QueryAggregateTagArgs = {
 };
 
 
+export type QueryAggregateTopicArgs = {
+  cursor: InputMaybe<TopicWhereUniqueInput>;
+  orderBy: InputMaybe<Array<TopicOrderByWithRelationInput>>;
+  skip: InputMaybe<Scalars['Int']>;
+  take: InputMaybe<Scalars['Int']>;
+  where: InputMaybe<TopicWhereInput>;
+};
+
+
 export type QueryAggregateUserArgs = {
   cursor: InputMaybe<UserWhereUniqueInput>;
   orderBy: InputMaybe<Array<UserOrderByWithRelationInput>>;
@@ -3306,6 +4587,21 @@ export type QueryAggregateVerificationTokenArgs = {
   skip: InputMaybe<Scalars['Int']>;
   take: InputMaybe<Scalars['Int']>;
   where: InputMaybe<VerificationTokenWhereInput>;
+};
+
+
+export type QueryArticleArgs = {
+  where: ArticleWhereUniqueInput;
+};
+
+
+export type QueryArticlesArgs = {
+  cursor: InputMaybe<ArticleWhereUniqueInput>;
+  distinct: InputMaybe<Array<ArticleScalarFieldEnum>>;
+  orderBy: InputMaybe<Array<ArticleOrderByWithRelationInput>>;
+  skip: InputMaybe<Scalars['Int']>;
+  take: InputMaybe<Scalars['Int']>;
+  where: InputMaybe<ArticleWhereInput>;
 };
 
 
@@ -3349,6 +4645,16 @@ export type QueryFindFirstAccountArgs = {
 };
 
 
+export type QueryFindFirstArticleArgs = {
+  cursor: InputMaybe<ArticleWhereUniqueInput>;
+  distinct: InputMaybe<Array<ArticleScalarFieldEnum>>;
+  orderBy: InputMaybe<Array<ArticleOrderByWithRelationInput>>;
+  skip: InputMaybe<Scalars['Int']>;
+  take: InputMaybe<Scalars['Int']>;
+  where: InputMaybe<ArticleWhereInput>;
+};
+
+
 export type QueryFindFirstCategoryArgs = {
   cursor: InputMaybe<CategoryWhereUniqueInput>;
   distinct: InputMaybe<Array<CategoryScalarFieldEnum>>;
@@ -3366,6 +4672,26 @@ export type QueryFindFirstCommentArgs = {
   skip: InputMaybe<Scalars['Int']>;
   take: InputMaybe<Scalars['Int']>;
   where: InputMaybe<CommentWhereInput>;
+};
+
+
+export type QueryFindFirstForumArgs = {
+  cursor: InputMaybe<ForumWhereUniqueInput>;
+  distinct: InputMaybe<Array<ForumScalarFieldEnum>>;
+  orderBy: InputMaybe<Array<ForumOrderByWithRelationInput>>;
+  skip: InputMaybe<Scalars['Int']>;
+  take: InputMaybe<Scalars['Int']>;
+  where: InputMaybe<ForumWhereInput>;
+};
+
+
+export type QueryFindFirstForumCategoryArgs = {
+  cursor: InputMaybe<ForumCategoryWhereUniqueInput>;
+  distinct: InputMaybe<Array<ForumCategoryScalarFieldEnum>>;
+  orderBy: InputMaybe<Array<ForumCategoryOrderByWithRelationInput>>;
+  skip: InputMaybe<Scalars['Int']>;
+  take: InputMaybe<Scalars['Int']>;
+  where: InputMaybe<ForumCategoryWhereInput>;
 };
 
 
@@ -3419,6 +4745,16 @@ export type QueryFindFirstTagArgs = {
 };
 
 
+export type QueryFindFirstTopicArgs = {
+  cursor: InputMaybe<TopicWhereUniqueInput>;
+  distinct: InputMaybe<Array<TopicScalarFieldEnum>>;
+  orderBy: InputMaybe<Array<TopicOrderByWithRelationInput>>;
+  skip: InputMaybe<Scalars['Int']>;
+  take: InputMaybe<Scalars['Int']>;
+  where: InputMaybe<TopicWhereInput>;
+};
+
+
 export type QueryFindFirstUserArgs = {
   cursor: InputMaybe<UserWhereUniqueInput>;
   distinct: InputMaybe<Array<UserScalarFieldEnum>>;
@@ -3439,6 +4775,36 @@ export type QueryFindFirstVerificationTokenArgs = {
 };
 
 
+export type QueryForumArgs = {
+  where: ForumWhereUniqueInput;
+};
+
+
+export type QueryForumCategoriesArgs = {
+  cursor: InputMaybe<ForumCategoryWhereUniqueInput>;
+  distinct: InputMaybe<Array<ForumCategoryScalarFieldEnum>>;
+  orderBy: InputMaybe<Array<ForumCategoryOrderByWithRelationInput>>;
+  skip: InputMaybe<Scalars['Int']>;
+  take: InputMaybe<Scalars['Int']>;
+  where: InputMaybe<ForumCategoryWhereInput>;
+};
+
+
+export type QueryForumCategoryArgs = {
+  where: ForumCategoryWhereUniqueInput;
+};
+
+
+export type QueryForumsArgs = {
+  cursor: InputMaybe<ForumWhereUniqueInput>;
+  distinct: InputMaybe<Array<ForumScalarFieldEnum>>;
+  orderBy: InputMaybe<Array<ForumOrderByWithRelationInput>>;
+  skip: InputMaybe<Scalars['Int']>;
+  take: InputMaybe<Scalars['Int']>;
+  where: InputMaybe<ForumWhereInput>;
+};
+
+
 export type QueryGroupByAccountArgs = {
   by: Array<AccountScalarFieldEnum>;
   having: InputMaybe<AccountScalarWhereWithAggregatesInput>;
@@ -3446,6 +4812,16 @@ export type QueryGroupByAccountArgs = {
   skip: InputMaybe<Scalars['Int']>;
   take: InputMaybe<Scalars['Int']>;
   where: InputMaybe<AccountWhereInput>;
+};
+
+
+export type QueryGroupByArticleArgs = {
+  by: Array<ArticleScalarFieldEnum>;
+  having: InputMaybe<ArticleScalarWhereWithAggregatesInput>;
+  orderBy: InputMaybe<Array<ArticleOrderByWithAggregationInput>>;
+  skip: InputMaybe<Scalars['Int']>;
+  take: InputMaybe<Scalars['Int']>;
+  where: InputMaybe<ArticleWhereInput>;
 };
 
 
@@ -3466,6 +4842,26 @@ export type QueryGroupByCommentArgs = {
   skip: InputMaybe<Scalars['Int']>;
   take: InputMaybe<Scalars['Int']>;
   where: InputMaybe<CommentWhereInput>;
+};
+
+
+export type QueryGroupByForumArgs = {
+  by: Array<ForumScalarFieldEnum>;
+  having: InputMaybe<ForumScalarWhereWithAggregatesInput>;
+  orderBy: InputMaybe<Array<ForumOrderByWithAggregationInput>>;
+  skip: InputMaybe<Scalars['Int']>;
+  take: InputMaybe<Scalars['Int']>;
+  where: InputMaybe<ForumWhereInput>;
+};
+
+
+export type QueryGroupByForumCategoryArgs = {
+  by: Array<ForumCategoryScalarFieldEnum>;
+  having: InputMaybe<ForumCategoryScalarWhereWithAggregatesInput>;
+  orderBy: InputMaybe<Array<ForumCategoryOrderByWithAggregationInput>>;
+  skip: InputMaybe<Scalars['Int']>;
+  take: InputMaybe<Scalars['Int']>;
+  where: InputMaybe<ForumCategoryWhereInput>;
 };
 
 
@@ -3516,6 +4912,16 @@ export type QueryGroupByTagArgs = {
   skip: InputMaybe<Scalars['Int']>;
   take: InputMaybe<Scalars['Int']>;
   where: InputMaybe<TagWhereInput>;
+};
+
+
+export type QueryGroupByTopicArgs = {
+  by: Array<TopicScalarFieldEnum>;
+  having: InputMaybe<TopicScalarWhereWithAggregatesInput>;
+  orderBy: InputMaybe<Array<TopicOrderByWithAggregationInput>>;
+  skip: InputMaybe<Scalars['Int']>;
+  take: InputMaybe<Scalars['Int']>;
+  where: InputMaybe<TopicWhereInput>;
 };
 
 
@@ -3616,6 +5022,21 @@ export type QueryTagsArgs = {
   skip: InputMaybe<Scalars['Int']>;
   take: InputMaybe<Scalars['Int']>;
   where: InputMaybe<TagWhereInput>;
+};
+
+
+export type QueryTopicArgs = {
+  where: TopicWhereUniqueInput;
+};
+
+
+export type QueryTopicsArgs = {
+  cursor: InputMaybe<TopicWhereUniqueInput>;
+  distinct: InputMaybe<Array<TopicScalarFieldEnum>>;
+  orderBy: InputMaybe<Array<TopicOrderByWithRelationInput>>;
+  skip: InputMaybe<Scalars['Int']>;
+  take: InputMaybe<Scalars['Int']>;
+  where: InputMaybe<TopicWhereInput>;
 };
 
 
@@ -4417,6 +5838,401 @@ export type TagWhereUniqueInput = {
   name?: InputMaybe<Scalars['String']>;
 };
 
+export type Topic = {
+  __typename?: 'Topic';
+  _count: Maybe<TopicCount>;
+  articles: Array<Article>;
+  created_at: Scalars['DateTime'];
+  forum_category: ForumCategory;
+  id: Scalars['String'];
+  is_disabled: Scalars['Boolean'];
+  moderators: Array<User>;
+  name: Scalars['String'];
+  updated_at: Scalars['DateTime'];
+};
+
+
+export type TopicArticlesArgs = {
+  cursor: InputMaybe<ArticleWhereUniqueInput>;
+  distinct: InputMaybe<Array<ArticleScalarFieldEnum>>;
+  orderBy: InputMaybe<Array<ArticleOrderByWithRelationInput>>;
+  skip: InputMaybe<Scalars['Int']>;
+  take: InputMaybe<Scalars['Int']>;
+  where: InputMaybe<ArticleWhereInput>;
+};
+
+
+export type TopicModeratorsArgs = {
+  cursor: InputMaybe<UserWhereUniqueInput>;
+  distinct: InputMaybe<Array<UserScalarFieldEnum>>;
+  orderBy: InputMaybe<Array<UserOrderByWithRelationInput>>;
+  skip: InputMaybe<Scalars['Int']>;
+  take: InputMaybe<Scalars['Int']>;
+  where: InputMaybe<UserWhereInput>;
+};
+
+export type TopicCount = {
+  __typename?: 'TopicCount';
+  articles: Scalars['Int'];
+  moderators: Scalars['Int'];
+};
+
+export type TopicCountAggregate = {
+  __typename?: 'TopicCountAggregate';
+  _all: Scalars['Int'];
+  created_at: Scalars['Int'];
+  id: Scalars['Int'];
+  is_disabled: Scalars['Int'];
+  name: Scalars['Int'];
+  updated_at: Scalars['Int'];
+};
+
+export type TopicCountOrderByAggregateInput = {
+  created_at?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  is_disabled?: InputMaybe<SortOrder>;
+  name?: InputMaybe<SortOrder>;
+  updated_at?: InputMaybe<SortOrder>;
+};
+
+export type TopicCreateInput = {
+  articles?: InputMaybe<ArticleCreateNestedManyWithoutTopicInput>;
+  created_at?: InputMaybe<Scalars['DateTime']>;
+  forum_category?: InputMaybe<ForumCategoryCreateNestedOneWithoutTopicsInput>;
+  is_disabled?: InputMaybe<Scalars['Boolean']>;
+  moderators?: InputMaybe<UserCreateNestedManyWithoutTopics_ModeratedInput>;
+  name: Scalars['String'];
+  updated_at?: InputMaybe<Scalars['DateTime']>;
+};
+
+export type TopicCreateManyForum_CategoryInput = {
+  created_at?: InputMaybe<Scalars['DateTime']>;
+  is_disabled?: InputMaybe<Scalars['Boolean']>;
+  name: Scalars['String'];
+  updated_at?: InputMaybe<Scalars['DateTime']>;
+};
+
+export type TopicCreateManyForum_CategoryInputEnvelope = {
+  data: Array<TopicCreateManyForum_CategoryInput>;
+  skipDuplicates?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type TopicCreateManyInput = {
+  created_at?: InputMaybe<Scalars['DateTime']>;
+  id?: InputMaybe<Scalars['String']>;
+  is_disabled?: InputMaybe<Scalars['Boolean']>;
+  name: Scalars['String'];
+  updated_at?: InputMaybe<Scalars['DateTime']>;
+};
+
+export type TopicCreateNestedManyWithoutForum_CategoryInput = {
+  connect?: InputMaybe<Array<TopicWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<TopicCreateOrConnectWithoutForum_CategoryInput>>;
+  create?: InputMaybe<Array<TopicCreateWithoutForum_CategoryInput>>;
+  createMany?: InputMaybe<TopicCreateManyForum_CategoryInputEnvelope>;
+};
+
+export type TopicCreateNestedManyWithoutModeratorsInput = {
+  connect?: InputMaybe<Array<TopicWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<TopicCreateOrConnectWithoutModeratorsInput>>;
+  create?: InputMaybe<Array<TopicCreateWithoutModeratorsInput>>;
+};
+
+export type TopicCreateNestedOneWithoutArticlesInput = {
+  connect?: InputMaybe<TopicWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<TopicCreateOrConnectWithoutArticlesInput>;
+  create?: InputMaybe<TopicCreateWithoutArticlesInput>;
+};
+
+export type TopicCreateOrConnectWithoutArticlesInput = {
+  create: TopicCreateWithoutArticlesInput;
+  where: TopicWhereUniqueInput;
+};
+
+export type TopicCreateOrConnectWithoutForum_CategoryInput = {
+  create: TopicCreateWithoutForum_CategoryInput;
+  where: TopicWhereUniqueInput;
+};
+
+export type TopicCreateOrConnectWithoutModeratorsInput = {
+  create: TopicCreateWithoutModeratorsInput;
+  where: TopicWhereUniqueInput;
+};
+
+export type TopicCreateWithoutArticlesInput = {
+  created_at?: InputMaybe<Scalars['DateTime']>;
+  forum_category?: InputMaybe<ForumCategoryCreateNestedOneWithoutTopicsInput>;
+  is_disabled?: InputMaybe<Scalars['Boolean']>;
+  moderators?: InputMaybe<UserCreateNestedManyWithoutTopics_ModeratedInput>;
+  name: Scalars['String'];
+  updated_at?: InputMaybe<Scalars['DateTime']>;
+};
+
+export type TopicCreateWithoutForum_CategoryInput = {
+  articles?: InputMaybe<ArticleCreateNestedManyWithoutTopicInput>;
+  created_at?: InputMaybe<Scalars['DateTime']>;
+  is_disabled?: InputMaybe<Scalars['Boolean']>;
+  moderators?: InputMaybe<UserCreateNestedManyWithoutTopics_ModeratedInput>;
+  name: Scalars['String'];
+  updated_at?: InputMaybe<Scalars['DateTime']>;
+};
+
+export type TopicCreateWithoutModeratorsInput = {
+  articles?: InputMaybe<ArticleCreateNestedManyWithoutTopicInput>;
+  created_at?: InputMaybe<Scalars['DateTime']>;
+  forum_category?: InputMaybe<ForumCategoryCreateNestedOneWithoutTopicsInput>;
+  is_disabled?: InputMaybe<Scalars['Boolean']>;
+  name: Scalars['String'];
+  updated_at?: InputMaybe<Scalars['DateTime']>;
+};
+
+export type TopicGroupBy = {
+  __typename?: 'TopicGroupBy';
+  _count: Maybe<TopicCountAggregate>;
+  _max: Maybe<TopicMaxAggregate>;
+  _min: Maybe<TopicMinAggregate>;
+  created_at: Scalars['DateTime'];
+  id: Scalars['String'];
+  is_disabled: Scalars['Boolean'];
+  name: Scalars['String'];
+  updated_at: Scalars['DateTime'];
+};
+
+export type TopicListRelationFilter = {
+  every?: InputMaybe<TopicWhereInput>;
+  none?: InputMaybe<TopicWhereInput>;
+  some?: InputMaybe<TopicWhereInput>;
+};
+
+export type TopicMaxAggregate = {
+  __typename?: 'TopicMaxAggregate';
+  created_at: Maybe<Scalars['DateTime']>;
+  id: Maybe<Scalars['String']>;
+  is_disabled: Maybe<Scalars['Boolean']>;
+  name: Maybe<Scalars['String']>;
+  updated_at: Maybe<Scalars['DateTime']>;
+};
+
+export type TopicMaxOrderByAggregateInput = {
+  created_at?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  is_disabled?: InputMaybe<SortOrder>;
+  name?: InputMaybe<SortOrder>;
+  updated_at?: InputMaybe<SortOrder>;
+};
+
+export type TopicMinAggregate = {
+  __typename?: 'TopicMinAggregate';
+  created_at: Maybe<Scalars['DateTime']>;
+  id: Maybe<Scalars['String']>;
+  is_disabled: Maybe<Scalars['Boolean']>;
+  name: Maybe<Scalars['String']>;
+  updated_at: Maybe<Scalars['DateTime']>;
+};
+
+export type TopicMinOrderByAggregateInput = {
+  created_at?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  is_disabled?: InputMaybe<SortOrder>;
+  name?: InputMaybe<SortOrder>;
+  updated_at?: InputMaybe<SortOrder>;
+};
+
+export type TopicOrderByRelationAggregateInput = {
+  _count?: InputMaybe<SortOrder>;
+};
+
+export type TopicOrderByWithAggregationInput = {
+  _count?: InputMaybe<TopicCountOrderByAggregateInput>;
+  _max?: InputMaybe<TopicMaxOrderByAggregateInput>;
+  _min?: InputMaybe<TopicMinOrderByAggregateInput>;
+  created_at?: InputMaybe<SortOrder>;
+  id?: InputMaybe<SortOrder>;
+  is_disabled?: InputMaybe<SortOrder>;
+  name?: InputMaybe<SortOrder>;
+  updated_at?: InputMaybe<SortOrder>;
+};
+
+export type TopicOrderByWithRelationInput = {
+  articles?: InputMaybe<ArticleOrderByRelationAggregateInput>;
+  created_at?: InputMaybe<SortOrder>;
+  forum_category?: InputMaybe<ForumCategoryOrderByWithRelationInput>;
+  id?: InputMaybe<SortOrder>;
+  is_disabled?: InputMaybe<SortOrder>;
+  moderators?: InputMaybe<UserOrderByRelationAggregateInput>;
+  name?: InputMaybe<SortOrder>;
+  updated_at?: InputMaybe<SortOrder>;
+};
+
+export type TopicRelationFilter = {
+  is?: InputMaybe<TopicWhereInput>;
+  isNot?: InputMaybe<TopicWhereInput>;
+};
+
+export enum TopicScalarFieldEnum {
+  CreatedAt = 'created_at',
+  Id = 'id',
+  IsDisabled = 'is_disabled',
+  Name = 'name',
+  UpdatedAt = 'updated_at'
+}
+
+export type TopicScalarWhereInput = {
+  AND?: InputMaybe<Array<TopicScalarWhereInput>>;
+  NOT?: InputMaybe<Array<TopicScalarWhereInput>>;
+  OR?: InputMaybe<Array<TopicScalarWhereInput>>;
+  created_at?: InputMaybe<DateTimeFilter>;
+  id?: InputMaybe<StringFilter>;
+  is_disabled?: InputMaybe<BoolFilter>;
+  name?: InputMaybe<StringFilter>;
+  updated_at?: InputMaybe<DateTimeFilter>;
+};
+
+export type TopicScalarWhereWithAggregatesInput = {
+  AND?: InputMaybe<Array<TopicScalarWhereWithAggregatesInput>>;
+  NOT?: InputMaybe<Array<TopicScalarWhereWithAggregatesInput>>;
+  OR?: InputMaybe<Array<TopicScalarWhereWithAggregatesInput>>;
+  created_at?: InputMaybe<DateTimeWithAggregatesFilter>;
+  id?: InputMaybe<StringWithAggregatesFilter>;
+  is_disabled?: InputMaybe<BoolWithAggregatesFilter>;
+  name?: InputMaybe<StringWithAggregatesFilter>;
+  updated_at?: InputMaybe<DateTimeWithAggregatesFilter>;
+};
+
+export type TopicUpdateInput = {
+  articles?: InputMaybe<ArticleUpdateManyWithoutTopicInput>;
+  created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  forum_category?: InputMaybe<ForumCategoryUpdateOneRequiredWithoutTopicsInput>;
+  is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  moderators?: InputMaybe<UserUpdateManyWithoutTopics_ModeratedInput>;
+  name?: InputMaybe<StringFieldUpdateOperationsInput>;
+  updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+};
+
+export type TopicUpdateManyMutationInput = {
+  created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  name?: InputMaybe<StringFieldUpdateOperationsInput>;
+  updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+};
+
+export type TopicUpdateManyWithWhereWithoutForum_CategoryInput = {
+  data: TopicUpdateManyMutationInput;
+  where: TopicScalarWhereInput;
+};
+
+export type TopicUpdateManyWithWhereWithoutModeratorsInput = {
+  data: TopicUpdateManyMutationInput;
+  where: TopicScalarWhereInput;
+};
+
+export type TopicUpdateManyWithoutForum_CategoryInput = {
+  connect?: InputMaybe<Array<TopicWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<TopicCreateOrConnectWithoutForum_CategoryInput>>;
+  create?: InputMaybe<Array<TopicCreateWithoutForum_CategoryInput>>;
+  createMany?: InputMaybe<TopicCreateManyForum_CategoryInputEnvelope>;
+  delete?: InputMaybe<Array<TopicWhereUniqueInput>>;
+  deleteMany?: InputMaybe<Array<TopicScalarWhereInput>>;
+  disconnect?: InputMaybe<Array<TopicWhereUniqueInput>>;
+  set?: InputMaybe<Array<TopicWhereUniqueInput>>;
+  update?: InputMaybe<Array<TopicUpdateWithWhereUniqueWithoutForum_CategoryInput>>;
+  updateMany?: InputMaybe<Array<TopicUpdateManyWithWhereWithoutForum_CategoryInput>>;
+  upsert?: InputMaybe<Array<TopicUpsertWithWhereUniqueWithoutForum_CategoryInput>>;
+};
+
+export type TopicUpdateManyWithoutModeratorsInput = {
+  connect?: InputMaybe<Array<TopicWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<TopicCreateOrConnectWithoutModeratorsInput>>;
+  create?: InputMaybe<Array<TopicCreateWithoutModeratorsInput>>;
+  delete?: InputMaybe<Array<TopicWhereUniqueInput>>;
+  deleteMany?: InputMaybe<Array<TopicScalarWhereInput>>;
+  disconnect?: InputMaybe<Array<TopicWhereUniqueInput>>;
+  set?: InputMaybe<Array<TopicWhereUniqueInput>>;
+  update?: InputMaybe<Array<TopicUpdateWithWhereUniqueWithoutModeratorsInput>>;
+  updateMany?: InputMaybe<Array<TopicUpdateManyWithWhereWithoutModeratorsInput>>;
+  upsert?: InputMaybe<Array<TopicUpsertWithWhereUniqueWithoutModeratorsInput>>;
+};
+
+export type TopicUpdateOneRequiredWithoutArticlesInput = {
+  connect?: InputMaybe<TopicWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<TopicCreateOrConnectWithoutArticlesInput>;
+  create?: InputMaybe<TopicCreateWithoutArticlesInput>;
+  update?: InputMaybe<TopicUpdateWithoutArticlesInput>;
+  upsert?: InputMaybe<TopicUpsertWithoutArticlesInput>;
+};
+
+export type TopicUpdateWithWhereUniqueWithoutForum_CategoryInput = {
+  data: TopicUpdateWithoutForum_CategoryInput;
+  where: TopicWhereUniqueInput;
+};
+
+export type TopicUpdateWithWhereUniqueWithoutModeratorsInput = {
+  data: TopicUpdateWithoutModeratorsInput;
+  where: TopicWhereUniqueInput;
+};
+
+export type TopicUpdateWithoutArticlesInput = {
+  created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  forum_category?: InputMaybe<ForumCategoryUpdateOneRequiredWithoutTopicsInput>;
+  is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  moderators?: InputMaybe<UserUpdateManyWithoutTopics_ModeratedInput>;
+  name?: InputMaybe<StringFieldUpdateOperationsInput>;
+  updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+};
+
+export type TopicUpdateWithoutForum_CategoryInput = {
+  articles?: InputMaybe<ArticleUpdateManyWithoutTopicInput>;
+  created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  moderators?: InputMaybe<UserUpdateManyWithoutTopics_ModeratedInput>;
+  name?: InputMaybe<StringFieldUpdateOperationsInput>;
+  updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+};
+
+export type TopicUpdateWithoutModeratorsInput = {
+  articles?: InputMaybe<ArticleUpdateManyWithoutTopicInput>;
+  created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  forum_category?: InputMaybe<ForumCategoryUpdateOneRequiredWithoutTopicsInput>;
+  is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  name?: InputMaybe<StringFieldUpdateOperationsInput>;
+  updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+};
+
+export type TopicUpsertWithWhereUniqueWithoutForum_CategoryInput = {
+  create: TopicCreateWithoutForum_CategoryInput;
+  update: TopicUpdateWithoutForum_CategoryInput;
+  where: TopicWhereUniqueInput;
+};
+
+export type TopicUpsertWithWhereUniqueWithoutModeratorsInput = {
+  create: TopicCreateWithoutModeratorsInput;
+  update: TopicUpdateWithoutModeratorsInput;
+  where: TopicWhereUniqueInput;
+};
+
+export type TopicUpsertWithoutArticlesInput = {
+  create: TopicCreateWithoutArticlesInput;
+  update: TopicUpdateWithoutArticlesInput;
+};
+
+export type TopicWhereInput = {
+  AND?: InputMaybe<Array<TopicWhereInput>>;
+  NOT?: InputMaybe<Array<TopicWhereInput>>;
+  OR?: InputMaybe<Array<TopicWhereInput>>;
+  articles?: InputMaybe<ArticleListRelationFilter>;
+  created_at?: InputMaybe<DateTimeFilter>;
+  forum_category?: InputMaybe<ForumCategoryRelationFilter>;
+  id?: InputMaybe<StringFilter>;
+  is_disabled?: InputMaybe<BoolFilter>;
+  moderators?: InputMaybe<UserListRelationFilter>;
+  name?: InputMaybe<StringFilter>;
+  updated_at?: InputMaybe<DateTimeFilter>;
+};
+
+export type TopicWhereUniqueInput = {
+  id?: InputMaybe<Scalars['String']>;
+};
+
 export type User = {
   __typename?: 'User';
   Account: Array<Account>;
@@ -4436,6 +6252,7 @@ export type User = {
   first_name: Maybe<Scalars['String']>;
   follower_id: Maybe<Scalars['String']>;
   followersCount: Maybe<Follow>;
+  forum_articles: Array<Article>;
   id: Scalars['String'];
   image: Scalars['String'];
   is_disabled: Scalars['Boolean'];
@@ -4443,6 +6260,7 @@ export type User = {
   name: Scalars['String'];
   nickname: Maybe<Scalars['String']>;
   role: Role;
+  topics_moderated: Array<Topic>;
   updated_at: Scalars['DateTime'];
 };
 
@@ -4526,6 +6344,26 @@ export type UserUser_BArgs = {
   where: InputMaybe<UserWhereInput>;
 };
 
+
+export type UserForum_ArticlesArgs = {
+  cursor: InputMaybe<ArticleWhereUniqueInput>;
+  distinct: InputMaybe<Array<ArticleScalarFieldEnum>>;
+  orderBy: InputMaybe<Array<ArticleOrderByWithRelationInput>>;
+  skip: InputMaybe<Scalars['Int']>;
+  take: InputMaybe<Scalars['Int']>;
+  where: InputMaybe<ArticleWhereInput>;
+};
+
+
+export type UserTopics_ModeratedArgs = {
+  cursor: InputMaybe<TopicWhereUniqueInput>;
+  distinct: InputMaybe<Array<TopicScalarFieldEnum>>;
+  orderBy: InputMaybe<Array<TopicOrderByWithRelationInput>>;
+  skip: InputMaybe<Scalars['Int']>;
+  take: InputMaybe<Scalars['Int']>;
+  where: InputMaybe<TopicWhereInput>;
+};
+
 export type UserCount = {
   __typename?: 'UserCount';
   Account: Scalars['Int'];
@@ -4536,6 +6374,8 @@ export type UserCount = {
   Session: Scalars['Int'];
   User_A: Scalars['Int'];
   User_B: Scalars['Int'];
+  forum_articles: Scalars['Int'];
+  topics_moderated: Scalars['Int'];
 };
 
 export type UserCountAggregate = {
@@ -4592,6 +6432,7 @@ export type UserCreateInput = {
   emailVerified?: InputMaybe<Scalars['String']>;
   first_name?: InputMaybe<Scalars['String']>;
   follower_id?: InputMaybe<Scalars['String']>;
+  forum_articles?: InputMaybe<ArticleCreateNestedManyWithoutAuthorInput>;
   id?: InputMaybe<Scalars['String']>;
   image: Scalars['String'];
   is_disabled?: InputMaybe<Scalars['Boolean']>;
@@ -4600,6 +6441,7 @@ export type UserCreateInput = {
   nickname?: InputMaybe<Scalars['String']>;
   password?: InputMaybe<Scalars['String']>;
   role?: InputMaybe<Role>;
+  topics_moderated?: InputMaybe<TopicCreateNestedManyWithoutModeratorsInput>;
   updated_at?: InputMaybe<Scalars['DateTime']>;
 };
 
@@ -4627,6 +6469,12 @@ export type UserCreateNestedManyWithoutPost_LikesInput = {
   create?: InputMaybe<Array<UserCreateWithoutPost_LikesInput>>;
 };
 
+export type UserCreateNestedManyWithoutTopics_ModeratedInput = {
+  connect?: InputMaybe<Array<UserWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<UserCreateOrConnectWithoutTopics_ModeratedInput>>;
+  create?: InputMaybe<Array<UserCreateWithoutTopics_ModeratedInput>>;
+};
+
 export type UserCreateNestedManyWithoutUser_AInput = {
   connect?: InputMaybe<Array<UserWhereUniqueInput>>;
   connectOrCreate?: InputMaybe<Array<UserCreateOrConnectWithoutUser_AInput>>;
@@ -4649,6 +6497,12 @@ export type UserCreateNestedOneWithoutCommentInput = {
   connect?: InputMaybe<UserWhereUniqueInput>;
   connectOrCreate?: InputMaybe<UserCreateOrConnectWithoutCommentInput>;
   create?: InputMaybe<UserCreateWithoutCommentInput>;
+};
+
+export type UserCreateNestedOneWithoutForum_ArticlesInput = {
+  connect?: InputMaybe<UserWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<UserCreateOrConnectWithoutForum_ArticlesInput>;
+  create?: InputMaybe<UserCreateWithoutForum_ArticlesInput>;
 };
 
 export type UserCreateNestedOneWithoutPostInput = {
@@ -4679,6 +6533,11 @@ export type UserCreateOrConnectWithoutCommentInput = {
   where: UserWhereUniqueInput;
 };
 
+export type UserCreateOrConnectWithoutForum_ArticlesInput = {
+  create: UserCreateWithoutForum_ArticlesInput;
+  where: UserWhereUniqueInput;
+};
+
 export type UserCreateOrConnectWithoutPostInput = {
   create: UserCreateWithoutPostInput;
   where: UserWhereUniqueInput;
@@ -4696,6 +6555,11 @@ export type UserCreateOrConnectWithoutPreferenceInput = {
 
 export type UserCreateOrConnectWithoutSessionInput = {
   create: UserCreateWithoutSessionInput;
+  where: UserWhereUniqueInput;
+};
+
+export type UserCreateOrConnectWithoutTopics_ModeratedInput = {
+  create: UserCreateWithoutTopics_ModeratedInput;
   where: UserWhereUniqueInput;
 };
 
@@ -4724,6 +6588,7 @@ export type UserCreateWithoutAccountInput = {
   emailVerified?: InputMaybe<Scalars['String']>;
   first_name?: InputMaybe<Scalars['String']>;
   follower_id?: InputMaybe<Scalars['String']>;
+  forum_articles?: InputMaybe<ArticleCreateNestedManyWithoutAuthorInput>;
   id?: InputMaybe<Scalars['String']>;
   image: Scalars['String'];
   is_disabled?: InputMaybe<Scalars['Boolean']>;
@@ -4732,6 +6597,7 @@ export type UserCreateWithoutAccountInput = {
   nickname?: InputMaybe<Scalars['String']>;
   password?: InputMaybe<Scalars['String']>;
   role?: InputMaybe<Role>;
+  topics_moderated?: InputMaybe<TopicCreateNestedManyWithoutModeratorsInput>;
   updated_at?: InputMaybe<Scalars['DateTime']>;
 };
 
@@ -4750,6 +6616,7 @@ export type UserCreateWithoutCommentInput = {
   emailVerified?: InputMaybe<Scalars['String']>;
   first_name?: InputMaybe<Scalars['String']>;
   follower_id?: InputMaybe<Scalars['String']>;
+  forum_articles?: InputMaybe<ArticleCreateNestedManyWithoutAuthorInput>;
   id?: InputMaybe<Scalars['String']>;
   image: Scalars['String'];
   is_disabled?: InputMaybe<Scalars['Boolean']>;
@@ -4758,6 +6625,35 @@ export type UserCreateWithoutCommentInput = {
   nickname?: InputMaybe<Scalars['String']>;
   password?: InputMaybe<Scalars['String']>;
   role?: InputMaybe<Role>;
+  topics_moderated?: InputMaybe<TopicCreateNestedManyWithoutModeratorsInput>;
+  updated_at?: InputMaybe<Scalars['DateTime']>;
+};
+
+export type UserCreateWithoutForum_ArticlesInput = {
+  Account?: InputMaybe<AccountCreateNestedManyWithoutUserInput>;
+  Comment?: InputMaybe<CommentCreateNestedManyWithoutAuthorInput>;
+  Post?: InputMaybe<PostCreateNestedManyWithoutAuthorInput>;
+  Post_likes?: InputMaybe<PostCreateNestedManyWithoutUser_LikesInput>;
+  Preference?: InputMaybe<PreferenceCreateNestedOneWithoutUserInput>;
+  ResetPassword?: InputMaybe<ResetPasswordCreateNestedManyWithoutUserInput>;
+  Session?: InputMaybe<SessionCreateNestedManyWithoutUserInput>;
+  User_A?: InputMaybe<UserCreateNestedManyWithoutUser_BInput>;
+  User_B?: InputMaybe<UserCreateNestedManyWithoutUser_AInput>;
+  avatar?: InputMaybe<Scalars['String']>;
+  created_at?: InputMaybe<Scalars['DateTime']>;
+  email: Scalars['String'];
+  emailVerified?: InputMaybe<Scalars['String']>;
+  first_name?: InputMaybe<Scalars['String']>;
+  follower_id?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']>;
+  image: Scalars['String'];
+  is_disabled?: InputMaybe<Scalars['Boolean']>;
+  last_name?: InputMaybe<Scalars['String']>;
+  name: Scalars['String'];
+  nickname?: InputMaybe<Scalars['String']>;
+  password?: InputMaybe<Scalars['String']>;
+  role?: InputMaybe<Role>;
+  topics_moderated?: InputMaybe<TopicCreateNestedManyWithoutModeratorsInput>;
   updated_at?: InputMaybe<Scalars['DateTime']>;
 };
 
@@ -4776,6 +6672,7 @@ export type UserCreateWithoutPostInput = {
   emailVerified?: InputMaybe<Scalars['String']>;
   first_name?: InputMaybe<Scalars['String']>;
   follower_id?: InputMaybe<Scalars['String']>;
+  forum_articles?: InputMaybe<ArticleCreateNestedManyWithoutAuthorInput>;
   id?: InputMaybe<Scalars['String']>;
   image: Scalars['String'];
   is_disabled?: InputMaybe<Scalars['Boolean']>;
@@ -4784,6 +6681,7 @@ export type UserCreateWithoutPostInput = {
   nickname?: InputMaybe<Scalars['String']>;
   password?: InputMaybe<Scalars['String']>;
   role?: InputMaybe<Role>;
+  topics_moderated?: InputMaybe<TopicCreateNestedManyWithoutModeratorsInput>;
   updated_at?: InputMaybe<Scalars['DateTime']>;
 };
 
@@ -4802,6 +6700,7 @@ export type UserCreateWithoutPost_LikesInput = {
   emailVerified?: InputMaybe<Scalars['String']>;
   first_name?: InputMaybe<Scalars['String']>;
   follower_id?: InputMaybe<Scalars['String']>;
+  forum_articles?: InputMaybe<ArticleCreateNestedManyWithoutAuthorInput>;
   id?: InputMaybe<Scalars['String']>;
   image: Scalars['String'];
   is_disabled?: InputMaybe<Scalars['Boolean']>;
@@ -4810,6 +6709,7 @@ export type UserCreateWithoutPost_LikesInput = {
   nickname?: InputMaybe<Scalars['String']>;
   password?: InputMaybe<Scalars['String']>;
   role?: InputMaybe<Role>;
+  topics_moderated?: InputMaybe<TopicCreateNestedManyWithoutModeratorsInput>;
   updated_at?: InputMaybe<Scalars['DateTime']>;
 };
 
@@ -4828,6 +6728,7 @@ export type UserCreateWithoutPreferenceInput = {
   emailVerified?: InputMaybe<Scalars['String']>;
   first_name?: InputMaybe<Scalars['String']>;
   follower_id?: InputMaybe<Scalars['String']>;
+  forum_articles?: InputMaybe<ArticleCreateNestedManyWithoutAuthorInput>;
   id?: InputMaybe<Scalars['String']>;
   image: Scalars['String'];
   is_disabled?: InputMaybe<Scalars['Boolean']>;
@@ -4836,6 +6737,7 @@ export type UserCreateWithoutPreferenceInput = {
   nickname?: InputMaybe<Scalars['String']>;
   password?: InputMaybe<Scalars['String']>;
   role?: InputMaybe<Role>;
+  topics_moderated?: InputMaybe<TopicCreateNestedManyWithoutModeratorsInput>;
   updated_at?: InputMaybe<Scalars['DateTime']>;
 };
 
@@ -4854,6 +6756,36 @@ export type UserCreateWithoutSessionInput = {
   emailVerified?: InputMaybe<Scalars['String']>;
   first_name?: InputMaybe<Scalars['String']>;
   follower_id?: InputMaybe<Scalars['String']>;
+  forum_articles?: InputMaybe<ArticleCreateNestedManyWithoutAuthorInput>;
+  id?: InputMaybe<Scalars['String']>;
+  image: Scalars['String'];
+  is_disabled?: InputMaybe<Scalars['Boolean']>;
+  last_name?: InputMaybe<Scalars['String']>;
+  name: Scalars['String'];
+  nickname?: InputMaybe<Scalars['String']>;
+  password?: InputMaybe<Scalars['String']>;
+  role?: InputMaybe<Role>;
+  topics_moderated?: InputMaybe<TopicCreateNestedManyWithoutModeratorsInput>;
+  updated_at?: InputMaybe<Scalars['DateTime']>;
+};
+
+export type UserCreateWithoutTopics_ModeratedInput = {
+  Account?: InputMaybe<AccountCreateNestedManyWithoutUserInput>;
+  Comment?: InputMaybe<CommentCreateNestedManyWithoutAuthorInput>;
+  Post?: InputMaybe<PostCreateNestedManyWithoutAuthorInput>;
+  Post_likes?: InputMaybe<PostCreateNestedManyWithoutUser_LikesInput>;
+  Preference?: InputMaybe<PreferenceCreateNestedOneWithoutUserInput>;
+  ResetPassword?: InputMaybe<ResetPasswordCreateNestedManyWithoutUserInput>;
+  Session?: InputMaybe<SessionCreateNestedManyWithoutUserInput>;
+  User_A?: InputMaybe<UserCreateNestedManyWithoutUser_BInput>;
+  User_B?: InputMaybe<UserCreateNestedManyWithoutUser_AInput>;
+  avatar?: InputMaybe<Scalars['String']>;
+  created_at?: InputMaybe<Scalars['DateTime']>;
+  email: Scalars['String'];
+  emailVerified?: InputMaybe<Scalars['String']>;
+  first_name?: InputMaybe<Scalars['String']>;
+  follower_id?: InputMaybe<Scalars['String']>;
+  forum_articles?: InputMaybe<ArticleCreateNestedManyWithoutAuthorInput>;
   id?: InputMaybe<Scalars['String']>;
   image: Scalars['String'];
   is_disabled?: InputMaybe<Scalars['Boolean']>;
@@ -4880,6 +6812,7 @@ export type UserCreateWithoutUser_AInput = {
   emailVerified?: InputMaybe<Scalars['String']>;
   first_name?: InputMaybe<Scalars['String']>;
   follower_id?: InputMaybe<Scalars['String']>;
+  forum_articles?: InputMaybe<ArticleCreateNestedManyWithoutAuthorInput>;
   id?: InputMaybe<Scalars['String']>;
   image: Scalars['String'];
   is_disabled?: InputMaybe<Scalars['Boolean']>;
@@ -4888,6 +6821,7 @@ export type UserCreateWithoutUser_AInput = {
   nickname?: InputMaybe<Scalars['String']>;
   password?: InputMaybe<Scalars['String']>;
   role?: InputMaybe<Role>;
+  topics_moderated?: InputMaybe<TopicCreateNestedManyWithoutModeratorsInput>;
   updated_at?: InputMaybe<Scalars['DateTime']>;
 };
 
@@ -4906,6 +6840,7 @@ export type UserCreateWithoutUser_BInput = {
   emailVerified?: InputMaybe<Scalars['String']>;
   first_name?: InputMaybe<Scalars['String']>;
   follower_id?: InputMaybe<Scalars['String']>;
+  forum_articles?: InputMaybe<ArticleCreateNestedManyWithoutAuthorInput>;
   id?: InputMaybe<Scalars['String']>;
   image: Scalars['String'];
   is_disabled?: InputMaybe<Scalars['Boolean']>;
@@ -4914,6 +6849,7 @@ export type UserCreateWithoutUser_BInput = {
   nickname?: InputMaybe<Scalars['String']>;
   password?: InputMaybe<Scalars['String']>;
   role?: InputMaybe<Role>;
+  topics_moderated?: InputMaybe<TopicCreateNestedManyWithoutModeratorsInput>;
   updated_at?: InputMaybe<Scalars['DateTime']>;
 };
 
@@ -5060,6 +6996,7 @@ export type UserOrderByWithRelationInput = {
   emailVerified?: InputMaybe<SortOrder>;
   first_name?: InputMaybe<SortOrder>;
   follower_id?: InputMaybe<SortOrder>;
+  forum_articles?: InputMaybe<ArticleOrderByRelationAggregateInput>;
   id?: InputMaybe<SortOrder>;
   image?: InputMaybe<SortOrder>;
   is_disabled?: InputMaybe<SortOrder>;
@@ -5068,6 +7005,7 @@ export type UserOrderByWithRelationInput = {
   nickname?: InputMaybe<SortOrder>;
   password?: InputMaybe<SortOrder>;
   role?: InputMaybe<SortOrder>;
+  topics_moderated?: InputMaybe<TopicOrderByRelationAggregateInput>;
   updated_at?: InputMaybe<SortOrder>;
 };
 
@@ -5152,6 +7090,7 @@ export type UserUpdateInput = {
   emailVerified?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   first_name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   follower_id?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  forum_articles?: InputMaybe<ArticleUpdateManyWithoutAuthorInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
   image?: InputMaybe<StringFieldUpdateOperationsInput>;
   is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
@@ -5160,6 +7099,7 @@ export type UserUpdateInput = {
   nickname?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   password?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   role?: InputMaybe<EnumRoleFieldUpdateOperationsInput>;
+  topics_moderated?: InputMaybe<TopicUpdateManyWithoutModeratorsInput>;
   updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
 };
 
@@ -5186,6 +7126,11 @@ export type UserUpdateManyWithWhereWithoutPost_LikesInput = {
   where: UserScalarWhereInput;
 };
 
+export type UserUpdateManyWithWhereWithoutTopics_ModeratedInput = {
+  data: UserUpdateManyMutationInput;
+  where: UserScalarWhereInput;
+};
+
 export type UserUpdateManyWithWhereWithoutUser_AInput = {
   data: UserUpdateManyMutationInput;
   where: UserScalarWhereInput;
@@ -5207,6 +7152,19 @@ export type UserUpdateManyWithoutPost_LikesInput = {
   update?: InputMaybe<Array<UserUpdateWithWhereUniqueWithoutPost_LikesInput>>;
   updateMany?: InputMaybe<Array<UserUpdateManyWithWhereWithoutPost_LikesInput>>;
   upsert?: InputMaybe<Array<UserUpsertWithWhereUniqueWithoutPost_LikesInput>>;
+};
+
+export type UserUpdateManyWithoutTopics_ModeratedInput = {
+  connect?: InputMaybe<Array<UserWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<UserCreateOrConnectWithoutTopics_ModeratedInput>>;
+  create?: InputMaybe<Array<UserCreateWithoutTopics_ModeratedInput>>;
+  delete?: InputMaybe<Array<UserWhereUniqueInput>>;
+  deleteMany?: InputMaybe<Array<UserScalarWhereInput>>;
+  disconnect?: InputMaybe<Array<UserWhereUniqueInput>>;
+  set?: InputMaybe<Array<UserWhereUniqueInput>>;
+  update?: InputMaybe<Array<UserUpdateWithWhereUniqueWithoutTopics_ModeratedInput>>;
+  updateMany?: InputMaybe<Array<UserUpdateManyWithWhereWithoutTopics_ModeratedInput>>;
+  upsert?: InputMaybe<Array<UserUpsertWithWhereUniqueWithoutTopics_ModeratedInput>>;
 };
 
 export type UserUpdateManyWithoutUser_AInput = {
@@ -5251,6 +7209,14 @@ export type UserUpdateOneRequiredWithoutCommentInput = {
   upsert?: InputMaybe<UserUpsertWithoutCommentInput>;
 };
 
+export type UserUpdateOneRequiredWithoutForum_ArticlesInput = {
+  connect?: InputMaybe<UserWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<UserCreateOrConnectWithoutForum_ArticlesInput>;
+  create?: InputMaybe<UserCreateWithoutForum_ArticlesInput>;
+  update?: InputMaybe<UserUpdateWithoutForum_ArticlesInput>;
+  upsert?: InputMaybe<UserUpsertWithoutForum_ArticlesInput>;
+};
+
 export type UserUpdateOneRequiredWithoutPostInput = {
   connect?: InputMaybe<UserWhereUniqueInput>;
   connectOrCreate?: InputMaybe<UserCreateOrConnectWithoutPostInput>;
@@ -5280,6 +7246,11 @@ export type UserUpdateWithWhereUniqueWithoutPost_LikesInput = {
   where: UserWhereUniqueInput;
 };
 
+export type UserUpdateWithWhereUniqueWithoutTopics_ModeratedInput = {
+  data: UserUpdateWithoutTopics_ModeratedInput;
+  where: UserWhereUniqueInput;
+};
+
 export type UserUpdateWithWhereUniqueWithoutUser_AInput = {
   data: UserUpdateWithoutUser_AInput;
   where: UserWhereUniqueInput;
@@ -5305,6 +7276,7 @@ export type UserUpdateWithoutAccountInput = {
   emailVerified?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   first_name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   follower_id?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  forum_articles?: InputMaybe<ArticleUpdateManyWithoutAuthorInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
   image?: InputMaybe<StringFieldUpdateOperationsInput>;
   is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
@@ -5313,6 +7285,7 @@ export type UserUpdateWithoutAccountInput = {
   nickname?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   password?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   role?: InputMaybe<EnumRoleFieldUpdateOperationsInput>;
+  topics_moderated?: InputMaybe<TopicUpdateManyWithoutModeratorsInput>;
   updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
 };
 
@@ -5331,6 +7304,7 @@ export type UserUpdateWithoutCommentInput = {
   emailVerified?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   first_name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   follower_id?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  forum_articles?: InputMaybe<ArticleUpdateManyWithoutAuthorInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
   image?: InputMaybe<StringFieldUpdateOperationsInput>;
   is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
@@ -5339,6 +7313,35 @@ export type UserUpdateWithoutCommentInput = {
   nickname?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   password?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   role?: InputMaybe<EnumRoleFieldUpdateOperationsInput>;
+  topics_moderated?: InputMaybe<TopicUpdateManyWithoutModeratorsInput>;
+  updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+};
+
+export type UserUpdateWithoutForum_ArticlesInput = {
+  Account?: InputMaybe<AccountUpdateManyWithoutUserInput>;
+  Comment?: InputMaybe<CommentUpdateManyWithoutAuthorInput>;
+  Post?: InputMaybe<PostUpdateManyWithoutAuthorInput>;
+  Post_likes?: InputMaybe<PostUpdateManyWithoutUser_LikesInput>;
+  Preference?: InputMaybe<PreferenceUpdateOneWithoutUserInput>;
+  ResetPassword?: InputMaybe<ResetPasswordUpdateManyWithoutUserInput>;
+  Session?: InputMaybe<SessionUpdateManyWithoutUserInput>;
+  User_A?: InputMaybe<UserUpdateManyWithoutUser_BInput>;
+  User_B?: InputMaybe<UserUpdateManyWithoutUser_AInput>;
+  avatar?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  email?: InputMaybe<StringFieldUpdateOperationsInput>;
+  emailVerified?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  first_name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  follower_id?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  image?: InputMaybe<StringFieldUpdateOperationsInput>;
+  is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  last_name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  name?: InputMaybe<StringFieldUpdateOperationsInput>;
+  nickname?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  password?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  role?: InputMaybe<EnumRoleFieldUpdateOperationsInput>;
+  topics_moderated?: InputMaybe<TopicUpdateManyWithoutModeratorsInput>;
   updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
 };
 
@@ -5357,6 +7360,7 @@ export type UserUpdateWithoutPostInput = {
   emailVerified?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   first_name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   follower_id?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  forum_articles?: InputMaybe<ArticleUpdateManyWithoutAuthorInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
   image?: InputMaybe<StringFieldUpdateOperationsInput>;
   is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
@@ -5365,6 +7369,7 @@ export type UserUpdateWithoutPostInput = {
   nickname?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   password?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   role?: InputMaybe<EnumRoleFieldUpdateOperationsInput>;
+  topics_moderated?: InputMaybe<TopicUpdateManyWithoutModeratorsInput>;
   updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
 };
 
@@ -5383,6 +7388,7 @@ export type UserUpdateWithoutPost_LikesInput = {
   emailVerified?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   first_name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   follower_id?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  forum_articles?: InputMaybe<ArticleUpdateManyWithoutAuthorInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
   image?: InputMaybe<StringFieldUpdateOperationsInput>;
   is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
@@ -5391,6 +7397,7 @@ export type UserUpdateWithoutPost_LikesInput = {
   nickname?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   password?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   role?: InputMaybe<EnumRoleFieldUpdateOperationsInput>;
+  topics_moderated?: InputMaybe<TopicUpdateManyWithoutModeratorsInput>;
   updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
 };
 
@@ -5409,6 +7416,7 @@ export type UserUpdateWithoutPreferenceInput = {
   emailVerified?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   first_name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   follower_id?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  forum_articles?: InputMaybe<ArticleUpdateManyWithoutAuthorInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
   image?: InputMaybe<StringFieldUpdateOperationsInput>;
   is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
@@ -5417,6 +7425,7 @@ export type UserUpdateWithoutPreferenceInput = {
   nickname?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   password?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   role?: InputMaybe<EnumRoleFieldUpdateOperationsInput>;
+  topics_moderated?: InputMaybe<TopicUpdateManyWithoutModeratorsInput>;
   updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
 };
 
@@ -5435,6 +7444,36 @@ export type UserUpdateWithoutSessionInput = {
   emailVerified?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   first_name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   follower_id?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  forum_articles?: InputMaybe<ArticleUpdateManyWithoutAuthorInput>;
+  id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  image?: InputMaybe<StringFieldUpdateOperationsInput>;
+  is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  last_name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  name?: InputMaybe<StringFieldUpdateOperationsInput>;
+  nickname?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  password?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  role?: InputMaybe<EnumRoleFieldUpdateOperationsInput>;
+  topics_moderated?: InputMaybe<TopicUpdateManyWithoutModeratorsInput>;
+  updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+};
+
+export type UserUpdateWithoutTopics_ModeratedInput = {
+  Account?: InputMaybe<AccountUpdateManyWithoutUserInput>;
+  Comment?: InputMaybe<CommentUpdateManyWithoutAuthorInput>;
+  Post?: InputMaybe<PostUpdateManyWithoutAuthorInput>;
+  Post_likes?: InputMaybe<PostUpdateManyWithoutUser_LikesInput>;
+  Preference?: InputMaybe<PreferenceUpdateOneWithoutUserInput>;
+  ResetPassword?: InputMaybe<ResetPasswordUpdateManyWithoutUserInput>;
+  Session?: InputMaybe<SessionUpdateManyWithoutUserInput>;
+  User_A?: InputMaybe<UserUpdateManyWithoutUser_BInput>;
+  User_B?: InputMaybe<UserUpdateManyWithoutUser_AInput>;
+  avatar?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  email?: InputMaybe<StringFieldUpdateOperationsInput>;
+  emailVerified?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  first_name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  follower_id?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  forum_articles?: InputMaybe<ArticleUpdateManyWithoutAuthorInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
   image?: InputMaybe<StringFieldUpdateOperationsInput>;
   is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
@@ -5461,6 +7500,7 @@ export type UserUpdateWithoutUser_AInput = {
   emailVerified?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   first_name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   follower_id?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  forum_articles?: InputMaybe<ArticleUpdateManyWithoutAuthorInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
   image?: InputMaybe<StringFieldUpdateOperationsInput>;
   is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
@@ -5469,6 +7509,7 @@ export type UserUpdateWithoutUser_AInput = {
   nickname?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   password?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   role?: InputMaybe<EnumRoleFieldUpdateOperationsInput>;
+  topics_moderated?: InputMaybe<TopicUpdateManyWithoutModeratorsInput>;
   updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
 };
 
@@ -5487,6 +7528,7 @@ export type UserUpdateWithoutUser_BInput = {
   emailVerified?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   first_name?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   follower_id?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  forum_articles?: InputMaybe<ArticleUpdateManyWithoutAuthorInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
   image?: InputMaybe<StringFieldUpdateOperationsInput>;
   is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
@@ -5495,12 +7537,19 @@ export type UserUpdateWithoutUser_BInput = {
   nickname?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   password?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   role?: InputMaybe<EnumRoleFieldUpdateOperationsInput>;
+  topics_moderated?: InputMaybe<TopicUpdateManyWithoutModeratorsInput>;
   updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
 };
 
 export type UserUpsertWithWhereUniqueWithoutPost_LikesInput = {
   create: UserCreateWithoutPost_LikesInput;
   update: UserUpdateWithoutPost_LikesInput;
+  where: UserWhereUniqueInput;
+};
+
+export type UserUpsertWithWhereUniqueWithoutTopics_ModeratedInput = {
+  create: UserCreateWithoutTopics_ModeratedInput;
+  update: UserUpdateWithoutTopics_ModeratedInput;
   where: UserWhereUniqueInput;
 };
 
@@ -5524,6 +7573,11 @@ export type UserUpsertWithoutAccountInput = {
 export type UserUpsertWithoutCommentInput = {
   create: UserCreateWithoutCommentInput;
   update: UserUpdateWithoutCommentInput;
+};
+
+export type UserUpsertWithoutForum_ArticlesInput = {
+  create: UserCreateWithoutForum_ArticlesInput;
+  update: UserUpdateWithoutForum_ArticlesInput;
 };
 
 export type UserUpsertWithoutPostInput = {
@@ -5560,6 +7614,7 @@ export type UserWhereInput = {
   emailVerified?: InputMaybe<StringNullableFilter>;
   first_name?: InputMaybe<StringNullableFilter>;
   follower_id?: InputMaybe<StringNullableFilter>;
+  forum_articles?: InputMaybe<ArticleListRelationFilter>;
   id?: InputMaybe<StringFilter>;
   image?: InputMaybe<StringFilter>;
   is_disabled?: InputMaybe<BoolFilter>;
@@ -5568,6 +7623,7 @@ export type UserWhereInput = {
   nickname?: InputMaybe<StringNullableFilter>;
   password?: InputMaybe<StringNullableFilter>;
   role?: InputMaybe<EnumRoleFilter>;
+  topics_moderated?: InputMaybe<TopicListRelationFilter>;
   updated_at?: InputMaybe<DateTimeFilter>;
 };
 
@@ -5799,6 +7855,11 @@ export type GetAllFollowersQueryVariables = Exact<{
 
 export type GetAllFollowersQuery = { __typename?: 'Query', user: { __typename?: 'User', followersCount: { __typename?: 'Follow', count: number, isFollowing: boolean } } };
 
+export type GetAllForumsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAllForumsQuery = { __typename?: 'Query', forums: Array<{ __typename?: 'Forum', id: string, name: string, forum_categories: Array<{ __typename?: 'ForumCategory', id: string, name: string, description: string, icon: string }> }> };
+
 export type GetAllLikesQueryVariables = Exact<{
   where: PostWhereUniqueInput;
 }>;
@@ -5845,12 +7906,26 @@ export type GetAllTagsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetAllTagsQuery = { __typename?: 'Query', tags: Array<{ __typename?: 'Tag', id: string, name: string }> };
 
+export type GetArticleDataQueryVariables = Exact<{
+  where: ArticleWhereInput;
+}>;
+
+
+export type GetArticleDataQuery = { __typename?: 'Query', articles: Array<{ __typename?: 'Article', id: string, name: string, content: string }> };
+
 export type GetPostDataQueryVariables = Exact<{
   where: PostWhereUniqueInput;
 }>;
 
 
 export type GetPostDataQuery = { __typename?: 'Query', post: { __typename?: 'Post', id: string, slug: string, title: string, content: string, cover_picture: string, isDraft: boolean, User_likes: Array<{ __typename?: 'User', id: string }>, author: { __typename?: 'User', nickname: string, id: string, first_name: string, last_name: string, image: string, email: string, avatar: string }, Tags: Array<{ __typename?: 'Tag', id: string, name: string }> } };
+
+export type GetTopicsByForumCategoryQueryVariables = Exact<{
+  where: TopicWhereInput;
+}>;
+
+
+export type GetTopicsByForumCategoryQuery = { __typename?: 'Query', topics: Array<{ __typename?: 'Topic', id: string, name: string, created_at: any, updated_at: any, articles: Array<{ __typename?: 'Article', id: string, name: string, content: string, created_at: any, updated_at: any, author: { __typename?: 'User', id: string, name: string } }>, forum_category: { __typename?: 'ForumCategory', id: string, name: string } }> };
 
 export type GetUserDataQueryVariables = Exact<{
   where: UserWhereUniqueInput;
@@ -6340,6 +8415,47 @@ export function useGetAllFollowersLazyQuery(baseOptions?: Apollo.LazyQueryHookOp
 export type GetAllFollowersQueryHookResult = ReturnType<typeof useGetAllFollowersQuery>;
 export type GetAllFollowersLazyQueryHookResult = ReturnType<typeof useGetAllFollowersLazyQuery>;
 export type GetAllFollowersQueryResult = Apollo.QueryResult<GetAllFollowersQuery, GetAllFollowersQueryVariables>;
+export const GetAllForumsDocument = gql`
+    query GetAllForums {
+  forums {
+    id
+    name
+    forum_categories {
+      id
+      name
+      description
+      icon
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetAllForumsQuery__
+ *
+ * To run a query within a React component, call `useGetAllForumsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAllForumsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAllForumsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetAllForumsQuery(baseOptions?: Apollo.QueryHookOptions<GetAllForumsQuery, GetAllForumsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetAllForumsQuery, GetAllForumsQueryVariables>(GetAllForumsDocument, options);
+      }
+export function useGetAllForumsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAllForumsQuery, GetAllForumsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetAllForumsQuery, GetAllForumsQueryVariables>(GetAllForumsDocument, options);
+        }
+export type GetAllForumsQueryHookResult = ReturnType<typeof useGetAllForumsQuery>;
+export type GetAllForumsLazyQueryHookResult = ReturnType<typeof useGetAllForumsLazyQuery>;
+export type GetAllForumsQueryResult = Apollo.QueryResult<GetAllForumsQuery, GetAllForumsQueryVariables>;
 export const GetAllLikesDocument = gql`
     query GetAllLikes($where: PostWhereUniqueInput!) {
   post(where: $where) {
@@ -6630,6 +8746,43 @@ export function useGetAllTagsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions
 export type GetAllTagsQueryHookResult = ReturnType<typeof useGetAllTagsQuery>;
 export type GetAllTagsLazyQueryHookResult = ReturnType<typeof useGetAllTagsLazyQuery>;
 export type GetAllTagsQueryResult = Apollo.QueryResult<GetAllTagsQuery, GetAllTagsQueryVariables>;
+export const GetArticleDataDocument = gql`
+    query GetArticleData($where: ArticleWhereInput!) {
+  articles(where: $where) {
+    id
+    name
+    content
+  }
+}
+    `;
+
+/**
+ * __useGetArticleDataQuery__
+ *
+ * To run a query within a React component, call `useGetArticleDataQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetArticleDataQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetArticleDataQuery({
+ *   variables: {
+ *      where: // value for 'where'
+ *   },
+ * });
+ */
+export function useGetArticleDataQuery(baseOptions: Apollo.QueryHookOptions<GetArticleDataQuery, GetArticleDataQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetArticleDataQuery, GetArticleDataQueryVariables>(GetArticleDataDocument, options);
+      }
+export function useGetArticleDataLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetArticleDataQuery, GetArticleDataQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetArticleDataQuery, GetArticleDataQueryVariables>(GetArticleDataDocument, options);
+        }
+export type GetArticleDataQueryHookResult = ReturnType<typeof useGetArticleDataQuery>;
+export type GetArticleDataLazyQueryHookResult = ReturnType<typeof useGetArticleDataLazyQuery>;
+export type GetArticleDataQueryResult = Apollo.QueryResult<GetArticleDataQuery, GetArticleDataQueryVariables>;
 export const GetPostDataDocument = gql`
     query GetPostData($where: PostWhereUniqueInput!) {
   post(where: $where) {
@@ -6686,6 +8839,59 @@ export function useGetPostDataLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
 export type GetPostDataQueryHookResult = ReturnType<typeof useGetPostDataQuery>;
 export type GetPostDataLazyQueryHookResult = ReturnType<typeof useGetPostDataLazyQuery>;
 export type GetPostDataQueryResult = Apollo.QueryResult<GetPostDataQuery, GetPostDataQueryVariables>;
+export const GetTopicsByForumCategoryDocument = gql`
+    query GetTopicsByForumCategory($where: TopicWhereInput!) {
+  topics(where: $where) {
+    id
+    name
+    created_at
+    updated_at
+    articles {
+      id
+      name
+      author {
+        id
+        name
+      }
+      content
+      created_at
+      updated_at
+    }
+    forum_category {
+      id
+      name
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetTopicsByForumCategoryQuery__
+ *
+ * To run a query within a React component, call `useGetTopicsByForumCategoryQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetTopicsByForumCategoryQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetTopicsByForumCategoryQuery({
+ *   variables: {
+ *      where: // value for 'where'
+ *   },
+ * });
+ */
+export function useGetTopicsByForumCategoryQuery(baseOptions: Apollo.QueryHookOptions<GetTopicsByForumCategoryQuery, GetTopicsByForumCategoryQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetTopicsByForumCategoryQuery, GetTopicsByForumCategoryQueryVariables>(GetTopicsByForumCategoryDocument, options);
+      }
+export function useGetTopicsByForumCategoryLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetTopicsByForumCategoryQuery, GetTopicsByForumCategoryQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetTopicsByForumCategoryQuery, GetTopicsByForumCategoryQueryVariables>(GetTopicsByForumCategoryDocument, options);
+        }
+export type GetTopicsByForumCategoryQueryHookResult = ReturnType<typeof useGetTopicsByForumCategoryQuery>;
+export type GetTopicsByForumCategoryLazyQueryHookResult = ReturnType<typeof useGetTopicsByForumCategoryLazyQuery>;
+export type GetTopicsByForumCategoryQueryResult = Apollo.QueryResult<GetTopicsByForumCategoryQuery, GetTopicsByForumCategoryQueryVariables>;
 export const GetUserDataDocument = gql`
     query GetUserData($where: UserWhereUniqueInput!) {
   user(where: $where) {

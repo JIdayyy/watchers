@@ -11,10 +11,12 @@ type Props = {
 
 export default function SettingsLayout({ children }: Props): JSX.Element {
     const router = useRouter();
+
     useSession({
         required: true,
         onUnauthenticated: () => router.push("/login"),
     });
+
     return (
         <Flex
             pt="110px"

@@ -1,0 +1,7 @@
+query GetArticleData($where: ArticleWhereInput!) {
+    articles(where: $where) {
+        id
+        name
+        content
+    }
+}

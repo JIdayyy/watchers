@@ -2099,6 +2099,7 @@ export type Post = {
   created_at: Scalars['DateTime'];
   id: Scalars['String'];
   isDraft: Scalars['Boolean'];
+  is_disabled: Scalars['Boolean'];
   likeCount: Maybe<Count>;
   slug: Scalars['String'];
   title: Scalars['String'];
@@ -2152,6 +2153,7 @@ export type PostCountAggregate = {
   created_at: Scalars['Int'];
   id: Scalars['Int'];
   isDraft: Scalars['Int'];
+  is_disabled: Scalars['Int'];
   slug: Scalars['Int'];
   title: Scalars['Int'];
   updated_at: Scalars['Int'];
@@ -2165,6 +2167,7 @@ export type PostCountOrderByAggregateInput = {
   created_at?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
   isDraft?: InputMaybe<SortOrder>;
+  is_disabled?: InputMaybe<SortOrder>;
   slug?: InputMaybe<SortOrder>;
   title?: InputMaybe<SortOrder>;
   updated_at?: InputMaybe<SortOrder>;
@@ -2182,6 +2185,7 @@ export type PostCreateInput = {
   created_at?: InputMaybe<Scalars['DateTime']>;
   id?: InputMaybe<Scalars['String']>;
   isDraft?: InputMaybe<Scalars['Boolean']>;
+  is_disabled?: InputMaybe<Scalars['Boolean']>;
   slug: Scalars['String'];
   title: Scalars['String'];
   updated_at?: InputMaybe<Scalars['DateTime']>;
@@ -2194,6 +2198,7 @@ export type PostCreateManyAuthorInput = {
   created_at?: InputMaybe<Scalars['DateTime']>;
   id?: InputMaybe<Scalars['String']>;
   isDraft?: InputMaybe<Scalars['Boolean']>;
+  is_disabled?: InputMaybe<Scalars['Boolean']>;
   slug: Scalars['String'];
   title: Scalars['String'];
   updated_at?: InputMaybe<Scalars['DateTime']>;
@@ -2210,6 +2215,7 @@ export type PostCreateManyCategoryInput = {
   created_at?: InputMaybe<Scalars['DateTime']>;
   id?: InputMaybe<Scalars['String']>;
   isDraft?: InputMaybe<Scalars['Boolean']>;
+  is_disabled?: InputMaybe<Scalars['Boolean']>;
   slug: Scalars['String'];
   title: Scalars['String'];
   updated_at?: InputMaybe<Scalars['DateTime']>;
@@ -2228,6 +2234,7 @@ export type PostCreateManyInput = {
   created_at?: InputMaybe<Scalars['DateTime']>;
   id?: InputMaybe<Scalars['String']>;
   isDraft?: InputMaybe<Scalars['Boolean']>;
+  is_disabled?: InputMaybe<Scalars['Boolean']>;
   slug: Scalars['String'];
   title: Scalars['String'];
   updated_at?: InputMaybe<Scalars['DateTime']>;
@@ -2301,6 +2308,7 @@ export type PostCreateWithoutAuthorInput = {
   created_at?: InputMaybe<Scalars['DateTime']>;
   id?: InputMaybe<Scalars['String']>;
   isDraft?: InputMaybe<Scalars['Boolean']>;
+  is_disabled?: InputMaybe<Scalars['Boolean']>;
   slug: Scalars['String'];
   title: Scalars['String'];
   updated_at?: InputMaybe<Scalars['DateTime']>;
@@ -2316,6 +2324,7 @@ export type PostCreateWithoutCategoryInput = {
   created_at?: InputMaybe<Scalars['DateTime']>;
   id?: InputMaybe<Scalars['String']>;
   isDraft?: InputMaybe<Scalars['Boolean']>;
+  is_disabled?: InputMaybe<Scalars['Boolean']>;
   slug: Scalars['String'];
   title: Scalars['String'];
   updated_at?: InputMaybe<Scalars['DateTime']>;
@@ -2331,6 +2340,7 @@ export type PostCreateWithoutCommentInput = {
   created_at?: InputMaybe<Scalars['DateTime']>;
   id?: InputMaybe<Scalars['String']>;
   isDraft?: InputMaybe<Scalars['Boolean']>;
+  is_disabled?: InputMaybe<Scalars['Boolean']>;
   slug: Scalars['String'];
   title: Scalars['String'];
   updated_at?: InputMaybe<Scalars['DateTime']>;
@@ -2346,6 +2356,7 @@ export type PostCreateWithoutTagsInput = {
   created_at?: InputMaybe<Scalars['DateTime']>;
   id?: InputMaybe<Scalars['String']>;
   isDraft?: InputMaybe<Scalars['Boolean']>;
+  is_disabled?: InputMaybe<Scalars['Boolean']>;
   slug: Scalars['String'];
   title: Scalars['String'];
   updated_at?: InputMaybe<Scalars['DateTime']>;
@@ -2361,6 +2372,7 @@ export type PostCreateWithoutUser_LikesInput = {
   created_at?: InputMaybe<Scalars['DateTime']>;
   id?: InputMaybe<Scalars['String']>;
   isDraft?: InputMaybe<Scalars['Boolean']>;
+  is_disabled?: InputMaybe<Scalars['Boolean']>;
   slug: Scalars['String'];
   title: Scalars['String'];
   updated_at?: InputMaybe<Scalars['DateTime']>;
@@ -2377,6 +2389,7 @@ export type PostGroupBy = {
   created_at: Scalars['DateTime'];
   id: Scalars['String'];
   isDraft: Scalars['Boolean'];
+  is_disabled: Scalars['Boolean'];
   slug: Scalars['String'];
   title: Scalars['String'];
   updated_at: Scalars['DateTime'];
@@ -2397,6 +2410,7 @@ export type PostMaxAggregate = {
   created_at: Maybe<Scalars['DateTime']>;
   id: Maybe<Scalars['String']>;
   isDraft: Maybe<Scalars['Boolean']>;
+  is_disabled: Maybe<Scalars['Boolean']>;
   slug: Maybe<Scalars['String']>;
   title: Maybe<Scalars['String']>;
   updated_at: Maybe<Scalars['DateTime']>;
@@ -2410,6 +2424,7 @@ export type PostMaxOrderByAggregateInput = {
   created_at?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
   isDraft?: InputMaybe<SortOrder>;
+  is_disabled?: InputMaybe<SortOrder>;
   slug?: InputMaybe<SortOrder>;
   title?: InputMaybe<SortOrder>;
   updated_at?: InputMaybe<SortOrder>;
@@ -2424,6 +2439,7 @@ export type PostMinAggregate = {
   created_at: Maybe<Scalars['DateTime']>;
   id: Maybe<Scalars['String']>;
   isDraft: Maybe<Scalars['Boolean']>;
+  is_disabled: Maybe<Scalars['Boolean']>;
   slug: Maybe<Scalars['String']>;
   title: Maybe<Scalars['String']>;
   updated_at: Maybe<Scalars['DateTime']>;
@@ -2437,6 +2453,7 @@ export type PostMinOrderByAggregateInput = {
   created_at?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
   isDraft?: InputMaybe<SortOrder>;
+  is_disabled?: InputMaybe<SortOrder>;
   slug?: InputMaybe<SortOrder>;
   title?: InputMaybe<SortOrder>;
   updated_at?: InputMaybe<SortOrder>;
@@ -2457,6 +2474,7 @@ export type PostOrderByWithAggregationInput = {
   created_at?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
   isDraft?: InputMaybe<SortOrder>;
+  is_disabled?: InputMaybe<SortOrder>;
   slug?: InputMaybe<SortOrder>;
   title?: InputMaybe<SortOrder>;
   updated_at?: InputMaybe<SortOrder>;
@@ -2475,6 +2493,7 @@ export type PostOrderByWithRelationInput = {
   created_at?: InputMaybe<SortOrder>;
   id?: InputMaybe<SortOrder>;
   isDraft?: InputMaybe<SortOrder>;
+  is_disabled?: InputMaybe<SortOrder>;
   slug?: InputMaybe<SortOrder>;
   title?: InputMaybe<SortOrder>;
   updated_at?: InputMaybe<SortOrder>;
@@ -2493,6 +2512,7 @@ export enum PostScalarFieldEnum {
   CreatedAt = 'created_at',
   Id = 'id',
   IsDraft = 'isDraft',
+  IsDisabled = 'is_disabled',
   Slug = 'slug',
   Title = 'title',
   UpdatedAt = 'updated_at',
@@ -2509,6 +2529,7 @@ export type PostScalarWhereInput = {
   created_at?: InputMaybe<DateTimeFilter>;
   id?: InputMaybe<StringFilter>;
   isDraft?: InputMaybe<BoolFilter>;
+  is_disabled?: InputMaybe<BoolFilter>;
   slug?: InputMaybe<StringFilter>;
   title?: InputMaybe<StringFilter>;
   updated_at?: InputMaybe<DateTimeFilter>;
@@ -2525,6 +2546,7 @@ export type PostScalarWhereWithAggregatesInput = {
   created_at?: InputMaybe<DateTimeWithAggregatesFilter>;
   id?: InputMaybe<StringWithAggregatesFilter>;
   isDraft?: InputMaybe<BoolWithAggregatesFilter>;
+  is_disabled?: InputMaybe<BoolWithAggregatesFilter>;
   slug?: InputMaybe<StringWithAggregatesFilter>;
   title?: InputMaybe<StringWithAggregatesFilter>;
   updated_at?: InputMaybe<DateTimeWithAggregatesFilter>;
@@ -2542,6 +2564,7 @@ export type PostUpdateInput = {
   created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
   isDraft?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
   slug?: InputMaybe<StringFieldUpdateOperationsInput>;
   title?: InputMaybe<StringFieldUpdateOperationsInput>;
   updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
@@ -2553,6 +2576,7 @@ export type PostUpdateManyMutationInput = {
   created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
   isDraft?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
   slug?: InputMaybe<StringFieldUpdateOperationsInput>;
   title?: InputMaybe<StringFieldUpdateOperationsInput>;
   updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
@@ -2670,6 +2694,7 @@ export type PostUpdateWithoutAuthorInput = {
   created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
   isDraft?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
   slug?: InputMaybe<StringFieldUpdateOperationsInput>;
   title?: InputMaybe<StringFieldUpdateOperationsInput>;
   updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
@@ -2685,6 +2710,7 @@ export type PostUpdateWithoutCategoryInput = {
   created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
   isDraft?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
   slug?: InputMaybe<StringFieldUpdateOperationsInput>;
   title?: InputMaybe<StringFieldUpdateOperationsInput>;
   updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
@@ -2700,6 +2726,7 @@ export type PostUpdateWithoutCommentInput = {
   created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
   isDraft?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
   slug?: InputMaybe<StringFieldUpdateOperationsInput>;
   title?: InputMaybe<StringFieldUpdateOperationsInput>;
   updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
@@ -2715,6 +2742,7 @@ export type PostUpdateWithoutTagsInput = {
   created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
   isDraft?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
   slug?: InputMaybe<StringFieldUpdateOperationsInput>;
   title?: InputMaybe<StringFieldUpdateOperationsInput>;
   updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
@@ -2730,6 +2758,7 @@ export type PostUpdateWithoutUser_LikesInput = {
   created_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   id?: InputMaybe<StringFieldUpdateOperationsInput>;
   isDraft?: InputMaybe<BoolFieldUpdateOperationsInput>;
+  is_disabled?: InputMaybe<BoolFieldUpdateOperationsInput>;
   slug?: InputMaybe<StringFieldUpdateOperationsInput>;
   title?: InputMaybe<StringFieldUpdateOperationsInput>;
   updated_at?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
@@ -2779,6 +2808,7 @@ export type PostWhereInput = {
   created_at?: InputMaybe<DateTimeFilter>;
   id?: InputMaybe<StringFilter>;
   isDraft?: InputMaybe<BoolFilter>;
+  is_disabled?: InputMaybe<BoolFilter>;
   slug?: InputMaybe<StringFilter>;
   title?: InputMaybe<StringFilter>;
   updated_at?: InputMaybe<DateTimeFilter>;
@@ -5764,6 +5794,14 @@ export type SetLikeMutationVariables = Exact<{
 
 export type SetLikeMutation = { __typename?: 'Mutation', updatePost: { __typename?: 'Post', id: string } };
 
+export type UpdatePostMutationVariables = Exact<{
+  where: PostWhereUniqueInput;
+  data: PostUpdateInput;
+}>;
+
+
+export type UpdatePostMutation = { __typename?: 'Mutation', updatePost: { __typename?: 'Post', id: string, slug: string } };
+
 export type UpdateUserMutationVariables = Exact<{
   where: UserWhereUniqueInput;
   data: UserUpdateInput;
@@ -5828,7 +5866,7 @@ export type GetAllPostsQueryVariables = Exact<{
 }>;
 
 
-export type GetAllPostsQuery = { __typename?: 'Query', posts: Array<{ __typename?: 'Post', id: string, title: string, content: string, isDraft: boolean, cover_picture: string, slug: string, created_at: any, userId: string, categoryId: string, commentCount: { __typename?: 'Count', count: number }, likeCount: { __typename?: 'Count', count: number }, author: { __typename?: 'User', id: string, first_name: string, image: string, nickname: string, last_name: string, email: string, avatar: string }, Category: { __typename?: 'Category', id: string, name: string }, Tags: Array<{ __typename?: 'Tag', id: string, name: string }> }> };
+export type GetAllPostsQuery = { __typename?: 'Query', posts: Array<{ __typename?: 'Post', id: string, title: string, content: string, isDraft: boolean, is_disabled: boolean, cover_picture: string, slug: string, created_at: any, userId: string, categoryId: string, commentCount: { __typename?: 'Count', count: number }, likeCount: { __typename?: 'Count', count: number }, author: { __typename?: 'User', id: string, first_name: string, image: string, nickname: string, last_name: string, email: string, avatar: string }, Category: { __typename?: 'Category', id: string, name: string }, Tags: Array<{ __typename?: 'Tag', id: string, name: string }> }> };
 
 export type GetAllPostByInputQueryVariables = Exact<{
   where: InputMaybe<PostWhereInput>;
@@ -5838,19 +5876,26 @@ export type GetAllPostByInputQueryVariables = Exact<{
 }>;
 
 
-export type GetAllPostByInputQuery = { __typename?: 'Query', posts: Array<{ __typename?: 'Post', id: string, title: string, content: string, isDraft: boolean, cover_picture: string, slug: string, created_at: any, userId: string, categoryId: string, commentCount: { __typename?: 'Count', count: number }, likeCount: { __typename?: 'Count', count: number }, author: { __typename?: 'User', id: string, first_name: string, image: string, nickname: string, last_name: string, email: string, avatar: string }, Category: { __typename?: 'Category', id: string, name: string }, Tags: Array<{ __typename?: 'Tag', id: string, name: string }> }> };
+export type GetAllPostByInputQuery = { __typename?: 'Query', posts: Array<{ __typename?: 'Post', id: string, title: string, content: string, isDraft: boolean, cover_picture: string, slug: string, created_at: any, is_disabled: boolean, userId: string, categoryId: string, commentCount: { __typename?: 'Count', count: number }, likeCount: { __typename?: 'Count', count: number }, author: { __typename?: 'User', id: string, first_name: string, image: string, nickname: string, last_name: string, email: string, avatar: string }, Category: { __typename?: 'Category', id: string, name: string }, Tags: Array<{ __typename?: 'Tag', id: string, name: string }> }> };
 
 export type GetAllTagsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetAllTagsQuery = { __typename?: 'Query', tags: Array<{ __typename?: 'Tag', id: string, name: string }> };
 
+export type GetAllUserLikesQueryVariables = Exact<{
+  where: UserWhereUniqueInput;
+}>;
+
+
+export type GetAllUserLikesQuery = { __typename?: 'Query', user: { __typename?: 'User', Post_likes: Array<{ __typename?: 'Post', id: string }> } };
+
 export type GetPostDataQueryVariables = Exact<{
   where: PostWhereUniqueInput;
 }>;
 
 
-export type GetPostDataQuery = { __typename?: 'Query', post: { __typename?: 'Post', id: string, slug: string, title: string, content: string, cover_picture: string, isDraft: boolean, User_likes: Array<{ __typename?: 'User', id: string }>, author: { __typename?: 'User', nickname: string, id: string, first_name: string, last_name: string, image: string, email: string, avatar: string }, Tags: Array<{ __typename?: 'Tag', id: string, name: string }> } };
+export type GetPostDataQuery = { __typename?: 'Query', post: { __typename?: 'Post', id: string, slug: string, title: string, content: string, cover_picture: string, isDraft: boolean, Category: { __typename?: 'Category', id: string, name: string }, User_likes: Array<{ __typename?: 'User', id: string }>, author: { __typename?: 'User', nickname: string, id: string, first_name: string, last_name: string, image: string, email: string, avatar: string }, Tags: Array<{ __typename?: 'Tag', id: string, name: string }> } };
 
 export type GetUserDataQueryVariables = Exact<{
   where: UserWhereUniqueInput;
@@ -6153,6 +6198,41 @@ export function useSetLikeMutation(baseOptions?: Apollo.MutationHookOptions<SetL
 export type SetLikeMutationHookResult = ReturnType<typeof useSetLikeMutation>;
 export type SetLikeMutationResult = Apollo.MutationResult<SetLikeMutation>;
 export type SetLikeMutationOptions = Apollo.BaseMutationOptions<SetLikeMutation, SetLikeMutationVariables>;
+export const UpdatePostDocument = gql`
+    mutation UpdatePost($where: PostWhereUniqueInput!, $data: PostUpdateInput!) {
+  updatePost(where: $where, data: $data) {
+    id
+    slug
+  }
+}
+    `;
+export type UpdatePostMutationFn = Apollo.MutationFunction<UpdatePostMutation, UpdatePostMutationVariables>;
+
+/**
+ * __useUpdatePostMutation__
+ *
+ * To run a mutation, you first call `useUpdatePostMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdatePostMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updatePostMutation, { data, loading, error }] = useUpdatePostMutation({
+ *   variables: {
+ *      where: // value for 'where'
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useUpdatePostMutation(baseOptions?: Apollo.MutationHookOptions<UpdatePostMutation, UpdatePostMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdatePostMutation, UpdatePostMutationVariables>(UpdatePostDocument, options);
+      }
+export type UpdatePostMutationHookResult = ReturnType<typeof useUpdatePostMutation>;
+export type UpdatePostMutationResult = Apollo.MutationResult<UpdatePostMutation>;
+export type UpdatePostMutationOptions = Apollo.BaseMutationOptions<UpdatePostMutation, UpdatePostMutationVariables>;
 export const UpdateUserDocument = gql`
     mutation UpdateUser($where: UserWhereUniqueInput!, $data: UserUpdateInput!) {
   updateUser(where: $where, data: $data) {
@@ -6464,6 +6544,7 @@ export const GetAllPostsDocument = gql`
     title
     content
     isDraft
+    is_disabled
     cover_picture
     slug
     created_at
@@ -6536,6 +6617,7 @@ export const GetAllPostByInputDocument = gql`
     cover_picture
     slug
     created_at
+    is_disabled
     commentCount {
       count
     }
@@ -6630,6 +6712,43 @@ export function useGetAllTagsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions
 export type GetAllTagsQueryHookResult = ReturnType<typeof useGetAllTagsQuery>;
 export type GetAllTagsLazyQueryHookResult = ReturnType<typeof useGetAllTagsLazyQuery>;
 export type GetAllTagsQueryResult = Apollo.QueryResult<GetAllTagsQuery, GetAllTagsQueryVariables>;
+export const GetAllUserLikesDocument = gql`
+    query GetAllUserLikes($where: UserWhereUniqueInput!) {
+  user(where: $where) {
+    Post_likes {
+      id
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetAllUserLikesQuery__
+ *
+ * To run a query within a React component, call `useGetAllUserLikesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAllUserLikesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAllUserLikesQuery({
+ *   variables: {
+ *      where: // value for 'where'
+ *   },
+ * });
+ */
+export function useGetAllUserLikesQuery(baseOptions: Apollo.QueryHookOptions<GetAllUserLikesQuery, GetAllUserLikesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetAllUserLikesQuery, GetAllUserLikesQueryVariables>(GetAllUserLikesDocument, options);
+      }
+export function useGetAllUserLikesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAllUserLikesQuery, GetAllUserLikesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetAllUserLikesQuery, GetAllUserLikesQueryVariables>(GetAllUserLikesDocument, options);
+        }
+export type GetAllUserLikesQueryHookResult = ReturnType<typeof useGetAllUserLikesQuery>;
+export type GetAllUserLikesLazyQueryHookResult = ReturnType<typeof useGetAllUserLikesLazyQuery>;
+export type GetAllUserLikesQueryResult = Apollo.QueryResult<GetAllUserLikesQuery, GetAllUserLikesQueryVariables>;
 export const GetPostDataDocument = gql`
     query GetPostData($where: PostWhereUniqueInput!) {
   post(where: $where) {
@@ -6638,6 +6757,10 @@ export const GetPostDataDocument = gql`
     title
     content
     cover_picture
+    Category {
+      id
+      name
+    }
     isDraft
     User_likes {
       id

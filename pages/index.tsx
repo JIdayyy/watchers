@@ -47,6 +47,9 @@ const Home = ({ posts }: IProps): JSX.Element => {
                 isDraft: {
                     equals: false,
                 },
+                is_disabled: {
+                    equals: false,
+                },
             },
             skip: 0,
             take: 10,
@@ -54,6 +57,7 @@ const Home = ({ posts }: IProps): JSX.Element => {
                 created_at: SortOrder.Desc,
             },
         },
+
         skip: isClient === false,
     });
 
@@ -68,9 +72,13 @@ const Home = ({ posts }: IProps): JSX.Element => {
                     isDraft: {
                         equals: false,
                     },
+                    is_disabled: {
+                        equals: false,
+                    },
                 },
                 skip: 0,
                 take: 10,
+
                 orderBy: {
                     created_at: SortOrder.Desc,
                 },
@@ -88,6 +96,9 @@ const Home = ({ posts }: IProps): JSX.Element => {
                     take: 6,
                     where: {
                         isDraft: {
+                            equals: false,
+                        },
+                        is_disabled: {
                             equals: false,
                         },
                     },
@@ -238,9 +249,13 @@ export const getStaticProps = async (): Promise<
 > => {
     const data = await apolloClient.query({
         query: GetAllPostsDocument,
+
         variables: {
             where: {
                 isDraft: {
+                    equals: false,
+                },
+                is_disabled: {
                     equals: false,
                 },
             },

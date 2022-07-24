@@ -9,6 +9,7 @@ query GetAllPosts(
         title
         content
         isDraft
+        is_disabled
         cover_picture
         slug
         created_at

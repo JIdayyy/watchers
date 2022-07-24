@@ -5,6 +5,10 @@ query GetPostData($where: PostWhereUniqueInput!) {
         title
         content
         cover_picture
+        Category {
+            id
+            name
+        }
         isDraft
         User_likes {
             id

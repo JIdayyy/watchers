@@ -5,7 +5,7 @@ import CreateComment from "@components/Comments/CreateComment";
 export default function Comments(): JSX.Element {
     return (
         <Flex
-            p={5}
+            p="40px"
             mt="100px"
             w="full"
             justifyContent="center"

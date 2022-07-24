@@ -161,10 +161,10 @@ export default function Watch({ post }: IProps): JSX.Element {
                     "repeat(1, 1fr)",
                     "repeat(1, 1fr)",
                     "repeat(1, 1fr)",
-                    "repeat(5, 1fr)",
+                    "repeat(6, 1fr)",
                 ]}
             >
-                <GridItem colSpan={[5, 3]}>
+                <GridItem colSpan={[5, 4]}>
                     <CustomBox
                         display="flex"
                         border={
@@ -187,8 +187,7 @@ export default function Watch({ post }: IProps): JSX.Element {
                         )}
                         <Flex
                             direction="column"
-                            p={5}
-                            px={5}
+                            p="40px"
                             w="full"
                             justifyContent="flex-start"
                             alignItems="flex-start"
@@ -206,10 +205,16 @@ export default function Watch({ post }: IProps): JSX.Element {
                                     bg={isLiked ? "red" : "blue.400"}
                                     isLoading={loading}
                                     size="sm"
+                                    color="white"
                                     onClick={handleClick}
                                     mr={5}
                                 >
-                                    <Icon mr={1} as={AiFillLike} size={10} />
+                                    <Icon
+                                        mr={1}
+                                        as={AiFillLike}
+                                        size={10}
+                                        color="white"
+                                    />
                                     {data?.post.User_likes.length}{" "}
                                     {data?.post.User_likes.length === 1
                                         ? "like"

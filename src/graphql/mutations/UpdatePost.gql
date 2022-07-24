@@ -1,0 +1,6 @@
+mutation UpdatePost($where: PostWhereUniqueInput!, $data: PostUpdateInput!) {
+    updatePost(where: $where, data: $data) {
+        id
+        slug
+    }
+}

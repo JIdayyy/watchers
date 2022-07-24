@@ -15,7 +15,13 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import globalWebsiteConfig from "../website-config/global.json";
 import { FieldValues, useForm } from "react-hook-form";
-import { useCreatePostMutation } from "src/generated/graphql";
+import {
+    GetAllPostByInputDocument,
+    SortOrder,
+    useCreatePostMutation,
+    useGetPostDataQuery,
+    useUpdatePostMutation,
+} from "src/generated/graphql";
 import { useSelector } from "react-redux";
 import { RootState } from "@redux/reducers";
 import { imageService } from "@services/api/fetcher";
@@ -34,6 +40,9 @@ const CategoriesModal = dynamic(
 const TagsList = dynamic(() => import("@components/Tags/TagsList"));
 
 export default function NewWatch(): JSX.Element {
+    const {
+        query: { isEdit, postId },
+    } = useRouter();
     const toast = useToast();
     const inputRef = useRef<HTMLInputElement>(null);
     const [isFocus, setIsFocus] = useState(false);
@@ -46,7 +55,7 @@ export default function NewWatch(): JSX.Element {
     const [tagInput, setTagInput] = useState("");
     const [value, onChange] = useState(initialValue);
     const [selectedCategory, setSelectedCategory] = useState<string>("");
-    const { handleSubmit, register, getValues } = useForm();
+    const { handleSubmit, register, getValues, setValue } = useForm();
     const [image, setImage] = useState<File | undefined>();
     const [createPost, { loading }] = useCreatePostMutation();
     const [isUploading, setIsUploading] = useState(false);
@@ -60,12 +69,6 @@ export default function NewWatch(): JSX.Element {
         "strike",
     ];
 
-    useEffect(() => {
-        if (!user.id) {
-            router.push("/");
-        }
-    }, []);
-
     const handleSetTags = (e: string) => {
         if (tags.length < 4 && e.length > 0) {
             setTags([
@@ -78,6 +81,72 @@ export default function NewWatch(): JSX.Element {
             setIsFocus(false);
         }
     };
+
+    useGetPostDataQuery({
+        variables: {
+            where: {
+                id: postId as string,
+            },
+        },
+        onCompleted: (data) => {
+            if (postId) {
+                setValue("title", data?.post?.title);
+                onChange(data.post.content);
+                setSelectedCategory(data?.post?.Category.id);
+                setValue("image", data?.post?.cover_picture);
+                data.post.Tags.map((tag) => handleSetTags(tag.name));
+            }
+        },
+        skip: !postId,
+    });
+
+    const [updatePost, { loading: updateLoading }] = useUpdatePostMutation({
+        variables: {
+            where: {
+                id: postId as string,
+            },
+            data: {
+                is_disabled: {
+                    set: false,
+                },
+            },
+        },
+        refetchQueries: [
+            {
+                query: GetAllPostByInputDocument,
+                variables: {
+                    where: {
+                        author: {
+                            is: {
+                                id: {
+                                    equals: user.id,
+                                },
+                            },
+                        },
+                        is_disabled: {
+                            equals: false,
+                        },
+                    },
+                    take: 10,
+                    skip: 0,
+                    orderBy: {
+                        created_at: SortOrder.Desc,
+                    },
+                },
+            },
+        ],
+        onCompleted: (res) => {
+            if (res.updatePost.id) {
+                router.push(`/${res.updatePost.slug}`);
+            }
+        },
+    });
+
+    useEffect(() => {
+        if (!user.id) {
+            router.push("/");
+        }
+    }, []);
 
     const handleRemoveTag = (name: string) => {
         setTags(tags.filter((tag) => tag !== name));
@@ -138,6 +207,47 @@ export default function NewWatch(): JSX.Element {
                 duration: 4000,
             });
         }
+
+        if (isEdit === "true") {
+            return updatePost({
+                variables: {
+                    where: {
+                        id: postId as string,
+                    },
+                    data: {
+                        Category: {
+                            connect: {
+                                id: selectedCategory,
+                            },
+                        },
+                        slug: {
+                            set: data.title
+                                .toLowerCase()
+                                .replace(/[^a-z0-9 -]/g, "")
+                                .replace(/\s+/g, "-")
+                                .replace(/-+/g, "-"),
+                        },
+                        content: {
+                            set: value,
+                        },
+                        title: {
+                            set: data.title,
+                        },
+                        Tags: {
+                            connectOrCreate: tags.map((tag) => ({
+                                where: {
+                                    name: tag,
+                                },
+                                create: {
+                                    name: tag,
+                                },
+                            })),
+                        },
+                    },
+                },
+            });
+        }
+
         createPost({
             variables: {
                 data: {
@@ -253,9 +363,12 @@ export default function NewWatch(): JSX.Element {
                                         <Image
                                             objectFit="cover"
                                             priority
-                                            src={URL.createObjectURL(
-                                                image as File,
-                                            )}
+                                            src={
+                                                getValues("image") ||
+                                                URL.createObjectURL(
+                                                    image as File,
+                                                )
+                                            }
                                             width={160}
                                             height={90}
                                         />
@@ -401,13 +514,13 @@ export default function NewWatch(): JSX.Element {
                         alignItems="flex-start"
                     >
                         <Button
-                            isLoading={loading || isUploading}
+                            isLoading={loading || isUploading || updateLoading}
                             onClick={handleSubmit(onSubmit)}
                             bg="blue"
                             color="white"
                             mr={2}
                         >
-                            PUBLISH
+                            {isEdit ? "EDIT" : "PUBLISH"}
                         </Button>
                         <Button bg="transparent">Save as draft</Button>
                     </Flex>

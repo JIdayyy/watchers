@@ -12,6 +12,7 @@ query GetAllPostByInput(
         cover_picture
         slug
         created_at
+        is_disabled
         commentCount {
             count
         }

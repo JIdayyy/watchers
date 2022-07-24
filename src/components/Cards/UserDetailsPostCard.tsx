@@ -194,7 +194,7 @@ export default function UserDetailsPostCard({ author }: IProps): JSX.Element {
                         rounded="md"
                         cursor="pointer"
                         onClick={() => handleClick(watch.slug)}
-                        py={4}
+                        py={2}
                         w="full"
                         direction="column"
                     >

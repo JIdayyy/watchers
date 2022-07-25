@@ -187,7 +187,7 @@ export default function Watch({ post }: IProps): JSX.Element {
                         )}
                         <Flex
                             direction="column"
-                            p="40px"
+                            p={[4, 4, "30px", "40px"]}
                             w="full"
                             justifyContent="flex-start"
                             alignItems="flex-start"

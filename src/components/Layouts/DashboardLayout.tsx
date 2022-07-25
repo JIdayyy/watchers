@@ -4,6 +4,7 @@ import DashboardSidebar from "@components/Molecules/DashboardSidebar";
 import Navbar from "@components/Navbar";
 import { login, logout } from "@redux/actions";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 import { ReactNode, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Role, useLogoutMutation } from "src/generated/graphql";
@@ -14,6 +15,7 @@ type Props = {
 
 export default function DashboardLayout({ children }: Props): JSX.Element {
     const dispatch = useDispatch();
+    const { push } = useRouter();
     const session = useSession();
     const [logoutMutation] = useLogoutMutation();
 
@@ -35,6 +37,7 @@ export default function DashboardLayout({ children }: Props): JSX.Element {
         if (session.status === "unauthenticated") {
             logoutMutation();
             dispatch(logout());
+            push("/");
         }
     }, [session]);
 

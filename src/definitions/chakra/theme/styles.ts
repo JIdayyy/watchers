@@ -13,6 +13,8 @@ export default {
                 fontWeight: "bold",
                 fontSize: "32px",
                 fontFamily: "sans-serif",
+                marginTop: 5,
+                marginBottom: 3,
             },
             a: {
                 color: "blue",
@@ -21,19 +23,25 @@ export default {
                 fontWeight: "bold",
                 fontSize: "24px",
                 fontFamily: "sans-serif",
+                marginTop: 5,
+                marginBottom: 2,
             },
             h3: {
                 fontWeight: "bold",
                 fontSize: "18px",
                 fontFamily: "sans-serif",
+                marginTop: 5,
+                marginBottom: 2,
             },
             h4: {
                 fontWeight: "bold",
                 fontSize: "16px",
                 fontFamily: "sans-serif",
+                marginTop: 5,
+                marginBottom: 2,
             },
             p: {
-                fontsize: "18px",
+                fontsize: "24px",
                 fontFamily: "sans-serif",
             },
             iframe: {
@@ -54,7 +62,7 @@ export default {
             },
             pre: {
                 marginY: "30px",
-                rounded: "10px",
+                rounded: "5px",
                 borderRadius: "10px",
                 width: "full",
             },

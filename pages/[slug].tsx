@@ -207,7 +207,6 @@ export default function Watch({ post }: IProps): JSX.Element {
                                     size="sm"
                                     color="white"
                                     onClick={handleClick}
-                                    mr={5}
                                 >
                                     <Icon
                                         mr={1}
@@ -221,10 +220,10 @@ export default function Watch({ post }: IProps): JSX.Element {
                                         : "likes"}
                                 </Button>
                             </Flex>
-                            <Text my={4} as="h1">
+                            <Text mt={4} as="h1">
                                 {post.title}
                             </Text>
-                            <Flex my={4}>
+                            <Flex mb={5}>
                                 {post.Tags.map((tag) => (
                                     <Text
                                         key={tag.id}

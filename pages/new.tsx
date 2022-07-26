@@ -87,10 +87,10 @@ export default function NewWatch(): JSX.Element {
                 id: postId as string,
             },
         },
-        onCompleted: (data) => {
+        onCompleted: async (data) => {
             if (postId) {
                 setValue("title", data?.post?.title);
-                onChange(data.post.content);
+                await onChange(data.post.content);
                 setSelectedCategory(data?.post?.Category.id);
                 setValue("image", data?.post?.cover_picture);
                 const tagsNames = data.post.Tags.map((tg) => tg.name);
@@ -137,7 +137,7 @@ export default function NewWatch(): JSX.Element {
         ],
         onCompleted: async (data) => {
             if (image) {
-                return await uploadCoverPicture(image, data.updatePost.id).then(
+                return await uploadCoverPicture(image, postId as string).then(
                     (res) => {
                         if (res) {
                             router.push(`/${data.updatePost.slug}`);

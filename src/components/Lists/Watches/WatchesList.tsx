@@ -1,5 +1,5 @@
 import { forwardRef, VStack } from "@chakra-ui/react";
-import React from "react";
+import React, { Fragment } from "react";
 import { GetAllPostsQuery } from "src/generated/graphql";
 import WatchCard from "../../Cards/WatchCard";
 
@@ -16,12 +16,8 @@ const WatchesList = forwardRef(({ posts }: IProps, ref): JSX.Element => {
             direction="column"
         >
             {posts.map((watch, index) => (
-                <>
-                    <WatchCard
-                        key={watch.id}
-                        watch={watch}
-                        isMain={index === 0}
-                    />
+                <Fragment key={watch.id}>
+                    <WatchCard watch={watch} isMain={index === 0} />
                     {index === posts.length - 3 && posts.length > 5 && (
                         <span
                             style={{
@@ -32,7 +28,7 @@ const WatchesList = forwardRef(({ posts }: IProps, ref): JSX.Element => {
                             ref={ref}
                         />
                     )}
-                </>
+                </Fragment>
             ))}
         </VStack>
     );

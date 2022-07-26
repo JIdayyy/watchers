@@ -62,7 +62,6 @@ export default function NewWatch(): JSX.Element {
     const toolbarOptions = [
         "bold",
         "semi-bold",
-        "semibold",
         "semiBold",
         "italic",
         "underline",
@@ -81,7 +80,7 @@ export default function NewWatch(): JSX.Element {
             setIsFocus(false);
         }
     };
-
+    console.log(tags);
     useGetPostDataQuery({
         variables: {
             where: {
@@ -94,7 +93,8 @@ export default function NewWatch(): JSX.Element {
                 onChange(data.post.content);
                 setSelectedCategory(data?.post?.Category.id);
                 setValue("image", data?.post?.cover_picture);
-                data.post.Tags.map((tag) => handleSetTags(tag.name));
+                const tagsNames = data.post.Tags.map((tg) => tg.name);
+                setTags(tagsNames);
             }
         },
         skip: !postId,
@@ -135,9 +135,18 @@ export default function NewWatch(): JSX.Element {
                 },
             },
         ],
-        onCompleted: (res) => {
-            if (res.updatePost.id) {
-                router.push(`/${res.updatePost.slug}`);
+        onCompleted: async (data) => {
+            if (image) {
+                return await uploadCoverPicture(image, data.updatePost.id).then(
+                    (res) => {
+                        if (res) {
+                            router.push(`/${data.updatePost.slug}`);
+                        }
+                    },
+                );
+            }
+            if (data.updatePost.id) {
+                router.push(`/${data.updatePost.slug}`);
             }
         },
     });
@@ -402,6 +411,7 @@ export default function NewWatch(): JSX.Element {
                             <Flex position="relative" flexWrap="wrap" w="full">
                                 {tags.map((tag) => (
                                     <Flex
+                                        key={tag}
                                         justifyContent="center"
                                         alignItems="center"
                                         rounded="md"

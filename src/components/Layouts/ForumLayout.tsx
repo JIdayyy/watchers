@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Role, useLogoutMutation } from "src/generated/graphql";
 import Image from "next/image";
 import ForumBreadScrumbs from "@components/Molecules/ForumBreadScrumbs";
+import BottomStats from "@components/Molecules/BottomStats";
 
 type Props = {
     children: ReactNode;
@@ -50,7 +51,7 @@ export default function ForumLayout({ children }: Props): JSX.Element {
 
     return (
         <Flex
-            pt="80px"
+            pt="55px"
             w="100vw"
             h="100vh"
             justifyContent="flex-start"
@@ -58,7 +59,12 @@ export default function ForumLayout({ children }: Props): JSX.Element {
             direction="column"
         >
             <Navbar />
-            <Box position="relative" w="full" h="30vh">
+            <Box
+                className="image-drop-contrast"
+                position="relative"
+                w="full"
+                h="40vh"
+            >
                 <Image
                     objectFit="cover"
                     src="/images/forum_bg.webp"
@@ -68,6 +74,7 @@ export default function ForumLayout({ children }: Props): JSX.Element {
             <ForumBreadScrumbs />
 
             {children}
+            <BottomStats />
         </Flex>
     );
 }

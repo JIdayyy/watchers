@@ -15,7 +15,7 @@ interface IProps {
 export default function Forum({ forums }: IProps): JSX.Element {
     return (
         <Flex
-            justifyContent="flex-start"
+            justifyContent="center"
             alignItems="center"
             direction="column"
             w="full"

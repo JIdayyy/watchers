@@ -88,3 +88,9 @@ ul {
 .scrollbarList::-webkit-scrollbar-thumb:hover {
     background: #555;
 }
+
+.image-drop-contrast {
+    filter: sepia(22%) brightness(76%);
+    -webkit-filter: sepia(22%) brightness(76%);
+    -moz-filter: sepia(22%) brightness(76%);
+}

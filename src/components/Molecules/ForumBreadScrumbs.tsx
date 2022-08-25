@@ -4,7 +4,6 @@ import {
     Breadcrumb,
     BreadcrumbItem,
     BreadcrumbLink,
-    BreadcrumbSeparator,
     useColorMode,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
@@ -34,8 +33,6 @@ export default function ForumBreadScrumbs(): JSX.Element {
             setBreadcrumbs(pathArray);
         }
     }, [router]);
-
-    console.log(breadcrumbs);
 
     return (
         <Flex

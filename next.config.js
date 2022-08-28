@@ -4,6 +4,7 @@ module.exports = withPlugins([], {
     images: {
         domains: [
             "minio-cloud-s3.jidayyy.com",
+            "minio-dc-s3.digitalcopilote.re",
             "avatarfiles.alphacoders.com",
             "avatars.githubusercontent.com",
             "lh3.googleusercontent.com",

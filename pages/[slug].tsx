@@ -148,7 +148,7 @@ export default function Watch({ post }: IProps): JSX.Element {
 
     return (
         <>
-            <NextSeo {...SEO} title="About Me" />
+            <NextSeo {...SEO} title="Post content" />
 
             <Grid
                 alignItems="start"

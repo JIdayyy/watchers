@@ -3,7 +3,7 @@ const withPlugins = require("next-compose-plugins");
 module.exports = withPlugins([], {
     images: {
         domains: [
-            "minio-dc-s3.digitalcopilote.re",
+            "minio-cloud-s3.jidayyy.com",
             "avatarfiles.alphacoders.com",
             "avatars.githubusercontent.com",
             "lh3.googleusercontent.com",

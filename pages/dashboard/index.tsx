@@ -4,11 +4,12 @@ import CustomBox from "@definitions/chakra/theme/components/Box/CustomBox";
 import { RootState } from "@redux/reducers";
 import { DateTime } from "luxon";
 
-import React from "react";
+import React, { ReactNode } from "react";
 import { useSelector } from "react-redux";
 import { SortOrder, useGetAllPostByInputQuery } from "src/generated/graphql";
 import DashboardPostCardMenu from "@components/Menu/DashboardPostCardMenu";
 import Link from "next/link";
+import MainLayout from "@components/Layouts/MainLayout";
 
 export default function Dashboard(): JSX.Element {
     const { user } = useSelector((state: RootState) => state.user);
@@ -29,7 +30,7 @@ export default function Dashboard(): JSX.Element {
                     equals: false,
                 },
             },
-            take: 10,
+            take: 999999,
             skip: 0,
             orderBy: {
                 created_at: SortOrder.Desc,
@@ -94,4 +95,8 @@ export default function Dashboard(): JSX.Element {
     );
 }
 
-Dashboard.Layout = DashboardLayout;
+Dashboard.Layout = ({ children }: { children: ReactNode }) => (
+    <MainLayout>
+        <DashboardLayout>{children}</DashboardLayout>
+    </MainLayout>
+);

@@ -4,7 +4,6 @@ import {
     Breadcrumb,
     BreadcrumbItem,
     BreadcrumbLink,
-    BreadcrumbSeparator,
     useColorMode,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
@@ -35,15 +34,13 @@ export default function ForumBreadScrumbs(): JSX.Element {
         }
     }, [router]);
 
-    console.log(breadcrumbs);
-
     return (
         <Flex
             justifyContent="center"
             alignItems="center"
             w="full"
             h="50px"
-            bg={colorMode === "light" ? "gray.100" : "gray.800"}
+            bg={colorMode === "light" ? "white" : "gray.800"}
         >
             <Breadcrumb maxW="7xl" w="full">
                 {breadcrumbs?.map((breadcrumb) => (

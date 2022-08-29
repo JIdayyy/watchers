@@ -22,8 +22,7 @@ export default function ForumCategoriesTable({ forum }: Props): JSX.Element {
 
     return (
         <TableContainer
-            my={10}
-            border={colorMode === "dark" ? "" : "#D6D6D6"}
+            border={colorMode == "light" ? "1px solid #D6D6D6" : ""}
             rounded={5}
             w="full"
         >

@@ -11,7 +11,6 @@ import { JWT } from "next-auth/jwt";
 import Cookies from "cookies";
 import bcrypt from "bcrypt";
 import { NextApiRequest, NextApiResponse } from "next";
-import axios from "axios";
 
 const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:5000";
 

@@ -4,7 +4,6 @@ import MainLayout from "@components/Layouts/MainLayout";
 import ForumList from "@components/Lists/Forums/ForumList";
 import ForumBreadScrumbs from "@components/Molecules/ForumBreadScrumbs";
 import { GetServerSidePropsResult } from "next";
-import Image from "next/image";
 import { apolloClient } from "pages/_app";
 import { GetAllForumsDocument, GetAllForumsQuery } from "src/generated/graphql";
 
@@ -19,7 +18,6 @@ export default function Forum({ forums }: IProps): JSX.Element {
             alignItems="center"
             direction="column"
             w="full"
-            h="full"
         >
             <ForumList forums={forums} />
         </Flex>

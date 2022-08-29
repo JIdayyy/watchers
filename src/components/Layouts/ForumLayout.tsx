@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Role, useLogoutMutation } from "src/generated/graphql";
 import Image from "next/image";
 import ForumBreadScrumbs from "@components/Molecules/ForumBreadScrumbs";
+import ForumFooter from "@components/Forum/Footer";
 
 type Props = {
     children: ReactNode;
@@ -50,7 +51,7 @@ export default function ForumLayout({ children }: Props): JSX.Element {
 
     return (
         <Flex
-            pt="80px"
+            pt="50px"
             w="100vw"
             h="100vh"
             justifyContent="flex-start"
@@ -68,6 +69,7 @@ export default function ForumLayout({ children }: Props): JSX.Element {
             <ForumBreadScrumbs />
 
             {children}
+            <ForumFooter />
         </Flex>
     );
 }

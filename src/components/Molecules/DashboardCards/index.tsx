@@ -61,10 +61,7 @@ export default function DashboardCards(): JSX.Element {
                 number={followersData?.user.followersCount.count || 0}
                 title="Total Followers"
             />
-            <Card
-                number={data?.posts.length || 0}
-                title="Total followed users"
-            />
+            <Card number={0} title="Total followed users" />
         </HStack>
     );
 }

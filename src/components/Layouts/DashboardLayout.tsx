@@ -51,14 +51,12 @@ export default function DashboardLayout({ children }: Props): JSX.Element {
 
     return (
         <Flex
-            pt="80px"
             w="100vw"
-            h="100vh"
+            h="full"
             justifyContent="flex-start"
             alignItems="center"
             direction="column"
         >
-            <Navbar />
             <Flex h="full" w="full" maxW="7xl" direction="column">
                 <Text fontWeight="bold" fontSize={34}>
                     Dashboard

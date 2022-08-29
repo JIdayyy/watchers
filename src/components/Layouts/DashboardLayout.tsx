@@ -1,7 +1,6 @@
 import { Center, Flex, Spinner, Text } from "@chakra-ui/react";
 import DashboardCards from "@components/Molecules/DashboardCards";
 import DashboardSidebar from "@components/Molecules/DashboardSidebar";
-import Navbar from "@components/Navbar";
 import { login, logout } from "@redux/actions";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";

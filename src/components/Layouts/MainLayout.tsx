@@ -1,4 +1,5 @@
-import { Center, Flex, Spinner } from "@chakra-ui/react";
+import { Center, Flex } from "@chakra-ui/react";
+import Lantern from "@components/Lotties/Lantern/Lantern";
 import Navbar from "@components/Navbar";
 import { login, logout } from "@redux/actions";
 import { useSession } from "next-auth/react";
@@ -38,8 +39,8 @@ export default function MainLayout({ children }: Props): JSX.Element {
 
     if (session.status === "loading") {
         return (
-            <Center w="100vw" h="100vh">
-                <Spinner />
+            <Center bg="#544A5F" w="100vw" h="100vh">
+                <Lantern />
             </Center>
         );
     }

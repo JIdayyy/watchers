@@ -80,7 +80,6 @@ export default function NewWatch(): JSX.Element {
             setIsFocus(false);
         }
     };
-    console.log(tags);
     useGetPostDataQuery({
         variables: {
             where: {
